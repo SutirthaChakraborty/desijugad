@@ -11,8 +11,8 @@
   --ink-soft: #4A4742;
   --ink-muted: #8A857D;
   --line: #E8E1D3;
-  --indigo: #4F3CC9;
-  --indigo-soft: #6E5EE0;
+  --indigo: #7051BC;
+  --indigo-soft: #9070D0;
   --saffron: #E87C3E;
   --saffron-soft: #F4A368;
   --success: #1F7A4C;
@@ -156,7 +156,16 @@ p { color: var(--ink-soft); }
   font-weight: 700;
   font-size: 0.72rem;
   letter-spacing: 0.04em;
-  box-shadow: 0 4px 10px -2px rgba(79,60,201,0.35);
+  box-shadow: 0 4px 10px -2px rgba(112,81,188,0.35);
+}
+.brand-logo {
+  height: 38px;
+  width: auto;
+  display: block;
+}
+.footer-brand .brand-logo {
+  border-radius: 10px;
+  height: 36px;
 }
 .nav-links {
   display: flex;
@@ -200,7 +209,7 @@ p { color: var(--ink-soft); }
   height: 50vw;
   max-width: 700px;
   max-height: 700px;
-  background: radial-gradient(circle at 50% 50%, rgba(79,60,201,0.12), transparent 60%);
+  background: radial-gradient(circle at 50% 50%, rgba(112,81,188,0.12), transparent 60%);
   pointer-events: none;
   z-index: 0;
   transform: translate(var(--blob-x, 0px), var(--blob-y, 0px));
@@ -280,7 +289,7 @@ p { color: var(--ink-soft); }
 .btn-primary:hover {
   background: var(--indigo);
   transform: translateY(-2px);
-  box-shadow: 0 14px 28px -12px rgba(79,60,201,0.5);
+  box-shadow: 0 14px 28px -12px rgba(112,81,188,0.5);
 }
 .btn-secondary {
   background: transparent;
@@ -292,6 +301,7 @@ p { color: var(--ink-soft); }
   background: var(--surface);
 }
 .btn svg { width: 16px; height: 16px; }
+.btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none !important; box-shadow: none !important; }
 
 /* Trust badges */
 .trust-row {
@@ -508,7 +518,7 @@ p { color: var(--ink-soft); }
   width: 160px;
   height: 160px;
   border-radius: 50%;
-  background: radial-gradient(circle, var(--card-accent, rgba(79,60,201,0.08)) 0%, transparent 70%);
+  background: radial-gradient(circle, var(--card-accent, rgba(112,81,188,0.08)) 0%, transparent 70%);
   opacity: 0;
   transition: opacity 0.4s var(--ease);
   pointer-events: none;
@@ -810,7 +820,7 @@ p { color: var(--ink-soft); }
   display: grid;
   place-items: center;
   color: #fff;
-  box-shadow: 0 20px 40px -15px rgba(79,60,201,0.4);
+  box-shadow: 0 20px 40px -15px rgba(112,81,188,0.4);
   transform: rotate(-4deg);
   transition: transform 0.4s var(--ease);
 }
@@ -1368,7 +1378,7 @@ body.lang-hi {
   height: 18px;
   border-radius: 50%;
   background: var(--indigo);
-  box-shadow: 0 2px 6px rgba(79,60,201,0.35);
+  box-shadow: 0 2px 6px rgba(112,81,188,0.35);
   cursor: pointer;
   border: 2px solid #fff;
   transition: transform 0.15s var(--ease);
@@ -1550,7 +1560,7 @@ body.lang-hi {
   inset: auto -15% -20% auto;
   width: 180px; height: 180px;
   border-radius: 50%;
-  background: radial-gradient(circle, var(--card-glow, rgba(79,60,201,0.08)) 0%, transparent 70%);
+  background: radial-gradient(circle, var(--card-glow, rgba(112,81,188,0.08)) 0%, transparent 70%);
   opacity: 0;
   transition: opacity 0.4s var(--ease);
   pointer-events: none;
@@ -1726,9 +1736,9 @@ body.lang-hi {
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
-  box-shadow: 0 8px 24px -8px rgba(79,60,201,0.45);
+  box-shadow: 0 8px 24px -8px rgba(112,81,188,0.45);
 }
-.btn-generate:hover { transform: translateY(-2px); box-shadow: 0 14px 32px -10px rgba(79,60,201,0.55); }
+.btn-generate:hover { transform: translateY(-2px); box-shadow: 0 14px 32px -10px rgba(112,81,188,0.55); }
 .btn-generate:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 .btn-generate .spinner {
   width: 16px; height: 16px;
@@ -2272,6 +2282,9 @@ body.lang-hi {
 
   .brand-mark {
     width: 32px;
+    height: 32px;
+  }
+  .brand-logo {
     height: 32px;
   }
 
