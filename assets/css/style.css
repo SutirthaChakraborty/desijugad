@@ -124,10 +124,11 @@ p { color: var(--ink-soft); }
   position: sticky;
   top: 0;
   z-index: 50;
-  background: color-mix(in srgb, var(--bg) 85%, transparent);
-  backdrop-filter: saturate(140%) blur(10px);
-  -webkit-backdrop-filter: saturate(140%) blur(10px);
-  border-bottom: 1px solid color-mix(in srgb, var(--line) 60%, transparent);
+  background: var(--bg); /* solid fallback for older/mobile browsers */
+  background: color-mix(in srgb, var(--bg) 92%, transparent);
+  backdrop-filter: saturate(140%) blur(12px);
+  -webkit-backdrop-filter: saturate(140%) blur(12px);
+  border-bottom: 1px solid color-mix(in srgb, var(--line) 80%, transparent);
 }
 .nav-inner {
   display: flex;
@@ -190,7 +191,10 @@ p { color: var(--ink-soft); }
   font-weight: 500;
   transition: transform 0.2s var(--ease), background 0.2s var(--ease);
 }
-.nav-cta:hover { transform: translateY(-1px); background: var(--indigo); }
+/* Override .nav-links a specificity so text stays light on dark button */
+.nav-links .nav-cta,
+.nav-links a.nav-cta { color: var(--bg); }
+.nav-cta:hover { transform: translateY(-1px); background: var(--indigo); color: #fff; }
 
 .menu-toggle { display: none; }
 
@@ -1223,6 +1227,12 @@ p { color: var(--ink-soft); }
 /* Mobile menu
    ========================================================================== */
 @media (max-width: 720px) {
+  .nav {
+    background: var(--bg);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border-bottom: 1px solid var(--line);
+  }
   .menu-toggle {
     display: grid;
     place-items: center;
@@ -1242,10 +1252,18 @@ p { color: var(--ink-soft); }
     transition: transform 0.3s var(--ease);
     align-items: flex-start;
     z-index: 100;
+    border-top: 1px solid var(--line);
+    overflow-y: auto;
   }
   .nav-links.open { transform: translateX(0); }
   .nav-links li { width: 100%; }
   .nav-links a { font-size: 1.2rem; font-family: var(--font-display); }
+  .nav-links .nav-cta,
+  .nav-links a.nav-cta {
+    display: inline-block;
+    color: var(--bg);
+    background: var(--ink);
+  }
 }
 
 @media (max-width: 900px) {
