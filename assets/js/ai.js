@@ -151,7 +151,7 @@ function requireKey(service) {
 /* ── Replicate API helpers ───────────────────────────────────────────────── */
 window.Replicate = {
   async _proxy(method, path, body, key) {
-    const url = `${PROXY_BASE}?target=replicate&path=${encodeURIComponent(path)}`;
+    const url = `https://api.replicate.com${path}`;
     const opts = {
       method,
       headers: {
@@ -215,12 +215,7 @@ window.replicate = window.Replicate;
 window.Suno = {
   _sunoProxy(method, path, body, key) {
     const base = window.getSunoBase();
-    const params = new URLSearchParams({
-      target: 'suno',
-      path,
-    });
-    if (base && base !== DEFAULT_SUNO_PROVIDER) params.set('base', base);
-    const url = `${PROXY_BASE}?${params.toString()}`;
+    const url = `${base}${path}`;
     const opts = {
       method,
       headers: { 'Authorization': `Bearer ${key}`, 'X-API-Key': key, 'Content-Type': 'application/json' },
