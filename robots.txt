@@ -1,0 +1,27 @@
+# Desi Jugad — robots.txt
+# Free, private file conversion. Crawl freely.
+
+User-agent: *
+Allow: /
+Disallow: /assets/js/
+Disallow: /*.json$
+Disallow: /api/
+
+# AI crawlers — we're okay with being cited, not okay with being scraped for training.
+# Comment these lines out if you're happy to be included in AI training datasets.
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+# Be polite; don't hammer us.
+Crawl-delay: 1
+
+Sitemap: https://desijugad.co.in/sitemap.xml

@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Video Generator — Veo 3.1, Kling 3.0, Seedance · Desi Jugad</title>
+<meta name="description" content="Generate AI videos with Veo 3.1, Kling 3.0, Seedance 2.0, Wan 2.7. Text-to-video and image-to-video. Bring your own Replicate key, pay at cost.">
+<meta name="keywords" content="AI video generator, text to video AI, Veo 3.1, Kling video, Seedance AI, bring your own key video generation">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://desijugad.co.in/ai/video.html">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https://replicate.delivery https://*.replicate.com; media-src 'self' blob: https://replicate.delivery https://*.replicate.com; connect-src 'self' https://*.tmpfiles.org https://*.file.io;">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://desijugad.co.in/ai/video.html">
+<meta property="og:title" content="AI Video Generator — Veo 3.1, Kling 3.0, Seedance · Desi Jugad">
+<meta property="og:description" content="Text-to-video and image-to-video. Pay Replicate directly at $0.10–$0.50/sec.">
+<meta property="og:image" content="https://desijugad.co.in/assets/img/og.png">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,30..100;1,9..144,300..700,30..100&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400..600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://api.replicate.com">
+<link rel="stylesheet" href="../assets/css/style.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Desi Jugad AI Video Studio",
+  "url": "https://desijugad.co.in/ai/video.html",
+  "description": "Generate AI videos from text or reference images with Veo, Seedance, Kling, and Wan via your own Replicate key.",
+  "applicationCategory": "VideoGenerator",
+  "operatingSystem": "Any"
+}
+</script>
+</head>
+<body>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="/" class="brand"><span class="brand-mark">DJ</span><span>Desi Jugad</span></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="/#converters">Converters</a></li>
+      <li><a href="/ai/" class="active">AI Studio <span class="badge-new">NEW</span></a></li>
+      <li><a href="/blog/">Blog</a></li>
+      <li><a href="/about.html">About</a></li>
+      <li><a href="/ai/settings.html" class="nav-cta">Add API keys</a></li>
+    </ul>
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</header>
+
+<main class="converter-page">
+  <div class="container">
+    <nav class="breadcrumb">
+      <a href="/">Home</a><span class="sep">/</span>
+      <a href="/ai/">AI Studio</a><span class="sep">/</span>
+      <span>AI Video</span>
+    </nav>
+
+    <div class="ai-page-header">
+      <h1>AI Video <em class="italic">Studio</em></h1>
+      <p class="lead">Cinema-grade video generation from text or an image. Native audio on Veo, Seedance, and Grok models. You pay Replicate at their published rate — $0.10 to $0.50 per second of output.</p>
+      <div class="ai-page-header-row">
+        <a href="settings.html?need=replicate" id="key-pill" class="key-pill key-pill--missing">Add Replicate key</a>
+        <span style="font-size:0.82rem;color:var(--danger);font-family:var(--font-mono);background:#F9E6E3;padding:0.25rem 0.6rem;border-radius:999px">⚠ Video is expensive — check cost before generating</span>
+      </div>
+    </div>
+
+    <!-- TABS -->
+    <div class="ai-tabs">
+      <button class="ai-tab active" data-tab="t2v" onclick="switchTab('t2v',this)">Text → Video</button>
+      <button class="ai-tab" data-tab="i2v" onclick="switchTab('i2v',this)">Image → Video</button>
+    </div>
+
+    <!-- IMAGE INPUT (I2V tab) -->
+    <div id="panel-i2v" class="ai-tab-panel">
+      <div class="ai-panel">
+        <div class="ai-panel-title">Reference image</div>
+        <div class="ai-dropzone" id="img-dropzone">
+          <input type="file" id="img-input" accept="image/*" onchange="handleImageInput(this)">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--ink-muted)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          <p style="margin-top:0.75rem;color:var(--ink-muted);font-size:0.9rem">Drop an image or click to select</p>
+          <img id="img-preview" class="ai-dropzone-preview" alt="preview">
+        </div>
+        <div id="img-url-row" style="margin-top:0.75rem;display:flex;gap:0.5rem;align-items:center">
+          <span style="font-size:0.82rem;color:var(--ink-muted)">Or paste a URL:</span>
+          <input type="url" id="img-url" placeholder="https://…" class="seed-input" style="flex:1;min-width:0">
+        </div>
+      </div>
+    </div>
+
+    <!-- MODEL PICKER -->
+    <div class="ai-panel">
+      <div class="ai-panel-title">Choose a model</div>
+      <div class="model-picker" id="model-picker"></div>
+    </div>
+
+    <!-- PROMPT -->
+    <div class="ai-panel">
+      <div class="ai-panel-title">Describe the video</div>
+
+      <div class="toggle-row" style="margin-bottom:0.75rem">
+        <label class="toggle-switch" title="Append cinematic quality modifiers to your prompt">
+          <input type="checkbox" id="cinematic-toggle">
+          <span class="toggle-slider"></span>
+        </label>
+        <span style="font-size:0.88rem;color:var(--ink-soft)">Cinematic enhancer <span style="font-size:0.75rem;color:var(--ink-muted)">(adds "cinematic lighting, shallow DOF, Arri Alexa, 24fps")</span></span>
+      </div>
+
+      <div class="ai-prompt-wrap">
+        <textarea id="prompt" class="ai-prompt" placeholder="Slow-motion tracking shot of a tiger walking through tall golden grass at dawn, lens flare, cinematic…" maxlength="2000"></textarea>
+        <span class="ai-prompt-counter" id="prompt-counter">0 / 2000</span>
+      </div>
+
+      <div style="display:flex;flex-wrap:wrap;gap:2rem;margin-top:0.75rem">
+        <div>
+          <span class="chip-label">Duration</span>
+          <div class="chips-row" id="duration-chips">
+            <button class="chip" data-val="4">4s</button>
+            <button class="chip selected" data-val="8">8s</button>
+            <button class="chip" data-val="10">10s</button>
+            <button class="chip" data-val="12">12s</button>
+            <button class="chip" data-val="15">15s</button>
+          </div>
+        </div>
+        <div>
+          <span class="chip-label">Resolution</span>
+          <div class="chips-row" id="res-chips">
+            <button class="chip" data-val="480p">480p</button>
+            <button class="chip selected" data-val="720p">720p</button>
+            <button class="chip" data-val="1080p">1080p</button>
+          </div>
+        </div>
+        <div>
+          <span class="chip-label">Aspect ratio</span>
+          <div class="chips-row" id="aspect-chips">
+            <button class="chip" data-val="9:16">9:16</button>
+            <button class="chip selected" data-val="16:9">16:9</button>
+            <button class="chip" data-val="1:1">1:1</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COST + GENERATE -->
+    <div class="cost-panel" id="cost-panel">
+      <div>
+        <div class="cost-panel-estimate" id="cost-estimate">Select a model above</div>
+        <div class="cost-panel-note" id="cost-note">Billed per second of output</div>
+      </div>
+    </div>
+
+    <div style="margin-bottom:2rem">
+      <button class="btn-generate" id="gen-btn" onclick="generate()">
+        <span class="btn-label">🎬 Generate video</span>
+        <span class="spinner"></span>
+      </button>
+      <span style="font-size:0.82rem;color:var(--ink-muted);margin-left:1rem">Generation can take 2–8 minutes</span>
+    </div>
+
+    <!-- OUTPUT -->
+    <div class="ai-output" id="output-zone" style="display:none">
+      <div class="ai-output-header">
+        <span class="ai-output-title">Generated video</span>
+        <button class="key-btn" id="dl-btn" onclick="downloadVideo()">⬇ Download MP4</button>
+      </div>
+      <div class="ai-output-body" style="text-align:center">
+        <video id="video-player" class="video-preview" controls style="max-height:480px"></video>
+        <div style="margin-top:1rem;display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap">
+          <button class="key-btn" onclick="sendToMusicVideo()">Send to Music Video Maker</button>
+          <button class="key-btn" onclick="useAsImageSource()">Use as image source</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="log-zone" style="display:none;margin-top:1rem">
+      <div class="stream-output" id="stream-log"></div>
+    </div>
+  </div>
+
+  <!-- SEO CONTENT -->
+  <div class="container" style="margin-top:4rem">
+    <div class="info-section">
+      <h2>AI video generation at direct API cost</h2>
+      <p>Video generation is the most compute-intensive thing you can do with AI — which is why most tools charge subscription prices or clip you off after a few seconds. Desi Jugad Video Studio connects your Replicate account directly, so you pay exactly what Replicate charges: typically $0.10–$0.50 per second of generated video.</p>
+      <p>That sounds expensive, but consider: a single 8-second clip with Veo 3.1 Fast costs $2. With Wan 2.7 (open source), the same clip is about $0.32. For music videos, short social clips, and B-roll, the economics are solid — especially compared to stock footage licensing.</p>
+
+      <h3>Which model for which use case?</h3>
+      <p><strong>Veo 3.1</strong> is Google's flagship. It generates native audio (music, dialogue, sound effects) alongside video, and handles lip-sync well. Use it for talking-head videos, product demos, and anything where audio matters. <strong>Seedance 2.0</strong> has the best lip-sync of any model as of April 2026 — ideal for music videos with vocals. <strong>Kling 3.0</strong> handles multi-shot sequences (you describe a scene, it generates multiple camera angles). <strong>Wan 2.7</strong> is open source, cheap, and generates 1080p — great for B-roll and establishing shots where budget matters.</p>
+
+      <h3>Image-to-video explained</h3>
+      <p>Upload a still image and describe how you want it to move. Wan 2.7 I2V also accepts a "last frame" image — specify where the clip ends as well as where it starts, and the model generates the motion in between. This is useful for smooth transitions between scenes in a music video.</p>
+    </div>
+
+    <div class="info-section" style="margin-top:2rem">
+      <h2>Frequently asked questions</h2>
+      <details class="faq-item">
+        <summary>How long does video generation take?</summary>
+        <p>Typically 2–8 minutes depending on model and duration. Veo 3.1 Fast and Wan 2.7 are on the faster end. The stream log shows live status from Replicate while you wait.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Can I generate video longer than 15 seconds?</summary>
+        <p>Most models max out at 8–15 seconds per generation. For longer pieces, use the Music Video Maker page which chains multiple clips and stitches them together.</p>
+      </details>
+      <details class="faq-item">
+        <summary>What does "native audio" mean?</summary>
+        <p>Models marked 🔊 generate audio (ambient sound, music, or speech) alongside the video frames. You don't need to add audio separately. The quality varies by model — Veo 3.1 and Seedance 2.0 are the strongest.</p>
+      </details>
+      <details class="faq-item">
+        <summary>What resolution can I generate?</summary>
+        <p>Most models support 720p and 1080p. 480p is available as a cheaper option. Not all models support all resolutions — unavailable options are grayed out based on the selected model.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Why is the cost estimate shown before generating?</summary>
+        <p>Because video can get expensive fast. A 15-second Veo 3.1 clip costs $7.50. We want you to know before you click, not after. You'll see a warning if estimated cost exceeds $5.</p>
+      </details>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid footer-grid-5">
+      <div class="footer-brand"><div class="brand"><span class="brand-mark">DJ</span><span>Desi Jugad</span></div><p>Free, private file conversion for everyone.</p></div>
+      <div class="footer-col"><h5>Popular tools</h5><ul><li><a href="/convert/heic-to-jpg.html">HEIC to JPG</a></li><li><a href="/convert/image-converter.html">Image Converter</a></li><li><a href="/convert/qr-code.html">QR Code</a></li></ul></div>
+      <div class="footer-col"><h5>AI Studio</h5><ul><li><a href="/ai/image.html">AI Images</a></li><li><a href="/ai/video.html">AI Video</a></li><li><a href="/ai/music.html">AI Music</a></li><li><a href="/ai/music-video.html">Music Videos</a></li><li><a href="/ai/writer.html">AI Writer</a></li><li><a href="/ai/photo-studio.html">Photo Studio</a></li></ul></div>
+      <div class="footer-col"><h5>Company</h5><ul><li><a href="/about.html">About</a></li><li><a href="/blog/">Blog</a></li><li><a href="/contact.html">Contact</a></li><li><a href="/privacy.html">Privacy Policy</a></li><li><a href="/terms.html">Terms</a></li></ul></div>
+      <div class="footer-col"><h5>Connect</h5><ul><li><a href="https://twitter.com/" rel="noopener">Twitter / X</a></li><li><a href="https://github.com/" rel="noopener">GitHub</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <div>© <span data-year>2026</span> Desi Jugad. All rights reserved.</div>
+      <div class="made-in"><span class="flag-in" aria-hidden="true"></span>Proudly made in India, built for the world.</div>
+    </div>
+  </div>
+</footer>
+
+<script src="../assets/js/main.js"></script>
+<script src="../assets/js/ai.js"></script>
+<script>
+(function() {
+  const MODELS = [
+    { slug: 'google/veo-3.1',                  name: 'Veo 3.1', desc: 'Native audio, best quality', pricePerSec: 0.50, audio: true, maxDur: 8, supports: ['16:9'] },
+    { slug: 'google/veo-3.1-fast',             name: 'Veo 3.1 Fast', desc: 'Native audio, faster', pricePerSec: 0.25, audio: true, maxDur: 8, supports: ['16:9'] },
+    { slug: 'google/veo-3.1-lite',             name: 'Veo 3.1 Lite', desc: 'Native audio, high volume', pricePerSec: 0.10, audio: true, maxDur: 8, supports: ['16:9'] },
+    { slug: 'bytedance/seedance-2.0',          name: 'Seedance 2.0', desc: 'Best lip-sync, unified audio', pricePerSec: 0.14, audio: true, maxDur: 12, supports: ['16:9','9:16','1:1'] },
+    { slug: 'bytedance/seedance-2.0-fast',     name: 'Seedance 2.0 Fast', desc: 'Faster, lower cost', pricePerSec: 0.08, audio: false, maxDur: 12, supports: ['16:9','9:16'] },
+    { slug: 'kwaivgi/kling-video-3.0',         name: 'Kling Video 3.0', desc: 'Multi-shot, native audio', pricePerSec: 0.18, audio: true, maxDur: 15, supports: ['16:9','9:16','1:1'] },
+    { slug: 'kwaivgi/kling-2.5-turbo-pro',     name: 'Kling 2.5 Turbo Pro', desc: 'Fast + quality T2V/I2V', pricePerSec: 0.12, audio: false, maxDur: 10, supports: ['16:9','9:16'] },
+    { slug: 'wan-video/wan-2.7-t2v',           name: 'Wan 2.7', desc: 'Open source, 1080p, cheap', pricePerSec: 0.04, audio: false, maxDur: 15, supports: ['16:9','9:16','1:1'] },
+    { slug: 'wan-video/wan-2.7-i2v',           name: 'Wan 2.7 I2V', desc: 'Image-to-video, first+last frame', pricePerSec: 0.04, audio: false, maxDur: 10, i2v: true, supports: ['16:9','9:16'] },
+    { slug: 'xai/grok-imagine-video',          name: 'Grok Video', desc: '~30s turnaround, audio', pricePerSec: 0.20, audio: true, maxDur: 8, supports: ['16:9'] },
+  ];
+
+  let selectedModel = MODELS[0];
+  let selectedDuration = 8;
+  let selectedResolution = '720p';
+  let selectedAspect = '16:9';
+  let currentTab = 't2v';
+  let videoUrl = null;
+
+  const picker = document.getElementById('model-picker');
+  MODELS.forEach((m, i) => {
+    const card = document.createElement('div');
+    card.className = 'model-card' + (i === 0 ? ' selected' : '');
+    card.innerHTML = `<div class="model-name">${m.name}${m.audio ? '<span class="model-audio-badge">🔊 Audio</span>' : ''}</div><div class="model-desc">${m.desc}</div><span class="model-price-badge">$${m.pricePerSec}/sec</span>`;
+    card.addEventListener('click', () => {
+      document.querySelectorAll('#model-picker .model-card').forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+      selectedModel = m;
+      updateCost();
+      updateModelConstraints();
+    });
+    picker.appendChild(card);
+  });
+
+  function bindChips(id, cb) {
+    document.querySelectorAll('#' + id + ' .chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        if (chip.classList.contains('disabled')) return;
+        document.querySelectorAll('#' + id + ' .chip').forEach(c => c.classList.remove('selected'));
+        chip.classList.add('selected');
+        cb(chip.dataset.val);
+      });
+    });
+  }
+  bindChips('duration-chips', v => { selectedDuration = parseInt(v); updateCost(); });
+  bindChips('res-chips', v => { selectedResolution = v; });
+  bindChips('aspect-chips', v => { selectedAspect = v; });
+
+  const promptEl = document.getElementById('prompt');
+  promptEl.addEventListener('input', () => { document.getElementById('prompt-counter').textContent = promptEl.value.length + ' / 2000'; });
+
+  function updateModelConstraints() {
+    document.querySelectorAll('#duration-chips .chip').forEach(chip => {
+      const dur = parseInt(chip.dataset.val);
+      chip.classList.toggle('disabled', dur > selectedModel.maxDur);
+    });
+  }
+
+  function updateCost() {
+    const total = selectedModel.pricePerSec * selectedDuration;
+    const costEl = document.getElementById('cost-estimate');
+    const panel = document.getElementById('cost-panel');
+    costEl.textContent = `${selectedModel.name} · ${selectedDuration}s · ~$${total.toFixed(2)} (≈₹${(total * 84).toFixed(0)})`;
+    panel.className = 'cost-panel' + (total > 5 ? ' cost-panel--danger' : total > 2 ? ' cost-panel--warn' : '');
+    if (total > 5) {
+      document.getElementById('cost-note').textContent = '⚠ This will cost more than $5 — confirm you want to proceed';
+    } else {
+      document.getElementById('cost-note').textContent = 'Billed per second of output by Replicate';
+    }
+  }
+  updateCost();
+
+  window.switchTab = function(tab, el) {
+    currentTab = tab;
+    document.querySelectorAll('.ai-tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+    const i2vPanel = document.getElementById('panel-i2v');
+    if (i2vPanel) i2vPanel.style.display = tab === 'i2v' ? '' : 'none';
+  };
+
+  window.handleImageInput = function(input) {
+    const file = input.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+      const preview = document.getElementById('img-preview');
+      if (preview) { preview.src = e.target.result; preview.style.display = 'block'; }
+    };
+    reader.readAsDataURL(file);
+  };
+
+  // Init I2V panel
+  const i2vPanel = document.getElementById('panel-i2v');
+  if (i2vPanel) i2vPanel.style.display = 'none';
+
+  function logToStream(msg, type) {
+    const log = document.getElementById('stream-log');
+    document.getElementById('log-zone').style.display = '';
+    const line = document.createElement('div');
+    line.className = type ? 'log-' + type : '';
+    line.textContent = '[' + new Date().toLocaleTimeString() + '] ' + msg;
+    log.appendChild(line);
+    log.scrollTop = log.scrollHeight;
+  }
+
+  function updateKeyPill() {
+    const key = window.AIKeys.get('replicate');
+    const pill = document.getElementById('key-pill');
+    if (key) { pill.className = 'key-pill key-pill--ok'; pill.textContent = 'Replicate: ' + window.AIKeys.mask(key); }
+    else { pill.className = 'key-pill key-pill--missing'; pill.textContent = 'Add Replicate key'; }
+  }
+
+  window.generate = async function() {
+    const prompt = promptEl.value.trim();
+    if (!prompt) { window.showToast('Write a prompt first', 'error'); return; }
+
+    const total = selectedModel.pricePerSec * selectedDuration;
+    if (total > 5 && !confirm(`This generation will cost approximately $${total.toFixed(2)}. Continue?`)) return;
+
+    const btn = document.getElementById('gen-btn');
+    btn.classList.add('loading'); btn.disabled = true;
+    document.getElementById('stream-log').innerHTML = '';
+    videoUrl = null;
+
+    const enhancer = document.getElementById('cinematic-toggle').checked;
+    const finalPrompt = enhancer
+      ? prompt + ', cinematic lighting, shallow depth of field, shot on Arri Alexa, 24fps, professional color grade'
+      : prompt;
+
+    logToStream('Starting — model: ' + selectedModel.name);
+    logToStream('Duration: ' + selectedDuration + 's, Resolution: ' + selectedResolution);
+
+    const input = {
+      prompt: finalPrompt,
+      duration: selectedDuration,
+      aspect_ratio: selectedAspect,
+      resolution: selectedResolution,
+    };
+
+    if (currentTab === 'i2v') {
+      const imgUrl = document.getElementById('img-url')?.value?.trim();
+      if (imgUrl) input.image = imgUrl;
+    }
+
+    try {
+      const output = await window.Replicate.run(selectedModel.slug, input, {
+        onProgress: ({ status, logs }) => { logToStream(status + (logs ? ' — ' + logs.split('\n').pop().slice(0, 80) : '')); },
+        timeoutMs: 600000,
+      });
+      videoUrl = Array.isArray(output) ? output[0] : (typeof output === 'string' ? output : output?.video || output?.url);
+      if (!videoUrl) throw new Error('No video URL in response');
+      document.getElementById('video-player').src = videoUrl;
+      document.getElementById('output-zone').style.display = '';
+      logToStream('Done!', 'ok');
+      window.showToast('Video ready', 'success');
+      window.logUsage('replicate', selectedModel.slug, prompt, total);
+    } catch(e) {
+      logToStream('Error: ' + e.message, 'err');
+      window.handleAIError(e);
+    } finally {
+      btn.classList.remove('loading'); btn.disabled = false;
+    }
+  };
+
+  window.downloadVideo = function() {
+    if (!videoUrl) return;
+    const a = document.createElement('a');
+    a.href = videoUrl;
+    a.download = 'desi-jugad-video-' + Date.now() + '.mp4';
+    a.target = '_blank';
+    a.click();
+  };
+
+  window.sendToMusicVideo = function() {
+    if (!videoUrl) return;
+    localStorage.setItem('dj_mv_video_url', videoUrl);
+    window.location.href = '/ai/music-video.html?from=video';
+  };
+
+  window.useAsImageSource = function() {
+    window.showToast('Paste the video URL in the Image→Video tab as a reference frame');
+  };
+
+  document.addEventListener('DOMContentLoaded', updateKeyPill);
+  if (document.readyState !== 'loading') updateKeyPill();
+  updateModelConstraints();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Photo Studio — Passport Photo, LinkedIn Headshot, Restoration · Desi Jugad</title>
+<meta name="description" content="Make passport photos, LinkedIn headshots, restore old photos, improve lighting, and add cinematic grading — all with AI. Upload your photo, pick a template. Bring your own Replicate or Gemini key.">
+<meta name="keywords" content="AI passport photo maker, AI LinkedIn headshot, AI photo restoration, AI photo enhancer free, improve photo lighting AI, cinematic photo AI India">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://desijugad.co.in/ai/photo-studio.html">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https://replicate.delivery https://*.replicate.com; media-src 'self' blob:; connect-src 'self';">
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://desijugad.co.in/ai/photo-studio.html">
+<meta property="og:title" content="AI Photo Studio — Passport Photos, Headshots &amp; Restoration · Desi Jugad">
+<meta property="og:description" content="Professional passport photos, LinkedIn headshots, photo restoration, cinematic grading. AI-powered, bring your own key.">
+<meta property="og:image" content="https://desijugad.co.in/assets/img/og.png">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,30..100;1,9..144,300..700,30..100&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400..600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://api.replicate.com">
+<link rel="stylesheet" href="../assets/css/style.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Desi Jugad AI Photo Studio",
+  "url": "https://desijugad.co.in/ai/photo-studio.html",
+  "description": "AI-powered passport photos, LinkedIn headshots, photo restoration, and cinematic grading.",
+  "applicationCategory": "PhotoEditingApplication",
+  "operatingSystem": "Any"
+}
+</script>
+
+<style>
+.photo-template-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.photo-template {
+  border: 2px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  cursor: pointer;
+  transition: all 0.22s var(--ease);
+  background: var(--surface);
+  text-align: center;
+}
+.photo-template:hover { border-color: var(--indigo); transform: translateY(-2px); box-shadow: var(--shadow); }
+.photo-template.selected { border-color: var(--indigo); background: color-mix(in srgb, var(--indigo) 5%, var(--surface)); box-shadow: 0 0 0 3px color-mix(in srgb, var(--indigo) 25%, transparent); }
+.photo-template .pt-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+.photo-template .pt-title { font-weight: 600; font-size: 0.95rem; color: var(--ink); margin-bottom: 0.25rem; }
+.photo-template .pt-desc { font-size: 0.78rem; color: var(--ink-muted); line-height: 1.4; }
+.photo-template .pt-cost { font-family: var(--font-mono); font-size: 0.7rem; color: var(--indigo); margin-top: 0.4rem; }
+
+.before-after {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.before-after-item {
+  text-align: center;
+}
+.before-after-item img {
+  width: 100%;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+  aspect-ratio: 1;
+  object-fit: cover;
+  background: var(--bg-alt);
+}
+.before-after-label {
+  font-size: 0.78rem;
+  font-family: var(--font-mono);
+  color: var(--ink-muted);
+  margin-top: 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.photo-output-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1rem;
+  margin-top: 1.25rem;
+}
+.photo-output-item {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--surface);
+}
+.photo-output-item img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  display: block;
+}
+.photo-output-actions {
+  padding: 0.75rem;
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  border-top: 1px solid var(--line);
+}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="/" class="brand"><span class="brand-mark">DJ</span><span>Desi Jugad</span></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="/#converters">Converters</a></li>
+      <li><a href="/ai/" class="active">AI Studio <span class="badge-new">NEW</span></a></li>
+      <li><a href="/blog/">Blog</a></li>
+      <li><a href="/about.html">About</a></li>
+      <li><a href="/ai/settings.html" class="nav-cta">Add API keys</a></li>
+    </ul>
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</header>
+
+<main class="converter-page">
+  <div class="container">
+    <nav class="breadcrumb">
+      <a href="/">Home</a><span class="sep">/</span>
+      <a href="/ai/">AI Studio</a><span class="sep">/</span>
+      <span>Photo Studio</span>
+    </nav>
+
+    <div class="ai-page-header">
+      <h1>AI Photo <em class="italic">Studio</em></h1>
+      <p class="lead">Passport photos that meet government specs, LinkedIn headshots that look professional, old photo restoration, dramatic lighting, and cinematic grading — all from a single selfie. Pick a template, upload your photo, get results in under a minute.</p>
+      <div class="ai-page-header-row">
+        <a href="settings.html?need=replicate" id="key-pill-replicate" class="key-pill key-pill--missing">Add Replicate key</a>
+        <a href="settings.html?need=gemini" id="key-pill-gemini" class="key-pill key-pill--missing">Add Gemini key (optional)</a>
+      </div>
+    </div>
+
+    <!-- TEMPLATE SELECTION -->
+    <div class="ai-panel">
+      <div class="ai-panel-title">Choose a template</div>
+      <div class="photo-template-grid" id="template-grid"></div>
+    </div>
+
+    <div class="ai-panel">
+      <div class="ai-panel-title">Provider</div>
+      <div class="chips-row" id="provider-chips" style="flex-wrap:wrap">
+        <button class="chip selected" data-provider="replicate">Replicate</button>
+        <button class="chip" data-provider="gemini">Gemini</button>
+      </div>
+      <p style="margin-top:0.6rem;font-size:0.82rem;color:var(--ink-muted)">Gemini works best for portrait restyling templates like passport photos, LinkedIn headshots, better lighting, cinematic grading, and studio portraits. Restoration, background removal, and upscaling stay on Replicate.</p>
+    </div>
+
+    <!-- UPLOAD -->
+    <div class="ai-panel">
+      <div class="ai-panel-title">Upload your photo</div>
+      <div class="ai-dropzone" id="photo-dropzone">
+        <input type="file" id="photo-input" accept="image/jpeg,image/png,image/webp" onchange="handlePhotoUpload(this)">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--ink-muted)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        <p style="margin-top:0.75rem;color:var(--ink-muted);font-size:0.9rem">Drop JPG, PNG, or WebP (up to 10 MB)</p>
+        <p style="font-size:0.78rem;color:var(--ink-muted);font-family:var(--font-mono)">For passport photos: face clearly visible, neutral expression, good lighting</p>
+      </div>
+      <img id="photo-preview" style="display:none;max-width:300px;max-height:300px;margin:1rem auto 0;display:none;border-radius:var(--radius-sm);border:1px solid var(--line)" alt="preview">
+
+      <!-- Template-specific options (shown conditionally) -->
+      <div id="template-options" style="margin-top:1.25rem;display:none"></div>
+    </div>
+
+    <!-- CUSTOM PROMPT (advanced) -->
+    <details style="margin-bottom:1.25rem">
+      <summary style="font-size:0.9rem;color:var(--ink-soft);cursor:pointer;padding:0.5rem 0;user-select:none">Advanced: custom prompt override</summary>
+      <div class="ai-panel" style="margin-top:0.75rem">
+        <textarea id="custom-prompt" class="ai-prompt" rows="2" placeholder="Leave blank to use the template prompt. Or add extra instructions: 'Keep glasses', 'Smile slightly', 'Dark background'…" maxlength="400"></textarea>
+      </div>
+    </details>
+
+    <!-- GENERATE -->
+    <div style="margin:1.5rem 0;display:flex;flex-wrap:wrap;gap:1rem;align-items:center">
+      <button id="generate-btn" class="btn btn-primary" onclick="generatePhoto()" style="font-size:1.05rem;padding:1rem 2rem">
+        Generate
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      </button>
+      <span id="cost-display" style="font-family:var(--font-mono);font-size:0.82rem;color:var(--ink-muted)"></span>
+    </div>
+
+    <!-- PROGRESS -->
+    <div id="progress-wrap" style="display:none">
+      <div class="ai-panel">
+        <div class="ai-panel-title">Generating…</div>
+        <div class="progress-bar-outer" style="height:6px;background:var(--line);border-radius:999px;margin-bottom:0.75rem;overflow:hidden">
+          <div id="progress-bar" style="height:100%;background:var(--indigo);border-radius:999px;width:0%;transition:width 0.4s var(--ease)"></div>
+        </div>
+        <div id="progress-msg" style="font-family:var(--font-mono);font-size:0.8rem;color:var(--ink-muted)">Starting…</div>
+      </div>
+    </div>
+
+    <!-- OUTPUT GALLERY -->
+    <div id="output-section" style="display:none">
+      <div class="ai-panel">
+        <div class="ai-panel-title" style="display:flex;justify-content:space-between;align-items:center">
+          <span>Results</span>
+          <button class="key-btn" onclick="resetStudio()">New photo</button>
+        </div>
+        <div id="output-grid" class="photo-output-grid"></div>
+      </div>
+    </div>
+
+    <!-- INFO -->
+    <div class="info-section">
+      <h2>AI-powered photo tools — professional results from your phone camera</h2>
+      <p>Getting a good passport photo in India used to mean finding a photo studio, paying ₹50–100, and hoping the framing meets the specifications. A professional LinkedIn headshot could cost ₹3,000–10,000 at a photography studio. Desi Jugad AI Photo Studio does both — and much more — for fractions of a rupee per image, using AI models running on Replicate's infrastructure.</p>
+
+      <h3>Passport photo specifications</h3>
+      <p>The passport photo template automatically formats your photo to standard specifications: 35mm × 45mm at 600 DPI, white background, face occupying 70–80% of the frame. The AI removes the original background, adjusts lighting to ensure even illumination with no harsh shadows, and centres the face with the correct margins. Suitable for Indian passport, Aadhaar update, visa applications, and most government document photo requirements.</p>
+      <p>Important: for official documents, always verify the final image against the specific document's requirements. AI-generated photos are highly accurate but you are responsible for final compliance.</p>
+
+      <h3>LinkedIn profile photo</h3>
+      <p>The LinkedIn headshot template transforms a casual selfie into a professional headshot with a clean background, adjusted lighting, and a polished look that works on professional networks. The AI maintains your likeness while improving exposure, removing distracting backgrounds, and applying a subtle professional portrait style.</p>
+
+      <h3>Photo restoration</h3>
+      <p>The restoration template uses face restoration models (GFPGAN and CodeFormer available on Replicate) to repair old, damaged, or low-quality photographs. It recovers detail in faces, fixes color fading, and removes scratches and noise — without adding fake details that weren't there. Ideal for old family photographs scanned from prints.</p>
+
+      <h3>Lighting and cinematic grade</h3>
+      <p>The "Better lighting" template re-illuminates your photo with professional studio lighting — Rembrandt, butterfly, or split lighting patterns. The "Cinematic" template applies a film-grade color treatment: raised blacks, warm highlights, subtle grain, and a widescreen crop if your photo is portrait orientation. Both templates use FLUX-based inpainting models on Replicate.</p>
+
+      <h3>Models used</h3>
+      <p>Photo editing templates use these Replicate models depending on the task: <strong>FLUX 1.1 Pro</strong> for background replacement and style transfer; <strong>Clarity Upscaler</strong> for upscaling and detail recovery; <strong>GFPGAN</strong> and <strong>CodeFormer</strong> for face restoration; <strong>Recraft v3</strong> for passport-style background replacement. You can select Gemini's Imagen 3 as an alternative provider in settings for image editing tasks.</p>
+
+      <h3>Privacy</h3>
+      <p>Your photo is sent to Replicate (via our CORS proxy) as a base64-encoded image in the API request. Replicate's data retention policy applies. Desi Jugad does not store your photo. Your Replicate API key is stored only in your browser.</p>
+    </div>
+
+    <div class="info-section" style="margin-top:2rem">
+      <h2>Frequently asked questions</h2>
+      <details class="faq-item">
+        <summary>Will my passport photo be accepted by government offices?</summary>
+        <p>The AI photo meets standard dimensional and background specifications for most Indian government documents. However, different offices can be strict about specifics. Always print and check before submitting. If rejected, you can regenerate with different settings or use a local photo studio for the final print.</p>
+      </details>
+      <details class="faq-item">
+        <summary>What kind of source photo works best?</summary>
+        <p>A well-lit selfie or a photo where your face is clearly visible works best. For passport photos: neutral expression, facing directly at the camera, no sunglasses, no heavy shadows. For LinkedIn headshots: any reasonably clear photo works — the AI will handle the background and lighting.</p>
+      </details>
+      <details class="faq-item">
+        <summary>How much does it cost per photo?</summary>
+        <p>Typically $0.04–$0.08 per generation (₹3–7). Passport photo mode generates 4 copies at once (for a print sheet), so expect around $0.06 total. Restoration can vary from $0.03 to $0.10 depending on image size.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Can I use a Gemini API key instead of Replicate?</summary>
+        <p>Yes. Add your Gemini API key in AI Settings and select "Gemini" as the provider. Imagen 3 (Google's image editing model) supports background removal and style transfer. Some templates are Replicate-only; the tool will indicate which provider is required.</p>
+      </details>
+      <details class="faq-item">
+        <summary>My photo came out wrong — what can I do?</summary>
+        <p>Use the custom prompt override to add specific instructions: "keep the glasses", "brighter background", "more natural skin tone". You can also generate multiple variations by clicking Generate again — each run uses a different seed.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Can I restore a very old, black-and-white photo?</summary>
+        <p>Yes. Use the "Photo Restoration" template. It handles B&amp;W photos, adds colorisation if you check that option, and repairs damage. Results are best when the face is relatively large in the frame. Very heavily damaged photos may need the "Clarity Upscale" template as a first pass.</p>
+      </details>
+    </div>
+
+  </div><!-- /container -->
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid footer-grid-5">
+      <div class="footer-brand">
+        <div class="brand"><span class="brand-mark">DJ</span><span>Desi Jugad</span></div>
+        <p>Free, private file conversion for everyone. Your files never leave your device — because they shouldn't have to.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Popular tools</h5>
+        <ul>
+          <li><a href="/convert/heic-to-jpg.html">HEIC to JPG</a></li>
+          <li><a href="/convert/image-converter.html">Image Converter</a></li>
+          <li><a href="/convert/qr-code.html">QR Code</a></li>
+          <li><a href="/convert/json-to-csv.html">JSON to CSV</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>AI Studio</h5>
+        <ul>
+          <li><a href="/ai/image.html">AI Images</a></li>
+          <li><a href="/ai/video.html">AI Video</a></li>
+          <li><a href="/ai/music.html">AI Music</a></li>
+          <li><a href="/ai/music-video.html">Music Videos</a></li>
+          <li><a href="/ai/writer.html">AI Writer</a></li>
+          <li><a href="/ai/photo-studio.html">Photo Studio</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Company</h5>
+        <ul>
+          <li><a href="/about.html">About</a></li>
+          <li><a href="/blog/">Blog</a></li>
+          <li><a href="/contact.html">Contact</a></li>
+          <li><a href="/privacy.html">Privacy Policy</a></li>
+          <li><a href="/terms.html">Terms</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Connect</h5>
+        <ul>
+          <li><a href="https://twitter.com/" rel="noopener">Twitter / X</a></li>
+          <li><a href="https://github.com/" rel="noopener">GitHub</a></li>
+          <li><a href="/contact.html">Feature request</a></li>
+          <li><a href="/contact.html">Report a bug</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© <span data-year>2026</span> Desi Jugad. All rights reserved.</div>
+      <div class="made-in"><span class="flag-in" aria-hidden="true"></span>Proudly made in India, built for the world.</div>
+    </div>
+  </div>
+</footer>
+
+<script src="../assets/js/main.js"></script>
+<script src="../assets/js/ai.js"></script>
+<script>
+/* =========================================================
+   AI Photo Studio — main logic
+   ========================================================= */
+
+const PHOTO_TEMPLATES = [
+  {
+    id: 'passport',
+    icon: '🪪',
+    title: 'Passport Photo',
+    desc: 'White background, 35×45mm spec, face centred. India passport/visa/Aadhaar compatible.',
+    cost: 0.06,
+    provider: 'replicate',
+    model: 'black-forest-labs/flux-1.1-pro',
+    prompt: 'Professional passport photo, person facing camera directly, neutral expression, white plain background, even studio lighting, no shadows on face, formal attire, 35mm x 45mm standard passport photo specifications',
+    options: [
+      { id: 'country', label: 'Specification', type: 'select', values: ['India (standard)', 'US visa', 'UK passport', 'Schengen visa'] },
+    ],
+  },
+  {
+    id: 'linkedin',
+    icon: '💼',
+    title: 'LinkedIn Headshot',
+    desc: 'Professional headshot with clean background. Perfect for LinkedIn, resumes, and work profiles.',
+    cost: 0.06,
+    provider: 'replicate',
+    model: 'black-forest-labs/flux-1.1-pro',
+    prompt: 'Professional LinkedIn headshot portrait, clean light grey or office background, soft professional studio lighting, natural expression, confident and approachable, sharp focus on face, business casual attire',
+    options: [
+      { id: 'bg', label: 'Background', type: 'select', values: ['Light grey', 'Soft white', 'Blurred office', 'Outdoor natural'] },
+      { id: 'style', label: 'Style', type: 'select', values: ['Corporate', 'Startup casual', 'Creative professional'] },
+    ],
+  },
+  {
+    id: 'restoration',
+    icon: '🖼️',
+    title: 'Photo Restoration',
+    desc: 'Repair old, damaged, or low-quality photos. Fixes faces, removes scratches, recovers detail.',
+    cost: 0.05,
+    provider: 'replicate',
+    model: 'tencentarc/gfpgan',
+    prompt: '',
+    options: [
+      { id: 'colorize', label: 'Colorise B&W photo', type: 'toggle' },
+      { id: 'upscale', label: 'Upscale 2×', type: 'toggle' },
+    ],
+  },
+  {
+    id: 'lighting',
+    icon: '💡',
+    title: 'Better Lighting',
+    desc: 'Professional studio lighting applied to any photo. Fixes dark, overexposed, or uneven shots.',
+    cost: 0.05,
+    provider: 'replicate',
+    model: 'black-forest-labs/flux-1.1-pro',
+    prompt: 'Same person, professional portrait photography lighting, Rembrandt lighting setup, even skin illumination, eliminate harsh shadows, natural and flattering light, maintain exact likeness of the person',
+    options: [
+      { id: 'lighting_style', label: 'Lighting style', type: 'select', values: ['Rembrandt (classic)', 'Butterfly (glamour)', 'Split (dramatic)', 'Golden hour (warm)'] },
+    ],
+  },
+  {
+    id: 'cinematic',
+    icon: '🎬',
+    title: 'Cinematic Grade',
+    desc: 'Film-look color grading, raised blacks, subtle grain. Turns any photo into a still from a movie.',
+    cost: 0.05,
+    provider: 'replicate',
+    model: 'black-forest-labs/flux-1.1-pro',
+    prompt: 'Cinematic film photography style, shot on Kodak Portra 400, warm highlights, lifted shadows, subtle film grain, teal shadows and warm skin tones, shallow depth of field, professional color grading, movie still aesthetic',
+    options: [
+      { id: 'film_stock', label: 'Film stock', type: 'select', values: ['Kodak Portra 400 (warm)', 'Fuji Velvia (vivid)', 'Kodak Tri-X (B&W)', 'CineStill 800T (neon)'] },
+    ],
+  },
+  {
+    id: 'remove-bg',
+    icon: '✂️',
+    title: 'Background Removal',
+    desc: 'Clean background removal with sharp edges. Get a transparent PNG or pick a new background.',
+    cost: 0.03,
+    provider: 'replicate',
+    model: 'cjwbw/rembg',
+    prompt: '',
+    options: [
+      { id: 'new_bg', label: 'Replace with', type: 'select', values: ['Transparent', 'White', 'Light grey', 'Blurred original', 'Office background', 'Nature background'] },
+    ],
+  },
+  {
+    id: 'upscale',
+    icon: '🔍',
+    title: 'Clarity Upscale',
+    desc: 'Upscale low-res photos 2–4×. Recover detail in blurry faces. Great for old prints.',
+    cost: 0.04,
+    provider: 'replicate',
+    model: 'philz1337x/clarity-upscaler',
+    prompt: '',
+    options: [
+      { id: 'scale', label: 'Scale', type: 'select', values: ['2× (1080p)', '4× (4K)'] },
+    ],
+  },
+  {
+    id: 'studio',
+    icon: '📸',
+    title: 'Studio Portrait',
+    desc: 'Transform a casual selfie into a full professional studio portrait with dramatic lighting.',
+    cost: 0.06,
+    provider: 'replicate',
+    model: 'black-forest-labs/flux-1.1-pro',
+    prompt: 'Professional studio portrait photography, dark neutral background, dramatic key light from side, soft fill light, catch light in eyes, shallow depth of field, 85mm portrait lens look, magazine quality professional headshot',
+    options: [
+      { id: 'bg_color', label: 'Background', type: 'select', values: ['Dark charcoal', 'Deep navy', 'Dark forest green', 'Burgundy'] },
+    ],
+  },
+];
+
+let selectedTemplate = PHOTO_TEMPLATES[0];
+let uploadedPhotoDataUrl = null;
+let uploadedPhotoFile = null;
+let selectedProvider = 'replicate';
+
+/* ── Build template grid ─────────────────────────────────── */
+function buildTemplateGrid() {
+  const grid = document.getElementById('template-grid');
+  grid.innerHTML = PHOTO_TEMPLATES.map((t,i) => `
+    <div class="photo-template ${i===0?'selected':''}" onclick="selectTemplate(${i})">
+      <div class="pt-icon">${t.icon}</div>
+      <div class="pt-title">${t.title}</div>
+      <div class="pt-desc">${t.desc}</div>
+      <div class="pt-cost">≈ $${t.cost.toFixed(2)} (₹${Math.round(t.cost*84)})</div>
+    </div>`).join('');
+}
+
+function selectTemplate(idx) {
+  selectedTemplate = PHOTO_TEMPLATES[idx];
+  document.querySelectorAll('.photo-template').forEach((c,i) => c.classList.toggle('selected', i===idx));
+  renderTemplateOptions();
+  updateCostDisplay();
+}
+
+function updateCostDisplay() {
+  const providerLabel = selectedProvider === 'gemini' ? 'Gemini' : 'Replicate';
+  document.getElementById('cost-display').textContent = `≈ $${selectedTemplate.cost.toFixed(2)} per generation · ${providerLabel}`;
+}
+
+function templateSupportsGemini() {
+  return ['passport', 'linkedin', 'lighting', 'cinematic', 'studio'].includes(selectedTemplate.id);
+}
+
+function renderTemplateOptions() {
+  const container = document.getElementById('template-options');
+  if (!selectedTemplate.options || !selectedTemplate.options.length) { container.style.display = 'none'; return; }
+  container.style.display = '';
+  container.innerHTML = selectedTemplate.options.map(opt => {
+    if (opt.type === 'select') {
+      return `<div class="option" style="margin-bottom:0.75rem">
+        <label for="opt-${opt.id}">${opt.label}</label>
+        <select id="opt-${opt.id}" style="margin-top:0.3rem;padding:0.5rem 0.75rem;border:1.5px solid var(--line);border-radius:var(--radius-sm);background:var(--surface);font-family:var(--font-sans);font-size:0.9rem;color:var(--ink);width:auto">
+          ${opt.values.map(v => `<option>${v}</option>`).join('')}
+        </select>
+      </div>`;
+    }
+    if (opt.type === 'toggle') {
+      return `<div class="toggle-row" style="margin-bottom:0.75rem">
+        <label class="toggle-switch"><input type="checkbox" id="opt-${opt.id}"><span class="toggle-slider"></span></label>
+        <span style="font-size:0.9rem;color:var(--ink-soft)">${opt.label}</span>
+      </div>`;
+    }
+    return '';
+  }).join('');
+}
+
+/* ── Photo upload ────────────────────────────────────────── */
+function handlePhotoUpload(input) {
+  const f = input.files[0];
+  if (!f) return;
+  if (f.size > 10*1024*1024) { showErrorToast('File too large','Max photo size is 10 MB.'); return; }
+  uploadedPhotoFile = f;
+  const reader = new FileReader();
+  reader.onload = e => {
+    uploadedPhotoDataUrl = e.target.result;
+    const preview = document.getElementById('photo-preview');
+    preview.src = uploadedPhotoDataUrl;
+    preview.style.display = 'block';
+    const dz = document.getElementById('photo-dropzone');
+    dz.style.borderColor = 'var(--success)';
+  };
+  reader.readAsDataURL(f);
+}
+
+/* ── Generate ────────────────────────────────────────────── */
+async function generatePhoto() {
+  if (!uploadedPhotoDataUrl) {
+    showErrorToast('No photo', 'Upload a photo first.');
+    return;
+  }
+
+  if (selectedProvider === 'gemini' && !templateSupportsGemini()) {
+    showErrorToast('Template needs Replicate', 'This template uses specialist Replicate models. Switch provider to Replicate for restoration, background removal, or upscaling.');
+    return;
+  }
+
+  const key = window.AIKeys.get(selectedProvider);
+  if (!key) {
+    const serviceName = selectedProvider === 'gemini' ? 'Gemini' : 'Replicate';
+    showErrorToast('No API key', `Add your ${serviceName} key to use this provider.`, { label:'Settings', fn:`window.location='/ai/settings.html?need=${selectedProvider}'` });
+    return;
+  }
+
+  document.getElementById('generate-btn').disabled = true;
+  document.getElementById('progress-wrap').style.display = '';
+  document.getElementById('output-section').style.display = 'none';
+  setProgress(10, `Preparing your photo for ${selectedProvider === 'gemini' ? 'Gemini' : 'Replicate'}…`);
+
+  try {
+    const prompt = buildPrompt();
+    const t = selectedTemplate;
+
+    let output;
+    if (selectedProvider === 'gemini') {
+      output = await runGeminiEdit(key, prompt);
+    } else if (t.id === 'restoration') {
+      output = await runRestorationModel(key);
+    } else if (t.id === 'remove-bg') {
+      output = await runRemoveBgModel(key);
+    } else if (t.id === 'upscale') {
+      output = await runUpscaleModel(key);
+    } else {
+      output = await runFluxModel(key, prompt);
+    }
+
+    setProgress(95, 'Processing output…');
+    const outputUrls = Array.isArray(output) ? output : [output];
+    renderOutputs(outputUrls);
+    logUsage(selectedProvider, selectedProvider === 'gemini' ? 'gemini-2.5-flash-image' : t.model, prompt.slice(0,60), t.cost);
+    setProgress(100, 'Done!');
+    document.getElementById('output-section').style.display = '';
+  } catch(err) {
+    handlePhotoError(err);
+  }
+
+  document.getElementById('generate-btn').disabled = false;
+  document.getElementById('progress-wrap').style.display = 'none';
+}
+
+function buildPrompt() {
+  const custom = (document.getElementById('custom-prompt').value || '').trim();
+  let base = selectedTemplate.prompt;
+
+  // Augment with selected options
+  if (selectedTemplate.options) {
+    selectedTemplate.options.forEach(opt => {
+      const el = document.getElementById('opt-'+opt.id);
+      if (el && opt.type === 'select' && el.value) base += ', ' + el.value.toLowerCase();
+    });
+  }
+  return custom ? base + ', ' + custom : base;
+}
+
+async function runFluxModel(key, prompt) {
+  const parts = selectedTemplate.model.split('/');
+  const path = `/v1/models/${parts[0]}/${parts[1]}/predictions`;
+  const input = {
+    prompt,
+    image: uploadedPhotoDataUrl,
+    prompt_strength: 0.7,
+    num_outputs: 2,
+    output_format: 'jpg',
+    output_quality: 95,
+  };
+  return await callReplicate(key, path, input);
+}
+
+async function runGeminiEdit(key, prompt) {
+  setProgress(20, 'Submitting to Gemini…');
+  const match = uploadedPhotoDataUrl.match(/^data:([^;]+);base64,(.+)$/);
+  if (!match) throw new Error('INVALID_IMAGE_DATA');
+
+  const resp = await fetch('/api/proxy?target=gemini&path=' + encodeURIComponent('/v1beta/models/gemini-2.5-flash-image:generateContent'), {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-API-Key': key,
+      'X-Goog-Api-Key': key,
+    },
+    body: JSON.stringify({
+      contents: [{
+        parts: [
+          { text: `Edit this photo exactly once. Keep the person recognisable. Return the edited image only. ${prompt}` },
+          { inline_data: { mime_type: match[1], data: match[2] } },
+        ],
+      }],
+      generationConfig: {
+        responseModalities: ['TEXT', 'IMAGE'],
+      },
+    }),
+  });
+
+  if (resp.status === 401 || resp.status === 403) throw new Error('AUTH_ERROR');
+  if (resp.status === 429) throw new Error('RATE_ERROR');
+
+  const data = await resp.json();
+  if (!resp.ok) throw new Error('API_ERROR: ' + (data.error?.message || data.error?.status || 'Unknown Gemini error'));
+
+  const parts = (data.candidates || []).flatMap(candidate => candidate.content?.parts || []);
+  const imagePart = parts.find(part => (part.inlineData && part.inlineData.data) || (part.inline_data && part.inline_data.data));
+  if (!imagePart) throw new Error('NO_IMAGE_RETURNED');
+
+  const inline = imagePart.inlineData || imagePart.inline_data;
+  return `data:${inline.mimeType || inline.mime_type || 'image/png'};base64,${inline.data}`;
+}
+
+async function runRestorationModel(key) {
+  const path = '/v1/models/tencentarc/gfpgan/predictions';
+  const upscale = document.getElementById('opt-upscale')?.checked;
+  const input = { img: uploadedPhotoDataUrl, version:'v1.4', scale: upscale ? 2 : 1 };
+  return await callReplicate(key, path, input);
+}
+
+async function runRemoveBgModel(key) {
+  const path = '/v1/models/cjwbw/rembg/predictions';
+  const input = { image: uploadedPhotoDataUrl };
+  return await callReplicate(key, path, input);
+}
+
+async function runUpscaleModel(key) {
+  const scale = document.getElementById('opt-scale')?.value?.includes('4') ? 4 : 2;
+  const path = '/v1/models/philz1337x/clarity-upscaler/predictions';
+  const input = { image: uploadedPhotoDataUrl, scale_factor: scale };
+  return await callReplicate(key, path, input);
+}
+
+async function callReplicate(key, path, input) {
+  setProgress(20, 'Submitting to Replicate…');
+  const resp = await fetch('/api/proxy?target=replicate&path='+encodeURIComponent(path), {
+    method:'POST',
+    headers:{ 'Authorization':'Bearer '+key, 'Content-Type':'application/json', 'Prefer':'wait' },
+    body: JSON.stringify({ input })
+  });
+  if (resp.status === 401) throw new Error('AUTH_ERROR');
+  if (resp.status === 402) throw new Error('CREDITS_ERROR');
+  if (resp.status === 429) throw new Error('RATE_ERROR');
+  const pred = await resp.json();
+  if (!resp.ok) throw new Error('API_ERROR: '+(pred.detail||'Unknown error'));
+  if (pred.output) return pred.output;
+
+  // Poll
+  const id = pred.id;
+  const start = Date.now();
+  while (true) {
+    if (Date.now()-start > 5*60*1000) throw new Error('TIMEOUT');
+    await sleep(2000);
+    setProgress(50, 'Processing…');
+    const pr = await fetch('/api/proxy?target=replicate&path='+encodeURIComponent('/v1/predictions/'+id), {
+      headers:{'Authorization':'Bearer '+key}
+    });
+    const p = await pr.json();
+    if (p.status === 'succeeded') return p.output;
+    if (p.status === 'failed') throw new Error('PRED_FAILED: '+p.error);
+  }
+}
+
+function renderOutputs(urls) {
+  const grid = document.getElementById('output-grid');
+  grid.innerHTML = urls.map((url, i) => `
+    <div class="photo-output-item">
+      <img src="${url}" alt="Generated photo ${i+1}" loading="lazy">
+      <div class="photo-output-actions">
+        <button class="key-btn" onclick="downloadPhoto('${url}',${i})">⬇ Download</button>
+        <button class="key-btn" onclick="useAsInput('${url}')">↩ Use as input</button>
+      </div>
+    </div>`).join('');
+}
+
+function downloadPhoto(url, idx) {
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `dj-photo-${selectedTemplate.id}-${Date.now()}-${idx+1}.jpg`;
+  a.target = '_blank';
+  a.click();
+}
+
+function useAsInput(url) {
+  uploadedPhotoDataUrl = url;
+  const preview = document.getElementById('photo-preview');
+  preview.src = url;
+  preview.style.display = 'block';
+  showErrorToast('Photo loaded', 'The selected result is now the input for your next generation.');
+}
+
+function resetStudio() {
+  document.getElementById('output-section').style.display = 'none';
+  document.getElementById('photo-preview').style.display = 'none';
+  uploadedPhotoDataUrl = null;
+  uploadedPhotoFile = null;
+  const dz = document.getElementById('photo-dropzone');
+  dz.style.borderColor = '';
+  dz.style.background = '';
+}
+
+/* ── Helpers ──────────────────────────────────────────────── */
+function setProgress(pct, msg) {
+  document.getElementById('progress-bar').style.width = pct+'%';
+  if (msg) document.getElementById('progress-msg').textContent = msg;
+}
+
+function handlePhotoError(err) {
+  const msg = err.message || String(err);
+  if (msg === 'AUTH_ERROR') {
+    showErrorToast('Key rejected', `Check your ${selectedProvider === 'gemini' ? 'Gemini' : 'Replicate'} key in settings.`, { label:'Fix', fn:"window.location='/ai/settings.html'" });
+  } else if (msg === 'CREDITS_ERROR') {
+    showErrorToast('Out of credits', 'Top up your Replicate account.', { label:'Top up →', fn:"window.open('https://replicate.com/account/billing')" });
+  } else if (msg === 'TIMEOUT') {
+    showErrorToast('Timed out', 'Replicate is slow right now. Try again in a moment.', { label:'Retry', fn:'generatePhoto()' });
+  } else if (msg === 'NO_IMAGE_RETURNED') {
+    showErrorToast('Gemini returned text only', 'Try again with a more direct edit instruction or switch back to Replicate for this template.', { label:'Retry', fn:'generatePhoto()' });
+  } else {
+    showErrorToast('Generation failed', msg, { label:'Retry', fn:'generatePhoto()' });
+  }
+}
+
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+/* ── Init ─────────────────────────────────────────────────── */
+document.addEventListener('DOMContentLoaded', function() {
+  buildTemplateGrid();
+  renderTemplateOptions();
+  updateCostDisplay();
+
+  document.querySelectorAll('#provider-chips .chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      document.querySelectorAll('#provider-chips .chip').forEach(item => item.classList.remove('selected'));
+      chip.classList.add('selected');
+      selectedProvider = chip.dataset.provider;
+      updateCostDisplay();
+    });
+  });
+
+  const rKey = window.AIKeys.get('replicate');
+  const gKey = window.AIKeys.get('gemini');
+  const pillR = document.getElementById('key-pill-replicate');
+  const pillG = document.getElementById('key-pill-gemini');
+  if (rKey) { pillR.className = 'key-pill key-pill--ok'; pillR.textContent = 'Replicate: '+window.AIKeys.mask(rKey); pillR.href='#'; }
+  if (gKey) { pillG.className = 'key-pill key-pill--ok'; pillG.textContent = 'Gemini: '+window.AIKeys.mask(gKey); pillG.href='#'; }
+
+  // Drag and drop
+  const dz = document.getElementById('photo-dropzone');
+  dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('drag-over'); });
+  dz.addEventListener('dragleave', () => dz.classList.remove('drag-over'));
+  dz.addEventListener('drop', e => {
+    e.preventDefault(); dz.classList.remove('drag-over');
+    const f = e.dataTransfer.files[0];
+    if (f && f.type.startsWith('image/')) {
+      document.getElementById('photo-input').files = e.dataTransfer.files;
+      handlePhotoUpload(document.getElementById('photo-input'));
+    }
+  });
+});
+</script>
+</body>
+</html>

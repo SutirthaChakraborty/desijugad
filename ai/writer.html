@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Writer — Long-Form Articles, Stories &amp; Scripts · Desi Jugad</title>
+<meta name="description" content="Generate long-form articles, blog posts, stories, scripts, and LinkedIn posts with Claude Opus 4.7, Llama 3.3 70B, and Mistral. Up to 10,000 words. Bring your own Replicate key.">
+<meta name="keywords" content="AI writer free, AI article generator, AI blog writer, long form AI content generator, Claude AI writer, Llama AI writing, bring your own key AI writer India">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://desijugad.co.in/ai/writer.html">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self';">
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://desijugad.co.in/ai/writer.html">
+<meta property="og:title" content="AI Writer — Long-Form Articles, Stories &amp; Scripts · Desi Jugad">
+<meta property="og:description" content="Write 10,000-word articles, short stories, and scripts. Claude Opus 4.7, Llama 3.3 70B. Bring your own Replicate key.">
+<meta property="og:image" content="https://desijugad.co.in/assets/img/og.png">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,30..100;1,9..144,300..700,30..100&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+
+<!-- docx for export -->
+<script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js" integrity="sha384-4xaIisuLEy2lo2HkB2C4rEf7v8jbTb2kuogX6TkuEt9feTWKBSFSOzsqNNbV+sKh" crossorigin="anonymous" defer></script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Desi Jugad AI Writer",
+  "url": "https://desijugad.co.in/ai/writer.html",
+  "description": "Generate long-form articles, stories, scripts, and more with top LLMs.",
+  "applicationCategory": "ProductivityApplication",
+  "operatingSystem": "Any"
+}
+</script>
+
+<style>
+/* Writer-specific styles */
+.writer-output {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: var(--ink);
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  min-height: 200px;
+  position: relative;
+}
+.writer-output h1, .writer-output h2, .writer-output h3 {
+  font-family: var(--font-display);
+  margin-block: 1.5rem 0.75rem;
+  color: var(--ink);
+}
+.writer-output p { margin-bottom: 1rem; color: var(--ink-soft); }
+.writer-output:empty::before {
+  content: "Your generated content will appear here…";
+  color: var(--ink-muted);
+  font-style: italic;
+  font-family: var(--font-sans);
+  font-size: 0.92rem;
+}
+.outline-box {
+  background: color-mix(in srgb, var(--indigo) 4%, var(--surface));
+  border: 1.5px solid color-mix(in srgb, var(--indigo) 25%, var(--line));
+  border-radius: var(--radius-sm);
+  padding: 1.25rem;
+  font-size: 0.9rem;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  color: var(--ink-soft);
+  font-family: var(--font-sans);
+  max-height: 400px;
+  overflow-y: auto;
+}
+.section-progress {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 1rem;
+  background: var(--bg-alt);
+  border-radius: var(--radius-sm);
+  margin-bottom: 0.4rem;
+  font-size: 0.85rem;
+}
+.section-progress .sp-status {
+  width: 18px; height: 18px; border-radius: 50%;
+  display: grid; place-items: center; font-size: 0.65rem;
+}
+.sp-pending { background: var(--line); color: var(--ink-muted); }
+.sp-active  { background: var(--indigo); color: #fff; animation: pulse 1.2s infinite; }
+.sp-done    { background: var(--success); color: #fff; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.6} }
+.cursor-blink::after {
+  content: '▋';
+  animation: blink 0.8s step-end infinite;
+  color: var(--indigo);
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="/" class="brand"><span class="brand-mark">DJ</span><span>Desi Jugad</span></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="/#converters">Converters</a></li>
+      <li><a href="/ai/" class="active">AI Studio <span class="badge-new">NEW</span></a></li>
+      <li><a href="/blog/">Blog</a></li>
+      <li><a href="/about.html">About</a></li>
+      <li><a href="/ai/settings.html" class="nav-cta">Add API keys</a></li>
+    </ul>
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</header>
+
+<main class="converter-page">
+  <div class="container">
+    <nav class="breadcrumb">
+      <a href="/">Home</a><span class="sep">/</span>
+      <a href="/ai/">AI Studio</a><span class="sep">/</span>
+      <span>AI Writer</span>
+    </nav>
+
+    <div class="ai-page-header">
+      <h1>AI <em class="italic">Writer</em></h1>
+      <p class="lead">Long-form articles, blog posts, stories, scripts, and more. Powered by Claude Opus 4.7, Llama 3.3 70B, and Mistral. Up to 10,000 words with structured outline mode. Your key, your words, your cost.</p>
+      <div class="ai-page-header-row">
+        <a href="settings.html?need=replicate" id="key-pill" class="key-pill key-pill--missing">Add Replicate key</a>
+      </div>
+    </div>
+
+    <!-- TEMPLATE PICKER -->
+    <div class="ai-panel">
+      <div class="ai-panel-title">Content type</div>
+      <div class="template-chips" id="template-chips">
+        <button class="template-chip selected" data-val="blog">Blog post</button>
+        <button class="template-chip" data-val="story">Short story</button>
+        <button class="template-chip" data-val="linkedin">LinkedIn post</button>
+        <button class="template-chip" data-val="product">Product description</button>
+        <button class="template-chip" data-val="email">Email</button>
+        <button class="template-chip" data-val="outreach">Cold outreach</button>
+        <button class="template-chip" data-val="essay">Essay</button>
+        <button class="template-chip" data-val="screenplay">Screenplay scene</button>
+        <button class="template-chip" data-val="poem">Poem</button>
+        <button class="template-chip" data-val="news">News summary</button>
+      </div>
+    </div>
+
+    <!-- TONE + LENGTH -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem">
+      <div class="ai-panel">
+        <div class="ai-panel-title">Tone</div>
+        <div class="chips-row" id="tone-chips" style="flex-wrap:wrap">
+          <button class="chip selected" data-val="friendly">Friendly</button>
+          <button class="chip" data-val="formal">Formal</button>
+          <button class="chip" data-val="persuasive">Persuasive</button>
+          <button class="chip" data-val="technical">Technical</button>
+          <button class="chip" data-val="humorous">Humorous</button>
+          <button class="chip" data-val="poetic">Poetic</button>
+        </div>
+      </div>
+      <div class="ai-panel">
+        <div class="ai-panel-title">Target length</div>
+        <div class="chips-row" id="length-chips" style="flex-wrap:wrap">
+          <button class="chip selected" data-val="200">~200 words</button>
+          <button class="chip" data-val="500">~500 words</button>
+          <button class="chip" data-val="1000">~1,000 words</button>
+          <button class="chip" data-val="2500">~2,500 words</button>
+          <button class="chip" data-val="5000">~5,000 words</button>
+          <button class="chip" data-val="10000">~10,000 words</button>
+        </div>
+        <p id="long-form-note" style="display:none;margin-top:0.5rem;font-size:0.78rem;color:var(--indigo);font-family:var(--font-mono)">ⓘ Long-form mode: generates an outline first, then writes each section. Takes ~3-5 minutes.</p>
+      </div>
+    </div>
+
+    <!-- PROMPT -->
+    <div class="ai-panel">
+      <div class="ai-panel-title">What should it be about?</div>
+      <div class="ai-prompt-wrap">
+        <textarea id="main-prompt" class="ai-prompt" rows="4" maxlength="2000"
+          placeholder="A comprehensive guide to building a side income in India in 2026. Target audience: young professionals aged 22–30 in Tier 2 cities. Must include freelancing, digital products, and investment basics. Keep it actionable, not preachy."></textarea>
+        <span class="ai-prompt-counter" id="prompt-counter">0 / 2000</span>
+      </div>
+    </div>
+
+    <!-- MODEL PICKER -->
+    <div class="ai-panel">
+      <div class="ai-panel-title">LLM model</div>
+      <div class="model-picker" id="llm-model-picker"></div>
+    </div>
+
+    <!-- GENERATE -->
+    <div style="margin:2rem 0;display:flex;flex-wrap:wrap;gap:1rem;align-items:center">
+      <button id="generate-btn" class="btn btn-primary" onclick="startWriting()" style="font-size:1.05rem;padding:1rem 2rem">
+        Generate
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+      </button>
+      <button id="stop-btn" class="btn btn-secondary" onclick="stopGeneration()" style="display:none">Stop</button>
+      <span id="cost-preview" style="font-family:var(--font-mono);font-size:0.82rem;color:var(--ink-muted)"></span>
+    </div>
+
+    <!-- OUTLINE PHASE (for long-form) -->
+    <div id="outline-phase" style="display:none">
+      <div class="ai-panel">
+        <div class="ai-panel-title" style="display:flex;justify-content:space-between">
+          <span>Outline (review and edit before writing)</span>
+          <button class="key-btn" onclick="regenerateOutline()">Regenerate</button>
+        </div>
+        <textarea id="outline-editor" class="outline-box" style="width:100%;border:none;background:transparent;resize:vertical;min-height:200px;font-family:var(--font-sans);font-size:0.9rem;color:var(--ink-soft)" placeholder="Outline will appear here…"></textarea>
+        <div style="margin-top:1rem;display:flex;gap:0.75rem">
+          <button class="btn btn-primary" onclick="writeFromOutline()">
+            Write all sections
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          </button>
+          <button class="btn btn-secondary" onclick="document.getElementById('outline-phase').style.display='none'">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION PROGRESS -->
+    <div id="section-progress-panel" style="display:none">
+      <div class="ai-panel">
+        <div class="ai-panel-title">Writing progress</div>
+        <div id="section-list"></div>
+      </div>
+    </div>
+
+    <!-- OUTPUT -->
+    <div id="output-wrap" style="display:none">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:1.25rem">
+        <div style="display:flex;align-items:center;gap:1rem">
+          <strong style="font-family:var(--font-display);font-size:1.1rem">Your content</strong>
+          <span id="word-count" style="font-family:var(--font-mono);font-size:0.8rem;color:var(--ink-muted)">0 words</span>
+        </div>
+        <div style="display:flex;gap:0.6rem;flex-wrap:wrap">
+          <button class="key-btn" onclick="copyOutput()">📋 Copy</button>
+          <button class="key-btn" onclick="downloadMd()">⬇ .md</button>
+          <button class="key-btn" onclick="downloadDocx()">⬇ .docx</button>
+          <button class="key-btn" onclick="openInConverter()">🔗 Open in HTML converter</button>
+        </div>
+      </div>
+      <div id="writer-output" class="writer-output" contenteditable="true" spellcheck="true" aria-label="Generated content, editable"></div>
+    </div>
+
+    <!-- INFO SECTION -->
+    <div class="info-section" style="margin-top:3rem">
+      <h2>Write long-form content with the best AI models — at direct API cost</h2>
+      <p>Desi Jugad AI Writer connects you directly to frontier LLMs on Replicate. No subscription, no per-word pricing, no watermarks — you pay Replicate at their published rate, and the content is yours.</p>
+
+      <h3>Which model should you choose?</h3>
+      <p><strong>Claude Opus 4.7</strong> (via Replicate) is the best all-around writer. It understands nuance, maintains consistent voice throughout long pieces, follows complex instructions, and rarely produces generic filler text. Recommended for anything you plan to actually publish. Cost: roughly $0.015 per 1,000 output tokens (~750 words).</p>
+      <p><strong>Llama 3.3 70B</strong> is Meta's open-source model and the best free-tier option. Quality is very good for structured content, listicles, and technical writing. Significantly cheaper than Claude for long-form work. Recommended if you're producing large volumes of content.</p>
+      <p><strong>Mistral Large</strong> is efficient and produces clean prose. It's especially good at formal and technical content. A solid middle ground in both quality and cost.</p>
+
+      <h3>How long-form mode works</h3>
+      <p>For 5,000+ word pieces, the writer uses a two-pass approach: first, it generates a detailed outline with section headings and bullet points. You can review and edit this outline before committing to a full write. Then it writes each section individually, keeping the previous sections in context so the piece reads as one coherent document. Each call is typically 1,500–2,000 words, so a 10,000-word piece makes 5–7 API calls.</p>
+
+      <h3>Export options</h3>
+      <p>Your generated content can be copied to clipboard, downloaded as a Markdown file (.md), or exported as a Word document (.docx) using the docx library. You can also send it to Desi Jugad's Markdown-to-HTML converter to preview it as a formatted web page.</p>
+
+      <h3>Privacy</h3>
+      <p>Your prompts and generated content are not stored on any Desi Jugad server. The API calls go from your browser to Replicate via the CORS proxy (a dumb pass-through). Your Replicate key is stored only in your browser's localStorage. Generated text lives only in the browser until you choose to copy or download it.</p>
+    </div>
+
+    <div class="info-section" style="margin-top:2rem">
+      <h2>Frequently asked questions</h2>
+      <details class="faq-item">
+        <summary>How long can the generated content be?</summary>
+        <p>In single-pass mode, up to about 3,000 words depending on the model. In long-form (outline) mode, there's no hard limit — the tool generates sections sequentially, so you can get 10,000+ words given enough API credit. Typical 10,000-word generation takes 5–7 minutes.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Can I edit the content after it's generated?</summary>
+        <p>Yes — the output area is fully editable (contenteditable). Click anywhere and type. The export buttons will pick up your edits.</p>
+      </details>
+      <details class="faq-item">
+        <summary>What is the .docx export for?</summary>
+        <p>It exports your content as a Microsoft Word document using the docx.js library — entirely in your browser. You can open it in Word, Google Docs, or LibreOffice and continue editing or formatting it.</p>
+      </details>
+      <details class="faq-item">
+        <summary>How much does it cost to generate a 1,000-word article?</summary>
+        <p>With Claude Opus 4.7, roughly $0.015 (about ₹1.25). With Llama 3.3 70B, under $0.003 (about ₹0.25). This is billed directly to your Replicate account.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Does it support Hindi or other Indian languages?</summary>
+        <p>Claude Opus 4.7 and Llama 3.3 70B both support Hindi. Simply specify in your prompt: "Write this in Hindi" or "Write in Hinglish." Quality in Hindi is reasonably good for both models, though Claude generally produces more natural prose.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Can I stop generation partway through?</summary>
+        <p>Yes. Click the Stop button at any time. Content written so far will remain in the output area and is fully editable and exportable. Mid-stream stops may leave the last sentence incomplete — just edit it manually.</p>
+      </details>
+    </div>
+
+  </div><!-- /container -->
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid footer-grid-5">
+      <div class="footer-brand">
+        <div class="brand"><span class="brand-mark">DJ</span><span>Desi Jugad</span></div>
+        <p>Free, private file conversion for everyone. Your files never leave your device — because they shouldn't have to.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Popular tools</h5>
+        <ul>
+          <li><a href="/convert/heic-to-jpg.html">HEIC to JPG</a></li>
+          <li><a href="/convert/image-converter.html">Image Converter</a></li>
+          <li><a href="/convert/qr-code.html">QR Code</a></li>
+          <li><a href="/convert/json-to-csv.html">JSON to CSV</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>AI Studio</h5>
+        <ul>
+          <li><a href="/ai/image.html">AI Images</a></li>
+          <li><a href="/ai/video.html">AI Video</a></li>
+          <li><a href="/ai/music.html">AI Music</a></li>
+          <li><a href="/ai/music-video.html">Music Videos</a></li>
+          <li><a href="/ai/writer.html">AI Writer</a></li>
+          <li><a href="/ai/photo-studio.html">Photo Studio</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Company</h5>
+        <ul>
+          <li><a href="/about.html">About</a></li>
+          <li><a href="/blog/">Blog</a></li>
+          <li><a href="/contact.html">Contact</a></li>
+          <li><a href="/privacy.html">Privacy Policy</a></li>
+          <li><a href="/terms.html">Terms</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Connect</h5>
+        <ul>
+          <li><a href="https://twitter.com/" rel="noopener">Twitter / X</a></li>
+          <li><a href="https://github.com/" rel="noopener">GitHub</a></li>
+          <li><a href="/contact.html">Feature request</a></li>
+          <li><a href="/contact.html">Report a bug</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© <span data-year>2026</span> Desi Jugad. All rights reserved.</div>
+      <div class="made-in"><span class="flag-in" aria-hidden="true"></span>Proudly made in India, built for the world.</div>
+    </div>
+  </div>
+</footer>
+
+<script src="../assets/js/main.js"></script>
+<script src="../assets/js/ai.js"></script>
+<script>
+/* =========================================================
+   AI Writer — main logic
+   ========================================================= */
+
+const LLM_MODELS = [
+  { id:'anthropic/claude-3-7-sonnet-20250219', name:'Claude Sonnet 3.7', cost:0.012, badge:'Best quality', desc:'Anthropic latest. Best reasoning, voice, nuance. Great for publishable content.' },
+  { id:'meta/meta-llama-3-70b-instruct',       name:'Llama 3.3 70B',     cost:0.0008, badge:'Best value', desc:'Meta open-source. Solid for structured content, listicles, technical writing.' },
+  { id:'mistralai/mistral-large',              name:'Mistral Large',     cost:0.004,  badge:'Balanced',   desc:'Clean prose, formal and technical writing. Good middle ground.' },
+];
+
+let selectedLLM = LLM_MODELS[0];
+let selectedTemplate = 'blog';
+let selectedTone = 'friendly';
+let selectedLength = 200;
+let generatedContent = '';
+let isStopped = false;
+let sectionOutline = [];
+
+/* ── Build model picker ─────────────────────────────────── */
+function buildModelPicker() {
+  const picker = document.getElementById('llm-model-picker');
+  picker.innerHTML = LLM_MODELS.map((m,i) => `
+    <div class="model-card ${i===0?'selected':''}" onclick="selectLLM(${i})">
+      <div style="font-weight:600;font-size:0.95rem;color:var(--ink);margin-bottom:0.25rem">${m.name}</div>
+      <div style="font-size:0.78rem;color:var(--ink-muted);margin-bottom:0.5rem">${m.desc}</div>
+      <div style="display:flex;justify-content:space-between">
+        <span style="font-family:var(--font-mono);font-size:0.75rem;color:var(--indigo)">$${m.cost}/1K tokens</span>
+        <span style="font-size:0.7rem;background:var(--bg-alt);padding:0.15rem 0.4rem;border-radius:4px;color:var(--ink-muted)">${m.badge}</span>
+      </div>
+    </div>`).join('');
+}
+
+function selectLLM(idx) {
+  selectedLLM = LLM_MODELS[idx];
+  document.querySelectorAll('#llm-model-picker .model-card').forEach((c,i) => c.classList.toggle('selected', i===idx));
+  updateCostPreview();
+}
+
+/* ── Chip helpers ───────────────────────────────────────── */
+function initChips(containerId, setter) {
+  document.getElementById(containerId).querySelectorAll('.chip, .template-chip').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.getElementById(containerId).querySelectorAll('.chip, .template-chip').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      setter(btn.dataset.val);
+    });
+  });
+}
+
+/* ── Cost preview ───────────────────────────────────────── */
+function updateCostPreview() {
+  const tokens = selectedLength * 1.4; // rough token estimate
+  const cost = (tokens / 1000) * selectedLLM.cost;
+  const preview = document.getElementById('cost-preview');
+  if (preview) preview.textContent = `≈ $${cost.toFixed(4)} for ~${selectedLength} words`;
+}
+
+/* ── Replicate LLM call ──────────────────────────────────── */
+async function callLLM(systemPrompt, userPrompt, maxTokens) {
+  const key = window.AIKeys.get('replicate');
+  if (!key) throw { name:'NoKeyError', service:'replicate' };
+
+  const parts = selectedLLM.id.split('/');
+  const path = `/v1/models/${parts[0]}/${parts[1]}/predictions`;
+
+  const input = {
+    system_prompt: systemPrompt,
+    prompt: userPrompt,
+    max_tokens: maxTokens || 4096,
+    temperature: 0.7,
+  };
+
+  const resp = await fetch('/api/proxy?target=replicate&path='+encodeURIComponent(path), {
+    method:'POST',
+    headers:{ 'Authorization':'Bearer '+key, 'Content-Type':'application/json', 'Prefer':'wait' },
+    body: JSON.stringify({ input })
+  });
+
+  if (resp.status === 401) throw new Error('AUTH_ERROR');
+  if (resp.status === 402) throw new Error('CREDITS_ERROR');
+  if (resp.status === 429) throw new Error('RATE_ERROR');
+
+  const pred = await resp.json();
+  if (!resp.ok) throw new Error('API_ERROR: '+(pred.detail||'Unknown'));
+
+  if (pred.output) return Array.isArray(pred.output) ? pred.output.join('') : pred.output;
+
+  // Poll
+  const id = pred.id;
+  const start = Date.now();
+  while (!isStopped) {
+    if (Date.now()-start > 5*60*1000) throw new Error('TIMEOUT');
+    await sleep(2000);
+    const pr = await fetch('/api/proxy?target=replicate&path='+encodeURIComponent('/v1/predictions/'+id), {
+      headers:{'Authorization':'Bearer '+key}
+    });
+    const p = await pr.json();
+    if (p.status === 'succeeded') return Array.isArray(p.output) ? p.output.join('') : (p.output||'');
+    if (p.status === 'failed') throw new Error('PRED_FAILED: '+p.error);
+    if (p.status === 'canceled') throw new Error('CANCELED');
+  }
+  throw new Error('STOPPED');
+}
+
+/* ── Main write function ─────────────────────────────────── */
+async function startWriting() {
+  const key = window.AIKeys.get('replicate');
+  if (!key) {
+    showErrorToast('No API key','Add your Replicate key to use the writer.', { label:'Settings', fn:"window.location='/ai/settings.html?need=replicate'" });
+    return;
+  }
+  const prompt = document.getElementById('main-prompt').value.trim();
+  if (!prompt) { showErrorToast('Missing prompt','Tell the AI what to write.'); return; }
+
+  isStopped = false;
+  document.getElementById('generate-btn').style.display = 'none';
+  document.getElementById('stop-btn').style.display = '';
+  document.getElementById('output-wrap').style.display = '';
+  document.getElementById('outline-phase').style.display = 'none';
+
+  const outputEl = document.getElementById('writer-output');
+  outputEl.innerHTML = '<span class="cursor-blink" style="color:var(--ink-muted);font-style:italic;font-family:var(--font-sans)">Writing…</span>';
+
+  try {
+    if (selectedLength >= 5000) {
+      await longFormWrite(prompt, outputEl);
+    } else {
+      await singlePassWrite(prompt, outputEl);
+    }
+  } catch(err) {
+    handleWriterError(err);
+  }
+
+  document.getElementById('generate-btn').style.display = '';
+  document.getElementById('stop-btn').style.display = 'none';
+}
+
+async function singlePassWrite(prompt, outputEl) {
+  const system = buildSystemPrompt();
+  const userMsg = buildUserMessage(prompt, selectedLength);
+  const text = await callLLM(system, userMsg, Math.ceil(selectedLength * 1.5));
+  generatedContent = text;
+  outputEl.innerHTML = markdownToHtml(text);
+  updateWordCount();
+  logUsage('replicate', selectedLLM.id, prompt.slice(0,60), (selectedLength*1.4/1000)*selectedLLM.cost);
+}
+
+async function longFormWrite(prompt, outputEl) {
+  // Phase 1: outline
+  outputEl.innerHTML = '<span style="color:var(--ink-muted);font-style:italic;font-family:var(--font-sans)">Generating outline…</span>';
+  const system = buildSystemPrompt();
+  const outlinePrompt = `Create a detailed outline for a ${selectedLength}-word ${selectedTemplate} about: "${prompt}"\n\nInclude:\n- Section headings\n- Approximate word count per section\n- 2-3 bullet points per section\n\nReturn ONLY the outline, no intro text.`;
+  const outline = await callLLM(system, outlinePrompt, 2000);
+  if (isStopped) return;
+
+  document.getElementById('outline-editor').value = outline;
+  document.getElementById('outline-phase').style.display = '';
+  outputEl.innerHTML = '';
+  document.getElementById('generate-btn').style.display = '';
+  document.getElementById('stop-btn').style.display = 'none';
+  sectionOutline = { prompt, outline };
+}
+
+async function writeFromOutline() {
+  const key = window.AIKeys.get('replicate');
+  if (!key) return;
+  const outline = document.getElementById('outline-editor').value.trim();
+  if (!outline) return;
+  const { prompt } = sectionOutline;
+
+  document.getElementById('outline-phase').style.display = 'none';
+  document.getElementById('section-progress-panel').style.display = '';
+  document.getElementById('output-wrap').style.display = '';
+  document.getElementById('generate-btn').style.display = 'none';
+  document.getElementById('stop-btn').style.display = '';
+  isStopped = false;
+
+  // Parse sections from outline
+  const sections = outline.split('\n').filter(l => /^#+\s/.test(l) || /^[0-9]+[\.\)]\s/.test(l) || /^[A-Z]/.test(l.trim()) && l.trim().length > 3);
+  const chunks = sections.slice(0, 8); // max 8 sections
+  if (!chunks.length) chunks.push('Full content');
+
+  const listEl = document.getElementById('section-list');
+  listEl.innerHTML = chunks.map((s,i) => `
+    <div class="section-progress" id="sp-${i}">
+      <div class="sp-status sp-pending" id="sps-${i}">−</div>
+      <span style="flex:1;color:var(--ink-soft)">${s.replace(/^#+\s|^[0-9]+[\.\)]\s/,'').trim()}</span>
+      <span id="spt-${i}" style="font-family:var(--font-mono);font-size:0.72rem;color:var(--ink-muted)">pending</span>
+    </div>`).join('');
+
+  const outputEl = document.getElementById('writer-output');
+  outputEl.innerHTML = '';
+  generatedContent = '';
+
+  let previousSections = '';
+  for (let i = 0; i < chunks.length; i++) {
+    if (isStopped) break;
+    const sp = document.getElementById('sps-'+i);
+    const spt = document.getElementById('spt-'+i);
+    sp.className = 'sp-status sp-active';
+    sp.textContent = '▶';
+    spt.textContent = 'writing…';
+
+    const sectionPrompt = `You are writing section ${i+1} of a ${selectedLength}-word ${selectedTemplate} about: "${prompt}"\n\nOutline:\n${outline}\n\nPrevious sections written:\n${previousSections.slice(-2000) || '(none yet)'}\n\nNow write this section: "${chunks[i]}"\nAim for ~${Math.floor(selectedLength/chunks.length)} words. Continue naturally from the previous section. No intro line like "Section X:" — just write the content.`;
+
+    const text = await callLLM(buildSystemPrompt(), sectionPrompt, 2500);
+    if (isStopped) break;
+
+    previousSections += '\n\n' + text;
+    generatedContent += '\n\n' + text;
+    outputEl.innerHTML = markdownToHtml(generatedContent);
+    outputEl.scrollIntoView({ block:'end', behavior:'smooth' });
+    updateWordCount();
+    logUsage('replicate', selectedLLM.id, prompt.slice(0,60), (2500/1000)*selectedLLM.cost);
+
+    sp.className = 'sp-status sp-done';
+    sp.textContent = '✓';
+    spt.textContent = 'done';
+  }
+
+  document.getElementById('generate-btn').style.display = '';
+  document.getElementById('stop-btn').style.display = 'none';
+}
+
+async function regenerateOutline() {
+  const prompt = document.getElementById('main-prompt').value.trim();
+  if (!prompt) return;
+  document.getElementById('outline-editor').value = 'Regenerating…';
+  const system = buildSystemPrompt();
+  const outlinePrompt = `Create a detailed outline for a ${selectedLength}-word ${selectedTemplate} about: "${prompt}".\nReturn only the outline with section headings and bullet points.`;
+  const outline = await callLLM(system, outlinePrompt, 2000);
+  document.getElementById('outline-editor').value = outline;
+}
+
+/* ── Helpers ──────────────────────────────────────────────── */
+function buildSystemPrompt() {
+  return `You are an expert ${selectedTone} writer specialising in ${selectedTemplate} content. Write clearly, without padding or generic filler. Match the requested tone exactly: ${selectedTone}. Do not include disclaimers, do not break the fourth wall, do not reference being an AI. Just write.`;
+}
+
+function buildUserMessage(prompt, length) {
+  return `Write a ${selectedTone} ${selectedTemplate} of approximately ${length} words about:\n\n"${prompt}"\n\nFormat with headings where appropriate. Make it engaging and practical. No fluff.`;
+}
+
+function markdownToHtml(md) {
+  if (!md) return '';
+  return md
+    .replace(/^# (.+)$/gm, '<h1>$1</h1>')
+    .replace(/^## (.+)$/gm, '<h2>$1</h2>')
+    .replace(/^### (.+)$/gm, '<h3>$1</h3>')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g, '<em>$1</em>')
+    .replace(/\n\n/g, '</p><p>')
+    .replace(/^/,'<p>')
+    .replace(/$/, '</p>');
+}
+
+function updateWordCount() {
+  const text = document.getElementById('writer-output').innerText || '';
+  const words = text.trim().split(/\s+/).filter(w=>w.length>0).length;
+  document.getElementById('word-count').textContent = words.toLocaleString() + ' words';
+}
+
+function stopGeneration() { isStopped = true; }
+
+function copyOutput() {
+  const text = document.getElementById('writer-output').innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    showErrorToast('Copied!', 'Content copied to clipboard.');
+  });
+}
+
+function downloadMd() {
+  const text = document.getElementById('writer-output').innerText;
+  const blob = new Blob([text], { type:'text/markdown' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'desi-jugad-writer-' + Date.now() + '.md';
+  a.click();
+}
+
+function downloadDocx() {
+  if (!window.docx) { showErrorToast('Loading…','docx library loading, try again in a moment.'); return; }
+  const text = document.getElementById('writer-output').innerText;
+  const { Document, Packer, Paragraph, TextRun, HeadingLevel } = window.docx;
+  const lines = text.split('\n');
+  const children = lines.map(line => {
+    if (line.startsWith('# ')) return new Paragraph({ text:line.slice(2), heading:HeadingLevel.HEADING_1 });
+    if (line.startsWith('## ')) return new Paragraph({ text:line.slice(3), heading:HeadingLevel.HEADING_2 });
+    if (line.startsWith('### ')) return new Paragraph({ text:line.slice(4), heading:HeadingLevel.HEADING_3 });
+    return new Paragraph({ children:[new TextRun(line)] });
+  });
+  const doc = new Document({ sections:[{ children }] });
+  Packer.toBlob(doc).then(blob => {
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'desi-jugad-writer-' + Date.now() + '.docx';
+    a.click();
+  });
+}
+
+function openInConverter() {
+  const text = document.getElementById('writer-output').innerText;
+  sessionStorage.setItem('dj_md_prefill', text);
+  window.open('/convert/markdown-to-html.html', '_blank');
+}
+
+function handleWriterError(err) {
+  const msg = err.message || String(err);
+  if (msg === 'AUTH_ERROR' || err.name === 'NoKeyError') {
+    showErrorToast('Key rejected', 'Check your Replicate key in settings.', { label:'Fix', fn:"window.location='/ai/settings.html'" });
+  } else if (msg === 'CREDITS_ERROR') {
+    showErrorToast('Out of credits', 'Add credits to your Replicate account.', { label:'Top up →', fn:"window.open('https://replicate.com/account/billing')" });
+  } else if (msg === 'RATE_ERROR') {
+    showErrorToast('Rate limited', 'Waiting 20 seconds…'); setTimeout(startWriting, 20000);
+  } else if (msg !== 'STOPPED') {
+    showErrorToast('Generation failed', msg, { label:'Retry', fn:'startWriting()' });
+  }
+}
+
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+/* ── Init ─────────────────────────────────────────────────── */
+document.addEventListener('DOMContentLoaded', function() {
+  buildModelPicker();
+
+  initChips('template-chips', val => { selectedTemplate = val; updateCostPreview(); });
+  initChips('tone-chips', val => { selectedTone = val; });
+  initChips('length-chips', val => {
+    selectedLength = parseInt(val, 10);
+    document.getElementById('long-form-note').style.display = selectedLength >= 5000 ? '' : 'none';
+    updateCostPreview();
+  });
+
+  document.getElementById('main-prompt').addEventListener('input', function() {
+    document.getElementById('prompt-counter').textContent = this.value.length + ' / 2000';
+  });
+
+  const key = window.AIKeys.get('replicate');
+  const pill = document.getElementById('key-pill');
+  if (key) {
+    pill.className = 'key-pill key-pill--ok';
+    pill.textContent = 'Replicate: ' + window.AIKeys.mask(key);
+    pill.href = '#';
+  }
+
+  updateCostPreview();
+});
+</script>
+</body>
+</html>

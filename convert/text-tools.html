@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Text Tools — Case, URL Encode, HTML Escape, Hash | Free | Desi Jugad</title>
+<meta name="description" content="A suite of instant text utilities: case conversion, URL encoding, HTML escape/unescape, MD5/SHA hash generators, whitespace cleanup. All free, all in your browser.">
+<meta name="keywords" content="text tools, URL encoder, HTML escape, case converter, MD5 hash, SHA256 hash, whitespace cleaner">
+<link rel="canonical" href="https://desijugad.co.in/convert/text-tools.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,30..100;1,9..144,300..700,30..100&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="../" class="brand"><span class="brand-mark">DJ</span><span>Desi Jugad</span></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="../#converters">Converters</a></li>
+      <li><a href="../ai/">AI Studio <span class="badge-new">NEW</span></a></li>
+      <li><a href="../blog/">Blog</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../#converters" class="nav-cta">All tools</a></li>
+    </ul>
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+  </div>
+</header>
+
+<main class="converter-page">
+  <div class="container">
+    <nav class="breadcrumb"><a href="../">Home</a><span class="sep">/</span><a href="../#converters">Converters</a><span class="sep">/</span><span>Text Tools</span></nav>
+
+    <div class="converter-header">
+      <h1>Every <em class="italic">text trick</em> you ever needed.</h1>
+      <p class="lead">One suite for case conversion, encoding, escaping, hashing, and cleanup. Pick an operation, paste text, get result.</p>
+    </div>
+
+    <div class="options-row">
+      <div class="option">
+        <label>Operation</label>
+        <select id="op">
+          <optgroup label="Case">
+            <option value="upper">UPPERCASE</option>
+            <option value="lower">lowercase</option>
+            <option value="title">Title Case</option>
+            <option value="sentence">Sentence case</option>
+            <option value="camel">camelCase</option>
+            <option value="pascal">PascalCase</option>
+            <option value="snake">snake_case</option>
+            <option value="kebab">kebab-case</option>
+            <option value="constant">CONSTANT_CASE</option>
+          </optgroup>
+          <optgroup label="Encoding">
+            <option value="url-encode">URL encode</option>
+            <option value="url-decode">URL decode</option>
+            <option value="html-escape" selected>HTML escape</option>
+            <option value="html-unescape">HTML unescape</option>
+          </optgroup>
+          <optgroup label="Hashing">
+            <option value="sha1">SHA-1</option>
+            <option value="sha256">SHA-256</option>
+            <option value="sha384">SHA-384</option>
+            <option value="sha512">SHA-512</option>
+          </optgroup>
+          <optgroup label="Cleanup">
+            <option value="trim">Trim whitespace</option>
+            <option value="dedup-lines">Deduplicate lines</option>
+            <option value="sort-lines">Sort lines (A→Z)</option>
+            <option value="reverse-lines">Reverse lines</option>
+            <option value="collapse-spaces">Collapse spaces</option>
+            <option value="strip-html">Strip HTML tags</option>
+          </optgroup>
+          <optgroup label="Counts">
+            <option value="count">Count characters, words, lines</option>
+          </optgroup>
+          <optgroup label="Fun">
+            <option value="reverse">Reverse characters</option>
+            <option value="slugify">Slugify (URL-friendly)</option>
+          </optgroup>
+        </select>
+      </div>
+      <div style="display:flex; gap:0.5rem; align-items:flex-end;">
+        <button class="btn btn-primary" id="runBtn">Run →</button>
+        <button class="btn btn-secondary" id="sampleBtn">Try sample</button>
+      </div>
+    </div>
+
+    <div class="textarea-grid">
+      <div class="textarea-panel">
+        <div class="textarea-header">
+          <span class="label">Input</span>
+          <div class="actions">
+            <button class="textarea-btn" id="pasteBtn">Paste</button>
+            <button class="textarea-btn" id="clearInputBtn">Clear</button>
+          </div>
+        </div>
+        <div class="textarea-body"><textarea id="input" placeholder="Type or paste text here…" spellcheck="false"></textarea></div>
+      </div>
+      <div class="textarea-panel">
+        <div class="textarea-header">
+          <span class="label">Result</span>
+          <div class="actions">
+            <button class="textarea-btn" id="copyBtn">Copy</button>
+            <button class="textarea-btn" id="downloadBtn">Download</button>
+          </div>
+        </div>
+        <div class="textarea-body"><textarea id="output" readonly placeholder="Result appears here…" spellcheck="false"></textarea></div>
+      </div>
+    </div>
+
+    <section class="info-section">
+      <h2>Quick reference</h2>
+      <p><strong>Case conversions</strong> — handy for CSS classes, variable names, titles, or normalizing database fields. Title Case capitalizes each word; Sentence case capitalizes only the first word.</p>
+      <p><strong>URL encode / decode</strong> — for when you need to safely put text in a URL query string, or read one back.</p>
+      <p><strong>HTML escape / unescape</strong> — turn <code>&lt;</code>, <code>&gt;</code>, <code>&amp;</code>, <code>"</code> into their entity equivalents, so they display literally instead of being parsed as HTML.</p>
+      <p><strong>Cryptographic hashes (SHA-1, SHA-256, etc.)</strong> — produce fixed-length fingerprints of input. Useful for checksums, cache keys, and verifying file integrity. Note that SHA-1 should not be used for security-critical applications anymore.</p>
+      <p><strong>Slugify</strong> — turn "Hello, World!" into <code>hello-world</code> for use in URLs and file names.</p>
+
+      <h2>FAQ</h2>
+      <details class="faq-item" open><summary>Are the hashes calculated locally?</summary><p>Yes — we use the browser's native SubtleCrypto API. No text is ever sent over the network.</p></details>
+      <details class="faq-item"><summary>Why no MD5?</summary><p>MD5 is broken for security purposes and not part of the browser's SubtleCrypto. If you need MD5 for legacy reasons, it's a few-line addition to this page — but we don't recommend it for anything important.</p></details>
+      <details class="faq-item"><summary>Can I chain operations?</summary><p>Run one, copy the result, paste back into the input, run the next. Full chaining is on our roadmap.</p></details>
+    </section>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid footer-grid-5">
+      <div class="footer-brand"><div class="brand"><span class="brand-mark">DJ</span><span>Desi Jugad</span></div><p>Free, private file conversion for everyone.</p></div>
+      <div class="footer-col"><h5>Tools</h5><ul><li><a href="heic-to-jpg.html">HEIC to JPG</a></li><li><a href="json-to-csv.html">JSON to CSV</a></li><li><a href="markdown-to-html.html">Markdown to HTML</a></li><li><a href="base64.html">Base64</a></li></ul></div>
+      <div class="footer-col"><h5>AI Studio</h5><ul><li><a href="../ai/image.html">AI Images</a></li><li><a href="../ai/video.html">AI Video</a></li><li><a href="../ai/music.html">AI Music</a></li><li><a href="../ai/music-video.html">Music Videos</a></li><li><a href="../ai/writer.html">AI Writer</a></li><li><a href="../ai/photo-studio.html">Photo Studio</a></li></ul></div><div class="footer-col"><h5>Company</h5><ul><li><a href="../about.html">About</a></li><li><a href="../ai/">AI Studio <span class="badge-new">NEW</span></a></li>
+      <li><a href="../blog/">Blog</a></li><li><a href="../privacy.html">Privacy</a></li><li><a href="../terms.html">Terms</a></li></ul></div>
+      <div class="footer-col"><h5>Help</h5><ul><li><a href="../contact.html">Contact</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><div>© <span data-year>2026</span> Desi Jugad.</div><div class="made-in"><span class="flag-in"></span>Made in India, built for the world.</div></div>
+  </div>
+</footer>
+
+<script src="../assets/js/main.js"></script>
+<script>
+(function() {
+  const op = document.getElementById('op');
+  const input = document.getElementById('input');
+  const output = document.getElementById('output');
+
+  function splitWords(s) {
+    return s
+      .replace(/([a-z])([A-Z])/g, '$1 $2')
+      .replace(/[_\-\s]+/g, ' ')
+      .trim()
+      .split(/\s+/)
+      .filter(Boolean);
+  }
+
+  async function hashHex(text, algo) {
+    const data = new TextEncoder().encode(text);
+    const buf = await crypto.subtle.digest(algo, data);
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+  }
+
+  async function run() {
+    const s = input.value;
+    let r = '';
+    try {
+      switch (op.value) {
+        case 'upper': r = s.toUpperCase(); break;
+        case 'lower': r = s.toLowerCase(); break;
+        case 'title': r = s.toLowerCase().replace(/\b\w/g, c => c.toUpperCase()); break;
+        case 'sentence': r = s.toLowerCase().replace(/(^|[.!?]\s+)([a-z])/g, (m, p, c) => p + c.toUpperCase()); break;
+        case 'camel': { const w = splitWords(s); r = w.map((x, i) => i === 0 ? x.toLowerCase() : x[0].toUpperCase() + x.slice(1).toLowerCase()).join(''); break; }
+        case 'pascal': { const w = splitWords(s); r = w.map(x => x[0].toUpperCase() + x.slice(1).toLowerCase()).join(''); break; }
+        case 'snake': r = splitWords(s).map(x => x.toLowerCase()).join('_'); break;
+        case 'kebab': r = splitWords(s).map(x => x.toLowerCase()).join('-'); break;
+        case 'constant': r = splitWords(s).map(x => x.toUpperCase()).join('_'); break;
+        case 'url-encode': r = encodeURIComponent(s); break;
+        case 'url-decode': r = decodeURIComponent(s); break;
+        case 'html-escape': r = s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;'); break;
+        case 'html-unescape': {
+          const ta = document.createElement('textarea'); ta.innerHTML = s; r = ta.value; break;
+        }
+        case 'sha1': r = await hashHex(s, 'SHA-1'); break;
+        case 'sha256': r = await hashHex(s, 'SHA-256'); break;
+        case 'sha384': r = await hashHex(s, 'SHA-384'); break;
+        case 'sha512': r = await hashHex(s, 'SHA-512'); break;
+        case 'trim': r = s.split('\n').map(l => l.trim()).join('\n').trim(); break;
+        case 'dedup-lines': { const seen = new Set(); r = s.split('\n').filter(l => { if (seen.has(l)) return false; seen.add(l); return true; }).join('\n'); break; }
+        case 'sort-lines': r = s.split('\n').sort((a, b) => a.localeCompare(b)).join('\n'); break;
+        case 'reverse-lines': r = s.split('\n').reverse().join('\n'); break;
+        case 'collapse-spaces': r = s.replace(/[ \t]+/g, ' ').replace(/\n{3,}/g, '\n\n'); break;
+        case 'strip-html': r = s.replace(/<[^>]*>/g, ''); break;
+        case 'count': {
+          const chars = s.length;
+          const charsNoSpaces = s.replace(/\s/g, '').length;
+          const words = s.trim() ? s.trim().split(/\s+/).length : 0;
+          const lines = s ? s.split('\n').length : 0;
+          const bytes = new TextEncoder().encode(s).length;
+          r = `Characters: ${chars}\nCharacters (no spaces): ${charsNoSpaces}\nWords: ${words}\nLines: ${lines}\nBytes (UTF-8): ${bytes}`;
+          break;
+        }
+        case 'reverse': r = [...s].reverse().join(''); break;
+        case 'slugify': r = s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9\s-]/g, '').trim().replace(/[\s_-]+/g, '-').replace(/^-+|-+$/g, ''); break;
+      }
+      output.value = r;
+    } catch (err) {
+      output.value = 'Error: ' + err.message;
+    }
+  }
+
+  document.getElementById('runBtn').addEventListener('click', run);
+  input.addEventListener('input', () => { if (input.value) run(); });
+  op.addEventListener('change', run);
+
+  document.getElementById('sampleBtn').addEventListener('click', () => {
+    input.value = "Hello, World! This is Desi Jugad — a free, private file converter.\nsome_VARIABLE_nameOrOther\nRunning IN your browser.";
+    run();
+  });
+  document.getElementById('pasteBtn').addEventListener('click', async () => { try { input.value = await navigator.clipboard.readText(); run(); } catch { showToast('Paste blocked', 'error'); } });
+  document.getElementById('clearInputBtn').addEventListener('click', () => { input.value = ''; output.value = ''; });
+  document.getElementById('copyBtn').addEventListener('click', async () => { if (!output.value) return; const ok = await copyToClipboard(output.value); showToast(ok ? 'Copied!' : 'Copy failed', ok ? 'success' : 'error'); });
+  document.getElementById('downloadBtn').addEventListener('click', () => { if (!output.value) return; downloadBlob(new Blob([output.value], { type: 'text/plain' }), 'result.txt'); });
+})();
+</script>
+</body>
+</html>

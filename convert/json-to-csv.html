@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JSON to CSV Converter (and back) — Free & Private | Desi Jugad</title>
+<meta name="description" content="Convert JSON to CSV or CSV to JSON instantly in your browser. Handles nested objects, arrays, and custom delimiters. Free, no upload, no sign-up.">
+<link rel="canonical" href="https://desijugad.co.in/convert/json-to-csv.html">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,30..100;1,9..144,300..700,30..100&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="../" class="brand"><span class="brand-mark">DJ</span><span>Desi Jugad</span></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="../#converters">Converters</a></li>
+      <li><a href="../ai/">AI Studio <span class="badge-new">NEW</span></a></li>
+      <li><a href="../blog/">Blog</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../#converters" class="nav-cta">All tools</a></li>
+    </ul>
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+  </div>
+</header>
+
+<main class="converter-page">
+  <div class="container">
+    <nav class="breadcrumb"><a href="../">Home</a><span class="sep">/</span><a href="../#converters">Converters</a><span class="sep">/</span><span>JSON ⇄ CSV</span></nav>
+
+    <div class="converter-header">
+      <h1>JSON, <em class="italic">meet</em> CSV.</h1>
+      <p class="lead">Paste JSON on the left, get CSV on the right — or flip it. Handles nested objects and arrays automatically.</p>
+    </div>
+
+    <div class="options-row">
+      <div class="option">
+        <label>Direction</label>
+        <select id="direction">
+          <option value="json-to-csv" selected>JSON → CSV</option>
+          <option value="csv-to-json">CSV → JSON</option>
+        </select>
+      </div>
+      <div class="option">
+        <label>CSV delimiter</label>
+        <select id="delimiter">
+          <option value="," selected>Comma (,)</option>
+          <option value=";">Semicolon (;)</option>
+          <option value="	">Tab</option>
+          <option value="|">Pipe (|)</option>
+        </select>
+      </div>
+      <div class="option">
+        <label>Flatten nested objects</label>
+        <select id="flatten">
+          <option value="true" selected>Yes — use dot notation</option>
+          <option value="false">No — stringify them</option>
+        </select>
+      </div>
+      <div style="display:flex; gap:0.5rem; align-items:flex-end;">
+        <button class="btn btn-primary" id="convertBtn">Convert →</button>
+        <button class="btn btn-secondary" id="sampleBtn">Try sample</button>
+      </div>
+    </div>
+
+    <div class="textarea-grid">
+      <div class="textarea-panel">
+        <div class="textarea-header">
+          <span class="label" id="inputLabel">JSON Input</span>
+          <div class="actions">
+            <button class="textarea-btn" id="pasteBtn">Paste</button>
+            <button class="textarea-btn" id="clearInputBtn">Clear</button>
+          </div>
+        </div>
+        <div class="textarea-body">
+          <textarea id="input" placeholder='Paste your JSON here, e.g. [{"name":"Ada","role":"Engineer"}]' spellcheck="false"></textarea>
+        </div>
+      </div>
+      <div class="textarea-panel">
+        <div class="textarea-header">
+          <span class="label" id="outputLabel">CSV Output</span>
+          <div class="actions">
+            <button class="textarea-btn" id="copyBtn">Copy</button>
+            <button class="textarea-btn" id="downloadBtn">Download</button>
+          </div>
+        </div>
+        <div class="textarea-body">
+          <textarea id="output" readonly placeholder="Output appears here…" spellcheck="false"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <section class="info-section">
+      <h2>Why convert between JSON and CSV?</h2>
+      <p>JSON is the web's favorite data format — hierarchical, expressive, and perfect for APIs. CSV is the universal spreadsheet format — flat, familiar, and openable by every data tool on earth. Moving between them is one of the most common data tasks, and this tool does it locally with nothing uploaded.</p>
+
+      <h3>Nested objects, handled</h3>
+      <p>When you convert JSON with nested structure to CSV, there's no single "right" answer — CSV doesn't have nesting. By default we flatten nested keys using dot notation (so <code>user.profile.name</code> becomes a column). Toggle the option to instead stringify nested values as JSON strings.</p>
+
+      <h2>FAQ</h2>
+      <details class="faq-item" open><summary>Does this work for huge files?</summary><p>Up to a few million rows, yes. Everything runs in memory on your device.</p></details>
+      <details class="faq-item"><summary>Will my data be sent anywhere?</summary><p>No. This is a pure JavaScript parser. Check your browser's Network tab — not a single byte leaves your device during conversion.</p></details>
+      <details class="faq-item"><summary>What about CSV quirks like quotes and commas inside fields?</summary><p>Values containing delimiters, quotes, or newlines are automatically quoted and escaped per RFC 4180.</p></details>
+    </section>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid footer-grid-5">
+      <div class="footer-brand"><div class="brand"><span class="brand-mark">DJ</span><span>Desi Jugad</span></div><p>Free, private file conversion for everyone.</p></div>
+      <div class="footer-col"><h5>Tools</h5><ul><li><a href="heic-to-jpg.html">HEIC to JPG</a></li><li><a href="image-converter.html">Image Converter</a></li><li><a href="json-to-yaml.html">JSON to YAML</a></li><li><a href="csv-to-excel.html">CSV to Excel</a></li></ul></div>
+      <div class="footer-col"><h5>AI Studio</h5><ul><li><a href="../ai/image.html">AI Images</a></li><li><a href="../ai/video.html">AI Video</a></li><li><a href="../ai/music.html">AI Music</a></li><li><a href="../ai/music-video.html">Music Videos</a></li><li><a href="../ai/writer.html">AI Writer</a></li><li><a href="../ai/photo-studio.html">Photo Studio</a></li></ul></div><div class="footer-col"><h5>Company</h5><ul><li><a href="../about.html">About</a></li><li><a href="../ai/">AI Studio <span class="badge-new">NEW</span></a></li>
+      <li><a href="../blog/">Blog</a></li><li><a href="../privacy.html">Privacy</a></li><li><a href="../terms.html">Terms</a></li></ul></div>
+      <div class="footer-col"><h5>Help</h5><ul><li><a href="../contact.html">Contact</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><div>© <span data-year>2026</span> Desi Jugad.</div><div class="made-in"><span class="flag-in"></span>Made in India, built for the world.</div></div>
+  </div>
+</footer>
+
+<script src="../assets/js/main.js"></script>
+<script>
+(function() {
+  const direction = document.getElementById('direction');
+  const delimiter = document.getElementById('delimiter');
+  const flatten = document.getElementById('flatten');
+  const input = document.getElementById('input');
+  const output = document.getElementById('output');
+  const inputLabel = document.getElementById('inputLabel');
+  const outputLabel = document.getElementById('outputLabel');
+
+  direction.addEventListener('change', () => {
+    if (direction.value === 'json-to-csv') {
+      inputLabel.textContent = 'JSON Input';
+      outputLabel.textContent = 'CSV Output';
+      input.placeholder = 'Paste your JSON here, e.g. [{"name":"Ada","role":"Engineer"}]';
+    } else {
+      inputLabel.textContent = 'CSV Input';
+      outputLabel.textContent = 'JSON Output';
+      input.placeholder = 'Paste your CSV here, e.g.\nname,role\nAda,Engineer';
+    }
+    output.value = '';
+  });
+
+  function flattenObj(obj, prefix = '', res = {}) {
+    for (const k in obj) {
+      const v = obj[k];
+      const newKey = prefix ? prefix + '.' + k : k;
+      if (v !== null && typeof v === 'object' && !Array.isArray(v)) {
+        flattenObj(v, newKey, res);
+      } else if (Array.isArray(v)) {
+        res[newKey] = JSON.stringify(v);
+      } else {
+        res[newKey] = v;
+      }
+    }
+    return res;
+  }
+
+  function jsonToCsv(jsonStr, delim, doFlatten) {
+    const data = JSON.parse(jsonStr);
+    const arr = Array.isArray(data) ? data : [data];
+    if (!arr.length) return '';
+    const processed = doFlatten ? arr.map(r => flattenObj(r)) : arr.map(r => {
+      const out = {};
+      for (const k in r) {
+        const v = r[k];
+        out[k] = (v !== null && typeof v === 'object') ? JSON.stringify(v) : v;
+      }
+      return out;
+    });
+
+    const keys = [...new Set(processed.flatMap(r => Object.keys(r)))];
+    const escape = (val) => {
+      if (val === null || val === undefined) return '';
+      const s = String(val);
+      if (s.includes(delim) || s.includes('"') || s.includes('\n') || s.includes('\r')) {
+        return '"' + s.replace(/"/g, '""') + '"';
+      }
+      return s;
+    };
+    const rows = [keys.map(escape).join(delim)];
+    processed.forEach(r => rows.push(keys.map(k => escape(r[k])).join(delim)));
+    return rows.join('\n');
+  }
+
+  function parseCsvLine(line, delim) {
+    const res = [];
+    let cur = '', inQ = false;
+    for (let i = 0; i < line.length; i++) {
+      const c = line[i];
+      if (inQ) {
+        if (c === '"') {
+          if (line[i + 1] === '"') { cur += '"'; i++; }
+          else inQ = false;
+        } else cur += c;
+      } else {
+        if (c === '"') inQ = true;
+        else if (c === delim) { res.push(cur); cur = ''; }
+        else cur += c;
+      }
+    }
+    res.push(cur);
+    return res;
+  }
+
+  function csvToJson(csvStr, delim) {
+    const lines = csvStr.replace(/\r\n/g, '\n').split('\n').filter(l => l.length);
+    if (!lines.length) return '[]';
+    const headers = parseCsvLine(lines[0], delim);
+    const rows = lines.slice(1).map(line => {
+      const fields = parseCsvLine(line, delim);
+      const obj = {};
+      headers.forEach((h, i) => {
+        let v = fields[i] === undefined ? '' : fields[i];
+        // Attempt to coerce numbers and booleans
+        if (v === 'true') v = true;
+        else if (v === 'false') v = false;
+        else if (v === 'null') v = null;
+        else if (v !== '' && !isNaN(v) && !/^0\d/.test(v)) v = Number(v);
+        obj[h] = v;
+      });
+      return obj;
+    });
+    return JSON.stringify(rows, null, 2);
+  }
+
+  document.getElementById('convertBtn').addEventListener('click', () => {
+    const delim = delimiter.value;
+    const doFlatten = flatten.value === 'true';
+    try {
+      if (direction.value === 'json-to-csv') {
+        output.value = jsonToCsv(input.value, delim, doFlatten);
+      } else {
+        output.value = csvToJson(input.value, delim);
+      }
+      showToast('Converted', 'success', 1600);
+    } catch (err) {
+      output.value = '// Error: ' + err.message;
+      showToast('Invalid input', 'error');
+    }
+  });
+
+  document.getElementById('sampleBtn').addEventListener('click', () => {
+    if (direction.value === 'json-to-csv') {
+      input.value = JSON.stringify([
+        { id: 1, name: "Ada Lovelace", email: "ada@example.com", role: "Engineer", active: true },
+        { id: 2, name: "Alan Turing", email: "alan@example.com", role: "Cryptographer", active: true },
+        { id: 3, name: "Grace Hopper", email: "grace@example.com", role: "Admiral", active: false }
+      ], null, 2);
+    } else {
+      input.value = "id,name,email,role\n1,Ada Lovelace,ada@example.com,Engineer\n2,Alan Turing,alan@example.com,Cryptographer";
+    }
+  });
+
+  document.getElementById('clearInputBtn').addEventListener('click', () => { input.value = ''; output.value = ''; });
+
+  document.getElementById('pasteBtn').addEventListener('click', async () => {
+    try {
+      const text = await navigator.clipboard.readText();
+      input.value = text;
+    } catch {
+      showToast('Paste blocked by browser', 'error');
+    }
+  });
+
+  document.getElementById('copyBtn').addEventListener('click', async () => {
+    if (!output.value) return;
+    const ok = await copyToClipboard(output.value);
+    showToast(ok ? 'Copied!' : 'Copy failed', ok ? 'success' : 'error');
+  });
+
+  document.getElementById('downloadBtn').addEventListener('click', () => {
+    if (!output.value) return;
+    const ext = direction.value === 'json-to-csv' ? 'csv' : 'json';
+    const mime = ext === 'csv' ? 'text/csv' : 'application/json';
+    downloadBlob(new Blob([output.value], { type: mime }), `converted.${ext}`);
+  });
+})();
+</script>
+</body>
+</html>
