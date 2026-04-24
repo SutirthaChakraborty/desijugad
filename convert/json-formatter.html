@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/img/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/img/apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JSON Formatter & Validator — Beautify & Minify JSON Free | Desi Jugad</title>
+<meta name="description" content="Format, validate, beautify, and minify JSON online. Get instant error messages with line numbers. 100% client-side — your data stays private.">
+<meta name="keywords" content="JSON formatter, JSON validator, beautify JSON, minify JSON, JSON viewer, JSON linter, format JSON online">
+<link rel="canonical" href="https://desijugad.co.in/convert/json-formatter.html">
+<meta property="og:title" content="JSON Formatter & Validator — Beautify, Minify, Validate">
+<meta property="og:description" content="Format and validate JSON instantly in your browser. No data leaves your device.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,30..100;1,9..144,300..700,30..100&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+<style>
+  .editor-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+  }
+  @media (max-width: 720px) { .editor-grid { grid-template-columns: 1fr; } }
+  .editor-pane { display: flex; flex-direction: column; gap: 0.75rem; }
+  .editor-label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-muted);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .code-area {
+    width: 100%;
+    min-height: 360px;
+    padding: 1rem;
+    background: var(--surface);
+    border: 1.5px solid var(--line);
+    border-radius: var(--radius);
+    font-family: var(--font-mono);
+    font-size: 0.87rem;
+    line-height: 1.65;
+    resize: vertical;
+    color: var(--ink);
+    transition: border-color 0.2s;
+  }
+  .code-area:focus { outline: none; border-color: var(--indigo); }
+  .code-area.error { border-color: var(--danger); }
+  .code-area.success { border-color: var(--success); }
+  .error-msg {
+    font-size: 0.85rem;
+    color: var(--danger);
+    padding: 0.6rem 0.9rem;
+    background: #FEF2F1;
+    border: 1px solid #F5C6C3;
+    border-radius: 8px;
+    font-family: var(--font-mono);
+    display: none;
+  }
+  .tool-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 1rem;
+  }
+  .stats-bar {
+    font-size: 0.82rem;
+    color: var(--ink-muted);
+    font-family: var(--font-mono);
+    padding: 0.5rem 0;
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="../" class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="../#converters">Converters</a></li>
+      <li><a href="../ai/">AI Studio <span class="badge-new">NEW</span></a></li>
+      <li><a href="../blog/">Blog</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../#converters" class="nav-cta">All tools</a></li>
+    </ul>
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</header>
+
+<main class="converter-page">
+  <div class="container">
+    <nav class="breadcrumb">
+      <a href="../">Home</a><span class="sep">/</span>
+      <a href="../#converters">Converters</a><span class="sep">/</span>
+      <span>JSON Formatter</span>
+    </nav>
+
+    <div class="converter-header">
+      <h1>JSON formatter <em class="italic">&amp; validator.</em></h1>
+      <p class="lead">Paste raw JSON, get it instantly beautified, minified, or validated — with precise error messages. Zero data leaves your browser.</p>
+    </div>
+
+    <div class="tool-bar">
+      <button class="btn btn-primary" id="formatBtn">✨ Beautify</button>
+      <button class="btn btn-secondary" id="minifyBtn">⚡ Minify</button>
+      <button class="btn btn-secondary" id="validateBtn">✅ Validate</button>
+      <button class="btn btn-secondary" id="clearBtn">🗑 Clear</button>
+      <button class="btn btn-secondary" id="sampleBtn">📋 Load sample</button>
+    </div>
+
+    <div class="editor-grid">
+      <div class="editor-pane">
+        <div class="editor-label">
+          <span>Input JSON</span>
+          <button class="btn btn-secondary" style="padding:0.3rem 0.7rem;font-size:0.8rem;" id="pasteBtn">Paste</button>
+        </div>
+        <textarea class="code-area" id="inputArea" placeholder='Paste your JSON here…&#10;&#10;{&#10;  "name": "Desi Jugad",&#10;  "type": "tool"&#10;}'></textarea>
+        <div class="error-msg" id="errorMsg"></div>
+      </div>
+
+      <div class="editor-pane">
+        <div class="editor-label">
+          <span>Output</span>
+          <button class="btn btn-secondary" style="padding:0.3rem 0.7rem;font-size:0.8rem;" id="copyBtn">Copy</button>
+        </div>
+        <textarea class="code-area" id="outputArea" placeholder="Formatted output will appear here…" readonly></textarea>
+        <div class="stats-bar" id="statsBar"></div>
+        <button class="btn btn-secondary" id="downloadBtn" style="display:none;align-self:flex-start;">Download .json</button>
+      </div>
+    </div>
+
+    <div style="margin-top:2rem;">
+      <div class="options-row">
+        <div class="option">
+          <label for="indentSelect">Indent</label>
+          <select id="indentSelect">
+            <option value="2" selected>2 spaces</option>
+            <option value="4">4 spaces</option>
+            <option value="	">1 tab</option>
+          </select>
+        </div>
+        <div class="option">
+          <label for="sortKeys">
+            <input type="checkbox" id="sortKeys" style="margin-right:0.3rem;"> Sort keys
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <section class="info-section">
+      <h2>Why use a JSON formatter?</h2>
+      <p>Raw JSON from APIs or config files is often minified — one long line with no whitespace. A formatter adds indentation to make it human-readable. A minifier does the reverse for smaller payload sizes in production.</p>
+      <h3>Validation</h3>
+      <p>The validator uses <code>JSON.parse()</code> — the same parser your JavaScript runtime uses — and reports the exact character position of any syntax error. Common mistakes it catches:</p>
+      <ul>
+        <li>Trailing commas after the last object key or array element.</li>
+        <li>Single-quoted strings (JSON requires double quotes).</li>
+        <li>Comments inside JSON (<code>// comment</code> is not valid JSON).</li>
+        <li>Unquoted keys.</li>
+        <li>Missing commas between key-value pairs.</li>
+      </ul>
+      <h2>FAQ</h2>
+      <details class="faq-item" open>
+        <summary>Is there a size limit?</summary>
+        <p>No hard limit. The formatter runs synchronously in JavaScript, so very large files (10 MB+) may briefly freeze the tab. For huge payloads, consider splitting the file first.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Does it handle JSON5 or JSONC (with comments)?</summary>
+        <p>Not currently — this tool uses the native <code>JSON.parse()</code> which only accepts strict JSON. JSON5/JSONC support is on the roadmap.</p>
+      </details>
+    </section>
+
+    <div class="related-tools">
+      <h3>Related tools</h3>
+      <div class="related-grid">
+        <a href="json-to-csv.html" class="related-card">📊 JSON to CSV</a>
+        <a href="json-to-yaml.html" class="related-card">⚙️ JSON to YAML</a>
+        <a href="xml-to-json.html" class="related-card">🔄 XML to JSON</a>
+        <a href="text-tools.html" class="related-card">🔤 Text Tools</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid footer-grid-5">
+      <div class="footer-brand">
+        <div class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></div>
+        <p>Free, private file conversion for everyone.</p>
+      </div>
+      <div class="footer-col"><h5>Data Tools</h5><ul><li><a href="json-formatter.html">JSON Formatter</a></li><li><a href="json-to-csv.html">JSON to CSV</a></li><li><a href="json-to-yaml.html">JSON to YAML</a></li><li><a href="xml-to-json.html">XML to JSON</a></li></ul></div>
+      <div class="footer-col"><h5>AI Studio</h5><ul><li><a href="../ai/writer.html">AI Writer</a></li><li><a href="../ai/image.html">AI Images</a></li></ul></div>
+      <div class="footer-col"><h5>Company</h5><ul><li><a href="../about.html">About</a></li><li><a href="../blog/">Blog</a></li><li><a href="../privacy.html">Privacy</a></li></ul></div>
+      <div class="footer-col"><h5>Help</h5><ul><li><a href="../contact.html">Contact</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <div>© <span data-year>2026</span> Desi Jugad.</div>
+      <div class="made-in"><span class="flag-in"></span>Made in India, built for the world.</div>
+    </div>
+  </div>
+</footer>
+
+<script src="../assets/js/main.js"></script>
+<script>
+(function() {
+  const inputArea  = document.getElementById('inputArea');
+  const outputArea = document.getElementById('outputArea');
+  const errorMsg   = document.getElementById('errorMsg');
+  const statsBar   = document.getElementById('statsBar');
+  const downloadBtn= document.getElementById('downloadBtn');
+
+  const SAMPLE = JSON.stringify({
+    "name": "Desi Jugad",
+    "version": "2.0",
+    "description": "Free, private file conversion tools",
+    "tools": ["Image Converter","PDF Merge","OCR","JSON Formatter"],
+    "metadata": { "language": "en", "region": "IN", "launched": 2024 },
+    "private": true
+  });
+
+  document.getElementById('sampleBtn').addEventListener('click', () => {
+    inputArea.value = SAMPLE;
+    runFormat();
+  });
+
+  document.getElementById('formatBtn').addEventListener('click', runFormat);
+  document.getElementById('minifyBtn').addEventListener('click', runMinify);
+  document.getElementById('validateBtn').addEventListener('click', runValidate);
+  document.getElementById('clearBtn').addEventListener('click', () => {
+    inputArea.value = ''; outputArea.value = ''; clearState();
+    statsBar.textContent = ''; downloadBtn.style.display = 'none';
+  });
+
+  document.getElementById('pasteBtn').addEventListener('click', async () => {
+    try {
+      const text = await navigator.clipboard.readText();
+      inputArea.value = text;
+      runFormat();
+    } catch { showToast('Could not access clipboard', 'error'); }
+  });
+
+  document.getElementById('copyBtn').addEventListener('click', async () => {
+    if (!outputArea.value) return;
+    const ok = await copyToClipboard(outputArea.value);
+    showToast(ok ? 'Copied!' : 'Copy failed', ok ? 'success' : 'error');
+  });
+
+  downloadBtn.addEventListener('click', () => {
+    if (!outputArea.value) return;
+    const blob = new Blob([outputArea.value], { type: 'application/json' });
+    downloadBlob(blob, 'formatted.json');
+  });
+
+  // Auto-format on input after a short debounce
+  let debounceTimer;
+  inputArea.addEventListener('input', () => {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => { if (inputArea.value.trim()) runFormat(); }, 600);
+  });
+
+  function clearState() {
+    inputArea.classList.remove('error','success');
+    outputArea.classList.remove('error','success');
+    errorMsg.style.display = 'none';
+  }
+
+  function runFormat() {
+    const raw = inputArea.value.trim();
+    if (!raw) return;
+    clearState();
+    try {
+      const parsed = JSON.parse(raw);
+      const indent = document.getElementById('indentSelect').value;
+      const sort = document.getElementById('sortKeys').checked;
+      const sorted = sort ? sortObjectKeys(parsed) : parsed;
+      const formatted = JSON.stringify(sorted, null, indent);
+      outputArea.value = formatted;
+      inputArea.classList.add('success');
+      outputArea.classList.add('success');
+      updateStats(raw, formatted);
+      downloadBtn.style.display = '';
+    } catch (e) {
+      showError(e.message);
+    }
+  }
+
+  function runMinify() {
+    const raw = inputArea.value.trim();
+    if (!raw) return;
+    clearState();
+    try {
+      const parsed = JSON.parse(raw);
+      const minified = JSON.stringify(parsed);
+      outputArea.value = minified;
+      inputArea.classList.add('success');
+      outputArea.classList.add('success');
+      updateStats(raw, minified);
+      downloadBtn.style.display = '';
+    } catch (e) {
+      showError(e.message);
+    }
+  }
+
+  function runValidate() {
+    const raw = inputArea.value.trim();
+    if (!raw) return;
+    clearState();
+    try {
+      JSON.parse(raw);
+      inputArea.classList.add('success');
+      outputArea.value = '✅ Valid JSON!';
+      showToast('Valid JSON!', 'success');
+    } catch (e) {
+      showError(e.message);
+    }
+  }
+
+  function showError(msg) {
+    inputArea.classList.add('error');
+    errorMsg.textContent = '✗ ' + msg;
+    errorMsg.style.display = '';
+    outputArea.value = '';
+    downloadBtn.style.display = 'none';
+    statsBar.textContent = '';
+  }
+
+  function updateStats(raw, out) {
+    let parsed;
+    try { parsed = JSON.parse(raw); } catch { return; }
+    const keys = countKeys(parsed);
+    statsBar.textContent = `${out.length.toLocaleString()} chars · ${keys} keys`;
+  }
+
+  function countKeys(obj, depth = 0) {
+    if (depth > 10) return 0;
+    if (typeof obj !== 'object' || obj === null) return 0;
+    let count = Object.keys(obj).length;
+    for (const v of Object.values(obj)) count += countKeys(v, depth + 1);
+    return count;
+  }
+
+  function sortObjectKeys(obj) {
+    if (Array.isArray(obj)) return obj.map(sortObjectKeys);
+    if (typeof obj === 'object' && obj !== null) {
+      const sorted = {};
+      for (const k of Object.keys(obj).sort()) sorted[k] = sortObjectKeys(obj[k]);
+      return sorted;
+    }
+    return obj;
+  }
+})();
+</script>
+</body>
+</html>

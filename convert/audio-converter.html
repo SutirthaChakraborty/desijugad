@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/img/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/img/apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Audio Converter — MP3, WAV, OGG Free & Private | Desi Jugad</title>
+<meta name="description" content="Convert audio files between MP3 and WAV formats free, in your browser. No upload needed. Works with MP3, WAV, OGG, M4A, FLAC and more.">
+<meta name="keywords" content="audio converter, MP3 to WAV, WAV to MP3, convert audio online, free audio converter, in-browser audio">
+<link rel="canonical" href="https://desijugad.co.in/convert/audio-converter.html">
+<meta property="og:title" content="Audio Converter — Free In-Browser MP3 & WAV Conversion">
+<meta property="og:description" content="Convert audio between MP3, WAV, and OGG in your browser. No upload, no account.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,30..100;1,9..144,300..700,30..100&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="../" class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="../#converters">Converters</a></li>
+      <li><a href="../ai/">AI Studio <span class="badge-new">NEW</span></a></li>
+      <li><a href="../blog/">Blog</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../#converters" class="nav-cta">All tools</a></li>
+    </ul>
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</header>
+
+<main class="converter-page">
+  <div class="container">
+    <nav class="breadcrumb">
+      <a href="../">Home</a><span class="sep">/</span>
+      <a href="../#converters">Converters</a><span class="sep">/</span>
+      <span>Audio Converter</span>
+    </nav>
+
+    <div class="converter-header">
+      <h1>Audio converter, <em class="italic">right in your browser.</em></h1>
+      <p class="lead">Convert MP3, WAV, OGG, M4A, FLAC, and more — to MP3 or WAV output. Uses the Web Audio API and lame.js encoder, no server required.</p>
+    </div>
+
+    <div class="dropzone" id="dropzone">
+      <div class="dropzone-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13M9 18a3 3 0 01-3 3 3 3 0 01-3-3 3 3 0 013-3 3 3 0 013 3zm12-2a3 3 0 01-3 3 3 3 0 01-3-3 3 3 0 013-3 3 3 0 013 3z"/></svg>
+      </div>
+      <h2>Drop audio files here</h2>
+      <p class="sub">MP3, WAV, OGG, M4A, FLAC — convert to MP3 or WAV</p>
+      <input type="file" id="fileInput" class="dropzone-input" accept="audio/*" multiple>
+      <button class="btn btn-primary" id="pickBtn">Choose audio files</button>
+      <small>No upload. No sign-up. Runs locally.</small>
+
+      <div class="options-row" style="margin-top:2rem;">
+        <div class="option">
+          <label for="outputFormat">Output format</label>
+          <select id="outputFormat">
+            <option value="mp3">MP3</option>
+            <option value="wav">WAV</option>
+          </select>
+        </div>
+        <div class="option">
+          <label for="mp3Bitrate">MP3 Bitrate</label>
+          <select id="mp3Bitrate">
+            <option value="128">128 kbps</option>
+            <option value="192" selected>192 kbps</option>
+            <option value="256">256 kbps</option>
+            <option value="320">320 kbps</option>
+          </select>
+        </div>
+        <div class="option">
+          <label for="trimStart">Trim start (sec)</label>
+          <input type="number" id="trimStart" min="0" step="0.1" placeholder="0">
+        </div>
+        <div class="option">
+          <label for="trimEnd">Trim end (sec)</label>
+          <input type="number" id="trimEnd" min="0" step="0.1" placeholder="Full length">
+        </div>
+      </div>
+    </div>
+
+    <div id="fileList" class="file-list"></div>
+
+    <div class="convert-btn-row" id="actionRow">
+      <button class="btn btn-secondary" id="clearBtn">Clear all</button>
+      <button class="btn btn-primary" id="convertAllBtn" disabled>Convert audio</button>
+    </div>
+
+    <div id="progressBox" style="display:none;margin:1.5rem 0;padding:1.25rem;background:var(--bg-alt);border:1px solid var(--line);border-radius:var(--radius);">
+      <div style="font-weight:500;margin-bottom:0.75rem;" id="progressLabel">Loading encoder…</div>
+      <div style="height:6px;background:var(--line);border-radius:999px;overflow:hidden;">
+        <div id="progressBar" style="height:100%;width:0%;background:var(--indigo);transition:width 0.3s;border-radius:999px;"></div>
+      </div>
+    </div>
+
+    <section class="info-section">
+      <h2>How in-browser audio conversion works</h2>
+      <p>Your browser's <strong>Web Audio API</strong> can decode any audio format it natively supports into raw PCM data (uncompressed samples). This tool then re-encodes that PCM data into your chosen output format:</p>
+      <ul>
+        <li><strong>WAV output</strong> — PCM data is wrapped in a standard RIFF/WAV container. Lossless, large files.</li>
+        <li><strong>MP3 output</strong> — PCM is fed into <a href="https://github.com/nicktindall/lamejs" rel="noopener" target="_blank" style="color:var(--indigo);">lame.js</a>, a WebAssembly port of the LAME MP3 encoder. Result is a proper VBR/CBR MP3 file.</li>
+      </ul>
+      <p><strong>Note:</strong> Browser audio decoding supports MP3, WAV, OGG, AAC/M4A, FLAC, and OPUS depending on your browser. WebM, MKV, and exotic formats may not decode — try Chrome for the widest support.</p>
+      <h3>Trim audio while converting</h3>
+      <p>Set <strong>Trim start</strong> and <strong>Trim end</strong> in seconds to extract a clip. Leave blank to convert the full file. Great for cutting intros, ringtones, or podcast clips.</p>
+      <h2>FAQ</h2>
+      <details class="faq-item" open>
+        <summary>Which formats are supported as input?</summary>
+        <p>Any format your browser's audio decoder supports: MP3, WAV, OGG, FLAC, AAC/M4A, OPUS. The decoder is built into the browser — no plugin needed.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Is there quality loss when converting to WAV?</summary>
+        <p>When decoding to WAV, the process is lossless from the browser's perspective — you get the decoded PCM at 16-bit/44.1 kHz. If the source was MP3, the original lossy compression was already applied, but no additional quality is lost.</p>
+      </details>
+      <details class="faq-item">
+        <summary>What is the maximum file size?</summary>
+        <p>Limited only by your device's RAM. Audio is decoded into raw PCM which can be large — a 10-minute stereo track is ~100 MB in memory. Most modern devices handle this fine.</p>
+      </details>
+    </section>
+
+    <div class="related-tools">
+      <h3>Related tools</h3>
+      <div class="related-grid">
+        <a href="srt-to-vtt.html" class="related-card">📝 SRT ⇄ VTT Subtitles</a>
+        <a href="../ai/music.html" class="related-card">🎵 AI Music Studio</a>
+        <a href="../ai/music-video.html" class="related-card">🎬 AI Music Video Maker</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid footer-grid-5">
+      <div class="footer-brand">
+        <div class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></div>
+        <p>Free, private file conversion for everyone.</p>
+      </div>
+      <div class="footer-col"><h5>Tools</h5><ul><li><a href="image-converter.html">Image Converter</a></li><li><a href="audio-converter.html">Audio Converter</a></li><li><a href="srt-to-vtt.html">SRT ⇄ VTT</a></li><li><a href="pdf-merge.html">PDF Merge</a></li></ul></div>
+      <div class="footer-col"><h5>AI Studio</h5><ul><li><a href="../ai/music.html">AI Music</a></li><li><a href="../ai/video.html">AI Video</a></li><li><a href="../ai/music-video.html">Music Videos</a></li></ul></div>
+      <div class="footer-col"><h5>Company</h5><ul><li><a href="../about.html">About</a></li><li><a href="../blog/">Blog</a></li><li><a href="../privacy.html">Privacy</a></li></ul></div>
+      <div class="footer-col"><h5>Help</h5><ul><li><a href="../contact.html">Contact</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <div>© <span data-year>2026</span> Desi Jugad.</div>
+      <div class="made-in"><span class="flag-in"></span>Made in India, built for the world.</div>
+    </div>
+  </div>
+</footer>
+
+<script src="../assets/js/main.js"></script>
+<!-- lame.js loaded on demand -->
+<script>
+(function() {
+  const LAME_CDN = 'https://cdn.jsdelivr.net/npm/lamejs@1.2.1/lame.min.js';
+
+  const dropzone     = document.getElementById('dropzone');
+  const fileInput    = document.getElementById('fileInput');
+  const pickBtn      = document.getElementById('pickBtn');
+  const fileList     = document.getElementById('fileList');
+  const clearBtn     = document.getElementById('clearBtn');
+  const convertAllBtn= document.getElementById('convertAllBtn');
+  const progressBox  = document.getElementById('progressBox');
+  const progressLabel= document.getElementById('progressLabel');
+  const progressBar  = document.getElementById('progressBar');
+
+  const queued = [];
+  let lameLoaded = false;
+
+  pickBtn.addEventListener('click', () => fileInput.click());
+  fileInput.addEventListener('change', e => stageFiles(e.target.files));
+  ['dragenter','dragover'].forEach(evt => dropzone.addEventListener(evt, e => { e.preventDefault(); dropzone.classList.add('drag-over'); }));
+  ['dragleave','drop'].forEach(evt => dropzone.addEventListener(evt, e => { e.preventDefault(); dropzone.classList.remove('drag-over'); }));
+  dropzone.addEventListener('drop', e => stageFiles(e.dataTransfer.files));
+
+  function stageFiles(files) {
+    if (!files || !files.length) return;
+    for (const file of files) {
+      if (!file.type.startsWith('audio/')) { showToast(`Skipped ${file.name} — not an audio file`, 'error'); continue; }
+      const srcExt = (file.name.split('.').pop() || 'AUD').toUpperCase().slice(0,4);
+      const itemId = 'a' + Date.now() + Math.random().toString(36).slice(2,6);
+      const item = document.createElement('div');
+      item.className = 'file-item'; item.id = itemId;
+      item.innerHTML = `
+        <div class="file-item-icon">🎵</div>
+        <div><div class="file-item-name">${file.name}</div><div class="file-item-meta"><span>${formatBytes(file.size)}</span></div></div>
+        <span class="file-item-status">Queued</span>
+        <button class="file-item-action secondary" data-remove>Remove</button>`;
+      item.querySelector('[data-remove]').addEventListener('click', () => {
+        item.remove();
+        const i = queued.findIndex(q => q.itemId === itemId);
+        if (i !== -1) queued.splice(i, 1);
+        refreshActionRow();
+      });
+      fileList.appendChild(item);
+      queued.push({ file, itemId });
+    }
+    refreshActionRow();
+  }
+
+  function refreshActionRow() {
+    convertAllBtn.disabled = !queued.length;
+    convertAllBtn.textContent = queued.length ? `Convert ${queued.length} file${queued.length !== 1 ? 's' : ''}` : 'Convert audio';
+  }
+
+  convertAllBtn.addEventListener('click', async () => {
+    if (!queued.length) return;
+    const fmt = document.getElementById('outputFormat').value;
+
+    // Load lame.js for MP3 if not yet loaded
+    if (fmt === 'mp3' && !lameLoaded) {
+      progressBox.style.display = '';
+      progressLabel.textContent = 'Loading MP3 encoder (lame.js)…';
+      progressBar.style.width = '0%';
+      try {
+        await loadScript(LAME_CDN);
+        lameLoaded = true;
+      } catch(e) {
+        progressBox.style.display = 'none';
+        showToast('Failed to load MP3 encoder. Check your connection.', 'error');
+        return;
+      }
+    }
+
+    const batch = queued.splice(0);
+    convertAllBtn.disabled = true;
+    for (let i = 0; i < batch.length; i++) {
+      progressBox.style.display = '';
+      progressLabel.textContent = `Converting ${batch[i].file.name}… (${i+1}/${batch.length})`;
+      progressBar.style.width = Math.round((i / batch.length) * 100) + '%';
+      await convertOne(batch[i].file, batch[i].itemId, fmt);
+    }
+    progressBar.style.width = '100%';
+    progressLabel.textContent = 'Done!';
+    setTimeout(() => { progressBox.style.display = 'none'; }, 1500);
+    convertAllBtn.disabled = false;
+    refreshActionRow();
+  });
+
+  async function convertOne(file, itemId, fmt) {
+    const el = document.getElementById(itemId);
+    el.querySelector('.file-item-status').textContent = 'Decoding…';
+
+    const trimStart = parseFloat(document.getElementById('trimStart').value) || 0;
+    const trimEndVal = parseFloat(document.getElementById('trimEnd').value) || 0;
+
+    try {
+      // Decode audio to PCM
+      const arrayBuffer = await file.arrayBuffer();
+      const audioCtx = new (window.AudioContext || window.webkitAudioContext)({ sampleRate: 44100 });
+      const audioBuffer = await audioCtx.decodeAudioData(arrayBuffer);
+      await audioCtx.close();
+
+      const sampleRate = audioBuffer.sampleRate;
+      const duration = audioBuffer.duration;
+      const startSec = Math.max(0, Math.min(trimStart, duration));
+      const endSec   = trimEndVal > 0 ? Math.min(trimEndVal, duration) : duration;
+      const startSample = Math.floor(startSec * sampleRate);
+      const endSample   = Math.floor(endSec   * sampleRate);
+      const numSamples  = endSample - startSample;
+
+      // Get PCM channels
+      const ch0 = audioBuffer.getChannelData(0).slice(startSample, endSample);
+      const ch1 = audioBuffer.numberOfChannels > 1 ? audioBuffer.getChannelData(1).slice(startSample, endSample) : ch0;
+
+      el.querySelector('.file-item-status').textContent = 'Encoding…';
+
+      let blob;
+      const baseName = file.name.replace(/\.[^.]+$/, '');
+
+      if (fmt === 'wav') {
+        blob = pcmToWav(ch0, ch1, sampleRate);
+      } else {
+        // MP3 via lamejs
+        const bitrate = parseInt(document.getElementById('mp3Bitrate').value) || 192;
+        const mp3enc = new lamejs.Mp3Encoder(2, sampleRate, bitrate);
+        const leftPCM  = floatTo16Bit(ch0);
+        const rightPCM = floatTo16Bit(ch1);
+        const chunkSize = 1152;
+        const mp3Data = [];
+        for (let i = 0; i < numSamples; i += chunkSize) {
+          const left  = leftPCM.subarray(i, i + chunkSize);
+          const right = rightPCM.subarray(i, i + chunkSize);
+          const mp3buf = mp3enc.encodeBuffer(left, right);
+          if (mp3buf.length > 0) mp3Data.push(mp3buf);
+        }
+        const final = mp3enc.flush();
+        if (final.length > 0) mp3Data.push(final);
+        blob = new Blob(mp3Data, { type: 'audio/mpeg' });
+      }
+
+      const newName = baseName + '.' + fmt;
+      downloadBlob(blob, newName);
+
+      el.innerHTML = `
+        <div class="file-item-icon" style="background:#E0F4EA;color:var(--success);">🎵</div>
+        <div>
+          <div class="file-item-name">${newName}</div>
+          <div class="file-item-meta"><span>${formatBytes(blob.size)}</span><span>${duration.toFixed(1)}s</span></div>
+        </div>
+        <span class="file-item-status done">✓ Downloaded</span>`;
+    } catch (err) {
+      console.error(err);
+      el.querySelector('.file-item-status').textContent = '✗ Failed';
+      showToast(`Failed: ${file.name} — ${err.message}`, 'error');
+    }
+  }
+
+  function floatTo16Bit(floatArr) {
+    const out = new Int16Array(floatArr.length);
+    for (let i = 0; i < floatArr.length; i++) {
+      const s = Math.max(-1, Math.min(1, floatArr[i]));
+      out[i] = s < 0 ? s * 32768 : s * 32767;
+    }
+    return out;
+  }
+
+  function pcmToWav(ch0, ch1, sampleRate) {
+    const numFrames = ch0.length;
+    const numChannels = 2;
+    const bitsPerSample = 16;
+    const byteRate = sampleRate * numChannels * (bitsPerSample / 8);
+    const blockAlign = numChannels * (bitsPerSample / 8);
+    const dataLen = numFrames * numChannels * (bitsPerSample / 8);
+    const buffer = new ArrayBuffer(44 + dataLen);
+    const view = new DataView(buffer);
+    const writeStr = (offset, str) => { for (let i = 0; i < str.length; i++) view.setUint8(offset + i, str.charCodeAt(i)); };
+
+    writeStr(0, 'RIFF');
+    view.setUint32(4, 36 + dataLen, true);
+    writeStr(8, 'WAVE');
+    writeStr(12, 'fmt ');
+    view.setUint32(16, 16, true);
+    view.setUint16(20, 1, true);          // PCM
+    view.setUint16(22, numChannels, true);
+    view.setUint32(24, sampleRate, true);
+    view.setUint32(28, byteRate, true);
+    view.setUint16(32, blockAlign, true);
+    view.setUint16(34, bitsPerSample, true);
+    writeStr(36, 'data');
+    view.setUint32(40, dataLen, true);
+
+    let offset = 44;
+    for (let i = 0; i < numFrames; i++) {
+      const l = Math.max(-1, Math.min(1, ch0[i]));
+      const r = Math.max(-1, Math.min(1, ch1[i]));
+      view.setInt16(offset,     l < 0 ? l * 32768 : l * 32767, true); offset += 2;
+      view.setInt16(offset,     r < 0 ? r * 32768 : r * 32767, true); offset += 2;
+    }
+    return new Blob([buffer], { type: 'audio/wav' });
+  }
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  clearBtn.addEventListener('click', () => {
+    fileList.innerHTML = ''; queued.length = 0;
+    convertAllBtn.disabled = true; convertAllBtn.textContent = 'Convert audio';
+    fileInput.value = '';
+  });
+})();
+</script>
+</body>
+</html>

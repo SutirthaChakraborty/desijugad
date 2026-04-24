@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/img/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/img/apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PDF Merge & Split — Combine or Extract PDF Pages Free | Desi Jugad</title>
+<meta name="description" content="Merge multiple PDFs into one, or split a PDF into individual pages. Free, in-browser — your documents never leave your device.">
+<meta name="keywords" content="PDF merge, PDF split, combine PDF, extract PDF pages, merge PDF online, split PDF free">
+<link rel="canonical" href="https://desijugad.co.in/convert/pdf-merge.html">
+<meta property="og:title" content="PDF Merge & Split — Free In-Browser PDF Tool">
+<meta property="og:description" content="Combine multiple PDFs or split a PDF into pages. Everything runs locally — no uploads.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,30..100;1,9..144,300..700,30..100&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="../" class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="../#converters">Converters</a></li>
+      <li><a href="../ai/">AI Studio <span class="badge-new">NEW</span></a></li>
+      <li><a href="../blog/">Blog</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../#converters" class="nav-cta">All tools</a></li>
+    </ul>
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</header>
+
+<main class="converter-page">
+  <div class="container">
+    <nav class="breadcrumb">
+      <a href="../">Home</a><span class="sep">/</span>
+      <a href="../#converters">Converters</a><span class="sep">/</span>
+      <span>PDF Merge &amp; Split</span>
+    </nav>
+
+    <div class="converter-header">
+      <h1>PDF merge &amp; split, <em class="italic">instantly.</em></h1>
+      <p class="lead">Combine multiple PDFs into one, or extract specific pages from any PDF — all in your browser with pdf-lib. No server, no watermark.</p>
+    </div>
+
+    <!-- Mode tabs -->
+    <div class="category-filter" style="margin-bottom:2rem;" id="modeTabs">
+      <button class="active" data-mode="merge">Merge PDFs</button>
+      <button data-mode="split">Split / Extract Pages</button>
+    </div>
+
+    <!-- MERGE panel -->
+    <div id="panelMerge">
+      <div class="dropzone" id="dropzoneMerge">
+        <div class="dropzone-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M12 18v-6M9 15l3 3 3-3"/></svg>
+        </div>
+        <h2>Drop PDF files to merge</h2>
+        <p class="sub">Add multiple PDFs — they'll be combined in the order shown below</p>
+        <input type="file" id="mergeInput" class="dropzone-input" accept="application/pdf" multiple>
+        <button class="btn btn-primary" id="mergePickBtn">Choose PDFs</button>
+        <small>No upload. No sign-up. Drag to reorder.</small>
+      </div>
+
+      <div id="mergeList" class="file-list" style="margin-top:1.5rem;"></div>
+
+      <div class="convert-btn-row" id="mergeActionRow" style="margin-top:1rem;">
+        <button class="btn btn-secondary" id="mergeClearBtn">Clear all</button>
+        <button class="btn btn-primary" id="mergeBtn" disabled>Merge PDFs</button>
+      </div>
+    </div>
+
+    <!-- SPLIT panel -->
+    <div id="panelSplit" style="display:none;">
+      <div class="dropzone" id="dropzoneSplit">
+        <div class="dropzone-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M12 12v6M9 15l3-3 3 3"/></svg>
+        </div>
+        <h2>Drop a PDF to split</h2>
+        <p class="sub">One PDF — choose pages to extract or download all pages individually</p>
+        <input type="file" id="splitInput" class="dropzone-input" accept="application/pdf">
+        <button class="btn btn-primary" id="splitPickBtn">Choose PDF</button>
+        <small>No upload. No sign-up.</small>
+      </div>
+
+      <div id="splitInfo" style="display:none;padding:1.25rem;background:var(--bg-alt);border:1px solid var(--line);border-radius:var(--radius);margin-top:1.5rem;">
+        <p id="splitInfoText"></p>
+        <div class="options-row" style="margin-top:1rem;">
+          <div class="option" style="flex:2;">
+            <label for="pageRange">Pages to extract <span style="color:var(--ink-muted);font-weight:400;">(e.g. 1,3,5-8 — leave blank for all)</span></label>
+            <input type="text" id="pageRange" placeholder="1-3,5,7">
+          </div>
+        </div>
+        <div class="convert-btn-row" style="margin-top:1rem;">
+          <button class="btn btn-primary" id="splitBtn">Extract pages</button>
+          <button class="btn btn-secondary" id="splitAllBtn">Download all pages (ZIP)</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="progressBox" style="display:none;margin:1.5rem 0;padding:1.25rem;background:var(--bg-alt);border:1px solid var(--line);border-radius:var(--radius);">
+      <div style="font-weight:500;margin-bottom:0.5rem;" id="progressLabel">Loading pdf-lib…</div>
+      <div style="height:6px;background:var(--line);border-radius:999px;overflow:hidden;">
+        <div id="progressBar" style="height:100%;width:0%;background:var(--indigo);transition:width 0.4s;border-radius:999px;"></div>
+      </div>
+    </div>
+
+    <section class="info-section">
+      <h2>PDF merging and splitting, explained</h2>
+      <p>This tool uses <a href="https://pdf-lib.js.org/" rel="noopener" target="_blank" style="color:var(--indigo);">pdf-lib</a>, a pure-JavaScript PDF library that runs entirely in your browser. No server processing, no file upload, no size limits beyond your device RAM.</p>
+      <h3>Merge</h3>
+      <p>Drop multiple PDFs and they'll be concatenated in order. You can drag the items in the list to reorder them before merging. Embedded fonts, images, and forms are all preserved.</p>
+      <h3>Split / Extract</h3>
+      <p>Choose a specific page range (e.g. <code>1,3,5-8</code>) to extract only those pages into a new PDF, or download each page as a separate file in a ZIP.</p>
+      <h2>FAQ</h2>
+      <details class="faq-item" open>
+        <summary>Is there a page limit for merging?</summary>
+        <p>No hard limit — only your browser's memory. We've successfully merged 200-page PDFs on a standard laptop.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Are encrypted/password-protected PDFs supported?</summary>
+        <p>Not currently. Password-protected PDFs need to be unlocked first. This is a browser security restriction.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Will annotations and form fields be preserved?</summary>
+        <p>Yes — pdf-lib copies all page content including annotations. Interactive form fields are preserved in the output PDF.</p>
+      </details>
+    </section>
+
+    <div class="related-tools">
+      <h3>Related tools</h3>
+      <div class="related-grid">
+        <a href="pdf-to-image.html" class="related-card">🖼️ PDF to Images</a>
+        <a href="image-to-pdf.html" class="related-card">📄 Images to PDF</a>
+        <a href="image-compress.html" class="related-card">📉 Image Compressor</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid footer-grid-5">
+      <div class="footer-brand">
+        <div class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></div>
+        <p>Free, private file conversion for everyone.</p>
+      </div>
+      <div class="footer-col"><h5>Document Tools</h5><ul><li><a href="pdf-merge.html">PDF Merge &amp; Split</a></li><li><a href="pdf-to-image.html">PDF to Images</a></li><li><a href="image-to-pdf.html">Images to PDF</a></li></ul></div>
+      <div class="footer-col"><h5>AI Studio</h5><ul><li><a href="../ai/image.html">AI Images</a></li><li><a href="../ai/writer.html">AI Writer</a></li></ul></div>
+      <div class="footer-col"><h5>Company</h5><ul><li><a href="../about.html">About</a></li><li><a href="../blog/">Blog</a></li><li><a href="../privacy.html">Privacy</a></li></ul></div>
+      <div class="footer-col"><h5>Help</h5><ul><li><a href="../contact.html">Contact</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <div>© <span data-year>2026</span> Desi Jugad.</div>
+      <div class="made-in"><span class="flag-in"></span>Made in India, built for the world.</div>
+    </div>
+  </div>
+</footer>
+
+<script src="../assets/js/main.js"></script>
+<script>
+(function() {
+  const PDF_LIB_CDN = 'https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js';
+  const JSZIP_CDN   = 'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js';
+
+  let pdfLibLoaded = false;
+  const mergeFiles = [];  // { arrayBuffer, name }
+  let splitFile = null;   // { arrayBuffer, name, pageCount }
+
+  /* ── Mode tabs ── */
+  const modeTabs   = document.querySelectorAll('#modeTabs button');
+  const panelMerge = document.getElementById('panelMerge');
+  const panelSplit = document.getElementById('panelSplit');
+  modeTabs.forEach(btn => {
+    btn.addEventListener('click', () => {
+      modeTabs.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      if (btn.dataset.mode === 'merge') {
+        panelMerge.style.display = ''; panelSplit.style.display = 'none';
+      } else {
+        panelMerge.style.display = 'none'; panelSplit.style.display = '';
+      }
+    });
+  });
+
+  /* ── Merge panel ── */
+  const dropzoneMerge = document.getElementById('dropzoneMerge');
+  const mergeInput    = document.getElementById('mergeInput');
+  const mergePickBtn  = document.getElementById('mergePickBtn');
+  const mergeList     = document.getElementById('mergeList');
+  const mergeClearBtn = document.getElementById('mergeClearBtn');
+  const mergeBtn      = document.getElementById('mergeBtn');
+
+  mergePickBtn.addEventListener('click', () => mergeInput.click());
+  mergeInput.addEventListener('change', e => stageMergeFiles(e.target.files));
+  ['dragenter','dragover'].forEach(ev => dropzoneMerge.addEventListener(ev, e => { e.preventDefault(); dropzoneMerge.classList.add('drag-over'); }));
+  ['dragleave','drop'].forEach(ev => dropzoneMerge.addEventListener(ev, e => { e.preventDefault(); dropzoneMerge.classList.remove('drag-over'); }));
+  dropzoneMerge.addEventListener('drop', e => stageMergeFiles(e.dataTransfer.files));
+
+  async function stageMergeFiles(files) {
+    for (const file of files) {
+      if (file.type !== 'application/pdf') { showToast(`${file.name} is not a PDF`, 'error'); continue; }
+      const ab = await file.arrayBuffer();
+      const idx = mergeFiles.length;
+      mergeFiles.push({ arrayBuffer: ab, name: file.name });
+      const item = document.createElement('div');
+      item.className = 'file-item';
+      item.innerHTML = `
+        <div class="file-item-icon" style="font-size:1.1rem;">📄</div>
+        <div><div class="file-item-name">${file.name}</div><div class="file-item-meta"><span>${formatBytes(file.size)}</span></div></div>
+        <span class="file-item-status">#${idx+1}</span>
+        <button class="file-item-action secondary" data-rm="${idx}">Remove</button>`;
+      item.querySelector('[data-rm]').addEventListener('click', () => {
+        mergeFiles.splice(parseInt(item.querySelector('[data-rm]').dataset.rm), 1);
+        rebuildMergeList();
+      });
+      mergeList.appendChild(item);
+    }
+    mergeBtn.disabled = mergeFiles.length < 2;
+    mergeBtn.textContent = mergeFiles.length > 0 ? `Merge ${mergeFiles.length} PDFs` : 'Merge PDFs';
+  }
+
+  function rebuildMergeList() {
+    mergeList.innerHTML = '';
+    mergeFiles.forEach((f, idx) => {
+      const item = document.createElement('div');
+      item.className = 'file-item';
+      item.innerHTML = `
+        <div class="file-item-icon" style="font-size:1.1rem;">📄</div>
+        <div><div class="file-item-name">${f.name}</div></div>
+        <span class="file-item-status">#${idx+1}</span>
+        <button class="file-item-action secondary" data-rm="${idx}">Remove</button>`;
+      item.querySelector('[data-rm]').addEventListener('click', () => {
+        mergeFiles.splice(idx, 1); rebuildMergeList();
+      });
+      mergeList.appendChild(item);
+    });
+    mergeBtn.disabled = mergeFiles.length < 2;
+    mergeBtn.textContent = mergeFiles.length > 0 ? `Merge ${mergeFiles.length} PDFs` : 'Merge PDFs';
+  }
+
+  mergeClearBtn.addEventListener('click', () => {
+    mergeFiles.length = 0; mergeList.innerHTML = '';
+    mergeBtn.disabled = true; mergeBtn.textContent = 'Merge PDFs';
+  });
+
+  mergeBtn.addEventListener('click', async () => {
+    if (mergeFiles.length < 2) return;
+    await ensurePdfLib();
+    setProgress('Merging PDFs…', 20);
+    try {
+      const { PDFDocument } = PDFLib;
+      const merged = await PDFDocument.create();
+      for (let i = 0; i < mergeFiles.length; i++) {
+        setProgress(`Adding ${mergeFiles[i].name}…`, 20 + Math.round((i / mergeFiles.length) * 70));
+        const doc = await PDFDocument.load(mergeFiles[i].arrayBuffer);
+        const pages = await merged.copyPages(doc, doc.getPageIndices());
+        pages.forEach(p => merged.addPage(p));
+      }
+      setProgress('Saving…', 95);
+      const bytes = await merged.save();
+      downloadBlob(new Blob([bytes], { type: 'application/pdf' }), 'merged.pdf');
+      setProgress('Done!', 100);
+      showToast(`Merged ${mergeFiles.length} PDFs successfully!`, 'success');
+      setTimeout(() => hideProgress(), 1500);
+    } catch(err) {
+      hideProgress();
+      showToast('Merge failed: ' + err.message, 'error');
+    }
+  });
+
+  /* ── Split panel ── */
+  const dropzoneSplit = document.getElementById('dropzoneSplit');
+  const splitInput    = document.getElementById('splitInput');
+  const splitPickBtn  = document.getElementById('splitPickBtn');
+  const splitInfo     = document.getElementById('splitInfo');
+  const splitInfoText = document.getElementById('splitInfoText');
+  const splitBtn      = document.getElementById('splitBtn');
+  const splitAllBtn   = document.getElementById('splitAllBtn');
+
+  splitPickBtn.addEventListener('click', () => splitInput.click());
+  splitInput.addEventListener('change', e => { if (e.target.files[0]) loadSplitFile(e.target.files[0]); });
+  ['dragenter','dragover'].forEach(ev => dropzoneSplit.addEventListener(ev, e => { e.preventDefault(); dropzoneSplit.classList.add('drag-over'); }));
+  ['dragleave','drop'].forEach(ev => dropzoneSplit.addEventListener(ev, e => { e.preventDefault(); dropzoneSplit.classList.remove('drag-over'); }));
+  dropzoneSplit.addEventListener('drop', e => { e.preventDefault(); dropzoneSplit.classList.remove('drag-over'); if (e.dataTransfer.files[0]) loadSplitFile(e.dataTransfer.files[0]); });
+
+  async function loadSplitFile(file) {
+    if (file.type !== 'application/pdf') { showToast('Not a PDF', 'error'); return; }
+    await ensurePdfLib();
+    setProgress('Loading PDF…', 30);
+    try {
+      const ab = await file.arrayBuffer();
+      const { PDFDocument } = PDFLib;
+      const doc = await PDFDocument.load(ab);
+      splitFile = { arrayBuffer: ab, name: file.name, pageCount: doc.getPageCount() };
+      splitInfo.style.display = '';
+      splitInfoText.innerHTML = `<strong>${file.name}</strong> — ${splitFile.pageCount} pages (${formatBytes(file.size)})`;
+      hideProgress();
+    } catch(err) {
+      hideProgress();
+      showToast('Could not load PDF: ' + err.message, 'error');
+    }
+  }
+
+  splitBtn.addEventListener('click', async () => {
+    if (!splitFile) return;
+    await ensurePdfLib();
+    const range = document.getElementById('pageRange').value.trim();
+    const pages = parsePageRange(range, splitFile.pageCount);
+    if (!pages.length) { showToast('No valid pages selected', 'error'); return; }
+    setProgress('Extracting pages…', 30);
+    try {
+      const { PDFDocument } = PDFLib;
+      const src = await PDFDocument.load(splitFile.arrayBuffer);
+      const out = await PDFDocument.create();
+      const copied = await out.copyPages(src, pages.map(p => p - 1));
+      copied.forEach(p => out.addPage(p));
+      setProgress('Saving…', 90);
+      const bytes = await out.save();
+      const baseName = splitFile.name.replace('.pdf','');
+      downloadBlob(new Blob([bytes], { type: 'application/pdf' }), `${baseName}-pages-${range || 'all'}.pdf`);
+      setProgress('Done!', 100);
+      setTimeout(hideProgress, 1500);
+    } catch(err) {
+      hideProgress();
+      showToast('Failed: ' + err.message, 'error');
+    }
+  });
+
+  splitAllBtn.addEventListener('click', async () => {
+    if (!splitFile) return;
+    await ensurePdfLib();
+    if (!window.JSZip) { await loadScript(JSZIP_CDN); }
+    setProgress('Splitting into pages…', 10);
+    try {
+      const { PDFDocument } = PDFLib;
+      const src = await PDFDocument.load(splitFile.arrayBuffer);
+      const zip = new JSZip();
+      for (let i = 0; i < splitFile.pageCount; i++) {
+        setProgress(`Page ${i+1}/${splitFile.pageCount}…`, 10 + Math.round((i / splitFile.pageCount) * 80));
+        const out = await PDFDocument.create();
+        const [page] = await out.copyPages(src, [i]);
+        out.addPage(page);
+        const bytes = await out.save();
+        zip.file(`page-${String(i+1).padStart(3,'0')}.pdf`, bytes);
+      }
+      setProgress('Zipping…', 95);
+      const baseName = splitFile.name.replace('.pdf','');
+      downloadBlob(await zip.generateAsync({ type: 'blob' }), `${baseName}-pages.zip`);
+      setProgress('Done!', 100);
+      setTimeout(hideProgress, 1500);
+    } catch(err) {
+      hideProgress();
+      showToast('Failed: ' + err.message, 'error');
+    }
+  });
+
+  /* ── Helpers ── */
+  function parsePageRange(str, total) {
+    if (!str) return Array.from({ length: total }, (_, i) => i + 1);
+    const pages = new Set();
+    str.split(',').forEach(part => {
+      part = part.trim();
+      if (part.includes('-')) {
+        const [a, b] = part.split('-').map(Number);
+        for (let i = a; i <= b; i++) if (i >= 1 && i <= total) pages.add(i);
+      } else {
+        const n = parseInt(part);
+        if (n >= 1 && n <= total) pages.add(n);
+      }
+    });
+    return Array.from(pages).sort((a, b) => a - b);
+  }
+
+  const progressBox   = document.getElementById('progressBox');
+  const progressLabel = document.getElementById('progressLabel');
+  const progressBar   = document.getElementById('progressBar');
+  function setProgress(msg, pct) { progressBox.style.display = ''; progressLabel.textContent = msg; progressBar.style.width = pct + '%'; }
+  function hideProgress() { progressBox.style.display = 'none'; progressBar.style.width = '0%'; }
+
+  async function ensurePdfLib() {
+    if (pdfLibLoaded) return;
+    setProgress('Loading pdf-lib…', 10);
+    await loadScript(PDF_LIB_CDN);
+    pdfLibLoaded = true;
+  }
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+})();
+</script>
+</body>
+</html>

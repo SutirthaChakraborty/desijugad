@@ -229,6 +229,24 @@ window.showToast = function(message, type = 'default', duration = 3000) {
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 })();
 
+/* Shared: show/hide no-results message on homepage tool grid */
+(function() {
+  window._djShowNoResults = function(show) {
+    let msg = document.getElementById('no-results-msg');
+    if (!msg) {
+      const converterSection = document.getElementById('converters');
+      const grid = converterSection ? converterSection.querySelector('.converter-grid') : null;
+      if (!grid) return;
+      msg = document.createElement('p');
+      msg.id = 'no-results-msg';
+      msg.className = 'no-results-msg';
+      msg.textContent = 'No tools match your search. Try a different keyword.';
+      grid.after(msg);
+    }
+    msg.style.display = show ? '' : 'none';
+  };
+})();
+
 /* Category filter (homepage) */
 (function() {
   const filters = document.querySelectorAll('.category-filter button');
@@ -242,6 +260,10 @@ window.showToast = function(message, type = 'default', duration = 3000) {
       const cat = btn.dataset.category;
       filters.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
+      // Clear search when switching category
+      const searchInput = document.getElementById('toolSearch');
+      if (searchInput) searchInput.value = '';
+      if (window._djShowNoResults) window._djShowNoResults(false);
       cards.forEach(card => {
         if (cat === 'all' || card.dataset.category === cat) {
           card.style.display = '';
@@ -249,6 +271,72 @@ window.showToast = function(message, type = 'default', duration = 3000) {
           card.style.display = 'none';
         }
       });
+    });
+  });
+})();
+
+/* Tool search (homepage) */
+(function() {
+  const searchInput = document.getElementById('toolSearch');
+  if (!searchInput) return;
+  const converterSection = document.getElementById('converters');
+  const cards = converterSection
+    ? Array.from(converterSection.querySelectorAll('.converter-card'))
+    : [];
+  const filters = document.querySelectorAll('.category-filter button');
+
+  searchInput.addEventListener('input', () => {
+    const q = searchInput.value.trim().toLowerCase();
+    if (!q) {
+      // Restore active category filter
+      const activeFilter = document.querySelector('.category-filter button.active');
+      const cat = activeFilter ? activeFilter.dataset.category : 'all';
+      cards.forEach(card => { card.style.display = (cat === 'all' || card.dataset.category === cat) ? '' : 'none'; });
+      if (window._djShowNoResults) window._djShowNoResults(false);
+      return;
+    }
+    // Switch category filter to "All" visually
+    filters.forEach(b => b.classList.remove('active'));
+    const allBtn = document.querySelector('.category-filter button[data-category="all"]');
+    if (allBtn) allBtn.classList.add('active');
+
+    let visibleCount = 0;
+    cards.forEach(card => {
+      const title = (card.querySelector('.card-title') || card).textContent.toLowerCase();
+      const desc  = (card.querySelector('.card-desc')  || card).textContent.toLowerCase();
+      const show  = title.includes(q) || desc.includes(q);
+      card.style.display = show ? '' : 'none';
+      if (show) visibleCount++;
+    });
+    if (window._djShowNoResults) window._djShowNoResults(visibleCount === 0);
+  });
+
+  // Clear on Escape
+  searchInput.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { searchInput.value = ''; searchInput.dispatchEvent(new Event('input')); }
+  });
+})();
+
+/* Mega-menu keyboard/click accessibility */
+(function() {
+  document.querySelectorAll('.nav-has-menu').forEach(item => {
+    const trigger = item.querySelector('.nav-menu-trigger');
+    if (!trigger) return;
+    // Toggle on click (works for both mobile accordion and desktop fallback)
+    trigger.addEventListener('click', (e) => {
+      // On desktop, hover handles it — but allow click too
+      if (window.innerWidth <= 720) {
+        e.preventDefault();
+        item.classList.toggle('open');
+      }
+    });
+    // Close on outside click
+    document.addEventListener('click', (e) => {
+      if (!item.contains(e.target)) item.classList.remove('open');
+    });
+    // Close mega on Escape
+    item.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') item.classList.remove('open');
     });
   });
 })();

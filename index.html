@@ -60,7 +60,46 @@
       <img src="assets/img/logo.png" alt="Desi Jugad" class="brand-logo">
     </a>
     <ul class="nav-links" id="nav-links">
-      <li><a href="#converters" data-i18n="nav.converters">Converters</a></li>
+      <li class="nav-has-menu">
+        <a href="#converters" class="nav-menu-trigger" data-i18n="nav.converters">Converters <svg class="nav-chevron" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 1l5 5 5-5"/></svg></a>
+        <div class="nav-mega">
+          <div class="mega-col">
+            <div class="mega-heading">🖼 Images</div>
+            <a href="convert/heic-to-jpg.html">HEIC to JPG</a>
+            <a href="convert/image-converter.html">Image Converter</a>
+            <a href="convert/image-compress.html">Image Compressor <span class="badge-new">NEW</span></a>
+            <a href="convert/image-resize.html">Image Resize + DPI</a>
+            <a href="convert/svg-to-png.html">SVG to PNG</a>
+            <a href="convert/ocr.html">Image to Text (OCR) <span class="badge-new">NEW</span></a>
+          </div>
+          <div class="mega-col">
+            <div class="mega-heading">📄 Documents</div>
+            <a href="convert/image-to-pdf.html">Images to PDF</a>
+            <a href="convert/pdf-to-image.html">PDF to Images</a>
+            <a href="convert/pdf-merge.html">PDF Merge &amp; Split <span class="badge-new">NEW</span></a>
+            <div class="mega-heading" style="margin-top:1rem;">🎵 Audio</div>
+            <a href="convert/audio-converter.html">Audio Converter <span class="badge-new">NEW</span></a>
+            <a href="convert/srt-to-vtt.html">SRT ⇄ VTT Subtitles</a>
+          </div>
+          <div class="mega-col">
+            <div class="mega-heading">📊 Data</div>
+            <a href="convert/json-formatter.html">JSON Formatter <span class="badge-new">NEW</span></a>
+            <a href="convert/json-to-csv.html">JSON ⇄ CSV</a>
+            <a href="convert/json-to-yaml.html">JSON ⇄ YAML</a>
+            <a href="convert/csv-to-excel.html">CSV to Excel</a>
+            <a href="convert/xml-to-json.html">XML ⇄ JSON</a>
+          </div>
+          <div class="mega-col">
+            <div class="mega-heading">🔧 Utilities</div>
+            <a href="convert/qr-code.html">QR Code Generator</a>
+            <a href="convert/color-converter.html">Color Converter</a>
+            <a href="convert/password-gen.html">Password Generator</a>
+            <a href="convert/text-tools.html">Text Tools</a>
+            <a href="convert/base64.html">Base64 Encode/Decode</a>
+            <a href="convert/markdown-to-html.html">Markdown to HTML</a>
+          </div>
+        </div>
+      </li>
       <li><a href="ai/">AI Studio <span class="badge-new">NEW</span></a></li>
       <li><a href="blog/" data-i18n="nav.blog">Blog</a></li>
       <li><a href="about.html" data-i18n="nav.about">About</a></li>
@@ -134,7 +173,7 @@
     <div class="stats">
       <div class="stats-grid">
         <div>
-          <div class="stat-number">20<span class="italic">+</span></div>
+          <div class="stat-number">27<span class="italic">+</span></div>
           <div class="stat-label">File formats</div>
         </div>
         <div>
@@ -200,12 +239,17 @@
       </div>
     </div>
 
+    <div class="tool-search-wrap">
+      <input type="search" id="toolSearch" class="tool-search" placeholder="Search tools… (e.g. &quot;compress&quot;, &quot;PDF&quot;, &quot;audio&quot;)" autocomplete="off" spellcheck="false">
+    </div>
+
     <div class="category-filter">
       <button class="active" data-category="all" data-i18n="filter.all">All</button>
       <button data-category="image" data-i18n="filter.image">Images</button>
       <button data-category="document" data-i18n="filter.document">Documents</button>
       <button data-category="data" data-i18n="filter.data">Data</button>
       <button data-category="text" data-i18n="filter.text">Text</button>
+      <button data-category="audio">Audio</button>
       <button data-category="media" data-i18n="filter.media">Media</button>
       <button data-category="util" data-i18n="filter.util">Utilities</button>
     </div>
@@ -316,6 +360,48 @@
         <div class="card-icon">PWD</div>
         <h3 class="card-title">Password Generator</h3>
         <p class="card-desc">Generate strong, random passwords. Control length, symbols, and ambiguous chars.</p>
+        <span class="card-arrow">Open tool →</span>
+      </a>
+      <a href="convert/image-compress.html" class="converter-card" data-category="image">
+        <span class="card-new">New</span>
+        <div class="card-icon">ZIP</div>
+        <h3 class="card-title">Image Compressor</h3>
+        <p class="card-desc">Shrink PNG, JPG, and WebP by up to 90% — pick quality, set max width or target KB.</p>
+        <span class="card-arrow">Open tool →</span>
+      </a>
+      <a href="convert/audio-converter.html" class="converter-card" data-category="audio">
+        <span class="card-new">New</span>
+        <div class="card-icon">🎵</div>
+        <h3 class="card-title">Audio Converter</h3>
+        <p class="card-desc">Convert MP3, WAV, OGG, M4A, FLAC and more. Trim clips while converting — no upload.</p>
+        <span class="card-arrow">Open tool →</span>
+      </a>
+      <a href="convert/pdf-merge.html" class="converter-card" data-category="document">
+        <span class="card-new">New</span>
+        <div class="card-icon">PDF</div>
+        <h3 class="card-title">PDF Merge &amp; Split</h3>
+        <p class="card-desc">Combine multiple PDFs into one, or extract specific pages — powered by pdf-lib.</p>
+        <span class="card-arrow">Open tool →</span>
+      </a>
+      <a href="convert/ocr.html" class="converter-card" data-category="image">
+        <span class="card-new">New</span>
+        <div class="card-icon">OCR</div>
+        <h3 class="card-title">Image to Text (OCR)</h3>
+        <p class="card-desc">Extract text from photos, screenshots, and scans. 100+ languages via Tesseract WASM.</p>
+        <span class="card-arrow">Open tool →</span>
+      </a>
+      <a href="convert/json-formatter.html" class="converter-card" data-category="data">
+        <span class="card-new">New</span>
+        <div class="card-icon">{  }</div>
+        <h3 class="card-title">JSON Formatter</h3>
+        <p class="card-desc">Beautify, minify, and validate JSON with precise error messages and sort-keys option.</p>
+        <span class="card-arrow">Open tool →</span>
+      </a>
+      <a href="ai/bg-remove.html" class="converter-card" data-category="image">
+        <span class="card-new">New</span>
+        <div class="card-icon">✂️</div>
+        <h3 class="card-title">AI Background Remover</h3>
+        <p class="card-desc">Remove image backgrounds with AI — runs in-browser, no API key, completely free.</p>
         <span class="card-arrow">Open tool →</span>
       </a>
     </div>
@@ -438,11 +524,13 @@
         <ul>
           <li><a href="convert/heic-to-jpg.html">HEIC to JPG</a></li>
           <li><a href="convert/image-converter.html">Image Converter</a></li>
-          <li><a href="convert/image-resize.html">Image Resize + DPI</a></li>
+          <li><a href="convert/image-compress.html">Image Compressor</a></li>
+          <li><a href="convert/audio-converter.html">Audio Converter</a></li>
+          <li><a href="convert/pdf-merge.html">PDF Merge &amp; Split</a></li>
+          <li><a href="convert/ocr.html">Image to Text (OCR)</a></li>
+          <li><a href="convert/json-formatter.html">JSON Formatter</a></li>
+          <li><a href="ai/bg-remove.html">AI Background Remover</a></li>
           <li><a href="convert/qr-code.html">QR Code Generator</a></li>
-          <li><a href="convert/color-converter.html">Color Converter</a></li>
-          <li><a href="convert/xml-to-json.html">XML ⇄ JSON</a></li>
-          <li><a href="convert/json-to-csv.html">JSON to CSV</a></li>
           <li><a href="convert/password-gen.html">Password Generator</a></li>
         </ul>
       </div>
@@ -455,6 +543,7 @@
           <li><a href="ai/music-video.html">Music Videos</a></li>
           <li><a href="ai/writer.html">AI Writer</a></li>
           <li><a href="ai/photo-studio.html">Photo Studio</a></li>
+          <li><a href="ai/bg-remove.html">Background Remover</a></li>
         </ul>
       </div>
       <div class="footer-col">
