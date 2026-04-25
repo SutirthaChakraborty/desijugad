@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/img/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/img/apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Social Post Maker — Branded Posts for Instagram, LinkedIn &amp; More · Desi Jugad</title>
+<meta name="description" content="Upload your logo, describe your brand, and generate platform-ready social media post images for Instagram, Facebook, LinkedIn, Twitter/X, and Stories. Powered by Replicate. Bring your own key.">
+<meta name="keywords" content="AI social media post maker, AI Instagram post generator, AI LinkedIn post maker, branded post generator AI, social media automation tool India, bring your own key AI social media">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://desijugad.co.in/ai/social-post.html">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https://replicate.delivery https://*.replicate.com; media-src 'self' blob:; connect-src 'self' https://api.replicate.com https://*.sunoapi.org https://*.kie.ai https://*.piapi.ai https://*.tmpfiles.org https://*.file.io;">
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://desijugad.co.in/ai/social-post.html">
+<meta property="og:title" content="AI Social Post Maker — Branded Posts for Every Platform · Desi Jugad">
+<meta property="og:description" content="Upload your logo, describe your brand, get platform-ready social media post images. Replicate-powered, bring your own key.">
+<meta property="og:image" content="https://desijugad.co.in/assets/img/og.png">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,30..100;1,9..144,300..700,30..100&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400..600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://api.replicate.com">
+<link rel="stylesheet" href="../assets/css/style.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Desi Jugad AI Social Post Maker",
+  "url": "https://desijugad.co.in/ai/social-post.html",
+  "description": "Generate branded social media post images for Instagram, Facebook, LinkedIn, Twitter/X, and Stories using AI.",
+  "applicationCategory": "DesignApplication",
+  "operatingSystem": "Any"
+}
+</script>
+
+<style>
+/* ── Upload zones ─────────────────────────────────────────── */
+.upload-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+@media (max-width: 580px) { .upload-pair { grid-template-columns: 1fr; } }
+
+.upload-slot {
+  border: 2px dashed var(--line);
+  border-radius: var(--radius);
+  padding: 1.5rem 1rem;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.2s var(--ease), background 0.2s var(--ease);
+  position: relative;
+  background: var(--surface);
+}
+.upload-slot:hover, .upload-slot.drag-over {
+  border-color: var(--indigo);
+  background: color-mix(in srgb, var(--indigo) 4%, var(--surface));
+}
+.upload-slot.has-image { border-color: var(--success); border-style: solid; }
+.upload-slot input[type="file"] {
+  position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
+}
+.upload-slot-icon { font-size: 1.75rem; margin-bottom: 0.5rem; }
+.upload-slot-label { font-weight: 600; font-size: 0.9rem; color: var(--ink); margin-bottom: 0.25rem; }
+.upload-slot-hint { font-size: 0.77rem; color: var(--ink-muted); font-family: var(--font-mono); }
+.upload-slot-preview {
+  width: 100%; max-height: 160px; object-fit: contain;
+  border-radius: var(--radius-sm); margin-top: 0.75rem; display: none;
+}
+
+/* ── Platform chips ───────────────────────────────────────── */
+.platform-chips {
+  display: flex; flex-wrap: wrap; gap: 0.5rem;
+}
+.platform-chip {
+  display: flex; flex-direction: column; align-items: center;
+  padding: 0.6rem 0.9rem; border: 2px solid var(--line);
+  border-radius: var(--radius-sm); cursor: pointer;
+  transition: all 0.18s var(--ease); background: var(--surface);
+  min-width: 90px;
+}
+.platform-chip:hover { border-color: var(--indigo); }
+.platform-chip.selected {
+  border-color: var(--indigo);
+  background: color-mix(in srgb, var(--indigo) 7%, var(--surface));
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--indigo) 20%, transparent);
+}
+.platform-chip .pc-icon { font-size: 1.3rem; }
+.platform-chip .pc-name { font-size: 0.78rem; font-weight: 600; color: var(--ink); margin-top: 0.2rem; }
+.platform-chip .pc-size { font-size: 0.68rem; font-family: var(--font-mono); color: var(--ink-muted); }
+
+/* ── Progress steps ───────────────────────────────────────── */
+.gen-steps {
+  display: flex; gap: 0; margin-bottom: 1.25rem;
+}
+.gen-step {
+  flex: 1; text-align: center; padding: 0.75rem 0.5rem;
+  font-size: 0.78rem; font-family: var(--font-mono); color: var(--ink-muted);
+  border-bottom: 3px solid var(--line); transition: all 0.2s;
+  position: relative;
+}
+.gen-step.active { color: var(--indigo); border-bottom-color: var(--indigo); font-weight: 600; }
+.gen-step.done { color: var(--success); border-bottom-color: var(--success); }
+.gen-step .step-num {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 22px; height: 22px; border-radius: 50%;
+  background: var(--line); color: var(--ink-muted); font-size: 0.7rem;
+  font-weight: 700; margin-right: 0.4rem; vertical-align: middle;
+  transition: all 0.2s;
+}
+.gen-step.active .step-num { background: var(--indigo); color: #fff; }
+.gen-step.done .step-num { background: var(--success); color: #fff; }
+
+/* ── Platform preview tabs ────────────────────────────────── */
+.platform-tabs {
+  display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 1rem;
+}
+.platform-tab {
+  padding: 0.35rem 0.75rem; border: 1.5px solid var(--line);
+  border-radius: 999px; font-size: 0.78rem; font-family: var(--font-mono);
+  cursor: pointer; background: var(--surface); color: var(--ink-muted);
+  transition: all 0.15s;
+}
+.platform-tab:hover { border-color: var(--indigo); color: var(--indigo); }
+.platform-tab.active { background: var(--indigo); border-color: var(--indigo); color: #fff; }
+
+/* ── Preview canvas wrapper ───────────────────────────────── */
+.preview-canvas-wrap {
+  background: color-mix(in srgb, var(--ink) 5%, var(--surface));
+  border-radius: var(--radius);
+  padding: 1rem;
+  display: flex; align-items: center; justify-content: center;
+  min-height: 280px;
+}
+.preview-canvas-wrap canvas {
+  max-width: 100%; max-height: 400px;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+}
+
+/* ── Caption cards ────────────────────────────────────────── */
+.caption-cards { display: grid; gap: 0.75rem; }
+.caption-card {
+  background: var(--surface); border: 1.5px solid var(--line);
+  border-radius: var(--radius-sm); padding: 1rem;
+}
+.caption-card-label {
+  font-family: var(--font-mono); font-size: 0.72rem; color: var(--indigo);
+  text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem;
+}
+.caption-card textarea {
+  width: 100%; border: none; background: transparent; resize: vertical;
+  font-family: var(--font-sans); font-size: 0.92rem; color: var(--ink);
+  line-height: 1.6; min-height: 80px; outline: none;
+}
+.hashtag-box {
+  background: color-mix(in srgb, var(--indigo) 5%, var(--surface));
+  border: 1.5px solid color-mix(in srgb, var(--indigo) 25%, var(--line));
+  border-radius: var(--radius-sm); padding: 1rem;
+  font-family: var(--font-mono); font-size: 0.82rem; color: var(--indigo);
+  line-height: 1.8; word-break: break-word;
+}
+
+/* ── Share buttons ────────────────────────────────────────── */
+.share-row {
+  display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 1rem;
+}
+.share-btn {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.55rem 1rem; border-radius: var(--radius-sm);
+  font-size: 0.85rem; font-weight: 600; cursor: pointer;
+  border: none; transition: opacity 0.18s; text-decoration: none; color: #fff;
+}
+.share-btn:hover { opacity: 0.85; }
+.share-btn-fb   { background: #1877F2; }
+.share-btn-li   { background: #0A66C2; }
+.share-btn-tw   { background: #000; }
+.share-btn-ig   { background: linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888); }
+.share-btn-dl   { background: var(--indigo); }
+.share-btn-txt  { background: var(--ink); }
+
+/* ── How-to guide ─────────────────────────────────────────── */
+.how-to-steps {
+  counter-reset: how-to;
+  display: grid; gap: 1.25rem; margin: 1.5rem 0;
+}
+.how-to-step {
+  display: flex; gap: 1rem; align-items: flex-start;
+  padding: 1rem 1.25rem; background: var(--surface);
+  border: 1.5px solid var(--line); border-radius: var(--radius-sm);
+}
+.how-to-step-num {
+  counter-increment: how-to;
+  flex-shrink: 0; width: 2rem; height: 2rem;
+  background: var(--indigo); color: #fff;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 0.85rem; font-family: var(--font-mono);
+}
+.how-to-step-num::after { content: counter(how-to); }
+.how-to-step-body h4 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.25rem; }
+.how-to-step-body p { font-size: 0.85rem; color: var(--ink-soft); line-height: 1.55; margin: 0; }
+.how-to-step-body code {
+  font-family: var(--font-mono); font-size: 0.8em;
+  background: var(--bg-alt); padding: 0.1em 0.35em; border-radius: 3px;
+}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="/" class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="/#converters">Converters</a></li>
+      <li><a href="/ai/" class="active">AI Studio <span class="badge-new">NEW</span></a></li>
+      <li><a href="/blog/">Blog</a></li>
+      <li><a href="/about.html">About</a></li>
+      <li><a href="/ai/settings.html" class="nav-cta">Add API keys</a></li>
+    </ul>
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</header>
+
+<main class="converter-page">
+  <div class="container">
+    <nav class="breadcrumb">
+      <a href="/">Home</a><span class="sep">/</span>
+      <a href="/ai/">AI Studio</a><span class="sep">/</span>
+      <span>Social Post Maker</span>
+    </nav>
+
+    <div class="ai-page-header">
+      <h1>AI Social Post <em class="italic">Maker</em></h1>
+      <p class="lead">Upload your logo, describe your brand, and get a ready-to-post image for every major platform — Facebook, Instagram, LinkedIn, Twitter/X, and Stories — in one click. Powered by Google's Nano Banana model on Replicate. Bring your own key.</p>
+      <div class="ai-page-header-row">
+        <a href="settings.html?need=replicate" id="key-pill-replicate" class="key-pill key-pill--missing">Add Replicate key</a>
+        <a href="settings.html?need=gemini" id="key-pill-gemini" class="key-pill key-pill--missing">Add Gemini key (for captions)</a>
+      </div>
+    </div>
+
+    <!-- STEP INDICATOR -->
+    <div class="gen-steps" id="gen-steps" aria-hidden="true">
+      <div class="gen-step active" id="gstep-1"><span class="step-num"></span>Brand inputs</div>
+      <div class="gen-step" id="gstep-2"><span class="step-num"></span>Generate image</div>
+      <div class="gen-step" id="gstep-3"><span class="step-num"></span>Platform preview</div>
+      <div class="gen-step" id="gstep-4"><span class="step-num"></span>Captions &amp; share</div>
+    </div>
+
+    <!-- ── PANEL 1: UPLOAD IMAGES ─────────────────────────── -->
+    <div class="ai-panel" id="panel-upload">
+      <div class="ai-panel-title">1 · Upload images</div>
+      <div class="upload-pair">
+
+        <div class="upload-slot" id="logo-slot">
+          <input type="file" id="logo-input" accept="image/jpeg,image/png,image/webp,image/svg+xml" aria-label="Upload logo">
+          <div class="upload-slot-icon">🏷️</div>
+          <div class="upload-slot-label">Company / Brand Logo <span style="color:var(--danger)">*</span></div>
+          <div class="upload-slot-hint">JPG, PNG, WebP, SVG · max 8 MB</div>
+          <img id="logo-preview" class="upload-slot-preview" alt="Logo preview">
+        </div>
+
+        <div class="upload-slot" id="ref-slot">
+          <input type="file" id="ref-input" accept="image/jpeg,image/png,image/webp" aria-label="Upload reference image (optional)">
+          <div class="upload-slot-icon">🖼️</div>
+          <div class="upload-slot-label">Reference Image <span style="color:var(--ink-muted);font-weight:400">(optional)</span></div>
+          <div class="upload-slot-hint">Product, mood board, or example post</div>
+          <img id="ref-preview" class="upload-slot-preview" alt="Reference image preview">
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── PANEL 2: BRAND INFO ────────────────────────────── -->
+    <div class="ai-panel" id="panel-brand">
+      <div class="ai-panel-title">2 · Brand &amp; post description</div>
+      <div style="margin-bottom:1rem">
+        <label for="brand-name" style="font-size:0.85rem;font-weight:600;color:var(--ink);display:block;margin-bottom:0.4rem">Brand / Business name</label>
+        <input id="brand-name" type="text" class="ai-prompt" style="padding:0.7rem 1rem;font-size:0.95rem" placeholder="e.g. Chai &amp; Bytes, Meera Jewellers, TechVeda…" maxlength="80">
+      </div>
+      <div>
+        <label for="brand-desc" style="font-size:0.85rem;font-weight:600;color:var(--ink);display:block;margin-bottom:0.4rem">What should this post say?</label>
+        <textarea id="brand-desc" class="ai-prompt" rows="3" placeholder="e.g. Diwali sale — 30% off all jewellery. Festive vibe, warm gold tones, elegant. Target: Indian women 25–45." maxlength="500"></textarea>
+        <div style="font-size:0.75rem;color:var(--ink-muted);font-family:var(--font-mono);margin-top:0.3rem" id="desc-count">0 / 500</div>
+      </div>
+
+      <!-- Tone chips -->
+      <div style="margin-top:1.25rem">
+        <div style="font-size:0.85rem;font-weight:600;color:var(--ink);margin-bottom:0.6rem">Tone / Style</div>
+        <div class="chips-row" id="tone-chips">
+          <button class="chip selected" data-tone="professional">Professional</button>
+          <button class="chip" data-tone="playful">Playful</button>
+          <button class="chip" data-tone="bold">Bold</button>
+          <button class="chip" data-tone="minimal">Minimal</button>
+          <button class="chip" data-tone="festive">Festive</button>
+          <button class="chip" data-tone="luxury">Luxury</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── PANEL 3: PLATFORM ──────────────────────────────── -->
+    <div class="ai-panel" id="panel-platform">
+      <div class="ai-panel-title">3 · Target platforms</div>
+      <p style="font-size:0.82rem;color:var(--ink-muted);margin-bottom:0.9rem">Select one or more. The image will be cropped to each format in the preview.</p>
+      <div class="platform-chips" id="platform-chips">
+        <label class="platform-chip selected" data-platform="facebook" data-w="1200" data-h="630">
+          <input type="checkbox" checked style="display:none">
+          <span class="pc-icon">🔵</span>
+          <span class="pc-name">Facebook</span>
+          <span class="pc-size">1200×630</span>
+        </label>
+        <label class="platform-chip selected" data-platform="linkedin" data-w="1200" data-h="627">
+          <input type="checkbox" checked style="display:none">
+          <span class="pc-icon">💼</span>
+          <span class="pc-name">LinkedIn</span>
+          <span class="pc-size">1200×627</span>
+        </label>
+        <label class="platform-chip selected" data-platform="twitter" data-w="1200" data-h="675">
+          <input type="checkbox" checked style="display:none">
+          <span class="pc-icon">🐦</span>
+          <span class="pc-name">Twitter / X</span>
+          <span class="pc-size">1200×675</span>
+        </label>
+        <label class="platform-chip" data-platform="instagram-sq" data-w="1080" data-h="1080">
+          <input type="checkbox" style="display:none">
+          <span class="pc-icon">📷</span>
+          <span class="pc-name">Instagram</span>
+          <span class="pc-size">1080×1080</span>
+        </label>
+        <label class="platform-chip" data-platform="instagram-pt" data-w="1080" data-h="1350">
+          <input type="checkbox" style="display:none">
+          <span class="pc-icon">📱</span>
+          <span class="pc-name">IG Portrait</span>
+          <span class="pc-size">1080×1350</span>
+        </label>
+        <label class="platform-chip" data-platform="stories" data-w="1080" data-h="1920">
+          <input type="checkbox" style="display:none">
+          <span class="pc-icon">⬆️</span>
+          <span class="pc-name">Stories</span>
+          <span class="pc-size">1080×1920</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- ── GENERATE BUTTON ─────────────────────────────────── -->
+    <div style="margin:1.5rem 0;display:flex;flex-wrap:wrap;gap:1rem;align-items:center">
+      <button id="generate-btn" class="btn btn-primary" onclick="generatePost()" style="font-size:1.05rem;padding:1rem 2rem">
+        ✨ Generate Post
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      </button>
+      <span style="font-family:var(--font-mono);font-size:0.82rem;color:var(--ink-muted)">≈ $0.05–0.15 per generation · Replicate</span>
+    </div>
+
+    <!-- PROGRESS -->
+    <div id="progress-wrap" style="display:none">
+      <div class="ai-panel">
+        <div class="ai-panel-title">Generating…</div>
+        <div class="progress-bar-outer" style="height:6px;background:var(--line);border-radius:999px;margin-bottom:0.75rem;overflow:hidden">
+          <div id="progress-bar" style="height:100%;background:var(--indigo);border-radius:999px;width:0%;transition:width 0.5s var(--ease)"></div>
+        </div>
+        <div id="progress-msg" style="font-family:var(--font-mono);font-size:0.8rem;color:var(--ink-muted)">Starting…</div>
+      </div>
+    </div>
+
+    <!-- ── OUTPUT SECTION ──────────────────────────────────── -->
+    <div id="output-section" style="display:none">
+
+      <!-- Platform preview -->
+      <div class="ai-panel">
+        <div class="ai-panel-title" style="display:flex;justify-content:space-between;align-items:center">
+          <span>Platform Preview</span>
+          <button class="key-btn" onclick="resetTool()">New post</button>
+        </div>
+
+        <div class="platform-tabs" id="preview-tabs"></div>
+        <div class="preview-canvas-wrap">
+          <canvas id="preview-canvas" width="1200" height="630" aria-label="Post preview"></canvas>
+        </div>
+
+        <div class="share-row" id="download-row">
+          <button class="share-btn share-btn-dl" onclick="downloadCurrentPlatform()">⬇ Download image</button>
+          <button class="share-btn share-btn-txt" onclick="downloadCaptions()">📄 Download captions</button>
+        </div>
+      </div>
+
+      <!-- All platforms grid (optional full view) -->
+      <div id="all-platforms-wrap" style="display:none;margin-top:1rem">
+        <div class="ai-panel">
+          <div class="ai-panel-title">All platform sizes</div>
+          <div id="all-platforms-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem;margin-top:0.75rem"></div>
+        </div>
+      </div>
+
+      <!-- Raw generated image -->
+      <div class="ai-panel">
+        <div class="ai-panel-title">Generated image (original)</div>
+        <img id="result-img" style="max-width:100%;border-radius:var(--radius-sm);border:1px solid var(--line)" alt="Generated post image">
+      </div>
+
+      <!-- Captions & Hashtags -->
+      <div class="ai-panel" id="captions-panel">
+        <div class="ai-panel-title" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.5rem">
+          <span>Captions &amp; Hashtags</span>
+          <button class="key-btn" onclick="generateCaptions()" id="caption-btn">✨ Generate with Gemini</button>
+        </div>
+
+        <div id="captions-placeholder" style="font-size:0.88rem;color:var(--ink-muted);padding:1rem 0">
+          Click <strong>Generate with Gemini</strong> to auto-write 3 caption variants + hashtags for this image. Requires a Gemini API key.
+        </div>
+
+        <div id="captions-output" style="display:none">
+          <div class="caption-cards" id="caption-cards"></div>
+          <div style="margin-top:1rem">
+            <div style="font-size:0.85rem;font-weight:600;color:var(--ink);margin-bottom:0.5rem">Hashtags</div>
+            <div class="hashtag-box" id="hashtag-box" contenteditable="true" spellcheck="false"></div>
+            <div style="font-size:0.75rem;color:var(--ink-muted);font-family:var(--font-mono);margin-top:0.4rem">Click hashtags to edit. <button class="key-btn" style="display:inline;padding:0.15rem 0.5rem;font-size:0.72rem" onclick="copyHashtags()">Copy all</button></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Social share -->
+      <div class="ai-panel">
+        <div class="ai-panel-title">Share</div>
+        <p style="font-size:0.82rem;color:var(--ink-muted);margin-bottom:0.75rem">Download the image first, then share. Instagram requires downloading the image to your device.</p>
+        <div class="share-row">
+          <button class="share-btn share-btn-fb" onclick="shareToFacebook()">🔵 Facebook</button>
+          <button class="share-btn share-btn-li" onclick="shareToLinkedIn()">💼 LinkedIn</button>
+          <button class="share-btn share-btn-tw" onclick="shareToTwitter()">🐦 Twitter / X</button>
+          <button class="share-btn share-btn-ig" onclick="shareToInstagram()">📷 Instagram</button>
+        </div>
+      </div>
+
+    </div><!-- /output-section -->
+
+    <!-- ── HOW TO USE ───────────────────────────────────────── -->
+    <div class="info-section" id="how-to-section">
+      <h2>How to use the AI Social Post Maker</h2>
+      <div class="how-to-steps">
+        <div class="how-to-step">
+          <div class="how-to-step-num"></div>
+          <div class="how-to-step-body">
+            <h4>Get a free Replicate API key</h4>
+            <p>Sign up at <a href="https://replicate.com" target="_blank" rel="noopener">replicate.com</a>. Go to <strong>Account → API tokens</strong> and click <strong>Create token</strong>. New accounts get <strong>$5 free credit</strong> — enough for ~50 posts. Copy the token (starts with <code>r8_</code>).</p>
+          </div>
+        </div>
+        <div class="how-to-step">
+          <div class="how-to-step-num"></div>
+          <div class="how-to-step-body">
+            <h4>Save your key in AI Settings</h4>
+            <p>Click <a href="settings.html?need=replicate">Add Replicate key</a> above, or go to <strong>AI Studio → Settings</strong>. Paste your token and click Save. Your key is stored only in your browser — Desi Jugad never sees it.</p>
+          </div>
+        </div>
+        <div class="how-to-step">
+          <div class="how-to-step-num"></div>
+          <div class="how-to-step-body">
+            <h4>Upload your logo and fill in brand details</h4>
+            <p>Upload your company logo (PNG or JPG recommended). Add an optional reference image for mood/style. Write a short description of what the post should say — be specific about offer, audience, and visual style for best results.</p>
+          </div>
+        </div>
+        <div class="how-to-step">
+          <div class="how-to-step-num"></div>
+          <div class="how-to-step-body">
+            <h4>Select platforms and click Generate Post</h4>
+            <p>Pick the platforms you want to post on. The image is generated once and then cropped to each format. Generation takes 15–45 seconds depending on Replicate load.</p>
+          </div>
+        </div>
+        <div class="how-to-step">
+          <div class="how-to-step-num"></div>
+          <div class="how-to-step-body">
+            <h4>Generate captions (optional — needs Gemini key)</h4>
+            <p>Add a free <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener">Gemini API key</a> to also generate platform-ready captions and hashtags. The AI looks at your generated image and writes 3 caption variants. Save them as a .txt file to edit in Notion or Google Docs.</p>
+          </div>
+        </div>
+        <div class="how-to-step">
+          <div class="how-to-step-num"></div>
+          <div class="how-to-step-body">
+            <h4>Download and share</h4>
+            <p>Download the platform-cropped image for each size you need. For Facebook, LinkedIn, and Twitter/X you can use the Share buttons to open a pre-filled post. For Instagram, download the image first, then tap the Instagram share button to open the app.</p>
+          </div>
+        </div>
+      </div>
+
+      <div style="background:color-mix(in srgb,var(--saffron) 8%,var(--surface));border:1.5px solid color-mix(in srgb,var(--saffron) 30%,var(--line));border-radius:var(--radius-sm);padding:1rem 1.25rem;margin-top:1.25rem">
+        <strong style="font-size:0.9rem">💡 Tip — getting the best results:</strong>
+        <ul style="font-size:0.85rem;color:var(--ink-soft);margin:0.5rem 0 0;padding-left:1.25rem;line-height:1.7">
+          <li>Use a <strong>white or transparent background logo</strong> for cleanest integration.</li>
+          <li>Be specific in your description — <em>"Diwali sale, 30% off, warm gold tones, elegant Indian aesthetic"</em> beats <em>"post for sale"</em>.</li>
+          <li>Try <strong>Festive</strong> tone for seasonal campaigns, <strong>Luxury</strong> for premium brands.</li>
+          <li>Add a reference image of a post you admire to guide the visual style.</li>
+          <li>If the first result isn't right, click <strong>Generate Post</strong> again — each run uses a different seed.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ── INFO SECTION ────────────────────────────────────── -->
+    <div class="info-section">
+      <h2>AI-powered social media posts — branded, consistent, fast</h2>
+      <p>Creating good social media visuals usually means hiring a graphic designer, buying Canva Pro, or spending hours tweaking templates. Desi Jugad's Social Post Maker uses Google's Nano Banana model on Replicate to generate branded post images from your logo in under a minute — at less than ₹10 per image.</p>
+
+      <h3>What is Google Nano Banana?</h3>
+      <p>Nano Banana is an image generation model from Google optimised for product and brand visuals. It accepts multiple reference images and a text prompt, and generates a new image that incorporates elements from all provided references. By feeding it your logo and a brand description, it creates original social post images that are visually consistent with your brand identity.</p>
+
+      <h3>Platform size guide</h3>
+      <p><strong>Facebook / LinkedIn:</strong> 1200×630px (landscape, ~1.91:1 ratio) works best for link previews and standard posts. <strong>Twitter/X:</strong> 1200×675px (16:9) is optimised for in-feed display. <strong>Instagram square:</strong> 1080×1080px is the classic Instagram format, works in feeds and grid. <strong>Instagram portrait:</strong> 1080×1350px (4:5) takes up more screen space in the feed — higher engagement. <strong>Stories:</strong> 1080×1920px (9:16) for Instagram, Facebook, and WhatsApp status.</p>
+
+      <h3>Why bring your own Replicate key?</h3>
+      <p>Most AI design tools charge ₹500–5,000/month subscription. With BYOK, you pay ≈₹10 per post at model-owner rate. No subscription, no markup. Your logo and brand images go straight from your browser to Replicate via a pass-through proxy — Desi Jugad never stores your images.</p>
+
+      <h3>Caption generation with Gemini</h3>
+      <p>After generating your image, you can use a free <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener">Google Gemini API key</a> to auto-generate platform-ready captions. The AI analyses your generated image and writes 3 caption variants (short, medium, and long-form) plus 10–15 relevant hashtags. Edit them directly in the browser and download as .txt.</p>
+    </div>
+
+    <div class="info-section" style="margin-top:2rem">
+      <h2>Frequently asked questions</h2>
+      <details class="faq-item">
+        <summary>My API key doesn't work — what do I do?</summary>
+        <p>Make sure you copied the full token from Replicate — it starts with <code>r8_</code> and is quite long. Go to <a href="settings.html">AI Settings</a>, delete the old key, and paste again. If the error says <em>"Out of credits"</em>, top up your Replicate account at <a href="https://replicate.com/account/billing" target="_blank" rel="noopener">replicate.com/account/billing</a>. New accounts get $5 free credit automatically.</p>
+      </details>
+      <details class="faq-item">
+        <summary>How long does image generation take?</summary>
+        <p>Usually 15–45 seconds. Replicate sometimes queues requests during peak hours, which can add 30–60 seconds. The progress bar will show current status. If it times out after 2 minutes, click Generate again.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Can I use this for multiple brands?</summary>
+        <p>Yes — just upload different logos each time. Your API key stays saved; everything else resets between sessions. For multiple brands in one session, click <strong>New post</strong> to start fresh.</p>
+      </details>
+      <details class="faq-item">
+        <summary>The generated image doesn't match my brand style. How do I improve it?</summary>
+        <p>Try being more specific in your brand description. Mention specific colours ("<em>navy blue and gold</em>"), aesthetic ("<em>clean minimal</em>"), and content ("<em>show a product flat lay</em>"). Add a reference image of a post you like. Try a different tone chip. Each generation uses a different seed, so running it again will produce a different result.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Can I share directly to Instagram?</summary>
+        <p>Instagram doesn't allow direct image posting from the web. The Instagram share button downloads your image and opens Instagram's website where you can continue the post on mobile. For desktop publishing, use <a href="https://business.facebook.com" target="_blank" rel="noopener">Meta Business Suite</a>.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Does this work for Indian regional brand names?</summary>
+        <p>Yes. The model handles Indian brand names and Hinglish descriptions well. For scripts like Devanagari or Tamil in the prompt, results may vary — using transliterated brand names in the prompt tends to work better than native script for image generation models.</p>
+      </details>
+    </div>
+
+  </div><!-- /container -->
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid footer-grid-5">
+      <div class="footer-brand">
+        <div class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></div>
+        <p>Free, private file conversion for everyone. Your files never leave your device — because they shouldn't have to.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Popular tools</h5>
+        <ul>
+          <li><a href="/convert/heic-to-jpg.html">HEIC to JPG</a></li>
+          <li><a href="/convert/image-converter.html">Image Converter</a></li>
+          <li><a href="/convert/qr-code.html">QR Code</a></li>
+          <li><a href="/convert/json-to-csv.html">JSON to CSV</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>AI Studio</h5>
+        <ul>
+          <li><a href="/ai/image.html">AI Images</a></li>
+          <li><a href="/ai/video.html">AI Video</a></li>
+          <li><a href="/ai/music.html">AI Music</a></li>
+          <li><a href="/ai/writer.html">AI Writer</a></li>
+          <li><a href="/ai/photo-studio.html">Photo Studio</a></li>
+          <li><a href="/ai/social-post.html">Social Post Maker</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Company</h5>
+        <ul>
+          <li><a href="/about.html">About</a></li>
+          <li><a href="/blog/">Blog</a></li>
+          <li><a href="/contact.html">Contact</a></li>
+          <li><a href="/privacy.html">Privacy Policy</a></li>
+          <li><a href="/terms.html">Terms</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Connect</h5>
+        <ul>
+          <li><a href="https://twitter.com/" rel="noopener">Twitter / X</a></li>
+          <li><a href="https://github.com/" rel="noopener">GitHub</a></li>
+          <li><a href="/contact.html">Feature request</a></li>
+          <li><a href="/contact.html">Report a bug</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© <span data-year>2026</span> Desi Jugad. All rights reserved.</div>
+      <div class="made-in"><span class="flag-in" aria-hidden="true"></span>Proudly made in India, built for the world.</div>
+    </div>
+  </div>
+</footer>
+
+<script src="../assets/js/main.js"></script>
+<script src="../assets/js/ai.js"></script>
+<script>
+/* =============================================================
+   AI Social Post Maker
+   Model: google/nano-banana (Replicate)
+         image_input: array of image data URLs
+         prompt: string
+   Captions: gemini-2.5-flash via /api/proxy?target=gemini
+   ============================================================= */
+
+/* ── State ──────────────────────────────────────────────────── */
+let logoDataUrl   = null;
+let refDataUrl    = null;
+let selectedTone  = 'professional';
+let generatedImageUrl = null;   // URL from Replicate output
+let generatedDataUrl  = null;   // fetched as blob → data URL for canvas
+let currentPlatform   = null;
+let captionTexts  = [];
+let hashtagsText  = '';
+
+const PLATFORMS = {
+  'facebook':     { label: 'Facebook',    w: 1200, h: 630  },
+  'linkedin':     { label: 'LinkedIn',    w: 1200, h: 627  },
+  'twitter':      { label: 'Twitter / X', w: 1200, h: 675  },
+  'instagram-sq': { label: 'Instagram',   w: 1080, h: 1080 },
+  'instagram-pt': { label: 'IG Portrait', w: 1080, h: 1350 },
+  'stories':      { label: 'Stories',     w: 1080, h: 1920 },
+};
+
+/* ── Upload handlers ──────────────────────────────────────────── */
+function setupUploadSlot(inputId, slotId, previewId, setter) {
+  const input   = document.getElementById(inputId);
+  const slot    = document.getElementById(slotId);
+  const preview = document.getElementById(previewId);
+
+  input.addEventListener('change', () => {
+    const f = input.files[0];
+    if (!f) return;
+    if (f.size > 8*1024*1024) { showErrorToast('File too large', 'Max image size is 8 MB.'); return; }
+    const reader = new FileReader();
+    reader.onload = e => {
+      setter(e.target.result);
+      preview.src = e.target.result;
+      preview.style.display = 'block';
+      slot.classList.add('has-image');
+    };
+    reader.readAsDataURL(f);
+  });
+
+  // Drag and drop
+  slot.addEventListener('dragover',  e => { e.preventDefault(); slot.classList.add('drag-over'); });
+  slot.addEventListener('dragleave', () => slot.classList.remove('drag-over'));
+  slot.addEventListener('drop', e => {
+    e.preventDefault(); slot.classList.remove('drag-over');
+    const f = e.dataTransfer.files[0];
+    if (f && f.type.startsWith('image/')) {
+      // Simulate input change
+      const dt = new DataTransfer(); dt.items.add(f);
+      input.files = dt.files;
+      input.dispatchEvent(new Event('change'));
+    }
+  });
+}
+
+/* ── Platform chip toggle ─────────────────────────────────────── */
+function setupPlatformChips() {
+  document.querySelectorAll('#platform-chips .platform-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      chip.classList.toggle('selected');
+      chip.querySelector('input[type="checkbox"]').checked = chip.classList.contains('selected');
+    });
+  });
+}
+
+/* ── Tone chips ───────────────────────────────────────────────── */
+function setupToneChips() {
+  document.querySelectorAll('#tone-chips .chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      document.querySelectorAll('#tone-chips .chip').forEach(c => c.classList.remove('selected'));
+      chip.classList.add('selected');
+      selectedTone = chip.dataset.tone;
+    });
+  });
+}
+
+/* ── Build prompt ─────────────────────────────────────────────── */
+function buildPrompt() {
+  const name = (document.getElementById('brand-name').value || '').trim();
+  const desc = (document.getElementById('brand-desc').value || '').trim();
+
+  const toneMap = {
+    professional: 'clean professional corporate design, high-quality brand photography aesthetic',
+    playful:      'fun vibrant playful design, bright colours, friendly typography',
+    bold:         'bold strong graphic design, high contrast, impactful visual',
+    minimal:      'clean minimal white-space design, modern and elegant, simple typography',
+    festive:      'festive celebratory design, warm rich colours, decorative Indian aesthetic, Diwali or festival mood',
+    luxury:       'luxury premium design, gold accents, dark rich background, elegant sophisticated',
+  };
+  const toneStr = toneMap[selectedTone] || toneMap.professional;
+
+  // Selected platforms for context
+  const selectedPlatforms = getSelectedPlatforms().map(p => PLATFORMS[p]?.label).join(', ');
+  const platformHint = selectedPlatforms ? `Designed for ${selectedPlatforms} social media posts. ` : '';
+
+  let prompt = `${platformHint}${toneStr}. `;
+  if (name) prompt += `Brand: ${name}. `;
+  if (desc) prompt += `${desc} `;
+  prompt += 'Make the sheets in the style of the logo. Make the scene natural. High resolution, suitable for social media posting.';
+
+  return prompt.trim();
+}
+
+function getSelectedPlatforms() {
+  return [...document.querySelectorAll('#platform-chips .platform-chip.selected')]
+    .map(c => c.dataset.platform);
+}
+
+/* ── Step indicator ───────────────────────────────────────────── */
+function setStep(n) {
+  document.querySelectorAll('.gen-step').forEach((el, i) => {
+    el.classList.remove('active', 'done');
+    if (i + 1 < n)  el.classList.add('done');
+    if (i + 1 === n) el.classList.add('active');
+  });
+}
+
+function setProgress(pct, msg) {
+  document.getElementById('progress-bar').style.width = pct + '%';
+  if (msg) document.getElementById('progress-msg').textContent = msg;
+}
+
+/* ── Main generate ────────────────────────────────────────────── */
+async function generatePost() {
+  if (!logoDataUrl) {
+    showErrorToast('Logo required', 'Upload your company logo to get started.');
+    return;
+  }
+
+  const selectedPlatforms = getSelectedPlatforms();
+  if (!selectedPlatforms.length) {
+    showErrorToast('Select a platform', 'Pick at least one platform to generate for.');
+    return;
+  }
+
+  const key = window.AIKeys.get('replicate');
+  if (!key) {
+    showErrorToast(
+      'Replicate key missing',
+      'Add your Replicate API key to use this tool. It\'s free to sign up.',
+      { label: 'Add key →', fn: "window.location='/ai/settings.html?need=replicate'" }
+    );
+    // Show the how-to section prominently
+    document.getElementById('how-to-section').scrollIntoView({ behavior: 'smooth' });
+    return;
+  }
+
+  document.getElementById('generate-btn').disabled = true;
+  document.getElementById('output-section').style.display = 'none';
+  document.getElementById('progress-wrap').style.display = '';
+  setStep(2);
+  setProgress(5, 'Preparing images…');
+
+  try {
+    const prompt = buildPrompt();
+
+    // Build image_input array: logo (required) + optional ref image
+    const imageInputs = [logoDataUrl];
+    if (refDataUrl) imageInputs.push(refDataUrl);
+
+    setProgress(15, 'Submitting to Replicate (google/nano-banana)…');
+    const outputUrl = await callNanoBanana(key, prompt, imageInputs);
+
+    setProgress(85, 'Fetching generated image…');
+    generatedImageUrl = outputUrl;
+    // Fetch as blob to get data URL for canvas (avoids CORS issues with canvas taint)
+    try {
+      const blob = await fetch(outputUrl).then(r => r.blob());
+      generatedDataUrl = await blobToDataUrl(blob);
+    } catch (_) {
+      // If fetch fails (CORS), use URL directly — canvas preview may be tainted
+      generatedDataUrl = outputUrl;
+    }
+
+    setProgress(95, 'Rendering previews…');
+    setStep(3);
+    renderOutputSection(selectedPlatforms);
+    logUsage('replicate', 'google/nano-banana', prompt.slice(0, 60), 0.10);
+    setProgress(100, 'Done!');
+
+  } catch (err) {
+    handleGenerateError(err);
+  }
+
+  document.getElementById('generate-btn').disabled = false;
+  document.getElementById('progress-wrap').style.display = 'none';
+}
+
+/* ── Replicate: google/nano-banana ───────────────────────────── */
+async function callNanoBanana(key, prompt, imageInputs) {
+  const path = '/v1/models/google/nano-banana/predictions';
+
+  const resp = await fetch('/api/proxy?target=replicate&path=' + encodeURIComponent(path), {
+    method: 'POST',
+    headers: {
+      'Authorization': 'Bearer ' + key,
+      'Content-Type': 'application/json',
+      'Prefer': 'wait',          // ask Replicate to wait synchronously (up to 60s)
+    },
+    body: JSON.stringify({
+      input: {
+        prompt:      prompt,
+        image_input: imageInputs,
+      },
+    }),
+  });
+
+  if (resp.status === 401) throw new Error('AUTH_ERROR');
+  if (resp.status === 402) throw new Error('CREDITS_ERROR');
+  if (resp.status === 403) throw new Error('FORBIDDEN_ERROR');
+  if (resp.status === 422) throw new Error('VALIDATION_ERROR');
+  if (resp.status === 429) throw new Error('RATE_ERROR');
+
+  const pred = await resp.json();
+  if (!resp.ok) throw new Error('API_ERROR: ' + (pred.detail || pred.title || JSON.stringify(pred).slice(0, 120)));
+
+  // Immediate result
+  if (pred.output) return extractOutputUrl(pred.output);
+
+  // Poll
+  const id = pred.id;
+  if (!id) throw new Error('NO_PREDICTION_ID');
+  return await pollPrediction(key, id);
+}
+
+async function pollPrediction(key, id) {
+  const start = Date.now();
+  let attempt = 0;
+  while (true) {
+    if (Date.now() - start > 120_000) throw new Error('TIMEOUT');
+    const delay = attempt < 3 ? 2000 : attempt < 8 ? 3000 : 5000;
+    await sleep(delay);
+    attempt++;
+    const pct = Math.min(20 + attempt * 8, 80);
+    setProgress(pct, `Processing… (${Math.round((Date.now()-start)/1000)}s)`);
+
+    const pr = await fetch('/api/proxy?target=replicate&path=' + encodeURIComponent('/v1/predictions/' + id), {
+      headers: { 'Authorization': 'Bearer ' + key },
+    });
+    const p = await pr.json();
+    if (p.status === 'succeeded') return extractOutputUrl(p.output);
+    if (p.status === 'failed')    throw new Error('PRED_FAILED: ' + (p.error || 'Unknown error'));
+    if (p.status === 'canceled')  throw new Error('PRED_CANCELED');
+  }
+}
+
+function extractOutputUrl(output) {
+  if (!output) throw new Error('NO_IMAGE_RETURNED');
+  if (typeof output === 'string') return output;
+  if (Array.isArray(output) && output.length > 0) {
+    const first = output[0];
+    if (typeof first === 'string') return first;
+    if (first && typeof first.url === 'function') return first.url();
+    if (first && first.url) return first.url;
+  }
+  throw new Error('UNEXPECTED_OUTPUT_FORMAT');
+}
+
+/* ── Render output ────────────────────────────────────────────── */
+function renderOutputSection(selectedPlatforms) {
+  // Show raw image
+  document.getElementById('result-img').src = generatedImageUrl;
+
+  // Build platform tabs
+  buildPlatformTabs(selectedPlatforms);
+
+  // Activate first tab
+  if (selectedPlatforms.length > 0) {
+    activatePlatformTab(selectedPlatforms[0]);
+  }
+
+  // Update captions section
+  document.getElementById('captions-output').style.display = 'none';
+  document.getElementById('captions-placeholder').style.display = '';
+  updateCaptionBtnState();
+
+  document.getElementById('output-section').style.display = '';
+  setStep(3);
+  document.getElementById('output-section').scrollIntoView({ behavior: 'smooth' });
+}
+
+function buildPlatformTabs(platforms) {
+  const tabsEl = document.getElementById('preview-tabs');
+  tabsEl.innerHTML = platforms.map(p =>
+    `<button class="platform-tab" data-platform="${p}" onclick="activatePlatformTab('${p}')">${PLATFORMS[p]?.label || p}</button>`
+  ).join('');
+}
+
+function activatePlatformTab(platform) {
+  currentPlatform = platform;
+  document.querySelectorAll('.platform-tab').forEach(t => {
+    t.classList.toggle('active', t.dataset.platform === platform);
+  });
+  drawPlatformCanvas(platform);
+}
+
+function drawPlatformCanvas(platform) {
+  const def = PLATFORMS[platform];
+  if (!def) return;
+  const canvas = document.getElementById('preview-canvas');
+  canvas.width  = def.w;
+  canvas.height = def.h;
+  const ctx = canvas.getContext('2d');
+
+  const img = new Image();
+  img.crossOrigin = 'anonymous';
+  img.onload = () => {
+    // Cover-crop: fill canvas, centre image
+    const srcAspect = img.width / img.height;
+    const dstAspect = def.w / def.h;
+    let sx, sy, sw, sh;
+    if (srcAspect > dstAspect) {
+      sh = img.height; sw = sh * dstAspect;
+      sx = (img.width - sw) / 2; sy = 0;
+    } else {
+      sw = img.width; sh = sw / dstAspect;
+      sx = 0; sy = (img.height - sh) / 2;
+    }
+    ctx.drawImage(img, sx, sy, sw, sh, 0, 0, def.w, def.h);
+  };
+  img.onerror = () => {
+    // Fallback: draw placeholder
+    ctx.fillStyle = '#f0ecf7';
+    ctx.fillRect(0, 0, def.w, def.h);
+    ctx.fillStyle = '#7051BC';
+    ctx.font = `bold ${Math.round(def.w * 0.04)}px sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.fillText('Preview unavailable — download original above', def.w/2, def.h/2);
+  };
+  img.src = generatedDataUrl || generatedImageUrl;
+}
+
+/* ── Download ─────────────────────────────────────────────────── */
+function downloadCurrentPlatform() {
+  if (!currentPlatform) return;
+  const canvas = document.getElementById('preview-canvas');
+  try {
+    const url = canvas.toDataURL('image/jpeg', 0.92);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `dj-social-${currentPlatform}-${Date.now()}.jpg`;
+    a.click();
+  } catch (_) {
+    // Canvas is tainted if data URL fetch failed — fall back to original
+    const a = document.createElement('a');
+    a.href = generatedImageUrl;
+    a.download = `dj-social-post-${Date.now()}.jpg`;
+    a.target = '_blank';
+    a.click();
+  }
+}
+
+function downloadCaptions() {
+  const name  = (document.getElementById('brand-name').value || 'brand').trim();
+  const lines = [];
+  captionTexts.forEach((t, i) => {
+    lines.push(`=== Caption variant ${i + 1} ===`);
+    lines.push(t);
+    lines.push('');
+  });
+  if (hashtagsText) {
+    lines.push('=== Hashtags ===');
+    lines.push(document.getElementById('hashtag-box').innerText || hashtagsText);
+  }
+  if (!lines.length) {
+    lines.push('No captions generated yet. Click "Generate with Gemini" on the post page.');
+  }
+  const blob = new Blob([lines.join('\n')], { type: 'text/plain' });
+  downloadBlob(blob, `dj-captions-${name}-${Date.now()}.txt`);
+}
+
+/* ── Caption generation (Gemini) ──────────────────────────────── */
+function updateCaptionBtnState() {
+  const gKey = window.AIKeys.get('gemini');
+  const btn = document.getElementById('caption-btn');
+  if (!gKey) {
+    btn.textContent = '🔑 Add Gemini key for captions';
+    btn.onclick = () => window.location = '/ai/settings.html?need=gemini';
+  } else {
+    btn.textContent = '✨ Generate with Gemini';
+    btn.onclick = generateCaptions;
+  }
+}
+
+async function generateCaptions() {
+  const key = window.AIKeys.get('gemini');
+  if (!key) {
+    showErrorToast('Gemini key missing', 'Add a free Gemini API key to generate captions.', { label: 'Add key →', fn: "window.location='/ai/settings.html?need=gemini'" });
+    return;
+  }
+  if (!generatedDataUrl && !generatedImageUrl) {
+    showErrorToast('No image', 'Generate a post image first.');
+    return;
+  }
+
+  const btn = document.getElementById('caption-btn');
+  btn.disabled = true;
+  btn.textContent = '⏳ Generating…';
+
+  const name = (document.getElementById('brand-name').value || '').trim();
+  const desc = (document.getElementById('brand-desc').value || '').trim();
+  const tone = selectedTone;
+  const platforms = getSelectedPlatforms().map(p => PLATFORMS[p]?.label).join(', ');
+
+  const systemPrompt = `You are a social media copywriter for Indian brands. Given a branded post image, write platform-ready captions.
+Brand: ${name || 'the brand shown'}. Tone: ${tone}. Platforms: ${platforms || 'social media'}.
+${desc ? 'Post context: ' + desc : ''}
+Output EXACTLY in this format (nothing else):
+CAPTION_1:
+<short punchy caption, under 100 chars>
+
+CAPTION_2:
+<medium caption, 100-200 chars, call to action>
+
+CAPTION_3:
+<longer caption, 200-350 chars, storytelling style>
+
+HASHTAGS:
+<10-15 relevant hashtags separated by spaces, mix of niche and popular>`;
+
+  try {
+    // Get the image to send to Gemini
+    let imgData, mimeType;
+    if (generatedDataUrl && generatedDataUrl.startsWith('data:')) {
+      const match = generatedDataUrl.match(/^data:([^;]+);base64,(.+)$/);
+      if (match) { mimeType = match[1]; imgData = match[2]; }
+    }
+
+    let body;
+    if (imgData) {
+      body = {
+        contents: [{
+          parts: [
+            { text: systemPrompt },
+            { inline_data: { mime_type: mimeType, data: imgData } },
+          ],
+        }],
+        generationConfig: { temperature: 0.9 },
+      };
+    } else {
+      // Fallback: text-only with image URL description
+      body = {
+        contents: [{ parts: [{ text: systemPrompt + '\n\n(Image generated, URL: ' + generatedImageUrl + ')' }] }],
+        generationConfig: { temperature: 0.9 },
+      };
+    }
+
+    const resp = await fetch('/api/proxy?target=gemini&path=' + encodeURIComponent('/v1beta/models/gemini-2.5-flash:generateContent'), {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-API-Key': key,
+        'X-Goog-Api-Key': key,
+      },
+      body: JSON.stringify(body),
+    });
+
+    if (resp.status === 401 || resp.status === 403) throw new Error('GEMINI_AUTH');
+    if (resp.status === 429) throw new Error('GEMINI_RATE');
+    const data = await resp.json();
+    if (!resp.ok) throw new Error('GEMINI_ERROR: ' + (data.error?.message || 'Unknown'));
+
+    const text = (data.candidates?.[0]?.content?.parts?.[0]?.text || '').trim();
+    parseCaptions(text);
+    setStep(4);
+
+  } catch (err) {
+    const msg = err.message || '';
+    if (msg.includes('GEMINI_AUTH')) {
+      showErrorToast('Gemini key invalid', 'Check your Gemini API key in settings.', { label: 'Fix', fn: "window.location='/ai/settings.html'" });
+    } else if (msg.includes('GEMINI_RATE')) {
+      showErrorToast('Gemini rate limit', 'You hit the free tier limit. Wait a minute and try again.');
+    } else {
+      showErrorToast('Caption generation failed', msg.slice(0, 120));
+    }
+  }
+
+  btn.disabled = false;
+  btn.textContent = '✨ Regenerate captions';
+  btn.onclick = generateCaptions;
+}
+
+function parseCaptions(text) {
+  captionTexts = [];
+  hashtagsText = '';
+
+  const cap1 = text.match(/CAPTION_1:\s*([\s\S]*?)(?=CAPTION_2:|HASHTAGS:|$)/i);
+  const cap2 = text.match(/CAPTION_2:\s*([\s\S]*?)(?=CAPTION_3:|HASHTAGS:|$)/i);
+  const cap3 = text.match(/CAPTION_3:\s*([\s\S]*?)(?=HASHTAGS:|$)/i);
+  const tags  = text.match(/HASHTAGS:\s*([\s\S]*?)$/i);
+
+  if (cap1) captionTexts.push(cap1[1].trim());
+  if (cap2) captionTexts.push(cap2[1].trim());
+  if (cap3) captionTexts.push(cap3[1].trim());
+  if (tags) hashtagsText = tags[1].trim();
+
+  // Fallback: if parsing failed, show raw text
+  if (!captionTexts.length) captionTexts.push(text);
+
+  renderCaptions();
+}
+
+function renderCaptions() {
+  const labels = ['Short (punchy)', 'Medium (with CTA)', 'Long-form (storytelling)'];
+  const container = document.getElementById('caption-cards');
+  container.innerHTML = captionTexts.map((t, i) => `
+    <div class="caption-card">
+      <div class="caption-card-label">${labels[i] || 'Variant ' + (i+1)}</div>
+      <textarea onchange="captionTexts[${i}]=this.value">${escHtml(t)}</textarea>
+      <button class="key-btn" style="margin-top:0.4rem;font-size:0.75rem" onclick="copyCaption(${i})">Copy</button>
+    </div>`).join('');
+
+  if (hashtagsText) {
+    document.getElementById('hashtag-box').innerText = hashtagsText;
+  }
+
+  document.getElementById('captions-placeholder').style.display = 'none';
+  document.getElementById('captions-output').style.display = '';
+}
+
+function copyCaption(i) {
+  copyToClipboard(captionTexts[i] || '');
+}
+function copyHashtags() {
+  copyToClipboard(document.getElementById('hashtag-box').innerText);
+}
+
+/* ── Social share ─────────────────────────────────────────────── */
+function shareToFacebook() {
+  window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.href), '_blank', 'width=600,height=450');
+}
+function shareToLinkedIn() {
+  window.open('https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(window.location.href), '_blank', 'width=600,height=500');
+}
+function shareToTwitter() {
+  const caption = captionTexts[0] || (document.getElementById('brand-name').value + ' — made with Desi Jugad AI');
+  const tags = (hashtagsText || '#DesijugadAI #SocialPost').split(/\s+/).slice(0,3).join(' ');
+  const tweet = encodeURIComponent(caption.slice(0, 240) + '\n\n' + tags);
+  window.open('https://twitter.com/intent/tweet?text=' + tweet, '_blank', 'width=600,height=450');
+}
+function shareToInstagram() {
+  // Download first, then open Instagram
+  downloadCurrentPlatform();
+  setTimeout(() => window.open('https://www.instagram.com/', '_blank'), 800);
+}
+
+/* ── Error handler ────────────────────────────────────────────── */
+function handleGenerateError(err) {
+  const msg = err.message || String(err);
+  if (msg === 'AUTH_ERROR') {
+    showErrorToast(
+      'API key rejected',
+      'Your Replicate key was not accepted. Make sure you copied the full key starting with r8_.',
+      { label: 'Check settings', fn: "window.location='/ai/settings.html?need=replicate'" }
+    );
+  } else if (msg === 'CREDITS_ERROR') {
+    showErrorToast(
+      'Out of Replicate credits',
+      'Top up your Replicate account. New accounts get $5 free.',
+      { label: 'Top up →', fn: "window.open('https://replicate.com/account/billing')" }
+    );
+  } else if (msg === 'FORBIDDEN_ERROR') {
+    showErrorToast(
+      'Access denied',
+      'Your Replicate key does not have access to this model. Make sure your account is verified.',
+      { label: 'Replicate help', fn: "window.open('https://replicate.com/docs')" }
+    );
+  } else if (msg === 'VALIDATION_ERROR') {
+    showErrorToast(
+      'Invalid input',
+      'The image format or size was not accepted. Try a PNG or JPG under 5 MB.',
+      { label: 'Retry', fn: 'generatePost()' }
+    );
+  } else if (msg === 'RATE_ERROR') {
+    showErrorToast('Rate limit', 'Too many requests. Wait a few seconds and try again.', { label: 'Retry', fn: 'generatePost()' });
+  } else if (msg === 'TIMEOUT') {
+    showErrorToast('Timed out', 'Replicate is taking too long. Try again — it\'s usually faster on retry.', { label: 'Retry', fn: 'generatePost()' });
+  } else if (msg === 'NO_IMAGE_RETURNED') {
+    showErrorToast('No image returned', 'The model did not return an image. Try a different prompt or generate again.', { label: 'Retry', fn: 'generatePost()' });
+  } else {
+    showErrorToast('Generation failed', msg.slice(0, 160), { label: 'Retry', fn: 'generatePost()' });
+  }
+}
+
+/* ── Reset ────────────────────────────────────────────────────── */
+function resetTool() {
+  generatedImageUrl = null; generatedDataUrl  = null;
+  currentPlatform   = null; captionTexts = []; hashtagsText = '';
+  document.getElementById('output-section').style.display = 'none';
+  setStep(1);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ── Utilities ────────────────────────────────────────────────── */
+function blobToDataUrl(blob) {
+  return new Promise((res, rej) => {
+    const r = new FileReader();
+    r.onload  = () => res(r.result);
+    r.onerror = rej;
+    r.readAsDataURL(blob);
+  });
+}
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+function escHtml(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+/* ── Init ─────────────────────────────────────────────────────── */
+document.addEventListener('DOMContentLoaded', function() {
+  setupUploadSlot('logo-input', 'logo-slot', 'logo-preview', v => { logoDataUrl = v; });
+  setupUploadSlot('ref-input',  'ref-slot',  'ref-preview',  v => { refDataUrl  = v; });
+  setupPlatformChips();
+  setupToneChips();
+
+  // Key pills
+  const rKey = window.AIKeys.get('replicate');
+  const gKey = window.AIKeys.get('gemini');
+  const pillR = document.getElementById('key-pill-replicate');
+  const pillG = document.getElementById('key-pill-gemini');
+  if (rKey) { pillR.className = 'key-pill key-pill--ok'; pillR.textContent = 'Replicate: ' + window.AIKeys.mask(rKey); pillR.href = '#'; }
+  if (gKey) { pillG.className = 'key-pill key-pill--ok'; pillG.textContent = 'Gemini: '    + window.AIKeys.mask(gKey); pillG.href = '#'; }
+
+  // Char counter
+  const descEl = document.getElementById('brand-desc');
+  const countEl = document.getElementById('desc-count');
+  descEl.addEventListener('input', () => { countEl.textContent = descEl.value.length + ' / 500'; });
+});
+</script>
+</body>
+</html>
