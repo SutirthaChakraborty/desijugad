@@ -217,6 +217,12 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://desijugad.co.in/convert/hash-generator.html</loc>
+    <lastmod>2026-04-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>https://desijugad.co.in/convert/heic-to-jpg.html</loc>
     <lastmod>2026-04-23</lastmod>
     <changefreq>monthly</changefreq>
@@ -303,6 +309,12 @@
   <url>
     <loc>https://desijugad.co.in/convert/qr-code.html</loc>
     <lastmod>2026-04-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://desijugad.co.in/convert/secret-message.html</loc>
+    <lastmod>2026-04-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>

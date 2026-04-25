@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/img/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/img/apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hash Generator — SHA Checksums for Text & Files | Desi Jugad</title>
+<meta name="description" content="Generate SHA-1, SHA-256, SHA-384, and SHA-512 hashes for text or files in your browser. Compare expected checksums, copy results, and download checksum files privately.">
+<meta name="keywords" content="hash generator, checksum generator, sha256 file hash, sha512 text hash, file checksum, browser hash tool">
+<meta name="author" content="Desi Jugad">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://desijugad.co.in/convert/hash-generator.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Hash Generator — SHA Checksums for Text & Files | Desi Jugad">
+<meta property="og:description" content="Generate private SHA checksums for text and files in your browser. No uploads, no sign-up.">
+<meta property="og:url" content="https://desijugad.co.in/convert/hash-generator.html">
+<meta property="og:image" content="https://desijugad.co.in/assets/img/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Hash Generator — SHA Checksums for Text & Files | Desi Jugad">
+<meta name="twitter:description" content="Generate private SHA checksums for text and files in your browser. No uploads, no sign-up.">
+<meta name="twitter:image" content="https://desijugad.co.in/assets/img/og.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,30..100;1,9..144,300..700,30..100&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Hash Generator",
+  "url": "https://desijugad.co.in/convert/hash-generator.html",
+  "description": "Browser-based checksum generator for text and files using SHA-1, SHA-256, SHA-384, and SHA-512.",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Are hashes generated locally?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Text and files are hashed entirely in your browser using the Web Crypto API. Nothing is uploaded to a server."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I verify a file checksum?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Generate the checksum, paste an expected hash, and the tool will compare them after normalizing case and spacing."
+      }
+    }
+  ]
+}
+</script>
+<style>
+.hash-shell {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(300px, 0.8fr);
+  gap: 1.5rem;
+  align-items: start;
+}
+@media (max-width: 960px) {
+  .hash-shell { grid-template-columns: 1fr; }
+}
+.hash-card, .hash-panel {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+.hash-card { padding: 1.5rem; }
+.hash-panel { padding: 1.25rem; position: sticky; top: 1rem; }
+.mode-tabs {
+  display: inline-flex;
+  padding: 0.35rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--bg-alt);
+  gap: 0.35rem;
+  margin-bottom: 1.25rem;
+}
+.mode-tab {
+  border: 0;
+  background: transparent;
+  color: var(--ink-soft);
+  padding: 0.55rem 1rem;
+  border-radius: 999px;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 0.92rem;
+}
+.mode-tab.active {
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow: var(--shadow-xs);
+}
+.input-stack, .checklist, .result-stack { display: flex; flex-direction: column; gap: 1rem; }
+.hash-textarea, .hash-input {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--bg-alt);
+  color: var(--ink);
+  font-family: var(--font-mono);
+}
+.hash-textarea {
+  min-height: 220px;
+  padding: 1rem 1.1rem;
+  resize: vertical;
+  line-height: 1.55;
+}
+.hash-input {
+  padding: 0.9rem 1rem;
+  font-size: 0.95rem;
+}
+.file-drop {
+  border: 1.5px dashed var(--line-strong);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(180deg, rgba(99,102,241,0.06), rgba(99,102,241,0.02));
+  padding: 1.4rem;
+  text-align: center;
+}
+.file-drop.dragover { border-color: var(--indigo); background: rgba(99,102,241,0.08); }
+.file-drop strong { display: block; margin-bottom: 0.35rem; }
+.file-drop small { color: var(--ink-muted); }
+.check-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+@media (max-width: 640px) {
+  .check-grid { grid-template-columns: 1fr; }
+}
+.check-item {
+  display: flex;
+  gap: 0.65rem;
+  align-items: center;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 0.85rem 1rem;
+  background: var(--bg-alt);
+}
+.check-item input { width: 18px; height: 18px; accent-color: var(--indigo); }
+.convert-btn-row { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.25rem; }
+.result-item {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--bg-alt);
+  padding: 1rem;
+}
+.result-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+.result-head strong { font-size: 0.95rem; }
+.result-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.mini-btn {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--ink-soft);
+  padding: 0.35rem 0.8rem;
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-family: var(--font-mono);
+}
+.hash-output {
+  font-family: var(--font-mono);
+  word-break: break-all;
+  line-height: 1.7;
+  color: var(--ink);
+  font-size: 0.9rem;
+}
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-family: var(--font-mono);
+}
+.status-pill.ok { background: rgba(16, 185, 129, 0.14); color: #047857; }
+.status-pill.bad { background: rgba(239, 68, 68, 0.12); color: #b91c1c; }
+.status-pill.neutral { background: var(--surface); color: var(--ink-muted); border: 1px solid var(--line); }
+.side-meta {
+  display: grid;
+  gap: 0.9rem;
+  margin-bottom: 1rem;
+}
+.meta-box {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--bg-alt);
+  padding: 0.95rem 1rem;
+}
+.meta-box small { display: block; color: var(--ink-muted); margin-bottom: 0.2rem; }
+.meta-box strong, .meta-box span { word-break: break-word; }
+.helper-list {
+  margin: 0;
+  padding-left: 1.1rem;
+  color: var(--ink-soft);
+  line-height: 1.7;
+}
+.hidden { display: none !important; }
+</style>
+</head>
+<body>
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="../" class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="../#converters">Converters</a></li>
+      <li><a href="../ai/">AI Studio <span class="badge-new">NEW</span></a></li>
+      <li><a href="../blog/">Blog</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../#converters" class="nav-cta">All tools</a></li>
+    </ul>
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+  </div>
+</header>
+
+<main class="converter-page">
+  <div class="container">
+    <nav class="breadcrumb"><a href="../">Home</a><span class="sep">/</span><a href="../#converters">Converters</a><span class="sep">/</span><span>Hash Generator</span></nav>
+
+    <div class="converter-header">
+      <h1>Generate <em class="italic">different hashes</em> for text or files.</h1>
+      <p class="lead">Create SHA-1, SHA-256, SHA-384, and SHA-512 checksums right in your browser. Paste text, drop a file, compare expected checksums, then copy or download the results.</p>
+    </div>
+
+    <div class="hash-shell">
+      <section class="hash-card">
+        <div class="mode-tabs" role="tablist" aria-label="Hash input mode">
+          <button class="mode-tab active" id="textTab" data-mode="text" role="tab" aria-selected="true">Hash text</button>
+          <button class="mode-tab" id="fileTab" data-mode="file" role="tab" aria-selected="false">Hash file</button>
+        </div>
+
+        <div class="input-stack" id="textMode">
+          <label>
+            <span class="label">Text input</span>
+            <textarea id="textInput" class="hash-textarea" placeholder="Paste a secret message, API response, commit ID, paragraph, or any text here…" spellcheck="false"></textarea>
+          </label>
+        </div>
+
+        <div class="input-stack hidden" id="fileMode">
+          <div class="file-drop" id="fileDrop" tabindex="0">
+            <strong>Drop a file here</strong>
+            <small>or choose one manually. Files are read locally and never uploaded.</small>
+            <div class="convert-btn-row" style="justify-content:center; margin-top:1rem;">
+              <button class="btn btn-secondary" id="chooseFileBtn" type="button">Choose file</button>
+            </div>
+            <input type="file" id="fileInput" class="hidden">
+          </div>
+        </div>
+
+        <div class="checklist" style="margin-top:1.5rem;">
+          <div>
+            <span class="label">Algorithms</span>
+            <div class="check-grid" style="margin-top:0.55rem;">
+              <label class="check-item"><input type="checkbox" data-algo="SHA-1"><span>SHA-1</span></label>
+              <label class="check-item"><input type="checkbox" data-algo="SHA-256" checked><span>SHA-256</span></label>
+              <label class="check-item"><input type="checkbox" data-algo="SHA-384"><span>SHA-384</span></label>
+              <label class="check-item"><input type="checkbox" data-algo="SHA-512" checked><span>SHA-512</span></label>
+            </div>
+          </div>
+
+          <label>
+            <span class="label">Compare against expected hash</span>
+            <input id="compareInput" class="hash-input" type="text" placeholder="Optional: paste a checksum to verify a file or text block">
+          </label>
+        </div>
+
+        <div class="convert-btn-row">
+          <button class="btn btn-primary" id="generateBtn">Generate hashes</button>
+          <button class="btn btn-secondary" id="copyAllBtn">Copy all</button>
+          <button class="btn btn-secondary" id="downloadBtn">Download checksums</button>
+          <button class="btn btn-secondary" id="sampleBtn">Try sample text</button>
+        </div>
+
+        <div class="result-stack" id="results" style="margin-top:1.5rem;"></div>
+      </section>
+
+      <aside class="hash-panel">
+        <h2 style="margin-bottom:0.95rem;">Details</h2>
+        <div class="side-meta" id="metaBoxes">
+          <div class="meta-box"><small>Input mode</small><strong id="metaMode">Text</strong></div>
+          <div class="meta-box"><small>Size</small><span id="metaSize">0 bytes</span></div>
+          <div class="meta-box"><small>Selected file</small><span id="metaFile">None yet</span></div>
+        </div>
+
+        <h3 style="margin-bottom:0.7rem;">What this page is good for</h3>
+        <ul class="helper-list">
+          <li>Check whether a downloaded file matches the published checksum.</li>
+          <li>Create text fingerprints for build pipelines, cache keys, or integrity notes.</li>
+          <li>Compare multiple algorithms side by side for the same input.</li>
+          <li>Export checksums to a plain text file for release notes or QA.</li>
+        </ul>
+      </aside>
+    </div>
+
+    <section class="info-section">
+      <h2>What is a file hash?</h2>
+      <p>A hash is a fixed-length fingerprint of a file or text block. Change even one bit and the output changes. That makes hashes useful for verifying downloads, comparing files, or storing integrity checks in documentation.</p>
+
+      <h2>What’s the difference between SHA-1, SHA-256, SHA-384, and SHA-512?</h2>
+      <p><strong>SHA-1</strong> is legacy and still seen in older tooling, but it should not be used for new security-sensitive workflows. <strong>SHA-256</strong> is the most common checksum format for releases. <strong>SHA-384</strong> and <strong>SHA-512</strong> produce longer digests and are sometimes used in stricter environments.</p>
+
+      <h2>Related privacy-first tools</h2>
+      <ul>
+        <li><a href="secret-message.html">Encrypt / decrypt secret messages and files</a> when you want confidentiality, not just integrity checks.</li>
+        <li><a href="password-gen.html">Generate a strong password</a> before you create a passphrase for encrypted payloads.</li>
+        <li><a href="base64.html">Encode files to Base64</a> when you need a transport-friendly text representation instead of a checksum.</li>
+        <li><a href="text-tools.html">Use Text Tools</a> for quick SHA hashing of pasted strings, formatting, and cleanup workflows.</li>
+      </ul>
+
+      <h2>FAQ</h2>
+      <details class="faq-item" open><summary>Are the hashes generated locally?</summary><p>Yes. This tool uses the browser’s built-in Web Crypto API and never uploads the text or file you provide.</p></details>
+      <details class="faq-item"><summary>Can I hash very large files?</summary><p>You can hash most common files, but the browser must read the file into memory. Very large files may be limited by device memory.</p></details>
+      <details class="faq-item"><summary>Can I compare an expected checksum?</summary><p>Yes. Paste a hash into the compare box and any matching result will be marked as a verified match.</p></details>
+    </section>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid footer-grid-5">
+      <div class="footer-brand"><div class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></div><p>Free, private file conversion for everyone.</p></div>
+      <div class="footer-col"><h5>Tools</h5><ul><li><a href="heic-to-jpg.html">HEIC to JPG</a></li><li><a href="json-to-csv.html">JSON to CSV</a></li><li><a href="base64.html">Base64</a></li><li><a href="password-gen.html">Password Generator</a></li></ul></div>
+      <div class="footer-col"><h5>AI Studio</h5><ul><li><a href="../ai/image.html">AI Images</a></li><li><a href="../ai/video.html">AI Video</a></li><li><a href="../ai/music.html">AI Music</a></li><li><a href="../ai/writer.html">AI Writer</a></li></ul></div>
+      <div class="footer-col"><h5>Company</h5><ul><li><a href="../about.html">About</a></li><li><a href="../blog/">Blog</a></li><li><a href="../sitemap.html">HTML Sitemap</a></li><li><a href="../privacy.html">Privacy</a></li><li><a href="../terms.html">Terms</a></li></ul></div>
+      <div class="footer-col"><h5>Help</h5><ul><li><a href="../contact.html">Contact</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><div>© <span data-year>2026</span> Desi Jugad.</div><div class="made-in"><span class="flag-in"></span>Made in India, built for the world.</div></div>
+  </div>
+</footer>
+
+<script src="../assets/js/main.js"></script>
+<script>
+(function() {
+  const textTab = document.getElementById('textTab');
+  const fileTab = document.getElementById('fileTab');
+  const textMode = document.getElementById('textMode');
+  const fileMode = document.getElementById('fileMode');
+  const textInput = document.getElementById('textInput');
+  const fileInput = document.getElementById('fileInput');
+  const chooseFileBtn = document.getElementById('chooseFileBtn');
+  const fileDrop = document.getElementById('fileDrop');
+  const compareInput = document.getElementById('compareInput');
+  const results = document.getElementById('results');
+  const metaMode = document.getElementById('metaMode');
+  const metaSize = document.getElementById('metaSize');
+  const metaFile = document.getElementById('metaFile');
+  const algoChecks = Array.from(document.querySelectorAll('[data-algo]'));
+
+  let currentMode = 'text';
+  let currentFile = null;
+  let lastResults = [];
+
+  function setMode(mode) {
+    currentMode = mode;
+    const isText = mode === 'text';
+    textTab.classList.toggle('active', isText);
+    fileTab.classList.toggle('active', !isText);
+    textTab.setAttribute('aria-selected', isText ? 'true' : 'false');
+    fileTab.setAttribute('aria-selected', isText ? 'false' : 'true');
+    textMode.classList.toggle('hidden', !isText);
+    fileMode.classList.toggle('hidden', isText);
+    metaMode.textContent = isText ? 'Text' : 'File';
+    syncMeta();
+  }
+
+  function formatBytes(bytes) {
+    if (!bytes) return '0 bytes';
+    const units = ['bytes', 'KB', 'MB', 'GB'];
+    let value = bytes;
+    let unit = 0;
+    while (value >= 1024 && unit < units.length - 1) {
+      value /= 1024;
+      unit += 1;
+    }
+    return `${value.toFixed(value >= 10 || unit === 0 ? 0 : 1)} ${units[unit]}`;
+  }
+
+  function normalizeHash(value) {
+    return (value || '').toLowerCase().replace(/\s+/g, '');
+  }
+
+  function syncMeta() {
+    if (currentMode === 'text') {
+      const bytes = new TextEncoder().encode(textInput.value || '').length;
+      metaSize.textContent = formatBytes(bytes);
+      metaFile.textContent = textInput.value ? 'Text input' : 'None yet';
+      return;
+    }
+    metaSize.textContent = currentFile ? formatBytes(currentFile.size) : '0 bytes';
+    metaFile.textContent = currentFile ? currentFile.name : 'None yet';
+  }
+
+  function selectedAlgorithms() {
+    return algoChecks.filter((checkbox) => checkbox.checked).map((checkbox) => checkbox.dataset.algo);
+  }
+
+  function toHex(buffer) {
+    return Array.from(new Uint8Array(buffer)).map((byte) => byte.toString(16).padStart(2, '0')).join('');
+  }
+
+  async function getInputBytes() {
+    if (currentMode === 'text') return new TextEncoder().encode(textInput.value || '');
+    if (!currentFile) throw new Error('Choose a file first.');
+    return new Uint8Array(await currentFile.arrayBuffer());
+  }
+
+  function renderResults(items) {
+    const expected = normalizeHash(compareInput.value);
+    results.innerHTML = '';
+    if (!items.length) {
+      results.innerHTML = '<div class="result-item"><div class="hash-output">Choose at least one algorithm and provide some text or a file.</div></div>';
+      return;
+    }
+
+    items.forEach((item, index) => {
+      const matches = expected && expected === item.hash;
+      const row = document.createElement('article');
+      row.className = 'result-item';
+      row.innerHTML = `
+        <div class="result-head">
+          <div>
+            <strong>${item.algorithm}</strong>
+            <div style="margin-top:0.35rem;">
+              <span class="status-pill ${expected ? (matches ? 'ok' : 'bad') : 'neutral'}">${expected ? (matches ? 'Matches expected hash' : 'Does not match expected hash') : 'No comparison hash'}</span>
+            </div>
+          </div>
+          <div class="result-actions">
+            <button class="mini-btn" data-copy-index="${index}">Copy</button>
+          </div>
+        </div>
+        <div class="hash-output">${item.hash}</div>
+      `;
+      results.appendChild(row);
+    });
+  }
+
+  async function generateHashes() {
+    const algorithms = selectedAlgorithms();
+    if (!algorithms.length) {
+      showToast('Select at least one algorithm.', 'error');
+      return;
+    }
+
+    if (currentMode === 'text' && !textInput.value.trim()) {
+      showToast('Enter some text first.', 'error');
+      return;
+    }
+    if (currentMode === 'file' && !currentFile) {
+      showToast('Choose a file first.', 'error');
+      return;
+    }
+
+    const bytes = await getInputBytes();
+    const items = [];
+    for (const algorithm of algorithms) {
+      const hash = toHex(await crypto.subtle.digest(algorithm, bytes));
+      items.push({ algorithm, hash });
+    }
+    lastResults = items;
+    renderResults(items);
+    showToast('Hashes generated locally.', 'success');
+  }
+
+  function handleFile(file) {
+    currentFile = file || null;
+    syncMeta();
+    if (currentFile) showToast(`Loaded ${currentFile.name}`, 'success');
+  }
+
+  textTab.addEventListener('click', () => setMode('text'));
+  fileTab.addEventListener('click', () => setMode('file'));
+  chooseFileBtn.addEventListener('click', () => fileInput.click());
+  fileInput.addEventListener('change', () => handleFile(fileInput.files[0] || null));
+  textInput.addEventListener('input', syncMeta);
+  compareInput.addEventListener('input', () => renderResults(lastResults));
+
+  ['dragenter', 'dragover'].forEach((eventName) => fileDrop.addEventListener(eventName, (event) => {
+    event.preventDefault();
+    fileDrop.classList.add('dragover');
+  }));
+  ['dragleave', 'drop'].forEach((eventName) => fileDrop.addEventListener(eventName, (event) => {
+    event.preventDefault();
+    fileDrop.classList.remove('dragover');
+  }));
+  fileDrop.addEventListener('drop', (event) => {
+    const file = event.dataTransfer.files[0];
+    if (file) handleFile(file);
+  });
+
+  document.getElementById('generateBtn').addEventListener('click', () => generateHashes().catch((error) => {
+    showToast(error.message || 'Hashing failed.', 'error');
+  }));
+
+  results.addEventListener('click', async (event) => {
+    const button = event.target.closest('[data-copy-index]');
+    if (!button) return;
+    const item = lastResults[Number(button.dataset.copyIndex)];
+    if (!item) return;
+    const ok = await copyToClipboard(item.hash);
+    showToast(ok ? `${item.algorithm} copied.` : 'Copy failed.', ok ? 'success' : 'error');
+  });
+
+  document.getElementById('copyAllBtn').addEventListener('click', async () => {
+    if (!lastResults.length) {
+      showToast('Generate hashes first.', 'error');
+      return;
+    }
+    const prefix = currentMode === 'file' && currentFile ? `${currentFile.name}\n` : 'Text input\n';
+    const payload = prefix + lastResults.map((item) => `${item.algorithm}: ${item.hash}`).join('\n');
+    const ok = await copyToClipboard(payload);
+    showToast(ok ? 'All hashes copied.' : 'Copy failed.', ok ? 'success' : 'error');
+  });
+
+  document.getElementById('downloadBtn').addEventListener('click', () => {
+    if (!lastResults.length) {
+      showToast('Generate hashes first.', 'error');
+      return;
+    }
+    const base = currentMode === 'file' && currentFile ? currentFile.name : 'text-hashes';
+    const payload = lastResults.map((item) => `${item.algorithm}  ${item.hash}`).join('\n') + '\n';
+    downloadBlob(new Blob([payload], { type: 'text/plain' }), `${base}.checksums.txt`);
+  });
+
+  document.getElementById('sampleBtn').addEventListener('click', () => {
+    setMode('text');
+    textInput.value = 'Desi Jugad keeps files private by doing the work in your browser.';
+    syncMeta();
+    generateHashes().catch((error) => showToast(error.message || 'Hashing failed.', 'error'));
+  });
+
+  syncMeta();
+})();
+</script>
+</body>
+</html>
