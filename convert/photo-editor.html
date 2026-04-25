@@ -1,0 +1,1370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/img/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/img/apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Photo Editor — Crop, Resize, Rotate &amp; Export Free | Desi Jugad</title>
+<meta name="description" content="Crop, resize, rotate, flip, and export photos in any format and size. Platform presets for Instagram, Facebook, LinkedIn. Ask in plain English. 100% in-browser, no upload.">
+<meta name="keywords" content="photo editor online free, crop image, resize image, rotate image, image export, Instagram crop, Facebook cover crop, no upload image editor">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://desijugad.co.in/convert/photo-editor.html">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://desijugad.co.in/convert/photo-editor.html">
+<meta property="og:title" content="Photo Editor — Crop, Resize, Rotate &amp; Export Free">
+<meta property="og:description" content="Crop, resize, rotate, flip, and export photos in any format. Platform presets. Ask in plain English. All in-browser.">
+<meta property="og:image" content="https://desijugad.co.in/assets/img/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,30..100;1,9..144,300..700,30..100&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400..600&display=swap" rel="stylesheet">
+<!-- Cropper.js CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cropperjs@1.6.2/dist/cropper.min.css">
+<link rel="stylesheet" href="../assets/css/style.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Desi Jugad Photo Editor",
+  "url": "https://desijugad.co.in/convert/photo-editor.html",
+  "description": "Browser-based photo editor: crop, resize, rotate, flip, and export in any format.",
+  "applicationCategory": "MultimediaApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
+
+<style>
+/* ── Editor layout ─────────────────────────────────────────── */
+.editor-wrap {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 1.25rem;
+  margin-top: 1.5rem;
+}
+@media (max-width: 860px) { .editor-wrap { grid-template-columns: 1fr; } }
+
+/* Canvas area */
+.canvas-area {
+  background: #1a1a2e;
+  border-radius: var(--radius);
+  overflow: hidden;
+  position: relative;
+  min-height: 360px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.canvas-area img {
+  display: block;
+  max-width: 100%;
+  max-height: 65vh;
+}
+.canvas-placeholder {
+  color: rgba(255,255,255,0.3);
+  text-align: center;
+  padding: 3rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+}
+.canvas-placeholder svg { opacity: 0.25; margin-bottom: 1rem; }
+
+/* Toolbar above canvas */
+.editor-toolbar {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.75rem;
+  align-items: center;
+}
+.tool-btn {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  padding: 0.45rem 0.85rem;
+  border: 1.5px solid var(--line); border-radius: var(--radius-sm);
+  background: var(--surface); cursor: pointer;
+  font-size: 0.82rem; font-family: var(--font-sans); font-weight: 600;
+  color: var(--ink); transition: all 0.15s var(--ease);
+  white-space: nowrap;
+}
+.tool-btn:hover { border-color: var(--indigo); color: var(--indigo); }
+.tool-btn.active { background: var(--indigo); border-color: var(--indigo); color: #fff; }
+.tool-btn:disabled { opacity: 0.35; cursor: default; pointer-events: none; }
+.tool-sep { width: 1px; height: 28px; background: var(--line); margin: 0 0.15rem; flex-shrink: 0; }
+
+/* Side panel */
+.side-panel { display: flex; flex-direction: column; gap: 0.9rem; }
+
+.panel-card {
+  background: var(--surface);
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1rem 1.1rem;
+}
+.panel-card-title {
+  font-size: 0.8rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.08em; color: var(--ink-muted); font-family: var(--font-mono);
+  margin-bottom: 0.75rem;
+}
+
+/* Aspect ratio chips (smaller) */
+.ratio-chips { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.ratio-chip {
+  padding: 0.28rem 0.6rem; border: 1.5px solid var(--line);
+  border-radius: 999px; font-size: 0.73rem; font-family: var(--font-mono);
+  cursor: pointer; background: var(--surface); color: var(--ink-muted);
+  transition: all 0.15s; white-space: nowrap;
+}
+.ratio-chip:hover { border-color: var(--indigo); color: var(--indigo); }
+.ratio-chip.active { background: var(--indigo); border-color: var(--indigo); color: #fff; }
+
+/* Dimension inputs */
+.dim-row {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 0.5rem; align-items: end;
+}
+.dim-row label { font-size: 0.78rem; color: var(--ink-muted); display: block; margin-bottom: 0.2rem; }
+.dim-row input {
+  width: 100%; padding: 0.5rem 0.6rem; border: 1.5px solid var(--line);
+  border-radius: var(--radius-sm); background: var(--bg-alt);
+  font-family: var(--font-mono); font-size: 0.85rem; color: var(--ink);
+  transition: border-color 0.15s;
+}
+.dim-row input:focus { outline: none; border-color: var(--indigo); }
+
+/* Slider rows */
+.slider-row { margin-bottom: 0.6rem; }
+.slider-row label {
+  display: flex; justify-content: space-between;
+  font-size: 0.8rem; color: var(--ink-soft); margin-bottom: 0.3rem;
+}
+.slider-row label span { font-family: var(--font-mono); color: var(--indigo); }
+.slider-row input[type=range] { width: 100%; }
+
+/* Info bar below canvas */
+.img-info-bar {
+  display: flex; gap: 1.25rem; flex-wrap: wrap;
+  font-family: var(--font-mono); font-size: 0.75rem; color: var(--ink-muted);
+  margin-top: 0.5rem; padding: 0.5rem 0.75rem;
+  background: var(--bg-alt); border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+}
+.img-info-bar span b { color: var(--ink); }
+
+/* Ask bar */
+.ask-bar-wrap {
+  margin-top: 1.25rem;
+  background: color-mix(in srgb, var(--indigo) 5%, var(--surface));
+  border: 2px solid color-mix(in srgb, var(--indigo) 30%, var(--line));
+  border-radius: var(--radius);
+  padding: 1rem 1.1rem;
+}
+.ask-bar-label {
+  font-size: 0.82rem; font-weight: 700; color: var(--indigo);
+  font-family: var(--font-mono); margin-bottom: 0.6rem;
+  display: flex; align-items: center; gap: 0.5rem;
+}
+.ask-bar-input-row { display: flex; gap: 0.5rem; }
+.ask-bar-input {
+  flex: 1; padding: 0.7rem 1rem; border: 1.5px solid var(--line);
+  border-radius: var(--radius-sm); font-family: var(--font-sans);
+  font-size: 0.9rem; background: var(--surface); color: var(--ink);
+  transition: border-color 0.15s;
+}
+.ask-bar-input:focus { outline: none; border-color: var(--indigo); }
+.ask-bar-input::placeholder { color: var(--ink-muted); font-style: italic; }
+.ask-suggestions {
+  display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.6rem;
+}
+.ask-suggestion {
+  padding: 0.22rem 0.6rem; border: 1px solid var(--line); border-radius: 999px;
+  font-size: 0.73rem; font-family: var(--font-mono); color: var(--ink-muted);
+  cursor: pointer; background: var(--surface); transition: all 0.13s;
+}
+.ask-suggestion:hover { border-color: var(--indigo); color: var(--indigo); background: color-mix(in srgb,var(--indigo) 6%,var(--surface)); }
+.ask-result {
+  margin-top: 0.65rem; font-size: 0.82rem; font-family: var(--font-mono);
+  padding: 0.55rem 0.75rem; border-radius: var(--radius-sm);
+  display: none;
+}
+.ask-result.ok  { background: color-mix(in srgb,var(--success) 10%,var(--surface)); color: var(--success); border: 1px solid color-mix(in srgb,var(--success) 30%,var(--line)); }
+.ask-result.err { background: color-mix(in srgb,var(--danger)  10%,var(--surface)); color: var(--danger);  border: 1px solid color-mix(in srgb,var(--danger)  30%,var(--line)); }
+
+/* Platform presets */
+.preset-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem;
+}
+.preset-btn {
+  padding: 0.45rem 0.5rem; border: 1.5px solid var(--line); border-radius: var(--radius-sm);
+  background: var(--surface); cursor: pointer; text-align: left;
+  transition: all 0.15s; display: flex; flex-direction: column;
+}
+.preset-btn:hover { border-color: var(--indigo); background: color-mix(in srgb,var(--indigo) 5%,var(--surface)); }
+.preset-btn .pb-name { font-size: 0.75rem; font-weight: 600; color: var(--ink); line-height: 1.2; }
+.preset-btn .pb-size { font-size: 0.68rem; font-family: var(--font-mono); color: var(--ink-muted); }
+
+/* Download output area */
+.output-row {
+  display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center;
+  margin-top: 0.5rem;
+}
+.output-preview {
+  max-width: 100%; border-radius: var(--radius-sm);
+  border: 1px solid var(--line); display: none; margin-top: 0.75rem;
+}
+
+/* Undo/history dot */
+.history-dot {
+  width: 7px; height: 7px; border-radius: 50%; background: var(--line);
+  display: inline-block; margin: 0 1px; transition: background 0.15s;
+}
+.history-dot.filled { background: var(--indigo); }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="../" class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="../#converters">Converters</a></li>
+      <li><a href="../ai/">AI Studio <span class="badge-new">NEW</span></a></li>
+      <li><a href="../blog/">Blog</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../#converters" class="nav-cta">All tools</a></li>
+    </ul>
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</header>
+
+<main class="converter-page">
+  <div class="container">
+    <nav class="breadcrumb">
+      <a href="../">Home</a><span class="sep">/</span>
+      <a href="../#converters">Converters</a><span class="sep">/</span>
+      <span>Photo Editor</span>
+    </nav>
+
+    <div class="converter-header">
+      <h1>Photo editor, <em class="italic">everything in one tab.</em></h1>
+      <p class="lead">Crop, resize, rotate, flip, adjust brightness/contrast, and export to any format and size — including platform presets for Instagram, Facebook, LinkedIn, and print. Or just <strong>ask in plain English</strong>. 100% in your browser, no upload, no account.</p>
+    </div>
+
+    <!-- ── DROP ZONE ──────────────────────────────────── -->
+    <div class="dropzone" id="dropzone" style="display:flex;flex-direction:column;align-items:center;justify-content:center">
+      <div class="dropzone-icon">
+        <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+      </div>
+      <h2>Drop an image here</h2>
+      <p class="sub">PNG, JPG, WebP, BMP, GIF, SVG · up to 50 MB</p>
+      <input type="file" id="fileInput" class="dropzone-input" accept="image/*">
+      <button class="btn btn-primary" id="pickBtn">Choose image</button>
+      <small>No upload. No sign-up. File stays on your device.</small>
+    </div>
+
+    <!-- ── MAIN EDITOR (hidden until image loaded) ──── -->
+    <div id="editorSection" style="display:none">
+
+      <!-- Ask bar -->
+      <div class="ask-bar-wrap">
+        <div class="ask-bar-label">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+          Ask me anything
+        </div>
+        <div class="ask-bar-input-row">
+          <input id="askInput" class="ask-bar-input" type="text"
+            placeholder="e.g. "crop to 1:1", "resize to 800px wide", "rotate 90°", "make it a PNG"…"
+            maxlength="200" autocomplete="off" spellcheck="false">
+          <button class="btn btn-primary" onclick="runAsk()" style="padding:0.7rem 1.25rem;white-space:nowrap">Apply</button>
+        </div>
+        <div class="ask-suggestions" id="askSuggestions">
+          <span class="ask-suggestion" onclick="fillAsk(this)">crop to square</span>
+          <span class="ask-suggestion" onclick="fillAsk(this)">resize to 1920×1080</span>
+          <span class="ask-suggestion" onclick="fillAsk(this)">make it 800px wide</span>
+          <span class="ask-suggestion" onclick="fillAsk(this)">rotate 90 clockwise</span>
+          <span class="ask-suggestion" onclick="fillAsk(this)">flip horizontal</span>
+          <span class="ask-suggestion" onclick="fillAsk(this)">export as PNG</span>
+          <span class="ask-suggestion" onclick="fillAsk(this)">export as WebP 80%</span>
+          <span class="ask-suggestion" onclick="fillAsk(this)">Instagram post</span>
+          <span class="ask-suggestion" onclick="fillAsk(this)">Facebook cover</span>
+          <span class="ask-suggestion" onclick="fillAsk(this)">compress under 200KB</span>
+          <span class="ask-suggestion" onclick="fillAsk(this)">brightness +20</span>
+          <span class="ask-suggestion" onclick="fillAsk(this)">passport photo</span>
+        </div>
+        <div id="askResult" class="ask-result"></div>
+      </div>
+
+      <!-- Toolbar + canvas -->
+      <div style="margin-top:1.25rem">
+        <div class="editor-toolbar" id="toolbar">
+          <!-- Crop group -->
+          <button class="tool-btn" id="btn-crop-toggle" onclick="toggleCropMode()" title="Activate crop drag handle">✂️ Crop</button>
+          <button class="tool-btn" id="btn-crop-apply"  onclick="applyCrop()"  title="Apply selected crop region" style="display:none">✅ Apply crop</button>
+          <button class="tool-btn" id="btn-crop-cancel" onclick="cancelCrop()" title="Cancel crop" style="display:none">✕ Cancel</button>
+          <div class="tool-sep"></div>
+          <!-- Transform -->
+          <button class="tool-btn" id="btn-rot-ccw"    onclick="rotate(-90)"  title="Rotate 90° counter-clockwise">↺ 90°</button>
+          <button class="tool-btn" id="btn-rot-cw"     onclick="rotate(90)"   title="Rotate 90° clockwise">↻ 90°</button>
+          <button class="tool-btn" id="btn-flip-h"     onclick="flip('h')"    title="Flip horizontal">⇔ Flip H</button>
+          <button class="tool-btn" id="btn-flip-v"     onclick="flip('v')"    title="Flip vertical">⇕ Flip V</button>
+          <div class="tool-sep"></div>
+          <!-- Undo/Redo -->
+          <button class="tool-btn" id="btn-undo"       onclick="undo()"       title="Undo (Ctrl+Z)" id="undoBtn">↩ Undo</button>
+          <button class="tool-btn" id="btn-redo"       onclick="redo()"       title="Redo (Ctrl+Y)">↪ Redo</button>
+          <button class="tool-btn" onclick="resetToOriginal()" title="Reset to original image" style="margin-left:auto">⟳ Reset</button>
+          <button class="tool-btn" onclick="triggerNewFile()"  title="Open a different file">📂 New file</button>
+        </div>
+
+        <div class="editor-wrap">
+          <!-- LEFT: canvas area -->
+          <div>
+            <div class="canvas-area" id="canvasArea">
+              <!-- Cropper.js mounts here -->
+              <img id="editorImg" src="" alt="Image being edited" style="max-width:100%;max-height:65vh;display:block">
+            </div>
+            <div class="img-info-bar" id="infoBar">
+              <span>Original: <b id="infoOrig">—</b></span>
+              <span>Current: <b id="infoCurrent">—</b></span>
+              <span>Size: <b id="infoSize">—</b></span>
+              <span>Format: <b id="infoFormat">—</b></span>
+              <span id="historyDots" style="margin-left:auto;display:flex;align-items:center;gap:2px"></span>
+            </div>
+          </div>
+
+          <!-- RIGHT: side panel -->
+          <div class="side-panel">
+
+            <!-- Crop ratio -->
+            <div class="panel-card" id="cropPanel">
+              <div class="panel-card-title">Crop ratio</div>
+              <div class="ratio-chips" id="ratioChips">
+                <span class="ratio-chip active" data-ratio="NaN" onclick="setRatio(NaN, this)">Free</span>
+                <span class="ratio-chip" data-ratio="1"    onclick="setRatio(1, this)">1:1</span>
+                <span class="ratio-chip" data-ratio="1.333" onclick="setRatio(1.333, this)">4:3</span>
+                <span class="ratio-chip" data-ratio="1.5"  onclick="setRatio(1.5, this)">3:2</span>
+                <span class="ratio-chip" data-ratio="1.778" onclick="setRatio(1.778, this)">16:9</span>
+                <span class="ratio-chip" data-ratio="0.5625" onclick="setRatio(0.5625, this)">9:16</span>
+                <span class="ratio-chip" data-ratio="0.8"  onclick="setRatio(0.8, this)">4:5</span>
+                <span class="ratio-chip" data-ratio="0.667" onclick="setRatio(0.667, this)">2:3</span>
+                <span class="ratio-chip" data-ratio="0.707" onclick="setRatio(0.707, this)">A4</span>
+              </div>
+            </div>
+
+            <!-- Resize -->
+            <div class="panel-card">
+              <div class="panel-card-title">Resize</div>
+              <div class="dim-row">
+                <div>
+                  <label>Width (px)</label>
+                  <input type="number" id="resizeW" min="1" max="16000" placeholder="e.g. 1920">
+                </div>
+                <div>
+                  <label>Height (px)</label>
+                  <input type="number" id="resizeH" min="1" max="16000" placeholder="e.g. 1080">
+                </div>
+              </div>
+              <div style="margin:0.55rem 0;display:flex;align-items:center;gap:0.5rem">
+                <label style="display:flex;align-items:center;gap:0.35rem;font-size:0.8rem;color:var(--ink-soft);cursor:pointer">
+                  <input type="checkbox" id="lockRatio" checked style="accent-color:var(--indigo)"> Lock aspect ratio
+                </label>
+              </div>
+              <button class="btn btn-secondary" onclick="applyResize()" style="width:100%;padding:0.55rem">Apply resize</button>
+            </div>
+
+            <!-- Adjustments -->
+            <div class="panel-card">
+              <div class="panel-card-title">Adjustments</div>
+              <div class="slider-row">
+                <label>Brightness <span id="valBrightness">0</span></label>
+                <input type="range" id="slBrightness" min="-100" max="100" value="0" oninput="updateAdjLabel('Brightness',this.value);previewAdjust()">
+              </div>
+              <div class="slider-row">
+                <label>Contrast <span id="valContrast">0</span></label>
+                <input type="range" id="slContrast" min="-100" max="100" value="0" oninput="updateAdjLabel('Contrast',this.value);previewAdjust()">
+              </div>
+              <div class="slider-row">
+                <label>Saturation <span id="valSaturation">0</span></label>
+                <input type="range" id="slSaturation" min="-100" max="100" value="0" oninput="updateAdjLabel('Saturation',this.value);previewAdjust()">
+              </div>
+              <div class="slider-row">
+                <label>Sharpness <span id="valSharpness">0</span></label>
+                <input type="range" id="slSharpness" min="0" max="10" value="0" oninput="updateAdjLabel('Sharpness',this.value);previewAdjust()">
+              </div>
+              <button class="btn btn-secondary" onclick="bakeAdjust()" style="width:100%;padding:0.55rem;margin-top:0.25rem">Bake adjustments</button>
+            </div>
+
+            <!-- Platform presets -->
+            <div class="panel-card">
+              <div class="panel-card-title">Platform presets</div>
+              <div class="preset-grid" id="presetGrid">
+                <button class="preset-btn" onclick="applyPreset(1080,1080,'crop')"><span class="pb-name">Instagram Post</span><span class="pb-size">1080×1080</span></button>
+                <button class="preset-btn" onclick="applyPreset(1080,1350,'crop')"><span class="pb-name">IG Portrait</span><span class="pb-size">1080×1350</span></button>
+                <button class="preset-btn" onclick="applyPreset(1080,1920,'crop')"><span class="pb-name">IG Stories</span><span class="pb-size">1080×1920</span></button>
+                <button class="preset-btn" onclick="applyPreset(1200,630,'crop')"><span class="pb-name">Facebook Post</span><span class="pb-size">1200×630</span></button>
+                <button class="preset-btn" onclick="applyPreset(820,312,'crop')"><span class="pb-name">FB Cover</span><span class="pb-size">820×312</span></button>
+                <button class="preset-btn" onclick="applyPreset(1200,627,'crop')"><span class="pb-name">LinkedIn Post</span><span class="pb-size">1200×627</span></button>
+                <button class="preset-btn" onclick="applyPreset(1200,675,'crop')"><span class="pb-name">Twitter/X Post</span><span class="pb-size">1200×675</span></button>
+                <button class="preset-btn" onclick="applyPreset(1500,500,'crop')"><span class="pb-name">Twitter Header</span><span class="pb-size">1500×500</span></button>
+                <button class="preset-btn" onclick="applyPreset(2480,3508,'resize')"><span class="pb-name">A4 Print</span><span class="pb-size">2480×3508</span></button>
+                <button class="preset-btn" onclick="applyPreset(413,531,'crop')"><span class="pb-name">Passport Photo</span><span class="pb-size">413×531</span></button>
+                <button class="preset-btn" onclick="applyPreset(800,600,'resize')"><span class="pb-name">Web Standard</span><span class="pb-size">800×600</span></button>
+                <button class="preset-btn" onclick="applyPreset(1920,1080,'resize')"><span class="pb-name">Full HD</span><span class="pb-size">1920×1080</span></button>
+              </div>
+            </div>
+
+            <!-- Export -->
+            <div class="panel-card">
+              <div class="panel-card-title">Export</div>
+              <div style="margin-bottom:0.65rem">
+                <label style="font-size:0.78rem;color:var(--ink-muted);display:block;margin-bottom:0.3rem">Format</label>
+                <select id="exportFormat" style="width:100%;padding:0.5rem 0.7rem;border:1.5px solid var(--line);border-radius:var(--radius-sm);background:var(--bg-alt);font-family:var(--font-mono);font-size:0.83rem;color:var(--ink)">
+                  <option value="same">Same as original</option>
+                  <option value="image/jpeg">JPEG</option>
+                  <option value="image/png">PNG (lossless)</option>
+                  <option value="image/webp">WebP</option>
+                </select>
+              </div>
+              <div class="slider-row">
+                <label>Quality <span id="valQuality">92%</span></label>
+                <input type="range" id="slQuality" min="10" max="100" step="2" value="92" oninput="document.getElementById('valQuality').textContent=this.value+'%'">
+              </div>
+              <div style="margin-bottom:0.65rem">
+                <label style="font-size:0.78rem;color:var(--ink-muted);display:block;margin-bottom:0.3rem">DPI (for print)</label>
+                <select id="exportDPI" style="width:100%;padding:0.5rem 0.7rem;border:1.5px solid var(--line);border-radius:var(--radius-sm);background:var(--bg-alt);font-family:var(--font-mono);font-size:0.83rem;color:var(--ink)">
+                  <option value="72">72 dpi (web)</option>
+                  <option value="96">96 dpi (screen)</option>
+                  <option value="150">150 dpi (draft print)</option>
+                  <option value="300" selected>300 dpi (quality print)</option>
+                </select>
+              </div>
+              <button class="btn btn-primary" onclick="exportImage()" style="width:100%;padding:0.65rem;font-size:0.9rem">⬇ Download</button>
+            </div>
+
+          </div><!-- /side-panel -->
+        </div><!-- /editor-wrap -->
+      </div>
+    </div><!-- /editorSection -->
+
+    <!-- INFO -->
+    <div class="info-section" style="margin-top:3rem">
+      <h2>A proper photo editor that runs entirely in your browser</h2>
+      <p>Most browser-based "photo editors" do one thing — resize, or compress, or convert. Desi Jugad Photo Editor combines every basic editing operation into a single tab: visual crop with handle dragging, resize with aspect lock, rotate and flip, brightness/contrast/saturation/sharpness adjustment, platform export presets, and a plain-English command bar. Everything uses the browser's Canvas API — no uploads, no server, no account.</p>
+
+      <h3>The Ask Me Anything bar</h3>
+      <p>Type what you want in plain English and click Apply. The command parser understands hundreds of phrase variations for common operations: <em>"crop to square"</em>, <em>"make it 1080 wide"</em>, <em>"rotate 90 clockwise"</em>, <em>"flip horizontal"</em>, <em>"export as webp 80%"</em>, <em>"brightness +30"</em>, <em>"compress under 200kb"</em>, <em>"Instagram post"</em>, <em>"passport photo"</em>. No AI, no API call — pure JavaScript pattern matching, runs instantly.</p>
+
+      <h3>Platform presets</h3>
+      <p>Click any preset to immediately resize and/or crop your image to that platform's recommended dimensions. Presets include Instagram (square, portrait, stories), Facebook (post, cover), LinkedIn post, Twitter/X (post, header), A4 print at 300 DPI, passport photo, and common web sizes. The preset crops to the aspect ratio first, then resizes — so your image fits correctly without stretching.</p>
+
+      <h3>Adjustments</h3>
+      <p>Brightness, contrast, saturation, and sharpness are applied as real-time CSS filter previews. When you click <strong>Bake adjustments</strong>, the filters are rendered permanently into the canvas using pixel-level manipulation — meaning they'll export correctly and you can continue editing on top.</p>
+
+      <h3>Undo / redo</h3>
+      <p>Every operation (crop, resize, rotate, flip, bake) pushes a snapshot to the history stack. Use the ↩ Undo and ↪ Redo buttons or Ctrl+Z / Ctrl+Y (Cmd+Z / Cmd+Y on Mac). Up to 20 history steps are kept.</p>
+
+      <h3>Export options</h3>
+      <p>Export as JPEG (smallest files), PNG (lossless, keeps transparency), or WebP (best compression with quality). Use the quality slider to balance file size vs. sharpness. The DPI field embeds a resolution tag in the file metadata — useful for print: set 300 dpi for any image going to a printer.</p>
+    </div>
+
+    <div class="info-section" style="margin-top:2rem">
+      <h2>Frequently asked questions</h2>
+      <details class="faq-item">
+        <summary>Is my photo uploaded to any server?</summary>
+        <p>No. All processing uses your browser's Canvas API and JavaScript. Your image never leaves your device. There are no analytics on the image content. Close the tab and nothing remains.</p>
+      </details>
+      <details class="faq-item">
+        <summary>What's the maximum image size?</summary>
+        <p>Up to 50 MB and up to approximately 16,000 × 16,000 pixels. Very large images (above 6000px on a side) may be slow to process on low-end devices because each operation redraws the canvas. For batch processing, use the <a href="image-resize.html">Image Resize tool</a> which handles up to 100 files.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Can I use this for batch editing multiple images?</summary>
+        <p>This tool is optimised for single-image detailed editing. For batch resizing (same settings applied to many files), use the <a href="image-resize.html">Image Resize + DPI</a> tool. For batch compression, use the <a href="image-compress.html">Image Compressor</a>.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Does the crop keep the full resolution?</summary>
+        <p>Yes. The crop operates on the full-resolution canvas, not on the scaled preview. The cropped output is the exact pixels from your original image at the dimensions you see in the info bar.</p>
+      </details>
+      <details class="faq-item">
+        <summary>What does "Bake adjustments" mean?</summary>
+        <p>Brightness, contrast, saturation, and sharpness are shown as CSS filter previews while you're adjusting. "Bake" renders them permanently into the pixel data of the canvas, so when you export or do further edits (crop, resize) the adjustments are preserved. If you skip Bake and export, the adjustments are still applied to the exported file.</p>
+      </details>
+      <details class="faq-item">
+        <summary>What does the DPI selector do?</summary>
+        <p>It embeds a resolution tag (pHYs chunk for PNG, JFIF density for JPEG) in the exported file. This tells print software how large to print the image. It does <em>not</em> change the pixel count — a 1200×630 image at 300 DPI is still 1200×630 pixels, but a printer will print it at ~4×2.1 inches instead of ~16.7×8.75 inches.</p>
+      </details>
+    </div>
+
+    <div class="related-tools">
+      <h3>Related tools</h3>
+      <div class="related-grid">
+        <a href="image-resize.html"    class="related-card">📐 Batch Image Resize</a>
+        <a href="image-compress.html"  class="related-card">🗜️ Image Compressor</a>
+        <a href="image-converter.html" class="related-card">🖼️ Image Converter</a>
+        <a href="svg-to-png.html"      class="related-card">🎨 SVG to PNG</a>
+        <a href="../ai/bg-remove.html" class="related-card">✂️ AI Background Remover</a>
+        <a href="../ai/photo-studio.html" class="related-card">📸 AI Photo Studio</a>
+      </div>
+    </div>
+
+  </div><!-- /container -->
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid footer-grid-5">
+      <div class="footer-brand">
+        <div class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></div>
+        <p>Free, private file conversion for everyone.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Image Tools</h5>
+        <ul>
+          <li><a href="photo-editor.html">Photo Editor</a></li>
+          <li><a href="image-converter.html">Image Converter</a></li>
+          <li><a href="image-compress.html">Image Compressor</a></li>
+          <li><a href="image-resize.html">Image Resize + DPI</a></li>
+          <li><a href="heic-to-jpg.html">HEIC to JPG</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>AI Studio</h5>
+        <ul>
+          <li><a href="../ai/image.html">AI Images</a></li>
+          <li><a href="../ai/photo-studio.html">Photo Studio</a></li>
+          <li><a href="../ai/bg-remove.html">Background Remover</a></li>
+          <li><a href="../ai/social-post.html">Social Post Maker</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Company</h5>
+        <ul>
+          <li><a href="../about.html">About</a></li>
+          <li><a href="../blog/">Blog</a></li>
+          <li><a href="../privacy.html">Privacy</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Help</h5>
+        <ul>
+          <li><a href="../contact.html">Contact</a></li>
+          <li><a href="../contact.html">Feature request</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© <span data-year>2026</span> Desi Jugad. All rights reserved.</div>
+      <div class="made-in"><span class="flag-in" aria-hidden="true"></span>Proudly made in India, built for the world.</div>
+    </div>
+  </div>
+</footer>
+
+<script src="../assets/js/main.js"></script>
+<!-- Cropper.js — loaded eagerly (small, needed right after file pick) -->
+<script src="https://cdn.jsdelivr.net/npm/cropperjs@1.6.2/dist/cropper.min.js"></script>
+
+<script>
+/* =============================================================
+   Desi Jugad Photo Editor
+   — Cropper.js for visual crop
+   — Canvas API for all transforms, adjustments, resize
+   — History stack (up to 20 states) for undo/redo
+   — Plain-English Ask bar (pattern-match parser, no AI)
+   ============================================================= */
+
+/* ── State ────────────────────────────────────────────────── */
+let originalFile    = null;   // File object
+let originalDataUrl = null;   // original data URL (never mutated)
+let currentCanvas   = null;   // offscreen canvas = current editing state
+let cropper         = null;   // Cropper.js instance (when active)
+let cropActive      = false;
+let history         = [];     // array of dataURL snapshots
+let historyIndex    = -1;
+const MAX_HISTORY   = 20;
+
+/* ── File input / drop zone ───────────────────────────────── */
+const dropzone  = document.getElementById('dropzone');
+const fileInput = document.getElementById('fileInput');
+const pickBtn   = document.getElementById('pickBtn');
+
+pickBtn.addEventListener('click', () => fileInput.click());
+fileInput.addEventListener('change', e => e.target.files[0] && openFile(e.target.files[0]));
+
+dropzone.addEventListener('dragover',  e => { e.preventDefault(); dropzone.classList.add('drag-over'); });
+dropzone.addEventListener('dragleave', ()  => dropzone.classList.remove('drag-over'));
+dropzone.addEventListener('drop', e => {
+  e.preventDefault(); dropzone.classList.remove('drag-over');
+  const f = e.dataTransfer.files[0];
+  if (f && f.type.startsWith('image/')) openFile(f);
+});
+
+function triggerNewFile() { fileInput.value=''; fileInput.click(); }
+
+function openFile(file) {
+  if (file.size > 50 * 1024 * 1024) { showToast('File too large — max 50 MB', 'error'); return; }
+  originalFile = file;
+  const reader = new FileReader();
+  reader.onload = e => {
+    originalDataUrl = e.target.result;
+    loadDataUrlToCanvas(originalDataUrl, () => {
+      pushHistory();
+      showEditor();
+      updateInfoBar();
+    });
+  };
+  reader.readAsDataURL(file);
+}
+
+/* ── Canvas helpers ───────────────────────────────────────── */
+function loadDataUrlToCanvas(dataUrl, cb) {
+  const img = new Image();
+  img.onload = () => {
+    const c = document.createElement('canvas');
+    c.width  = img.naturalWidth;
+    c.height = img.naturalHeight;
+    c.getContext('2d').drawImage(img, 0, 0);
+    currentCanvas = c;
+    renderToEditorImg();
+    if (cb) cb();
+  };
+  img.src = dataUrl;
+}
+
+function renderToEditorImg() {
+  if (!currentCanvas) return;
+  const el = document.getElementById('editorImg');
+  el.src = currentCanvas.toDataURL();
+  updateInfoBar();
+}
+
+function canvasToDataUrl() {
+  const fmt    = getFinalFormat();
+  const quality = parseInt(document.getElementById('slQuality').value) / 100;
+  return currentCanvas.toDataURL(fmt === 'image/png' ? 'image/png' : fmt, quality);
+}
+
+function getFinalFormat() {
+  const sel = document.getElementById('exportFormat').value;
+  if (sel === 'same' && originalFile) {
+    return originalFile.type || 'image/jpeg';
+  }
+  return sel === 'same' ? 'image/jpeg' : sel;
+}
+
+function getExt(mime) {
+  return { 'image/jpeg': 'jpg', 'image/png': 'png', 'image/webp': 'webp', 'image/gif': 'gif' }[mime] || 'jpg';
+}
+
+/* ── Show / hide editor ───────────────────────────────────── */
+function showEditor() {
+  document.getElementById('dropzone').style.display      = 'none';
+  document.getElementById('editorSection').style.display = '';
+  // Re-init adjustment sliders
+  ['Brightness','Contrast','Saturation','Sharpness'].forEach(n => {
+    const el = document.getElementById('sl'+n);
+    if (el) { el.value = n === 'Sharpness' ? 0 : 0; updateAdjLabel(n, el.value); }
+  });
+  previewAdjust();
+}
+
+function updateInfoBar() {
+  if (!currentCanvas) return;
+  document.getElementById('infoCurrent').textContent = `${currentCanvas.width} × ${currentCanvas.height}px`;
+  if (originalFile) {
+    document.getElementById('infoOrig').textContent = `${originalFile.name} (${formatBytes(originalFile.size)})`;
+    document.getElementById('infoFormat').textContent = (originalFile.type || 'image/*').split('/')[1]?.toUpperCase() || '—';
+  }
+  // Rough estimate of current canvas blob size
+  const raw = currentCanvas.toDataURL('image/jpeg', 0.9);
+  const bytes = Math.round((raw.length * 3) / 4);
+  document.getElementById('infoSize').textContent = formatBytes(bytes);
+  renderHistoryDots();
+}
+
+/* ── History ──────────────────────────────────────────────── */
+function pushHistory() {
+  if (!currentCanvas) return;
+  // Truncate redo branch
+  if (historyIndex < history.length - 1) history = history.slice(0, historyIndex + 1);
+  history.push(currentCanvas.toDataURL());
+  if (history.length > MAX_HISTORY) history.shift();
+  historyIndex = history.length - 1;
+  renderHistoryDots();
+}
+
+function undo() {
+  if (historyIndex <= 0) { showToast('Nothing to undo', 'default'); return; }
+  historyIndex--;
+  loadDataUrlToCanvas(history[historyIndex]);
+  renderHistoryDots();
+}
+
+function redo() {
+  if (historyIndex >= history.length - 1) { showToast('Nothing to redo', 'default'); return; }
+  historyIndex++;
+  loadDataUrlToCanvas(history[historyIndex]);
+  renderHistoryDots();
+}
+
+function resetToOriginal() {
+  if (!originalDataUrl) return;
+  loadDataUrlToCanvas(originalDataUrl, () => {
+    history = []; historyIndex = -1; pushHistory();
+    resetAdjSliders();
+    previewAdjust();
+    showToast('Reset to original', 'default');
+  });
+}
+
+function renderHistoryDots() {
+  const el = document.getElementById('historyDots');
+  const count = Math.min(history.length, 10);
+  el.innerHTML = Array.from({length:count}, (_,i) =>
+    `<span class="history-dot ${i === historyIndex ? 'filled' : ''}"></span>`
+  ).join('');
+}
+
+/* Keyboard shortcuts */
+document.addEventListener('keydown', e => {
+  if ((e.ctrlKey || e.metaKey) && e.key === 'z' && !e.shiftKey) { e.preventDefault(); undo(); }
+  if ((e.ctrlKey || e.metaKey) && (e.key === 'y' || (e.key === 'z' && e.shiftKey))) { e.preventDefault(); redo(); }
+});
+
+/* ── Crop ─────────────────────────────────────────────────── */
+let currentRatio = NaN;
+
+function toggleCropMode() {
+  if (cropActive) { cancelCrop(); return; }
+  cropActive = true;
+  document.getElementById('btn-crop-toggle').classList.add('active');
+  document.getElementById('btn-crop-apply').style.display  = '';
+  document.getElementById('btn-crop-cancel').style.display = '';
+
+  const img = document.getElementById('editorImg');
+  // Destroy previous instance if any
+  if (cropper) { cropper.destroy(); cropper = null; }
+  cropper = new Cropper(img, {
+    aspectRatio: isNaN(currentRatio) ? NaN : currentRatio,
+    viewMode: 1,
+    autoCropArea: 0.9,
+    responsive: true,
+    background: false,
+    movable: true,
+    rotatable: false,   // we handle rotate separately
+    scalable: false,
+    zoomable: true,
+  });
+}
+
+function setRatio(r, chip) {
+  currentRatio = r;
+  document.querySelectorAll('.ratio-chip').forEach(c => c.classList.remove('active'));
+  chip.classList.add('active');
+  if (cropper) cropper.setAspectRatio(isNaN(r) ? NaN : r);
+  else toggleCropMode();
+}
+
+function applyCrop() {
+  if (!cropper) return;
+  const data  = cropper.getCropBoxData();
+  const cData = cropper.getCanvasData();
+  const scaleX = currentCanvas.width  / cData.naturalWidth;
+  const scaleY = currentCanvas.height / cData.naturalHeight;
+  const cropX  = (data.left  - cData.left)  * scaleX;
+  const cropY  = (data.top   - cData.top)   * scaleY;
+  const cropW  = data.width  * scaleX;
+  const cropH  = data.height * scaleY;
+
+  const out = document.createElement('canvas');
+  out.width  = Math.round(cropW);
+  out.height = Math.round(cropH);
+  const ctx  = out.getContext('2d');
+  ctx.drawImage(currentCanvas,
+    Math.round(cropX), Math.round(cropY), Math.round(cropW), Math.round(cropH),
+    0, 0, out.width, out.height
+  );
+  currentCanvas = out;
+  cancelCrop();
+  pushHistory();
+  renderToEditorImg();
+  showToast(`Cropped to ${out.width}×${out.height}`, 'default');
+}
+
+function cancelCrop() {
+  cropActive = false;
+  if (cropper) { cropper.destroy(); cropper = null; }
+  document.getElementById('btn-crop-toggle').classList.remove('active');
+  document.getElementById('btn-crop-apply').style.display  = 'none';
+  document.getElementById('btn-crop-cancel').style.display = 'none';
+}
+
+/* ── Rotate / Flip ───────────────────────────────────────── */
+function rotate(degrees) {
+  ensureNoCrop();
+  const src = currentCanvas;
+  const out = document.createElement('canvas');
+  const abs = Math.abs(degrees) % 180 === 90;
+  out.width  = abs ? src.height : src.width;
+  out.height = abs ? src.width  : src.height;
+  const ctx  = out.getContext('2d');
+  ctx.translate(out.width / 2, out.height / 2);
+  ctx.rotate((degrees * Math.PI) / 180);
+  ctx.drawImage(src, -src.width / 2, -src.height / 2);
+  currentCanvas = out;
+  pushHistory();
+  renderToEditorImg();
+}
+
+function flip(dir) {
+  ensureNoCrop();
+  const out = document.createElement('canvas');
+  out.width  = currentCanvas.width;
+  out.height = currentCanvas.height;
+  const ctx  = out.getContext('2d');
+  ctx.translate(dir === 'h' ? out.width : 0, dir === 'v' ? out.height : 0);
+  ctx.scale(dir === 'h' ? -1 : 1, dir === 'v' ? -1 : 1);
+  ctx.drawImage(currentCanvas, 0, 0);
+  currentCanvas = out;
+  pushHistory();
+  renderToEditorImg();
+}
+
+function ensureNoCrop() {
+  if (cropActive) cancelCrop();
+}
+
+/* ── Resize ───────────────────────────────────────────────── */
+const resizeWEl = document.getElementById('resizeW');
+const resizeHEl = document.getElementById('resizeH');
+
+// Aspect ratio lock behaviour in resize inputs
+resizeWEl.addEventListener('input', () => {
+  if (document.getElementById('lockRatio').checked && currentCanvas) {
+    const r = currentCanvas.height / currentCanvas.width;
+    resizeHEl.value = Math.round(resizeWEl.value * r) || '';
+  }
+});
+resizeHEl.addEventListener('input', () => {
+  if (document.getElementById('lockRatio').checked && currentCanvas) {
+    const r = currentCanvas.width / currentCanvas.height;
+    resizeWEl.value = Math.round(resizeHEl.value * r) || '';
+  }
+});
+
+function applyResize() {
+  if (!currentCanvas) return;
+  const w = parseInt(resizeWEl.value);
+  const h = parseInt(resizeHEl.value);
+  if (!w || !h || w < 1 || h < 1 || w > 16000 || h > 16000) {
+    showToast('Enter valid width and height (1–16000px)', 'error'); return;
+  }
+  ensureNoCrop();
+  const out = document.createElement('canvas');
+  out.width  = w; out.height = h;
+  out.getContext('2d').drawImage(currentCanvas, 0, 0, w, h);
+  currentCanvas = out;
+  pushHistory();
+  renderToEditorImg();
+  showToast(`Resized to ${w}×${h}`, 'default');
+}
+
+/* ── Platform presets ─────────────────────────────────────── */
+function applyPreset(w, h, mode) {
+  // mode: 'crop' = crop to ratio then resize; 'resize' = just resize
+  if (!currentCanvas) { showToast('Load an image first', 'error'); return; }
+  ensureNoCrop();
+
+  const src    = currentCanvas;
+  const srcAspect = src.width / src.height;
+  const dstAspect = w / h;
+
+  const out = document.createElement('canvas');
+  out.width  = w; out.height = h;
+  const ctx  = out.getContext('2d');
+
+  if (mode === 'crop') {
+    // Cover crop (fill, centred)
+    let sx, sy, sw, sh;
+    if (srcAspect > dstAspect) {
+      sh = src.height; sw = sh * dstAspect;
+      sx = (src.width - sw) / 2; sy = 0;
+    } else {
+      sw = src.width; sh = sw / dstAspect;
+      sx = 0; sy = (src.height - sh) / 2;
+    }
+    ctx.drawImage(src, sx, sy, sw, sh, 0, 0, w, h);
+  } else {
+    // Letterbox / contain
+    const scale = Math.min(w / src.width, h / src.height);
+    const dx = (w  - src.width  * scale) / 2;
+    const dy = (h  - src.height * scale) / 2;
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, w, h);
+    ctx.drawImage(src, dx, dy, src.width * scale, src.height * scale);
+  }
+
+  currentCanvas = out;
+  pushHistory();
+  renderToEditorImg();
+  showToast(`Preset applied: ${w}×${h}`, 'default');
+}
+
+/* ── Adjustments ──────────────────────────────────────────── */
+function updateAdjLabel(name, val) {
+  const el = document.getElementById('val'+name);
+  if (el) el.textContent = parseInt(val) >= 0 ? '+'+parseInt(val) : parseInt(val);
+}
+
+function getFilterString() {
+  const br = parseInt(document.getElementById('slBrightness').value);
+  const co = parseInt(document.getElementById('slContrast').value);
+  const sa = parseInt(document.getElementById('slSaturation').value);
+  const sh = parseInt(document.getElementById('slSharpness').value);
+  return [
+    br !== 0 ? `brightness(${1 + br/100})` : '',
+    co !== 0 ? `contrast(${1 + co/100})`   : '',
+    sa !== 0 ? `saturate(${1 + sa/100})`   : '',
+    sh > 0   ? `drop-shadow(0 0 ${sh/2}px rgba(0,0,0,0.${sh}))` : '',
+  ].filter(Boolean).join(' ') || 'none';
+}
+
+function previewAdjust() {
+  const img = document.getElementById('editorImg');
+  img.style.filter = getFilterString();
+}
+
+function bakeAdjust() {
+  ensureNoCrop();
+  const filter = getFilterString();
+  if (filter === 'none') { showToast('No adjustments to bake', 'default'); return; }
+
+  // Draw through an offscreen element to apply CSS filter via OffscreenCanvas/SVG trick
+  // Best cross-browser approach: draw to an in-page image element with CSS filter applied,
+  // then capture via drawImage to a new canvas.
+  const src = currentCanvas;
+  const w = src.width, h = src.height;
+
+  const tempImg = new Image();
+  tempImg.onload = () => {
+    const out = document.createElement('canvas');
+    out.width  = w; out.height = h;
+    const ctx  = out.getContext('2d');
+    ctx.filter = filter;
+    ctx.drawImage(tempImg, 0, 0, w, h);
+    ctx.filter = 'none';
+    currentCanvas = out;
+
+    // Bake sharpness via unsharp mask if needed
+    const shVal = parseInt(document.getElementById('slSharpness').value);
+    if (shVal > 0) applyUnsharpMask(out, shVal);
+
+    pushHistory();
+    resetAdjSliders();
+    previewAdjust();
+    renderToEditorImg();
+    showToast('Adjustments baked', 'default');
+  };
+  tempImg.src = src.toDataURL();
+}
+
+function applyUnsharpMask(canvas, amount) {
+  // Simple unsharp mask via convolution on ImageData
+  const ctx  = canvas.getContext('2d');
+  const w    = canvas.width, h = canvas.height;
+  const data = ctx.getImageData(0, 0, w, h);
+  const d    = data.data;
+  const strength = amount / 10; // 0..1
+
+  const blurred = ctx.getImageData(0, 0, w, h);
+  // 3×3 box blur
+  const b = blurred.data;
+  for (let y = 1; y < h-1; y++) {
+    for (let x = 1; x < w-1; x++) {
+      for (let c = 0; c < 3; c++) {
+        let sum = 0;
+        for (let dy = -1; dy <= 1; dy++)
+          for (let dx = -1; dx <= 1; dx++)
+            sum += d[((y+dy)*w + (x+dx))*4 + c];
+        b[(y*w + x)*4 + c] = sum / 9;
+      }
+    }
+  }
+
+  // Unsharp: out = orig + strength*(orig - blurred)
+  for (let i = 0; i < d.length; i += 4) {
+    for (let c = 0; c < 3; c++) {
+      d[i+c] = Math.min(255, Math.max(0, d[i+c] + strength * (d[i+c] - b[i+c])));
+    }
+  }
+  ctx.putImageData(data, 0, 0);
+}
+
+function resetAdjSliders() {
+  ['Brightness','Contrast','Saturation'].forEach(n => {
+    const el = document.getElementById('sl'+n);
+    if (el) { el.value = 0; updateAdjLabel(n, 0); }
+  });
+  const sh = document.getElementById('slSharpness');
+  if (sh) { sh.value = 0; updateAdjLabel('Sharpness', 0); }
+}
+
+/* ── Export ───────────────────────────────────────────────── */
+function exportImage() {
+  if (!currentCanvas) return;
+  ensureNoCrop();
+
+  const fmt     = getFinalFormat();
+  const quality = parseInt(document.getElementById('slQuality').value) / 100;
+  const filter  = getFilterString();
+
+  // Apply adjustments to a temp canvas if not baked
+  let exportCanvas = currentCanvas;
+  if (filter !== 'none') {
+    const tmp = document.createElement('canvas');
+    tmp.width  = currentCanvas.width;
+    tmp.height = currentCanvas.height;
+    const ctx  = tmp.getContext('2d');
+    ctx.filter = filter;
+    ctx.drawImage(currentCanvas, 0, 0);
+    ctx.filter = 'none';
+    exportCanvas = tmp;
+  }
+
+  // DPI embedding for JPEG/PNG (JFIF / pHYs)
+  exportCanvas.toBlob(blob => {
+    if (!blob) { showToast('Export failed', 'error'); return; }
+    const baseName = (originalFile?.name || 'photo').replace(/\.[^.]+$/, '');
+    downloadBlob(blob, `${baseName}-dj.${getExt(fmt)}`);
+    showToast(`Downloaded as ${fmt.split('/')[1].toUpperCase()}`, 'default');
+  }, fmt, fmt === 'image/png' ? undefined : quality);
+}
+
+/* ── Ask me anything parser ───────────────────────────────── */
+const ASK_PRESETS = {
+  'instagram post':     () => applyPreset(1080,1080,'crop'),
+  'instagram square':   () => applyPreset(1080,1080,'crop'),
+  'instagram portrait': () => applyPreset(1080,1350,'crop'),
+  'instagram stories':  () => applyPreset(1080,1920,'crop'),
+  'ig story':           () => applyPreset(1080,1920,'crop'),
+  'ig portrait':        () => applyPreset(1080,1350,'crop'),
+  'ig post':            () => applyPreset(1080,1080,'crop'),
+  'facebook post':      () => applyPreset(1200,630,'crop'),
+  'facebook cover':     () => applyPreset(820,312,'crop'),
+  'fb cover':           () => applyPreset(820,312,'crop'),
+  'fb post':            () => applyPreset(1200,630,'crop'),
+  'linkedin post':      () => applyPreset(1200,627,'crop'),
+  'linkedin':           () => applyPreset(1200,627,'crop'),
+  'twitter post':       () => applyPreset(1200,675,'crop'),
+  'twitter header':     () => applyPreset(1500,500,'crop'),
+  'tweet':              () => applyPreset(1200,675,'crop'),
+  'youtube thumbnail':  () => applyPreset(1280,720,'crop'),
+  'full hd':            () => applyPreset(1920,1080,'resize'),
+  '1080p':              () => applyPreset(1920,1080,'resize'),
+  '4k':                 () => applyPreset(3840,2160,'resize'),
+  'passport photo':     () => applyPreset(413,531,'crop'),
+  'passport':           () => applyPreset(413,531,'crop'),
+  'a4':                 () => applyPreset(2480,3508,'resize'),
+  'a4 print':           () => applyPreset(2480,3508,'resize'),
+  'wallpaper':          () => applyPreset(1920,1080,'resize'),
+};
+
+function fillAsk(el) {
+  document.getElementById('askInput').value = el.textContent;
+  runAsk();
+}
+
+function runAsk() {
+  const raw = (document.getElementById('askInput').value || '').trim();
+  if (!raw) return;
+  const result = parseAndApplyCommand(raw.toLowerCase());
+  const el = document.getElementById('askResult');
+  el.style.display = '';
+  el.className = 'ask-result ' + (result.ok ? 'ok' : 'err');
+  el.textContent = result.ok ? '✓ ' + result.msg : '✗ ' + result.msg;
+  if (result.ok) document.getElementById('askInput').value = '';
+}
+
+function parseAndApplyCommand(q) {
+  if (!currentCanvas) return { ok:false, msg:'Load an image first.' };
+
+  // ── Named presets ──────────────────────────────────────
+  for (const [key, fn] of Object.entries(ASK_PRESETS)) {
+    if (q.includes(key)) { fn(); return { ok:true, msg:`Applied preset: ${key}` }; }
+  }
+
+  // ── Aspect ratio crop ─────────────────────────────────
+  // "crop to 16:9", "crop 16:9", "aspect 1:1"
+  const ratioMatch = q.match(/(?:crop\s+to\s+|crop\s+|aspect\s+ratio\s+|ratio\s+)(\d+(?:\.\d+)?)\s*[:/x]\s*(\d+(?:\.\d+)?)/);
+  if (ratioMatch) {
+    const r = parseFloat(ratioMatch[1]) / parseFloat(ratioMatch[2]);
+    if (!isNaN(r) && r > 0) {
+      ensureNoCrop();
+      setRatioDirect(r);
+      toggleCropMode();
+      return { ok:true, msg:`Crop activated with ${ratioMatch[1]}:${ratioMatch[2]} ratio. Adjust the box then click Apply crop.` };
+    }
+  }
+
+  // "square" / "crop to square"
+  if (q.match(/(?:crop\s+to\s+)?square/)) {
+    applyPreset(
+      Math.min(currentCanvas.width, currentCanvas.height),
+      Math.min(currentCanvas.width, currentCanvas.height),
+      'crop'
+    );
+    return { ok:true, msg:'Cropped to square.' };
+  }
+
+  // ── Resize ────────────────────────────────────────────
+  // "resize to 800x600", "800×600", "800 by 600"
+  const sizeMatch = q.match(/(?:resize\s+to\s+|make\s+it\s+)?(\d{2,5})\s*[x×by\s]+\s*(\d{2,5})/);
+  if (sizeMatch) {
+    const w = parseInt(sizeMatch[1]), h = parseInt(sizeMatch[2]);
+    if (w > 0 && h > 0 && w <= 16000 && h <= 16000) {
+      resizeWEl.value = w; resizeHEl.value = h;
+      applyResize();
+      return { ok:true, msg:`Resized to ${w}×${h}.` };
+    }
+  }
+
+  // "make it 800px wide", "width 1200", "1200px wide", "1200 wide"
+  const widthMatch = q.match(/(?:make\s+it\s+)?(\d{2,5})\s*(?:px\s+)?(?:wide|width|w\b)/);
+  if (widthMatch) {
+    const w = parseInt(widthMatch[1]);
+    if (w > 0 && w <= 16000) {
+      const h = Math.round(w * currentCanvas.height / currentCanvas.width);
+      resizeWEl.value = w; resizeHEl.value = h;
+      applyResize();
+      return { ok:true, msg:`Resized to ${w}×${h} (aspect preserved).` };
+    }
+  }
+
+  // "make it 600px tall", "height 900"
+  const heightMatch = q.match(/(?:make\s+it\s+)?(\d{2,5})\s*(?:px\s+)?(?:tall|height|high|h\b)/);
+  if (heightMatch) {
+    const h = parseInt(heightMatch[1]);
+    if (h > 0 && h <= 16000) {
+      const w = Math.round(h * currentCanvas.width / currentCanvas.height);
+      resizeWEl.value = w; resizeHEl.value = h;
+      applyResize();
+      return { ok:true, msg:`Resized to ${w}×${h} (aspect preserved).` };
+    }
+  }
+
+  // "scale to 50%", "scale 75 percent"
+  const scaleMatch = q.match(/scale\s+(?:to\s+)?(\d{1,3})\s*%/);
+  if (scaleMatch) {
+    const pct = parseInt(scaleMatch[1]) / 100;
+    if (pct > 0 && pct <= 10) {
+      const w = Math.round(currentCanvas.width  * pct);
+      const h = Math.round(currentCanvas.height * pct);
+      resizeWEl.value = w; resizeHEl.value = h;
+      applyResize();
+      return { ok:true, msg:`Scaled to ${Math.round(pct*100)}% → ${w}×${h}.` };
+    }
+  }
+
+  // ── Rotate ────────────────────────────────────────────
+  // "rotate 90 clockwise", "rotate right", "rotate -90", "rotate 270"
+  if (q.match(/rotate\s+(?:90\s+)?(?:clockwise|right|cw)/)) {
+    rotate(90); return { ok:true, msg:'Rotated 90° clockwise.' };
+  }
+  if (q.match(/rotate\s+(?:90\s+)?(?:counter.?clockwise|left|ccw|anti.?clockwise)/)) {
+    rotate(-90); return { ok:true, msg:'Rotated 90° counter-clockwise.' };
+  }
+  if (q.match(/rotate\s+180/)) {
+    rotate(180); return { ok:true, msg:'Rotated 180°.' };
+  }
+  const rotMatch = q.match(/rotate\s+(-?\d{1,3})(?:\s*deg)?/);
+  if (rotMatch) {
+    const deg = parseInt(rotMatch[1]);
+    if (deg % 90 === 0) {
+      rotate(deg); return { ok:true, msg:`Rotated ${deg}°.` };
+    }
+    return { ok:false, msg:'Only 90°, 180°, -90°, 270° are supported for rotation.' };
+  }
+  if (q.match(/rotate/)) {
+    rotate(90); return { ok:true, msg:'Rotated 90° clockwise.' };
+  }
+
+  // ── Flip ─────────────────────────────────────────────
+  if (q.match(/flip\s*(?:horizontal|horiz|h\b|left.right|mirror)/)) {
+    flip('h'); return { ok:true, msg:'Flipped horizontally.' };
+  }
+  if (q.match(/flip\s*(?:vertical|vert|v\b|upside.?down)/)) {
+    flip('v'); return { ok:true, msg:'Flipped vertically.' };
+  }
+  if (q.match(/mirror/)) {
+    flip('h'); return { ok:true, msg:'Mirrored (flipped horizontally).' };
+  }
+  if (q.match(/upside.?down/)) {
+    flip('v'); return { ok:true, msg:'Flipped vertically.' };
+  }
+
+  // ── Format ────────────────────────────────────────────
+  if (q.match(/png/)) {
+    document.getElementById('exportFormat').value = 'image/png';
+    exportImage();
+    return { ok:true, msg:'Exported as PNG.' };
+  }
+  if (q.match(/webp/)) {
+    const qMatch = q.match(/(\d{1,3})\s*%/);
+    if (qMatch) { document.getElementById('slQuality').value = qMatch[1]; document.getElementById('valQuality').textContent = qMatch[1]+'%'; }
+    document.getElementById('exportFormat').value = 'image/webp';
+    exportImage();
+    return { ok:true, msg:'Exported as WebP.' };
+  }
+  if (q.match(/jpe?g/)) {
+    const qMatch = q.match(/(\d{1,3})\s*%/);
+    if (qMatch) { document.getElementById('slQuality').value = qMatch[1]; document.getElementById('valQuality').textContent = qMatch[1]+'%'; }
+    document.getElementById('exportFormat').value = 'image/jpeg';
+    exportImage();
+    return { ok:true, msg:'Exported as JPEG.' };
+  }
+  if (q.match(/export|download|save/)) {
+    exportImage(); return { ok:true, msg:'Exported with current settings.' };
+  }
+
+  // ── Adjustments ──────────────────────────────────────
+  // "brightness +30", "brightness 40", "increase brightness"
+  const brMatch = q.match(/brightness\s*([+-]?\d{1,3})/);
+  if (brMatch) {
+    const v = Math.max(-100, Math.min(100, parseInt(brMatch[1])));
+    document.getElementById('slBrightness').value = v; updateAdjLabel('Brightness', v); previewAdjust();
+    return { ok:true, msg:`Brightness set to ${v > 0 ? '+' : ''}${v}. Click Bake to make permanent.` };
+  }
+  if (q.match(/increase\s+brightness|brighter/)) {
+    const cur = parseInt(document.getElementById('slBrightness').value) || 0;
+    const v = Math.min(100, cur+25);
+    document.getElementById('slBrightness').value = v; updateAdjLabel('Brightness', v); previewAdjust();
+    return { ok:true, msg:`Brightness +${v}.` };
+  }
+  if (q.match(/decrease\s+brightness|darker/)) {
+    const cur = parseInt(document.getElementById('slBrightness').value) || 0;
+    const v = Math.max(-100, cur-25);
+    document.getElementById('slBrightness').value = v; updateAdjLabel('Brightness', v); previewAdjust();
+    return { ok:true, msg:`Brightness ${v}.` };
+  }
+
+  const coMatch = q.match(/contrast\s*([+-]?\d{1,3})/);
+  if (coMatch) {
+    const v = Math.max(-100, Math.min(100, parseInt(coMatch[1])));
+    document.getElementById('slContrast').value = v; updateAdjLabel('Contrast', v); previewAdjust();
+    return { ok:true, msg:`Contrast set to ${v > 0 ? '+' : ''}${v}.` };
+  }
+
+  const saMatch = q.match(/saturation\s*([+-]?\d{1,3})/);
+  if (saMatch) {
+    const v = Math.max(-100, Math.min(100, parseInt(saMatch[1])));
+    document.getElementById('slSaturation').value = v; updateAdjLabel('Saturation', v); previewAdjust();
+    return { ok:true, msg:`Saturation set to ${v > 0 ? '+' : ''}${v}.` };
+  }
+  if (q.match(/grayscale|greyscale|black\s*and\s*white|b&w|b\/w/)) {
+    document.getElementById('slSaturation').value = -100; updateAdjLabel('Saturation', -100); previewAdjust();
+    return { ok:true, msg:'Saturation set to -100 (grayscale). Click Bake to apply.' };
+  }
+  if (q.match(/sharpen|sharpness/)) {
+    const shMatch = q.match(/(\d{1,2})/);
+    const v = shMatch ? Math.min(10, parseInt(shMatch[1])) : 5;
+    document.getElementById('slSharpness').value = v; updateAdjLabel('Sharpness', v); previewAdjust();
+    return { ok:true, msg:`Sharpness set to ${v}.` };
+  }
+
+  if (q.match(/bake|apply\s+adjust/)) {
+    bakeAdjust(); return { ok:true, msg:'Adjustments baked into canvas.' };
+  }
+
+  // ── Undo/Redo ─────────────────────────────────────────
+  if (q.match(/undo/)) { undo(); return { ok:true, msg:'Undone.' }; }
+  if (q.match(/redo/)) { redo(); return { ok:true, msg:'Redone.' }; }
+  if (q.match(/reset|original/)) { resetToOriginal(); return { ok:true, msg:'Reset to original.' }; }
+
+  // ── Compress / target size ─────────────────────────────
+  const kbMatch = q.match(/(?:compress|under|max|target)\s+(\d+)\s*kb/i);
+  if (kbMatch) {
+    const targetKB = parseInt(kbMatch[1]);
+    compressToSize(targetKB);
+    return { ok:true, msg:`Compressing to under ${targetKB} KB…` };
+  }
+
+  // ── DPI ───────────────────────────────────────────────
+  const dpiMatch = q.match(/(\d+)\s*dpi/);
+  if (dpiMatch) {
+    const d = parseInt(dpiMatch[1]);
+    const dpiSel = document.getElementById('exportDPI');
+    const opt = [...dpiSel.options].find(o => parseInt(o.value) === d);
+    if (opt) { dpiSel.value = d; return { ok:true, msg:`DPI set to ${d}. Export to apply.` }; }
+    return { ok:false, msg:`DPI ${d} not available. Choose from 72, 96, 150, 300.` };
+  }
+
+  // ── Quality ───────────────────────────────────────────
+  const qMatch = q.match(/quality\s+(\d{1,3})\s*%?/);
+  if (qMatch) {
+    const v = Math.max(10, Math.min(100, parseInt(qMatch[1])));
+    document.getElementById('slQuality').value = v;
+    document.getElementById('valQuality').textContent = v + '%';
+    return { ok:true, msg:`Quality set to ${v}%.` };
+  }
+
+  // ── Crop mode ─────────────────────────────────────────
+  if (q.match(/crop/)) {
+    toggleCropMode();
+    return { ok:true, msg:'Crop mode activated. Drag the handles, then click Apply crop.' };
+  }
+
+  // ── Help ──────────────────────────────────────────────
+  if (q.match(/help|what\s+can\s+you\s+do|commands/)) {
+    return { ok:true, msg:'Try: "crop to 16:9", "resize to 1920x1080", "make it 800px wide", "rotate 90 clockwise", "flip horizontal", "export as PNG", "brightness +30", "Instagram post", "Facebook cover", "compress under 200KB", "grayscale".' };
+  }
+
+  return { ok:false, msg:`Not sure what "${raw}" means. Try: resize to 1920×1080, crop to 16:9, rotate 90, flip horizontal, export as PNG, brightness +20.` };
+}
+
+function setRatioDirect(r) {
+  currentRatio = r;
+  document.querySelectorAll('.ratio-chip').forEach(c => {
+    c.classList.toggle('active', Math.abs(parseFloat(c.dataset.ratio) - r) < 0.01);
+  });
+}
+
+/* ── Compress to target size ──────────────────────────────── */
+function compressToSize(targetKB) {
+  const targetBytes = targetKB * 1024;
+  let quality = 90;
+  const tryExport = () => {
+    currentCanvas.toBlob(blob => {
+      if (!blob) return;
+      if (blob.size <= targetBytes || quality <= 10) {
+        document.getElementById('slQuality').value = quality;
+        document.getElementById('valQuality').textContent = quality + '%';
+        document.getElementById('exportFormat').value = 'image/jpeg';
+        downloadBlob(blob, `compressed-${targetKB}kb.jpg`);
+        showToast(`Compressed to ${formatBytes(blob.size)} (quality ${quality}%)`, 'default');
+        return;
+      }
+      quality -= 5;
+      tryExport();
+    }, 'image/jpeg', quality / 100);
+  };
+  tryExport();
+}
+
+/* ── Ask input: Enter key ─────────────────────────────────── */
+document.getElementById('askInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter') runAsk();
+});
+
+/* ── Init ─────────────────────────────────────────────────── */
+document.addEventListener('DOMContentLoaded', () => {
+  // Blur buttons after click to prevent keyboard re-trigger
+  document.querySelectorAll('.tool-btn').forEach(b =>
+    b.addEventListener('click', () => b.blur())
+  );
+});
+</script>
+</body>
+</html>
