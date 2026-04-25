@@ -300,11 +300,12 @@
       const newName = baseName + '.' + fmt;
       downloadBlob(blob, newName);
 
+      const displayDuration = endSec - startSec;
       el.innerHTML = `
         <div class="file-item-icon" style="background:#E0F4EA;color:var(--success);">🎵</div>
         <div>
           <div class="file-item-name">${newName}</div>
-          <div class="file-item-meta"><span>${formatBytes(blob.size)}</span><span>${duration.toFixed(1)}s</span></div>
+          <div class="file-item-meta"><span>${formatBytes(blob.size)}</span><span>${displayDuration.toFixed(1)}s</span></div>
         </div>
         <span class="file-item-status done">✓ Downloaded</span>`;
     } catch (err) {

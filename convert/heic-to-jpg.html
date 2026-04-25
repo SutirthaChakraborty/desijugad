@@ -374,11 +374,23 @@
     try {
       const resultBlob = await heic2any({ blob: file, toType: fmt, quality });
       const blob    = Array.isArray(resultBlob) ? resultBlob[0] : resultBlob;
-      const newName = file.name.replace(/\.hei[cf]$/i, '.' + ext);
+
+      // Check if WebP conversion failed silently on Safari
+      let actualExt = ext;
+      if (fmt === 'image/webp' && blob.type !== 'image/webp') {
+        showToast('WebP is not supported on this browser — saved as PNG instead.', 'error');
+        actualExt = 'png';
+      }
+
+      // Safely handle filenames without extension
+      const dotIdx = file.name.lastIndexOf('.');
+      const newName = dotIdx > 0
+        ? file.name.slice(0, dotIdx) + '.' + actualExt
+        : file.name + '.' + actualExt;
       done.push({ blob, name: newName });
       const idx = done.length - 1;
       el.innerHTML = `
-        <div class="file-item-icon" style="background:#E0F4EA;color:var(--success);">${ext.toUpperCase()}</div>
+        <div class="file-item-icon" style="background:#E0F4EA;color:var(--success);">${actualExt.toUpperCase()}</div>
         <div><div class="file-item-name">${newName}</div><div class="file-item-meta"><span>${formatBytes(blob.size)}</span><span>Done</span></div></div>
         <span class="file-item-status done">✓ Ready</span>
         <button class="file-item-action" data-dl>Download</button>`;

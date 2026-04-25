@@ -250,7 +250,10 @@
       ctx.drawImage(img, 0, 0, w, h);
 
       let q = quality;
-      let blob = await canvasToBlob(canvas, file.type, q);
+      let outputType = file.type;
+      // PNG is lossless and ignores quality parameter; convert to WebP instead
+      if (file.type === 'image/png') { outputType = 'image/webp'; }
+      let blob = await canvasToBlob(canvas, outputType, q);
 
       // Iteratively reduce quality to hit target size
       if (targetKB > 0) {
@@ -258,24 +261,31 @@
         let attempts = 0;
         while (blob.size > targetBytes && q > 0.1 && attempts < 10) {
           q = Math.max(0.1, q - 0.1);
-          blob = await canvasToBlob(canvas, file.type, q);
+          blob = await canvasToBlob(canvas, outputType, q);
           attempts++;
         }
       }
 
-      const ext = file.type === 'image/jpeg' ? 'jpg' : file.type === 'image/webp' ? 'webp' : 'png';
+      const ext = outputType === 'image/jpeg' ? 'jpg' : outputType === 'image/webp' ? 'webp' : 'png';
       const newName = file.name.replace(/\.[^.]+$/, '') + '-compressed.' + ext;
       const reduction = Math.round((1 - blob.size / file.size) * 100);
       const idx = done.length;
       done.push({ blob, name: newName });
 
+      const reductionLabel = reduction > 0
+        ? `<span style="color:var(--success);font-weight:600;">−${reduction}%</span>`
+        : reduction < 0
+          ? `<span style="color:var(--error);font-weight:600;">+${Math.abs(reduction)}%</span>`
+          : `<span>No change</span>`;
+
+      const iconLabel = file.type === 'image/png' ? 'PNG→WEBP' : ext.toUpperCase();
       el.innerHTML = `
-        <div class="file-item-icon" style="background:#E0F4EA;color:var(--success);">${ext.toUpperCase()}</div>
+        <div class="file-item-icon" style="background:#E0F4EA;color:var(--success);">${iconLabel}</div>
         <div>
           <div class="file-item-name">${newName}</div>
           <div class="file-item-meta">
             <span>${formatBytes(file.size)} → <strong>${formatBytes(blob.size)}</strong></span>
-            <span style="color:var(--success);font-weight:600;">−${reduction}%</span>
+            ${reductionLabel}
           </div>
         </div>
         <span class="file-item-status done">✓</span>
