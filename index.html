@@ -154,11 +154,12 @@
         <h1>Convert anything,<br><span class="accent" data-i18n="hero.h1.accent">without the upload.</span></h1>
         <p class="lead" data-i18n="hero.lead">Images, documents, data, subtitles — transformed right inside your browser. No sign-up, no watermark, no nonsense. Your files never leave your device.</p>
         <div class="hero-cta-row">
-          <a href="#converters" class="btn btn-primary">
-            <span data-i18n="hero.cta.primary">Explore converters</span>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-          </a>
-          <a href="#how" class="btn btn-secondary" data-i18n="hero.cta.secondary">How it works</a>
+          <button class="btn btn-primary" onclick="window.cpOpen && window.cpOpen()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+            <span>Search all tools</span>
+            <span style="font-family:var(--font-mono);font-size:0.75rem;opacity:0.7;background:rgba(255,255,255,0.12);padding:0.1rem 0.4rem;border-radius:4px;letter-spacing:0">⌘K</span>
+          </button>
+          <a href="#converters" class="btn btn-secondary">Browse tools</a>
         </div>
         <div class="trust-row">
           <div class="trust-item">
@@ -180,20 +181,25 @@
         </div>
       </div>
       <div class="hero-visual">
-        <div class="speed-pill">Converting at lightning speed</div>
-        <div class="hero-card">
+        <div class="speed-pill">runs 100% in your browser</div>
+        <div class="hero-card" id="hero-dropzone">
           <div class="hero-card-header">
-            <span class="hero-card-title">Drop your file</span>
+            <span class="hero-card-title">Drop anything here</span>
             <div class="hero-card-dots"><span></span><span></span><span></span></div>
           </div>
-          <div class="file-drop-illustration">
-            <div class="icon-stack">
-              <div class="file-chip">HEIC</div>
-              <div class="file-chip">PNG</div>
-              <div class="file-chip">JPG</div>
+          <div class="hero-dz-inner" id="hero-dz-inner">
+            <div class="type-cycle">
+              <span class="type-chip img">HEIC</span>
+              <span class="type-chip doc">PDF</span>
+              <span class="type-chip data">JSON</span>
+              <span class="type-chip aud">MP3</span>
+              <span class="type-chip img">PNG</span>
+              <span class="type-chip doc">SVG</span>
+              <span class="type-chip data">CSV</span>
+              <span class="type-chip aud">SRT</span>
             </div>
-            <h4>Drop, click, done.</h4>
-            <small>Everything happens locally.</small>
+            <div class="hero-dz-label">Drop a file to start instantly</div>
+            <div class="hero-dz-sub">or press <kbd>⌘K</kbd> to search all tools</div>
           </div>
         </div>
       </div>
@@ -225,40 +231,47 @@
   </div>
 </section>
 
-<!-- ============ AI PROMO ============ -->
-<section class="section ai-promo-section" style="background:var(--bg-alt);border-top:1px solid var(--line);border-bottom:1px solid var(--line);">
-  <div class="container">
-    <div class="section-header" style="text-align:center;max-width:640px;margin:0 auto 2.5rem;">
-      <span class="eyebrow">Introducing</span>
-      <h2>Now with <em class="italic">AI Studio.</em></h2>
-      <p class="lead" style="font-size:1.1rem;">Generate images, videos, music, long-form writing, and passport photos using your own Replicate API key. No subscription. No markup. Just the model's actual price — paid directly to Replicate.</p>
-      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:1.5rem;">
-        <a href="ai/" class="btn btn-primary">Explore AI Studio →</a>
-        <a href="ai/settings.html" class="btn btn-secondary">Add API keys</a>
-      </div>
-    </div>
-    <div class="converter-grid" style="grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr))">
-      <a href="ai/image.html" class="converter-card" style="border-top:3px solid var(--indigo);">
-        <div class="card-icon">🖼️</div>
-        <h3 class="card-title">AI Image Studio</h3>
-        <p class="card-desc">FLUX, Ideogram, Recraft — generate stunning images from a text prompt.</p>
-        <span class="card-arrow">Open tool →</span>
-      </a>
-      <a href="ai/video.html" class="converter-card" style="border-top:3px solid var(--indigo);">
-        <div class="card-icon">🎬</div>
-        <h3 class="card-title">AI Video Studio</h3>
-        <p class="card-desc">Veo 3.1, Seedance, Kling — text or image to cinematic video clips.</p>
-        <span class="card-arrow">Open tool →</span>
-      </a>
-      <a href="ai/music.html" class="converter-card" style="border-top:3px solid var(--indigo);">
-        <div class="card-icon">🎵</div>
-        <h3 class="card-title">AI Music Studio</h3>
-        <p class="card-desc">Generate original songs with vocals, stems, and lyrics using Suno V5.5.</p>
-        <span class="card-arrow">Open tool →</span>
-      </a>
+<!-- ============ QUICK ACCESS STRIP ============ -->
+<div class="quick-access">
+  <div class="quick-access-inner">
+    <span class="quick-access-label">Quick jump</span>
+    <div class="quick-chips">
+      <a href="convert/image-converter.html" class="quick-chip">🖼️ Image Converter</a>
+      <a href="convert/image-compress.html" class="quick-chip">🗜️ Compress</a>
+      <a href="convert/ocr.html" class="quick-chip">🔤 OCR</a>
+      <a href="convert/pdf-merge.html" class="quick-chip">📄 PDF Merge</a>
+      <a href="convert/audio-converter.html" class="quick-chip">🎵 Audio Converter</a>
+      <a href="convert/password-gen.html" class="quick-chip">🔑 Password Gen</a>
+      <a href="convert/qr-code.html" class="quick-chip">⬛ QR Code</a>
+      <a href="convert/secret-message.html" class="quick-chip">🔐 Encrypt</a>
+      <a href="convert/heic-to-jpg.html" class="quick-chip">📱 HEIC to JPG</a>
+      <a href="ai/bg-remove.html" class="quick-chip">✂️ Remove BG</a>
+      <a href="convert/hash-generator.html" class="quick-chip">#️⃣ Hash</a>
+      <a href="convert/color-converter.html" class="quick-chip">🎨 Colors</a>
     </div>
   </div>
-</section>
+</div>
+
+<!-- ============ AI STRIP (compact) ============ -->
+<div class="ai-strip">
+  <div class="container">
+    <div class="ai-strip-inner">
+      <div class="ai-strip-text">
+        <span class="ai-strip-badge">NEW</span>
+        <strong>AI Studio</strong> — generate images, video, music &amp; writing with your own API key.
+      </div>
+      <div class="ai-strip-links">
+        <a href="ai/image.html" class="ai-strip-chip">🖼️ Images</a>
+        <a href="ai/video.html" class="ai-strip-chip">🎬 Video</a>
+        <a href="ai/music.html" class="ai-strip-chip">🎵 Music</a>
+        <a href="ai/writer.html" class="ai-strip-chip">✍️ Write</a>
+        <a href="ai/bg-remove.html" class="ai-strip-chip">✂️ BG Remove</a>
+        <a href="ai/photo-studio.html" class="ai-strip-chip">📸 Photo Studio</a>
+        <a href="ai/" class="btn btn-secondary" style="padding:0.38rem 0.9rem;font-size:0.8rem;">All AI tools →</a>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- ============ CONVERTERS ============ -->
 <section id="converters" class="section">
@@ -271,8 +284,15 @@
       </div>
     </div>
 
+    <!-- Recently used (shown only when localStorage has history) -->
+    <div class="recent-tools-section" id="recent-tools-section">
+      <div class="recent-tools-title">⚡ Jump back in</div>
+      <div class="recent-chips" id="recent-chips"></div>
+    </div>
+
     <div class="tool-search-wrap">
-      <input type="search" id="toolSearch" class="tool-search" placeholder="Search tools… (e.g. &quot;compress&quot;, &quot;PDF&quot;, &quot;audio&quot;)" autocomplete="off" spellcheck="false">
+      <input type="search" id="toolSearch" class="tool-search" placeholder="Search tools… or press ⌘K" autocomplete="off" spellcheck="false">
+      <span class="search-cmd-hint">⌘K</span>
     </div>
 
     <div class="category-filter">
@@ -644,23 +664,306 @@
   </div>
 </footer>
 
+<!-- ============ COMMAND PALETTE ============ -->
+<div class="cmd-overlay" id="cmd-overlay" role="dialog" aria-modal="true" aria-label="Search tools">
+  <div class="cmd-modal">
+    <div class="cmd-search-row">
+      <svg class="cmd-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      <input type="text" class="cmd-input" id="cmd-input" placeholder="Search 33 tools…" autocomplete="off" spellcheck="false">
+      <span class="cmd-kbd">Esc</span>
+    </div>
+    <div class="cmd-results" id="cmd-results"></div>
+    <div class="cmd-footer">
+      <span><kbd>↑</kbd><kbd>↓</kbd> navigate</span>
+      <span><kbd>↵</kbd> open</span>
+      <span><kbd>Esc</kbd> close</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============ DROP BANNER ============ -->
+<div class="drop-banner" id="drop-banner">
+  <span id="drop-banner-text"></span>
+  <div class="drop-banner-close" onclick="window.closeBanner && window.closeBanner()">✕</div>
+</div>
+
 <script src="assets/js/main.js"></script>
 <script>
 (function(){
-  /* Seed: realistic starting count as of 2026-01-01.
-     Grows by ~47 conversions/hour to reflect organic traffic growth.
-     Also increments by 1 for each tool visit stored locally. */
-  var SEED = 284319;
-  var SEED_TS = 1735689600000; /* 2026-01-01 UTC */
-  var RATE = 47;
+  /* Conversion counter */
+  var SEED = 284319, SEED_TS = 1735689600000, RATE = 47;
   var extra = parseInt(localStorage.getItem('dj_conv_seed') || '0', 10);
-  var hours = (Date.now() - SEED_TS) / 3600000;
-  var total = Math.floor(SEED + hours * RATE + extra);
+  var total = Math.floor(SEED + (Date.now() - SEED_TS) / 3600000 * RATE + extra);
   var el = document.getElementById('dj-counter-display');
-  if (el) {
-    var k = total >= 1000 ? (total / 1000).toFixed(1) + 'k' : String(total);
-    el.innerHTML = k + '<span class="italic">+</span>';
+  if (el) { var k = total >= 1000 ? (total/1000).toFixed(1)+'k' : String(total); el.innerHTML = k+'<span class="italic">+</span>'; }
+})();
+
+(function() {
+  'use strict';
+
+  /* ── ALL TOOLS (command palette data) ─────────────────────────── */
+  var ALL_TOOLS = [
+    { name:'Image Converter',       desc:'PNG · JPG · WebP · BMP · GIF',              url:'convert/image-converter.html',  icon:'🖼️' },
+    { name:'Image Compressor',      desc:'Shrink PNG, JPG, WebP by up to 90%',        url:'convert/image-compress.html',   icon:'🗜️' },
+    { name:'Image Resize + DPI',    desc:'Resize to exact pixels or target DPI',      url:'convert/image-resize.html',     icon:'📐' },
+    { name:'Images to PDF',         desc:'Combine multiple images into a PDF',        url:'convert/image-to-pdf.html',     icon:'📄' },
+    { name:'HEIC to JPG',           desc:'Convert iPhone HEIC/HEIF photos to JPEG',   url:'convert/heic-to-jpg.html',      icon:'📱' },
+    { name:'PDF to Images',         desc:'Extract PDF pages as PNG or JPG',           url:'convert/pdf-to-image.html',     icon:'📑' },
+    { name:'PDF Merge & Split',     desc:'Combine PDFs or extract specific pages',    url:'convert/pdf-merge.html',        icon:'📋' },
+    { name:'SVG to PNG',            desc:'Rasterize vector graphics at any size',     url:'convert/svg-to-png.html',       icon:'🎨' },
+    { name:'Photo Editor',          desc:'Crop, resize, rotate, flip, adjust',        url:'convert/photo-editor.html',     icon:'✂️' },
+    { name:'Image to Text (OCR)',   desc:'Extract text from photos and scans',        url:'convert/ocr.html',              icon:'🔤' },
+    { name:'CSV to Excel',          desc:'Convert CSV to a proper .xlsx workbook',    url:'convert/csv-to-excel.html',     icon:'📊' },
+    { name:'JSON ↔ CSV',            desc:'Flatten nested JSON to spreadsheet rows',   url:'convert/json-to-csv.html',      icon:'🔄' },
+    { name:'JSON Formatter',        desc:'Beautify, minify and validate JSON',        url:'convert/json-formatter.html',   icon:'{}' },
+    { name:'JSON ↔ YAML',           desc:'Convert between the two config formats',    url:'convert/json-to-yaml.html',     icon:'⚙️' },
+    { name:'XML ↔ JSON',            desc:'Parse XML into JSON and serialize back',    url:'convert/xml-to-json.html',      icon:'🏷️' },
+    { name:'Markdown to HTML',      desc:'Render Markdown as clean valid HTML',       url:'convert/markdown-to-html.html', icon:'📝' },
+    { name:'Base64 Encode/Decode',  desc:'Encode text or files to Base64 and back',  url:'convert/base64.html',           icon:'🔢' },
+    { name:'Text Tools',            desc:'Case, URL encode, HTML escape, count',      url:'convert/text-tools.html',       icon:'✏️' },
+    { name:'Hash Generator',        desc:'SHA-1, SHA-256, SHA-384, SHA-512',          url:'convert/hash-generator.html',   icon:'#️⃣' },
+    { name:'Audio Converter',       desc:'MP3, WAV, OGG, M4A, FLAC — trim & convert',url:'convert/audio-converter.html',  icon:'🎵' },
+    { name:'SRT ↔ VTT Subtitles',  desc:'Convert subtitle formats in seconds',       url:'convert/srt-to-vtt.html',       icon:'💬' },
+    { name:'Password Generator',   desc:'Strong random passwords, full control',     url:'convert/password-gen.html',     icon:'🔑' },
+    { name:'QR Code Generator',    desc:'QR codes from any URL, text, phone, email', url:'convert/qr-code.html',          icon:'⬛' },
+    { name:'Secret Message',       desc:'Encrypt & decrypt text with a passphrase',  url:'convert/secret-message.html',   icon:'🔐' },
+    { name:'Color Converter',      desc:'HEX, RGB, HSL, CMYK with visual picker',    url:'convert/color-converter.html',  icon:'🎨' },
+    { name:'AI Image Studio',      desc:'FLUX, Ideogram, Recraft from text prompts', url:'ai/image.html',                 icon:'🤖' },
+    { name:'AI Video Studio',      desc:'Veo, Kling, Seedance — text to video',      url:'ai/video.html',                 icon:'🎬' },
+    { name:'AI Music Studio',      desc:'Generate songs with Suno V5.5',             url:'ai/music.html',                 icon:'🎶' },
+    { name:'AI Writer',            desc:'Long-form articles, stories, scripts',      url:'ai/writer.html',                icon:'📖' },
+    { name:'AI Photo Studio',      desc:'Passport photo, LinkedIn headshot, restore',url:'ai/photo-studio.html',          icon:'📸' },
+    { name:'AI Background Remover',desc:'Remove image backgrounds instantly',        url:'ai/bg-remove.html',             icon:'✂️' },
+    { name:'AI Social Post Maker', desc:'Instagram, Facebook, LinkedIn post images', url:'ai/social-post.html',           icon:'📣' },
+    { name:'AI Music Video',       desc:'Generate music videos from audio + prompts',url:'ai/music-video.html',           icon:'🎞️' },
+  ];
+
+  /* ── FILE TYPE → TOOL DETECTION ───────────────────────────────── */
+  var FILE_RULES = [
+    { test: function(f){ return /\.(heic|heif)$/i.test(f.name) || f.type==='image/heic' || f.type==='image/heif'; },
+      tool: { name:'HEIC to JPG',     url:'convert/heic-to-jpg.html',     icon:'📱' } },
+    { test: function(f){ return f.type==='image/svg+xml' || /\.svg$/i.test(f.name); },
+      tool: { name:'SVG to PNG',      url:'convert/svg-to-png.html',      icon:'🎨' } },
+    { test: function(f){ return f.type.startsWith('image/'); },
+      tool: { name:'Image Converter', url:'convert/image-converter.html', icon:'🖼️' } },
+    { test: function(f){ return f.type==='application/pdf'; },
+      tool: { name:'PDF Merge & Split',url:'convert/pdf-merge.html',      icon:'📋' } },
+    { test: function(f){ return f.type.startsWith('audio/'); },
+      tool: { name:'Audio Converter', url:'convert/audio-converter.html', icon:'🎵' } },
+    { test: function(f){ return f.type==='application/json' || /\.json$/i.test(f.name); },
+      tool: { name:'JSON Formatter',  url:'convert/json-formatter.html',  icon:'{}' } },
+    { test: function(f){ return /\.(yaml|yml)$/i.test(f.name); },
+      tool: { name:'JSON ↔ YAML',     url:'convert/json-to-yaml.html',    icon:'⚙️' } },
+    { test: function(f){ return f.type==='text/csv' || /\.csv$/i.test(f.name); },
+      tool: { name:'CSV to Excel',    url:'convert/csv-to-excel.html',    icon:'📊' } },
+    { test: function(f){ return f.type.includes('xml') || /\.xml$/i.test(f.name); },
+      tool: { name:'XML ↔ JSON',      url:'convert/xml-to-json.html',     icon:'🏷️' } },
+    { test: function(f){ return /\.(srt|vtt)$/i.test(f.name); },
+      tool: { name:'SRT ↔ VTT',       url:'convert/srt-to-vtt.html',      icon:'💬' } },
+    { test: function(f){ return /\.(md|markdown)$/i.test(f.name); },
+      tool: { name:'Markdown to HTML',url:'convert/markdown-to-html.html',icon:'📝' } },
+  ];
+  function detectTool(file) {
+    for (var i=0; i<FILE_RULES.length; i++) { if (FILE_RULES[i].test(file)) return FILE_RULES[i].tool; }
+    return null;
   }
+
+  /* ── RECENT TOOLS (localStorage) ──────────────────────────────── */
+  function getRecent() {
+    try { return JSON.parse(localStorage.getItem('dj_recent') || '[]'); } catch(e) { return []; }
+  }
+  function saveRecent(t) {
+    try {
+      var list = getRecent().filter(function(x){ return x.url !== t.url; });
+      list.unshift(t); list = list.slice(0, 8);
+      localStorage.setItem('dj_recent', JSON.stringify(list));
+    } catch(e) {}
+  }
+
+  // Intercept card clicks to track recent tools
+  document.querySelectorAll('.converter-card[href]').forEach(function(card) {
+    card.addEventListener('click', function() {
+      var name = card.querySelector('.card-title');
+      var icon = card.querySelector('.card-icon');
+      saveRecent({
+        name: name ? name.textContent.trim() : '',
+        url: card.getAttribute('href'),
+        icon: icon ? icon.textContent.trim() : '🔧'
+      });
+    });
+  });
+
+  // Render recently used section
+  (function() {
+    var sec = document.getElementById('recent-tools-section');
+    var chips = document.getElementById('recent-chips');
+    if (!sec || !chips) return;
+    var recent = getRecent();
+    if (!recent.length) return;
+    chips.innerHTML = recent.map(function(t) {
+      return '<a href="'+t.url+'" class="recent-chip">'+t.icon+' '+t.name+'</a>';
+    }).join('');
+    sec.style.display = 'block';
+  })();
+
+  /* ── COMMAND PALETTE ───────────────────────────────────────────── */
+  var overlay = document.getElementById('cmd-overlay');
+  var cmdInput = document.getElementById('cmd-input');
+  var cmdResultsEl = document.getElementById('cmd-results');
+  var cpSelected = -1;
+  var cpFiltered = [];
+
+  function cpOpen() {
+    overlay.classList.add('open');
+    cmdInput.value = '';
+    cpSelected = -1;
+    cpRender();
+    setTimeout(function(){ cmdInput.focus(); }, 40);
+  }
+  function cpClose() {
+    overlay.classList.remove('open');
+  }
+
+  function cpItem(t) {
+    return '<div class="cmd-item" data-url="'+t.url+'">'
+      + '<div class="cmd-item-icon">'+t.icon+'</div>'
+      + '<div class="cmd-item-text">'
+      + '<div class="cmd-item-name">'+t.name+'</div>'
+      + '<div class="cmd-item-desc">'+t.desc+'</div>'
+      + '</div><div class="cmd-item-enter">↵</div></div>';
+  }
+
+  function cpRender() {
+    var q = cmdInput.value.trim().toLowerCase();
+    var recent = getRecent().slice(0, 4);
+    cpSelected = -1;
+    var html = '';
+
+    if (!q) {
+      if (recent.length) {
+        html += '<div class="cmd-section-label">Jump back in</div>';
+        html += recent.map(cpItem).join('');
+      }
+      cpFiltered = ALL_TOOLS;
+      html += '<div class="cmd-section-label">All tools</div>';
+      html += ALL_TOOLS.map(cpItem).join('');
+    } else {
+      cpFiltered = ALL_TOOLS.filter(function(t) {
+        return t.name.toLowerCase().indexOf(q) !== -1 || t.desc.toLowerCase().indexOf(q) !== -1;
+      });
+      if (cpFiltered.length) {
+        html += cpFiltered.map(cpItem).join('');
+      } else {
+        html += '<div class="cmd-empty">No tools match "'+q+'"</div>';
+      }
+    }
+
+    cmdResultsEl.innerHTML = html;
+    cmdResultsEl.querySelectorAll('.cmd-item').forEach(function(el, i) {
+      el.addEventListener('click', function(){ window.location.href = el.dataset.url; });
+      el.addEventListener('mouseenter', function() {
+        cpSelected = i; cpHighlight();
+      });
+    });
+  }
+
+  function cpHighlight() {
+    cmdResultsEl.querySelectorAll('.cmd-item').forEach(function(el, i) {
+      el.classList.toggle('selected', i === cpSelected);
+    });
+    var sel = cmdResultsEl.querySelector('.cmd-item.selected');
+    if (sel) sel.scrollIntoView({ block:'nearest' });
+  }
+
+  document.addEventListener('keydown', function(e) {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); cpOpen(); return; }
+    if (!overlay.classList.contains('open')) return;
+    var items = cmdResultsEl.querySelectorAll('.cmd-item');
+    if (e.key === 'Escape')    { cpClose(); }
+    else if (e.key === 'ArrowDown') { e.preventDefault(); cpSelected = Math.min(cpSelected+1, items.length-1); cpHighlight(); }
+    else if (e.key === 'ArrowUp')   { e.preventDefault(); cpSelected = Math.max(cpSelected-1, 0); cpHighlight(); }
+    else if (e.key === 'Enter') {
+      if (cpSelected >= 0 && items[cpSelected]) window.location.href = items[cpSelected].dataset.url;
+      else if (cpFiltered.length) window.location.href = cpFiltered[0].url;
+    }
+  });
+  if (overlay) overlay.addEventListener('click', function(e){ if (e.target === overlay) cpClose(); });
+  if (cmdInput) cmdInput.addEventListener('input', cpRender);
+
+  // Search bar click → open palette
+  var toolSearchEl = document.getElementById('toolSearch');
+  if (toolSearchEl) {
+    toolSearchEl.addEventListener('mousedown', function(e) {
+      e.preventDefault(); cpOpen();
+    });
+  }
+
+  window.cpOpen = cpOpen;
+
+  /* ── HERO DROP ZONE ────────────────────────────────────────────── */
+  var heroDZ = document.getElementById('hero-dropzone');
+  var heroDZInner = document.getElementById('hero-dz-inner');
+  var heroDZDefault = heroDZInner ? heroDZInner.innerHTML : '';
+  window._heroDZReset = function() {
+    if (heroDZInner) heroDZInner.innerHTML = heroDZDefault;
+  };
+
+  if (heroDZ) {
+    heroDZ.addEventListener('dragenter', function(e){ e.preventDefault(); heroDZ.classList.add('drag-active'); });
+    heroDZ.addEventListener('dragover',  function(e){ e.preventDefault(); });
+    heroDZ.addEventListener('dragleave', function(e){ if (!heroDZ.contains(e.relatedTarget)) heroDZ.classList.remove('drag-active'); });
+    heroDZ.addEventListener('drop', function(e) {
+      e.preventDefault(); heroDZ.classList.remove('drag-active');
+      var file = e.dataTransfer && e.dataTransfer.files[0];
+      if (file) heroHandleFile(file);
+    });
+    heroDZ.addEventListener('click', function(e) {
+      if (!e.target.closest('a') && !e.target.closest('[data-reset]')) cpOpen();
+    });
+  }
+
+  function heroHandleFile(file) {
+    var tool = detectTool(file);
+    var ext = (file.name.split('.').pop() || 'FILE').toUpperCase();
+    if (tool) {
+      heroDZInner.innerHTML =
+        '<div style="display:flex;flex-direction:column;align-items:center;gap:0.75rem;text-align:center">'
+        + '<div style="font-size:2.2rem">'+tool.icon+'</div>'
+        + '<div style="font-family:var(--font-display);font-size:1.05rem;color:var(--ink)">'+ext+' detected</div>'
+        + '<a href="'+tool.url+'" class="btn btn-primary" style="font-size:0.9rem;padding:0.55rem 1.25rem">Open '+tool.name+' →</a>'
+        + '<button data-reset style="font-size:0.78rem;color:var(--ink-muted);cursor:pointer;text-decoration:underline;background:none;border:none;margin-top:0.25rem" onclick="window._heroDZReset()">try another file</button>'
+        + '</div>';
+    } else {
+      cpOpen();
+    }
+  }
+
+  /* ── GLOBAL FILE DROP DETECTION ───────────────────────────────── */
+  var dropBanner = document.getElementById('drop-banner');
+  var dropBannerText = document.getElementById('drop-banner-text');
+  var dropBannerTimer;
+
+  document.addEventListener('dragover', function(e) {
+    if (e.dataTransfer && e.dataTransfer.types && [].indexOf.call(e.dataTransfer.types,'Files') !== -1) e.preventDefault();
+  });
+  document.addEventListener('drop', function(e) {
+    if (e.target.closest && e.target.closest('#hero-dropzone')) return;
+    e.preventDefault();
+    var file = e.dataTransfer && e.dataTransfer.files[0];
+    if (!file || !dropBanner) return;
+    var tool = detectTool(file);
+    if (tool) {
+      dropBannerText.innerHTML = tool.icon+'&nbsp;<strong>'+file.name+'</strong>&nbsp;→&nbsp;<a href="'+tool.url+'">'+tool.name+'</a>';
+      dropBanner.classList.add('show');
+      clearTimeout(dropBannerTimer);
+      dropBannerTimer = setTimeout(function(){ dropBanner.classList.remove('show'); }, 5000);
+    }
+  });
+  window.closeBanner = function() {
+    if (dropBanner) dropBanner.classList.remove('show');
+    clearTimeout(dropBannerTimer);
+  };
+
 })();
 </script>
 </body>

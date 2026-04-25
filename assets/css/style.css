@@ -2667,3 +2667,463 @@ body.lang-hi {
     width: 100%;
   }
 }
+
+/* ==========================================================================
+   Command Palette
+   ========================================================================== */
+.cmd-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(20,20,19,0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 600;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: clamp(5vh, 12vh, 130px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s var(--ease);
+}
+.cmd-overlay.open {
+  opacity: 1;
+  pointer-events: all;
+}
+.cmd-modal {
+  width: 100%;
+  max-width: 600px;
+  margin-inline: 1rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 32px 64px -20px rgba(20,20,19,0.28), 0 8px 20px -8px rgba(20,20,19,0.12);
+  overflow: hidden;
+  transform: translateY(-10px) scale(0.98);
+  transition: transform 0.2s var(--ease);
+}
+.cmd-overlay.open .cmd-modal {
+  transform: translateY(0) scale(1);
+}
+.cmd-search-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--line);
+}
+.cmd-search-icon {
+  width: 18px; height: 18px;
+  flex-shrink: 0;
+  color: var(--ink-muted);
+}
+.cmd-input {
+  flex: 1;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  color: var(--ink);
+  background: transparent;
+  border: none;
+  outline: none;
+  line-height: 1.5;
+}
+.cmd-input::placeholder { color: var(--ink-muted); }
+.cmd-kbd {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--ink-muted);
+  background: var(--bg-alt);
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  padding: 0.18rem 0.45rem;
+  flex-shrink: 0;
+  line-height: 1.4;
+}
+.cmd-results {
+  max-height: 380px;
+  overflow-y: auto;
+  padding: 0.4rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--line) transparent;
+}
+.cmd-section-label {
+  padding: 0.55rem 0.75rem 0.2rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink-muted);
+}
+.cmd-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 0.75rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.1s;
+  user-select: none;
+}
+.cmd-item:hover, .cmd-item.selected {
+  background: var(--bg-alt);
+}
+.cmd-item-icon {
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  display: grid;
+  place-items: center;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+  line-height: 1;
+}
+.cmd-item-text {
+  flex: 1;
+  min-width: 0;
+}
+.cmd-item-name {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.cmd-item-desc {
+  font-size: 0.77rem;
+  color: var(--ink-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.cmd-item-enter {
+  font-size: 0.72rem;
+  color: var(--ink-muted);
+  font-family: var(--font-mono);
+  opacity: 0;
+  transition: opacity 0.1s;
+  flex-shrink: 0;
+}
+.cmd-item.selected .cmd-item-enter { opacity: 1; }
+.cmd-empty {
+  text-align: center;
+  padding: 2.5rem 1rem;
+  color: var(--ink-muted);
+  font-size: 0.9rem;
+}
+.cmd-footer {
+  border-top: 1px solid var(--line);
+  padding: 0.5rem 1.25rem;
+  display: flex;
+  gap: 1.25rem;
+  font-size: 0.72rem;
+  color: var(--ink-muted);
+  font-family: var(--font-mono);
+}
+.cmd-footer kbd {
+  background: var(--bg-alt);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 0.1rem 0.35rem;
+  margin-right: 0.2rem;
+}
+@media (max-width: 640px) {
+  .cmd-overlay { padding-top: 0; align-items: flex-end; }
+  .cmd-modal { border-radius: var(--radius-lg) var(--radius-lg) 0 0; max-width: 100%; margin: 0; }
+  .cmd-results { max-height: 55vh; }
+}
+
+/* ==========================================================================
+   Quick Access Strip
+   ========================================================================== */
+.quick-access {
+  background: var(--bg-alt);
+  border-bottom: 1px solid var(--line);
+  overflow: hidden;
+}
+.quick-access-inner {
+  display: flex;
+  align-items: center;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding-block: 0.8rem;
+}
+.quick-access-inner::-webkit-scrollbar { display: none; }
+.quick-access-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--ink-muted);
+  white-space: nowrap;
+  padding: 0 1rem 0 clamp(1.25rem, 3vw, 2.5rem);
+  flex-shrink: 0;
+  border-right: 1px solid var(--line);
+  margin-right: 0.75rem;
+}
+.quick-chips {
+  display: flex;
+  gap: 0.45rem;
+  padding-right: clamp(1.25rem, 3vw, 2.5rem);
+}
+.quick-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.42rem 0.9rem;
+  background: var(--surface);
+  border: 1.5px solid var(--line);
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--ink-soft);
+  white-space: nowrap;
+  text-decoration: none;
+  transition: all 0.18s var(--ease);
+}
+.quick-chip:hover {
+  border-color: var(--indigo);
+  color: var(--indigo);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px -4px rgba(112,81,188,0.2);
+}
+
+/* ==========================================================================
+   Hero: interactive drop zone inner content
+   ========================================================================== */
+.hero-card.drag-active {
+  border-color: var(--indigo) !important;
+  box-shadow: var(--shadow-lg), 0 0 0 3px rgba(112,81,188,0.2) !important;
+  transform: rotate(0deg) scale(1.02) !important;
+}
+.hero-dz-inner {
+  border: 2px dashed var(--line);
+  border-radius: var(--radius);
+  padding: 1.75rem 1rem;
+  text-align: center;
+  background: var(--bg);
+  transition: border-color 0.25s var(--ease), background 0.25s var(--ease);
+  min-height: 195px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  cursor: pointer;
+}
+.hero-dz-inner:hover,
+.hero-card.drag-active .hero-dz-inner {
+  border-color: var(--indigo);
+  background: rgba(112,81,188,0.03);
+}
+.type-cycle {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  justify-content: center;
+}
+.type-chip {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 0.25rem 0.55rem;
+  border-radius: 6px;
+}
+.type-chip.img  { background: #EDE8FC; color: var(--indigo); }
+.type-chip.doc  { background: #FFEBDA; color: var(--saffron); }
+.type-chip.data { background: #E0F4EA; color: var(--success); }
+.type-chip.aud  { background: #E6EEFF; color: #3452CC; }
+.hero-dz-label {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: var(--ink);
+  line-height: 1.25;
+}
+.hero-dz-sub {
+  font-size: 0.78rem;
+  color: var(--ink-muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+.hero-dz-sub kbd {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 0.1rem 0.4rem;
+  color: var(--ink-soft);
+}
+
+/* ==========================================================================
+   Drop Banner (fixed, global file drop)
+   ========================================================================== */
+.drop-banner {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(8px);
+  background: var(--ink);
+  color: var(--bg);
+  border-radius: 999px;
+  padding: 0.65rem 0.65rem 0.65rem 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  box-shadow: 0 8px 28px -8px rgba(20,20,19,0.4);
+  z-index: 400;
+  font-size: 0.88rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.22s var(--ease), transform 0.22s var(--ease);
+  white-space: nowrap;
+  max-width: calc(100vw - 2rem);
+}
+.drop-banner.show {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateX(-50%) translateY(0);
+}
+.drop-banner a { color: #fff; font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
+.drop-banner-close {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+  display: grid;
+  place-items: center;
+  font-size: 0.65rem;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+.drop-banner-close:hover { background: rgba(255,255,255,0.28); }
+
+/* ==========================================================================
+   Recently Used Tools
+   ========================================================================== */
+.recent-tools-section {
+  display: none;
+  margin-bottom: 1.75rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg-alt);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+.recent-tools-title {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--ink-muted);
+  margin-bottom: 0.75rem;
+}
+.recent-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+.recent-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.42rem 0.9rem;
+  background: var(--surface);
+  border: 1.5px solid var(--line);
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--ink-soft);
+  text-decoration: none;
+  transition: all 0.18s var(--ease);
+}
+.recent-chip:hover {
+  border-color: var(--indigo);
+  color: var(--indigo);
+  transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   AI Studio Compact Strip
+   ========================================================================== */
+.ai-strip {
+  background: color-mix(in srgb, var(--indigo) 5%, var(--bg-alt));
+  border-bottom: 1px solid color-mix(in srgb, var(--indigo) 15%, var(--line));
+}
+.ai-strip-inner {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding-block: 0.9rem;
+  flex-wrap: wrap;
+}
+.ai-strip-text {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+  flex-shrink: 0;
+}
+.ai-strip-text strong { color: var(--ink); font-weight: 600; }
+.ai-strip-badge {
+  font-size: 0.62rem;
+  background: var(--indigo);
+  color: #fff;
+  padding: 0.18rem 0.5rem;
+  border-radius: 999px;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-family: var(--font-sans);
+  flex-shrink: 0;
+}
+.ai-strip-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  align-items: center;
+}
+.ai-strip-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.38rem 0.8rem;
+  background: var(--surface);
+  border: 1.5px solid color-mix(in srgb, var(--indigo) 20%, var(--line));
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--ink-soft);
+  text-decoration: none;
+  transition: all 0.18s var(--ease);
+  white-space: nowrap;
+}
+.ai-strip-chip:hover {
+  border-color: var(--indigo);
+  color: var(--indigo);
+  transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   Search ⌘K hint badge
+   ========================================================================== */
+.search-cmd-hint {
+  position: absolute;
+  right: 0.9rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--ink-muted);
+  background: var(--bg-alt);
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  padding: 0.18rem 0.45rem;
+  pointer-events: none;
+  line-height: 1.4;
+}
+@media (max-width: 600px) { .search-cmd-hint { display: none; } }
