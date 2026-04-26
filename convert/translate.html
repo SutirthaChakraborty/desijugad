@@ -79,6 +79,25 @@
 .attribution { font-size: 0.75rem; color: var(--ink-muted); margin-top: 1.5rem; }
 .attribution a { color: var(--ink-muted); }
 optgroup { font-weight: 700; }
+.tr-btn.recording {
+  background: var(--danger);
+  color: #fff;
+  border-color: var(--danger);
+}
+.tr-btn.recording .mic-icon {
+  animation: mic-pulse 0.75s ease-in-out infinite alternate;
+}
+@keyframes mic-pulse {
+  from { transform: scale(1); }
+  to   { transform: scale(1.4); }
+}
+.mic-listening-hint {
+  font-size: 0.76rem;
+  color: var(--danger);
+  margin-top: 0.4rem;
+  display: none;
+}
+.mic-listening-hint.visible { display: block; }
 </style>
 </head>
 <body>
@@ -291,8 +310,16 @@ optgroup { font-weight: 700; }
       <div class="tr-panel">
         <textarea class="tr-textarea" id="tr-input" placeholder="Type or paste text to translate (keep under 500 characters for best results)…" maxlength="1500"></textarea>
         <div class="char-hint"><span id="tr-char-count">0</span> / 1500 — shorter texts translate more accurately</div>
+        <div class="mic-listening-hint" id="tr-mic-hint">🔴 Listening… speak now. Will auto-translate when you pause.</div>
         <div class="tr-actions">
           <button class="tr-btn primary" id="tr-btn">Translate →</button>
+          <button class="tr-btn" id="tr-mic-btn" title="Speak to input text">
+            <svg class="mic-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="9" y="2" width="6" height="12" rx="3"/>
+              <path d="M5 10a7 7 0 0014 0M12 19v3M8 22h8"/>
+            </svg>
+            <span class="mic-label">Speak</span>
+          </button>
           <button class="tr-btn" id="tr-clear-btn">Clear</button>
         </div>
       </div>
@@ -350,22 +377,23 @@ optgroup { font-weight: 700; }
 <script src="../assets/js/main.js"></script>
 <script>
 (function() {
-  const inputEl = document.getElementById('tr-input');
+  const inputEl  = document.getElementById('tr-input');
   const outputEl = document.getElementById('tr-output');
-  const fromEl = document.getElementById('tr-from-lang');
-  const toEl = document.getElementById('tr-to-lang');
-  const trBtn = document.getElementById('tr-btn');
+  const fromEl   = document.getElementById('tr-from-lang');
+  const toEl     = document.getElementById('tr-to-lang');
+  const trBtn    = document.getElementById('tr-btn');
   const clearBtn = document.getElementById('tr-clear-btn');
-  const copyBtn = document.getElementById('tr-copy-btn');
+  const copyBtn  = document.getElementById('tr-copy-btn');
   const speakBtn = document.getElementById('tr-speak-btn');
+  const micBtn   = document.getElementById('tr-mic-btn');
+  const micHint  = document.getElementById('tr-mic-hint');
   const charCount = document.getElementById('tr-char-count');
-  const swapBtn = document.getElementById('tr-swap');
+  const swapBtn  = document.getElementById('tr-swap');
 
   inputEl.addEventListener('input', () => { charCount.textContent = inputEl.value.length; });
 
   swapBtn.addEventListener('click', () => {
     const tmp = fromEl.value; fromEl.value = toEl.value; toEl.value = tmp;
-    // Also swap text if translation exists
     const out = outputEl.textContent.trim();
     if (out && out !== 'Translation will appear here…') {
       inputEl.value = out;
@@ -387,7 +415,7 @@ optgroup { font-weight: 700; }
     const text = inputEl.value.trim();
     if (!text) { inputEl.focus(); return; }
     const from = fromEl.value;
-    const to = toEl.value;
+    const to   = toEl.value;
 
     trBtn.disabled = true;
     trBtn.textContent = 'Translating…';
@@ -396,7 +424,7 @@ optgroup { font-weight: 700; }
 
     try {
       const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${from}|${to}`;
-      const res = await fetch(url);
+      const res  = await fetch(url);
       if (!res.ok) throw new Error('Network error');
       const data = await res.json();
 
@@ -448,6 +476,86 @@ optgroup { font-weight: 700; }
     utt.lang = toEl.value;
     window.speechSynthesis.speak(utt);
   });
+
+  // ── Speech Recognition (mic → translate) ──────────────────────────────────
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) {
+    micBtn.hidden = true;
+  } else {
+    let recognition = null;
+    let micActive   = false;
+    let finalSoFar  = '';       // confirmed speech text
+    let autoTimer   = null;     // debounce before auto-translate
+
+    function setMicUI(active) {
+      micBtn.classList.toggle('recording', active);
+      micBtn.querySelector('.mic-label').textContent = active ? 'Stop' : 'Speak';
+      micHint.classList.toggle('visible', active);
+    }
+
+    function stopMic() {
+      micActive = false;
+      setMicUI(false);
+      clearTimeout(autoTimer);
+      if (recognition) { try { recognition.stop(); } catch(e) {} recognition = null; }
+    }
+
+    function startMic() {
+      finalSoFar = inputEl.value.trim();
+      recognition = new SR();
+      recognition.lang = fromEl.value;
+      recognition.interimResults = true;
+      recognition.continuous = true;
+      recognition.maxAlternatives = 1;
+
+      recognition.onstart = () => { micActive = true; setMicUI(true); };
+
+      recognition.onresult = (e) => {
+        let interim = '';
+        let newFinal = '';
+        for (let i = e.resultIndex; i < e.results.length; i++) {
+          const t = e.results[i][0].transcript;
+          if (e.results[i].isFinal) newFinal += t + ' ';
+          else interim += t;
+        }
+        // Show committed + new final + live interim in textarea
+        inputEl.value = (finalSoFar + ' ' + newFinal + interim).replace(/^\s+/, '');
+        charCount.textContent = inputEl.value.length;
+
+        if (newFinal) {
+          finalSoFar = (finalSoFar + ' ' + newFinal).trim();
+          // auto-translate 1.2 s after last final result
+          clearTimeout(autoTimer);
+          autoTimer = setTimeout(translate, 1200);
+        }
+      };
+
+      recognition.onerror = (e) => {
+        if (e.error === 'not-allowed') {
+          outputEl.textContent = '⚠️ Microphone access denied. Allow microphone permission in your browser and try again.';
+          outputEl.className = 'tr-output error';
+        }
+        if (e.error !== 'no-speech') stopMic();
+      };
+
+      // Some browsers stop after silence; restart transparently while active
+      recognition.onend = () => {
+        if (micActive) {
+          try { recognition.start(); } catch(e) { stopMic(); }
+        } else {
+          setMicUI(false);
+        }
+      };
+
+      try { recognition.start(); }
+      catch(e) { micActive = false; setMicUI(false); }
+    }
+
+    micBtn.addEventListener('click', () => { micActive ? stopMic() : startMic(); });
+
+    // Stop mic if user switches the source language
+    fromEl.addEventListener('change', () => { if (micActive) stopMic(); });
+  }
 })();
 </script>
 </body>
