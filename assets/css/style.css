@@ -200,7 +200,19 @@ p { color: var(--ink-soft); }
 
 /* Mega-menu dropdown
    ========================================================================== */
-.nav-has-menu { position: relative; }
+.nav-has-menu {
+  position: relative;
+}
+/* Invisible bridge fills the gap between the nav text and the dropdown,
+   so hover stays active while the mouse moves through the gap. */
+.nav-has-menu::after {
+  content: '';
+  position: absolute;
+  bottom: -14px;
+  left: -20px;
+  right: -20px;
+  height: 14px;
+}
 
 .nav-menu-trigger {
   display: inline-flex;
