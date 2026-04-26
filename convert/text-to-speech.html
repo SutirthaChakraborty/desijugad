@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/img/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/img/apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Text to Speech — Hindi, Urdu, English, Tamil & 30+ Languages | Desi Jugad</title>
+<meta name="description" content="Convert text to speech in Hindi, Urdu, English, Tamil, Telugu, Bengali, Marathi and 30+ languages. Adjust speed and pitch. Free, browser-native, no upload.">
+<meta name="keywords" content="text to speech, hindi text to speech, urdu TTS, hindi TTS free, online TTS, text to voice, speech synthesis, multiple languages TTS">
+<link rel="canonical" href="https://desijugad.co.in/convert/text-to-speech.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,30..100;1,9..144,300..700,30..100&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+<style>
+.tts-layout { display: grid; grid-template-columns: 1fr 340px; gap: 1.5rem; margin-top: 1.5rem; }
+@media (max-width: 800px) { .tts-layout { grid-template-columns: 1fr; } }
+.tts-panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.75rem; }
+.tts-textarea {
+  width: 100%; min-height: 220px; resize: vertical;
+  border: 1px solid var(--line); border-radius: var(--radius-sm);
+  padding: 1rem; font-size: 1rem; font-family: var(--font-sans);
+  background: var(--bg); color: var(--ink); box-sizing: border-box;
+  line-height: 1.6;
+}
+.tts-textarea:focus { outline: none; border-color: var(--indigo); }
+.char-count { font-size: 0.78rem; color: var(--ink-muted); text-align: right; margin-top: 0.4rem; }
+.tts-controls { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1.25rem; }
+.tts-play-btn {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.65rem 1.4rem; border-radius: 999px; border: none; cursor: pointer;
+  font-size: 1rem; font-weight: 600; font-family: var(--font-sans);
+  transition: all 0.15s;
+}
+.btn-play { background: var(--indigo); color: #fff; }
+.btn-play:hover { opacity: 0.9; }
+.btn-play:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn-stop { background: var(--bg-alt); border: 1px solid var(--line); color: var(--ink); }
+.btn-stop:hover { border-color: var(--danger); color: var(--danger); }
+.tts-progress {
+  height: 4px; background: var(--line); border-radius: 2px; margin-top: 1rem; overflow: hidden; display: none;
+}
+.tts-progress-bar { height: 100%; background: var(--indigo); width: 0%; transition: width 0.3s; border-radius: 2px; animation: tts-pulse 1.5s ease-in-out infinite; }
+@keyframes tts-pulse { 0%,100%{opacity:1} 50%{opacity:0.6} }
+.ctrl-row { display: flex; flex-direction: column; gap: 1rem; }
+.ctrl-group label { display: flex; justify-content: space-between; font-size: 0.82rem; font-weight: 600; margin-bottom: 0.4rem; color: var(--ink); }
+.ctrl-group label span { color: var(--indigo); font-family: var(--font-mono); }
+.ctrl-group input[type=range] { width: 100%; accent-color: var(--indigo); }
+.ctrl-group select {
+  width: 100%; padding: 0.55rem 0.75rem; border: 1px solid var(--line);
+  border-radius: var(--radius-sm); font-size: 0.88rem; background: var(--bg);
+  color: var(--ink); font-family: var(--font-sans);
+}
+.voices-list { max-height: 200px; overflow-y: auto; border: 1px solid var(--line); border-radius: var(--radius-sm); margin-top: 0.5rem; }
+.voice-item {
+  padding: 0.5rem 0.75rem; cursor: pointer; font-size: 0.82rem; border-bottom: 1px solid var(--line);
+  transition: background 0.1s;
+}
+.voice-item:last-child { border-bottom: none; }
+.voice-item:hover, .voice-item.selected { background: #EEF0FF; color: var(--indigo); }
+.voice-lang { font-size: 0.72rem; color: var(--ink-muted); margin-left: 0.4rem; }
+.status-bar {
+  display: flex; align-items: center; gap: 0.5rem; font-size: 0.82rem;
+  color: var(--ink-muted); margin-top: 0.75rem; min-height: 1.5rem;
+}
+.status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--line); flex-shrink: 0; }
+.status-dot.playing { background: #1F7A4C; animation: blink 1s ease-in-out infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+.unsupported-msg { background: #FEF2F2; color: var(--danger); border-radius: var(--radius-sm); padding: 1rem 1.25rem; font-size: 0.9rem; margin-top: 1rem; display: none; }
+.tip-box { background: var(--bg-alt); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 1rem 1.25rem; font-size: 0.82rem; color: var(--ink-muted); margin-top: 1.5rem; line-height: 1.6; }
+.tip-box strong { color: var(--ink); }
+.sample-texts { margin-top: 1.5rem; }
+.sample-chip {
+  display: inline-block; padding: 0.3rem 0.75rem; border: 1px solid var(--line);
+  border-radius: 999px; font-size: 0.78rem; cursor: pointer; margin: 0.25rem 0.25rem 0 0;
+  background: var(--surface); transition: all 0.15s;
+}
+.sample-chip:hover { border-color: var(--indigo); color: var(--indigo); }
+optgroup { font-weight: 700; }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="../" class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="../#converters">Converters</a></li>
+      <li><a href="../ai/">AI Studio <span class="badge-new">NEW</span></a></li>
+      <li><a href="../blog/">Blog</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../#converters" class="nav-cta">All tools</a></li>
+    </ul>
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</header>
+
+<main class="converter-page">
+  <div class="container">
+    <nav class="breadcrumb">
+      <a href="../">Home</a><span class="sep">/</span>
+      <a href="../#converters">Converters</a><span class="sep">/</span>
+      <span>Text to Speech</span>
+    </nav>
+
+    <div class="converter-header">
+      <h1>Text to speech — <em class="italic">desi voices.</em></h1>
+      <p class="lead">Type or paste any text and hear it spoken in Hindi, Urdu, English, Tamil, Telugu, Bengali and 30+ more languages. Uses your browser's built-in voice engine — nothing is uploaded.</p>
+    </div>
+
+    <div id="unsupported" class="unsupported-msg">
+      ⚠️ Your browser doesn't support the Web Speech API. Please try Chrome, Edge, or Safari on desktop or Android.
+    </div>
+
+    <div id="tts-app">
+      <div class="sample-texts">
+        <span style="font-size:0.8rem;color:var(--ink-muted);">Try a sample:</span>
+        <button class="sample-chip" data-text="Welcome to Desi Jugad. Your free, private conversion toolkit." data-lang="en-US">English</button>
+        <button class="sample-chip" data-text="नमस्ते! देसी जुगाड़ में आपका स्वागत है। यहाँ सब कुछ मुफ़्त है।" data-lang="hi-IN">हिंदी</button>
+        <button class="sample-chip" data-text="آپ کا دیسی جگاڑ میں خیر مقدم ہے۔ یہ سب کچھ مفت ہے۔" data-lang="ur-PK">اردو</button>
+        <button class="sample-chip" data-text="தமிழ் மொழி மிகவும் அழகான மொழி. நன்றி." data-lang="ta-IN">தமிழ்</button>
+        <button class="sample-chip" data-text="বাংলাদেশ ও ভারতের জনগণের শুভেচ্ছা জানাই।" data-lang="bn-IN">বাংলা</button>
+        <button class="sample-chip" data-text="نمستے! دیسی جگاڑ مفت ہے۔" data-lang="ur-PK">اردو ۲</button>
+      </div>
+
+      <div class="tts-layout">
+        <!-- Left: text input + controls -->
+        <div class="tts-panel">
+          <textarea class="tts-textarea" id="tts-text" placeholder="Type or paste your text here…" maxlength="5000"></textarea>
+          <div class="char-count"><span id="char-count">0</span> / 5000 characters</div>
+
+          <div class="tts-controls">
+            <button class="tts-play-btn btn-play" id="btn-play">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+              Speak
+            </button>
+            <button class="tts-play-btn btn-stop" id="btn-pause" style="display:none;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+              Pause
+            </button>
+            <button class="tts-play-btn btn-stop" id="btn-stop">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="4" width="16" height="16"/></svg>
+              Stop
+            </button>
+          </div>
+
+          <div class="tts-progress" id="tts-progress">
+            <div class="tts-progress-bar" id="tts-progress-bar"></div>
+          </div>
+
+          <div class="status-bar">
+            <div class="status-dot" id="status-dot"></div>
+            <span id="status-text">Ready</span>
+          </div>
+        </div>
+
+        <!-- Right: controls panel -->
+        <div class="tts-panel ctrl-row">
+          <div class="ctrl-group">
+            <label>Language <span id="lang-val"></span></label>
+            <select id="tts-lang">
+              <optgroup label="South Asian">
+                <option value="hi-IN">🇮🇳 Hindi — हिंदी</option>
+                <option value="ur-PK">🇵🇰 Urdu — اردو</option>
+                <option value="bn-IN">🇮🇳 Bengali (India) — বাংলা</option>
+                <option value="bn-BD">🇧🇩 Bengali (Bangladesh)</option>
+                <option value="ta-IN">🇮🇳 Tamil — தமிழ்</option>
+                <option value="te-IN">🇮🇳 Telugu — తెలుగు</option>
+                <option value="mr-IN">🇮🇳 Marathi — मराठी</option>
+                <option value="gu-IN">🇮🇳 Gujarati — ગુજરાતી</option>
+                <option value="pa-IN">🇮🇳 Punjabi — ਪੰਜਾਬੀ</option>
+                <option value="kn-IN">🇮🇳 Kannada — ಕನ್ನಡ</option>
+                <option value="ml-IN">🇮🇳 Malayalam — മലയാളം</option>
+                <option value="si-LK">🇱🇰 Sinhala</option>
+                <option value="ne-NP">🇳🇵 Nepali</option>
+              </optgroup>
+              <optgroup label="English">
+                <option value="en-IN">🇮🇳 English (India)</option>
+                <option value="en-US" selected>🇺🇸 English (US)</option>
+                <option value="en-GB">🇬🇧 English (UK)</option>
+                <option value="en-AU">🇦🇺 English (Australia)</option>
+              </optgroup>
+              <optgroup label="Major World Languages">
+                <option value="ar-SA">🇸🇦 Arabic</option>
+                <option value="zh-CN">🇨🇳 Chinese (Mandarin)</option>
+                <option value="zh-TW">🇹🇼 Chinese (Traditional)</option>
+                <option value="fr-FR">🇫🇷 French</option>
+                <option value="de-DE">🇩🇪 German</option>
+                <option value="es-ES">🇪🇸 Spanish</option>
+                <option value="pt-BR">🇧🇷 Portuguese (Brazil)</option>
+                <option value="ru-RU">🇷🇺 Russian</option>
+                <option value="ja-JP">🇯🇵 Japanese</option>
+                <option value="ko-KR">🇰🇷 Korean</option>
+                <option value="it-IT">🇮🇹 Italian</option>
+                <option value="tr-TR">🇹🇷 Turkish</option>
+                <option value="nl-NL">🇳🇱 Dutch</option>
+                <option value="pl-PL">🇵🇱 Polish</option>
+                <option value="sv-SE">🇸🇪 Swedish</option>
+                <option value="id-ID">🇮🇩 Indonesian</option>
+                <option value="ms-MY">🇲🇾 Malay</option>
+                <option value="th-TH">🇹🇭 Thai</option>
+                <option value="vi-VN">🇻🇳 Vietnamese</option>
+              </optgroup>
+            </select>
+          </div>
+
+          <div class="ctrl-group">
+            <label>Speed <span id="rate-val">1×</span></label>
+            <input type="range" id="tts-rate" min="0.5" max="2" step="0.1" value="1">
+          </div>
+
+          <div class="ctrl-group">
+            <label>Pitch <span id="pitch-val">1</span></label>
+            <input type="range" id="tts-pitch" min="0.5" max="2" step="0.1" value="1">
+          </div>
+
+          <div class="ctrl-group">
+            <label>Voice</label>
+            <div class="voices-list" id="voices-list">
+              <div class="voice-item" style="color:var(--ink-muted);">Loading voices…</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tip-box">
+        <strong>💡 Tips:</strong> Voice availability depends on your OS and browser. Chrome on Windows/Mac and Safari on iOS/Mac have the best voice libraries. For Hindi, install "Microsoft Swara" (Windows) or "Siri" (iOS/Mac). Urdu works well on Chrome for Android.
+        <br><br>
+        <strong>Want to record the audio?</strong> Use your system's screen-recorder audio capture, or <a href="https://obsproject.com" target="_blank" rel="noopener">OBS Studio</a> (free) to capture browser audio.
+      </div>
+    </div>
+
+    <div class="related-tools">
+      <h3>Related tools</h3>
+      <div class="related-grid">
+        <a href="speech-to-text.html" class="related-card">🎤 Speech to Text</a>
+        <a href="translate.html" class="related-card">🌐 Translate</a>
+        <a href="audio-converter.html" class="related-card">🎵 Audio Converter</a>
+        <a href="srt-to-vtt.html" class="related-card">📝 SRT ⇄ VTT Subtitles</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid footer-grid-5">
+      <div class="footer-brand">
+        <div class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></div>
+        <p>Free, private conversion tools for everyone.</p>
+      </div>
+      <div class="footer-col"><h5>Language Tools</h5><ul><li><a href="text-to-speech.html">Text to Speech</a></li><li><a href="speech-to-text.html">Speech to Text</a></li><li><a href="translate.html">Translate</a></li></ul></div>
+      <div class="footer-col"><h5>AI Studio</h5><ul><li><a href="../ai/image.html">AI Images</a></li><li><a href="../ai/video.html">AI Video</a></li><li><a href="../ai/writer.html">AI Writer</a></li></ul></div>
+      <div class="footer-col"><h5>Company</h5><ul><li><a href="../about.html">About</a></li><li><a href="../privacy.html">Privacy</a></li><li><a href="../terms.html">Terms</a></li></ul></div>
+      <div class="footer-col"><h5>Help</h5><ul><li><a href="../contact.html">Contact</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <div>© <span data-year>2026</span> Desi Jugad.</div>
+      <div class="made-in"><span class="flag-in"></span>Made in India, built for the world.</div>
+    </div>
+  </div>
+</footer>
+
+<script src="../assets/js/main.js"></script>
+<script>
+(function() {
+  if (!('speechSynthesis' in window)) {
+    document.getElementById('unsupported').style.display = '';
+    document.getElementById('tts-app').style.display = 'none';
+    return;
+  }
+
+  const synth = window.speechSynthesis;
+  let voices = [];
+  let selectedVoice = null;
+  let utterance = null;
+  let paused = false;
+
+  const textEl = document.getElementById('tts-text');
+  const charEl = document.getElementById('char-count');
+  const langEl = document.getElementById('tts-lang');
+  const rateEl = document.getElementById('tts-rate');
+  const pitchEl = document.getElementById('tts-pitch');
+  const rateValEl = document.getElementById('rate-val');
+  const pitchValEl = document.getElementById('pitch-val');
+  const voicesList = document.getElementById('voices-list');
+  const btnPlay = document.getElementById('btn-play');
+  const btnPause = document.getElementById('btn-pause');
+  const btnStop = document.getElementById('btn-stop');
+  const statusDot = document.getElementById('status-dot');
+  const statusText = document.getElementById('status-text');
+  const progressEl = document.getElementById('tts-progress');
+  const progressBar = document.getElementById('tts-progress-bar');
+
+  textEl.addEventListener('input', () => {
+    charEl.textContent = textEl.value.length;
+  });
+
+  rateEl.addEventListener('input', () => { rateValEl.textContent = parseFloat(rateEl.value).toFixed(1) + '×'; });
+  pitchEl.addEventListener('input', () => { pitchValEl.textContent = parseFloat(pitchEl.value).toFixed(1); });
+
+  function loadVoices() {
+    voices = synth.getVoices();
+    renderVoiceList();
+  }
+
+  function renderVoiceList() {
+    const lang = langEl.value;
+    const langBase = lang.split('-')[0];
+    let matching = voices.filter(v => v.lang.startsWith(langBase));
+    if (!matching.length) matching = voices;
+
+    voicesList.innerHTML = matching.map((v, i) =>
+      `<div class="voice-item${v === selectedVoice ? ' selected' : ''}" data-idx="${i}" onclick="selectVoice(this,${voices.indexOf(v)})">
+        ${v.name} <span class="voice-lang">${v.lang}</span>
+      </div>`
+    ).join('') || '<div class="voice-item" style="color:var(--ink-muted);">No voices for this language. Your OS may need a language pack installed.</div>';
+
+    if (!selectedVoice && matching.length) {
+      selectedVoice = matching[0];
+    }
+  }
+
+  window.selectVoice = function(el, idx) {
+    selectedVoice = voices[idx];
+    document.querySelectorAll('.voice-item').forEach(v => v.classList.remove('selected'));
+    el.classList.add('selected');
+  };
+
+  langEl.addEventListener('change', renderVoiceList);
+
+  function setStatus(state) {
+    if (state === 'playing') {
+      statusDot.className = 'status-dot playing';
+      statusText.textContent = 'Speaking…';
+      progressEl.style.display = '';
+      progressBar.style.width = '100%';
+      btnPlay.style.display = 'none';
+      btnPause.style.display = '';
+    } else if (state === 'paused') {
+      statusDot.className = 'status-dot';
+      statusDot.style.background = '#E87C3E';
+      statusText.textContent = 'Paused';
+      btnPause.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg> Resume`;
+    } else {
+      statusDot.className = 'status-dot';
+      statusDot.style.background = '';
+      statusText.textContent = 'Ready';
+      progressEl.style.display = 'none';
+      progressBar.style.width = '0%';
+      btnPlay.style.display = '';
+      btnPause.style.display = 'none';
+      btnPause.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg> Pause`;
+      paused = false;
+    }
+  }
+
+  btnPlay.addEventListener('click', () => {
+    const text = textEl.value.trim();
+    if (!text) { textEl.focus(); return; }
+    synth.cancel();
+    utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = langEl.value;
+    utterance.rate = parseFloat(rateEl.value);
+    utterance.pitch = parseFloat(pitchEl.value);
+    if (selectedVoice) utterance.voice = selectedVoice;
+    utterance.onstart = () => setStatus('playing');
+    utterance.onend = () => setStatus('idle');
+    utterance.onerror = (e) => { if (e.error !== 'interrupted') setStatus('idle'); };
+    synth.speak(utterance);
+  });
+
+  btnPause.addEventListener('click', () => {
+    if (!paused) { synth.pause(); paused = true; setStatus('paused'); }
+    else { synth.resume(); paused = false; setStatus('playing'); }
+  });
+
+  btnStop.addEventListener('click', () => { synth.cancel(); setStatus('idle'); });
+
+  // Sample chips
+  document.querySelectorAll('.sample-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      textEl.value = chip.dataset.text;
+      charEl.textContent = textEl.value.length;
+      if (chip.dataset.lang) {
+        langEl.value = chip.dataset.lang;
+        langEl.dispatchEvent(new Event('change'));
+      }
+    });
+  });
+
+  // Load voices (may be async in Chrome)
+  if (synth.onvoiceschanged !== undefined) synth.onvoiceschanged = loadVoices;
+  loadVoices();
+  setTimeout(loadVoices, 500);
+})();
+</script>
+</body>
+</html>

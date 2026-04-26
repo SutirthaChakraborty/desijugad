@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/img/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/img/apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Speech to Text — Hindi, Urdu, English & 30+ Languages | Desi Jugad</title>
+<meta name="description" content="Convert speech to text in Hindi, Urdu, English, Tamil, Telugu, Bengali and 30+ languages. Live transcription, copy to clipboard. Free, browser-native, no upload.">
+<meta name="keywords" content="speech to text, hindi speech to text, voice to text, voice recognition hindi, dictation online, transcription free, STT online">
+<link rel="canonical" href="https://desijugad.co.in/convert/speech-to-text.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,30..100;1,9..144,300..700,30..100&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+<style>
+.stt-layout { display: grid; grid-template-columns: 1fr 280px; gap: 1.5rem; margin-top: 1.5rem; }
+@media (max-width: 780px) { .stt-layout { grid-template-columns: 1fr; } }
+.stt-panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.75rem; }
+.mic-area { text-align: center; padding: 2rem 1rem; }
+.mic-btn {
+  width: 80px; height: 80px; border-radius: 50%; border: none; cursor: pointer;
+  font-size: 2rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;
+  transition: all 0.2s; box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+  background: var(--indigo); color: #fff;
+}
+.mic-btn:hover { transform: scale(1.06); }
+.mic-btn.recording { background: var(--danger); animation: mic-pulse 1.2s ease-in-out infinite; }
+.mic-btn:disabled { opacity: 0.5; cursor: not-allowed; animation: none; transform: none; }
+@keyframes mic-pulse { 0%,100%{box-shadow:0 0 0 0 rgba(184,58,46,0.5)} 50%{box-shadow:0 0 0 18px rgba(184,58,46,0)} }
+.mic-label { font-size: 0.9rem; color: var(--ink-muted); margin-top: 0.5rem; }
+.transcript-box {
+  min-height: 200px; max-height: 420px; overflow-y: auto;
+  border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 1rem;
+  font-size: 1rem; line-height: 1.7; color: var(--ink); background: var(--bg);
+  word-break: break-word; white-space: pre-wrap;
+  font-family: var(--font-sans);
+}
+.transcript-box .interim { color: var(--ink-muted); font-style: italic; }
+.transcript-box:empty::before { content: 'Your transcription will appear here…'; color: var(--ink-muted); font-style: italic; }
+.stt-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1rem; }
+.stt-btn {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.5rem 1rem; border-radius: 999px; border: 1px solid var(--line);
+  background: var(--surface); color: var(--ink); font-size: 0.85rem; cursor: pointer;
+  font-family: var(--font-sans); transition: all 0.15s;
+}
+.stt-btn:hover { border-color: var(--indigo); color: var(--indigo); }
+.stt-btn.primary { background: var(--indigo); color: #fff; border-color: var(--indigo); }
+.stt-btn.primary:hover { opacity: 0.9; }
+.word-count { font-size: 0.78rem; color: var(--ink-muted); margin-top: 0.5rem; }
+.ctrl-group { margin-bottom: 1.25rem; }
+.ctrl-label { display: block; font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--ink-muted); margin-bottom: 0.5rem; }
+.ctrl-select {
+  width: 100%; padding: 0.55rem 0.75rem; border: 1px solid var(--line);
+  border-radius: var(--radius-sm); font-size: 0.88rem; background: var(--bg);
+  color: var(--ink); font-family: var(--font-sans);
+}
+.toggle-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+.toggle-label { font-size: 0.85rem; color: var(--ink); }
+.toggle-switch { position: relative; width: 42px; height: 24px; }
+.toggle-switch input { opacity: 0; width: 0; height: 0; }
+.toggle-track {
+  position: absolute; inset: 0; border-radius: 999px; background: var(--line);
+  cursor: pointer; transition: background 0.2s;
+}
+.toggle-switch input:checked + .toggle-track { background: var(--indigo); }
+.toggle-track::before {
+  content: ''; position: absolute; width: 18px; height: 18px; border-radius: 50%;
+  background: #fff; top: 3px; left: 3px; transition: transform 0.2s;
+}
+.toggle-switch input:checked + .toggle-track::before { transform: translateX(18px); }
+.status-bar { display: flex; align-items: center; gap: 0.5rem; font-size: 0.82rem; color: var(--ink-muted); margin-top: 0.75rem; }
+.status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--line); flex-shrink: 0; }
+.status-dot.on { background: var(--danger); animation: blink2 1s ease-in-out infinite; }
+@keyframes blink2 { 0%,100%{opacity:1} 50%{opacity:0.3} }
+.unsupported-msg { background: #FEF2F2; color: var(--danger); border-radius: var(--radius-sm); padding: 1rem 1.25rem; font-size: 0.9rem; }
+.compat-note { background: var(--bg-alt); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 0.9rem 1.1rem; font-size: 0.82rem; margin-bottom: 1.5rem; line-height: 1.6; }
+optgroup { font-weight: 700; }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="../" class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="../#converters">Converters</a></li>
+      <li><a href="../ai/">AI Studio <span class="badge-new">NEW</span></a></li>
+      <li><a href="../blog/">Blog</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../#converters" class="nav-cta">All tools</a></li>
+    </ul>
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</header>
+
+<main class="converter-page">
+  <div class="container">
+    <nav class="breadcrumb">
+      <a href="../">Home</a><span class="sep">/</span>
+      <a href="../#converters">Converters</a><span class="sep">/</span>
+      <span>Speech to Text</span>
+    </nav>
+
+    <div class="converter-header">
+      <h1>Speech to text — <em class="italic">speak, get text.</em></h1>
+      <p class="lead">Speak in Hindi, Urdu, English, Tamil, Bengali and 30+ languages — get a live transcript instantly. Fully browser-native. Your audio never leaves your device.</p>
+    </div>
+
+    <div id="stt-unsupported" style="display:none;" class="unsupported-msg">
+      ⚠️ Speech recognition is not supported in this browser. Please use <strong>Google Chrome</strong> or <strong>Microsoft Edge</strong> on desktop or Android. Safari on iOS 15+ also works.
+    </div>
+
+    <div id="stt-app">
+      <div class="compat-note">
+        🎤 <strong>Best experience:</strong> Chrome or Edge on desktop/Android. Safari on iOS 15+. Firefox and Brave have limited support.
+        Microphone permission is required — your browser will ask for it on first use.
+      </div>
+
+      <div class="stt-layout">
+        <!-- Left: transcript -->
+        <div class="stt-panel">
+          <div class="transcript-box" id="transcript-box" aria-live="polite" aria-label="Transcript output"></div>
+          <div class="word-count" id="word-count">0 words · 0 characters</div>
+
+          <div class="stt-actions">
+            <button class="stt-btn primary" id="btn-record">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="8"/></svg>
+              Start Recording
+            </button>
+            <button class="stt-btn" id="btn-copy" title="Copy to clipboard">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+              Copy
+            </button>
+            <button class="stt-btn" id="btn-clear">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg>
+              Clear
+            </button>
+          </div>
+
+          <div class="status-bar">
+            <div class="status-dot" id="status-dot"></div>
+            <span id="status-text">Ready — click Start to begin</span>
+          </div>
+        </div>
+
+        <!-- Right: controls -->
+        <div class="stt-panel">
+          <div class="ctrl-group">
+            <span class="ctrl-label">Language</span>
+            <select class="ctrl-select" id="stt-lang">
+              <optgroup label="South Asian">
+                <option value="hi-IN">🇮🇳 Hindi — हिंदी</option>
+                <option value="ur-PK">🇵🇰 Urdu — اردو</option>
+                <option value="bn-IN">🇮🇳 Bengali (India)</option>
+                <option value="bn-BD">🇧🇩 Bengali (Bangladesh)</option>
+                <option value="ta-IN">🇮🇳 Tamil — தமிழ்</option>
+                <option value="te-IN">🇮🇳 Telugu — తెలుగు</option>
+                <option value="mr-IN">🇮🇳 Marathi — मराठी</option>
+                <option value="gu-IN">🇮🇳 Gujarati — ગુજરાતી</option>
+                <option value="pa-IN">🇮🇳 Punjabi — ਪੰਜਾਬੀ</option>
+                <option value="kn-IN">🇮🇳 Kannada — ಕನ್ನಡ</option>
+                <option value="ml-IN">🇮🇳 Malayalam — മലയാളം</option>
+                <option value="ne-NP">🇳🇵 Nepali</option>
+                <option value="si-LK">🇱🇰 Sinhala</option>
+              </optgroup>
+              <optgroup label="English">
+                <option value="en-IN">🇮🇳 English (India)</option>
+                <option value="en-US" selected>🇺🇸 English (US)</option>
+                <option value="en-GB">🇬🇧 English (UK)</option>
+                <option value="en-AU">🇦🇺 English (Australia)</option>
+              </optgroup>
+              <optgroup label="Major World Languages">
+                <option value="ar-SA">🇸🇦 Arabic</option>
+                <option value="zh-CN">🇨🇳 Chinese (Mandarin)</option>
+                <option value="fr-FR">🇫🇷 French</option>
+                <option value="de-DE">🇩🇪 German</option>
+                <option value="es-ES">🇪🇸 Spanish</option>
+                <option value="pt-BR">🇧🇷 Portuguese (Brazil)</option>
+                <option value="ru-RU">🇷🇺 Russian</option>
+                <option value="ja-JP">🇯🇵 Japanese</option>
+                <option value="ko-KR">🇰🇷 Korean</option>
+                <option value="it-IT">🇮🇹 Italian</option>
+                <option value="tr-TR">🇹🇷 Turkish</option>
+                <option value="nl-NL">🇳🇱 Dutch</option>
+                <option value="id-ID">🇮🇩 Indonesian</option>
+                <option value="ms-MY">🇲🇾 Malay</option>
+                <option value="th-TH">🇹🇭 Thai</option>
+                <option value="vi-VN">🇻🇳 Vietnamese</option>
+                <option value="pl-PL">🇵🇱 Polish</option>
+                <option value="sv-SE">🇸🇪 Swedish</option>
+              </optgroup>
+            </select>
+          </div>
+
+          <div class="toggle-row">
+            <span class="toggle-label">Continuous mode</span>
+            <label class="toggle-switch">
+              <input type="checkbox" id="stt-continuous" checked>
+              <div class="toggle-track"></div>
+            </label>
+          </div>
+          <p style="font-size:0.78rem;color:var(--ink-muted);margin-top:-0.75rem;margin-bottom:1rem;">Keep recording after a pause</p>
+
+          <div class="toggle-row">
+            <span class="toggle-label">Interim results</span>
+            <label class="toggle-switch">
+              <input type="checkbox" id="stt-interim" checked>
+              <div class="toggle-track"></div>
+            </label>
+          </div>
+          <p style="font-size:0.78rem;color:var(--ink-muted);margin-top:-0.75rem;">Show partial text as you speak</p>
+
+          <div style="margin-top:1.5rem;">
+            <div class="mic-area">
+              <button class="mic-btn" id="mic-btn" aria-label="Start/stop recording">🎤</button>
+              <div class="mic-label" id="mic-label">Click to start</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="related-tools">
+      <h3>Related tools</h3>
+      <div class="related-grid">
+        <a href="text-to-speech.html" class="related-card">🔊 Text to Speech</a>
+        <a href="translate.html" class="related-card">🌐 Translate</a>
+        <a href="audio-converter.html" class="related-card">🎵 Audio Converter</a>
+        <a href="ocr.html" class="related-card">🔍 Image to Text (OCR)</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid footer-grid-5">
+      <div class="footer-brand">
+        <div class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></div>
+        <p>Free, private conversion tools for everyone.</p>
+      </div>
+      <div class="footer-col"><h5>Language Tools</h5><ul><li><a href="speech-to-text.html">Speech to Text</a></li><li><a href="text-to-speech.html">Text to Speech</a></li><li><a href="translate.html">Translate</a></li></ul></div>
+      <div class="footer-col"><h5>AI Studio</h5><ul><li><a href="../ai/image.html">AI Images</a></li><li><a href="../ai/video.html">AI Video</a></li><li><a href="../ai/writer.html">AI Writer</a></li></ul></div>
+      <div class="footer-col"><h5>Company</h5><ul><li><a href="../about.html">About</a></li><li><a href="../privacy.html">Privacy</a></li><li><a href="../terms.html">Terms</a></li></ul></div>
+      <div class="footer-col"><h5>Help</h5><ul><li><a href="../contact.html">Contact</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <div>© <span data-year>2026</span> Desi Jugad.</div>
+      <div class="made-in"><span class="flag-in"></span>Made in India, built for the world.</div>
+    </div>
+  </div>
+</footer>
+
+<script src="../assets/js/main.js"></script>
+<script>
+(function() {
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SpeechRecognition) {
+    document.getElementById('stt-unsupported').style.display = '';
+    document.getElementById('stt-app').style.display = 'none';
+    return;
+  }
+
+  let recognition = null;
+  let isRecording = false;
+  let finalText = '';
+  let interimText = '';
+
+  const transcriptBox = document.getElementById('transcript-box');
+  const wordCountEl = document.getElementById('word-count');
+  const btnRecord = document.getElementById('btn-record');
+  const btnCopy = document.getElementById('btn-copy');
+  const btnClear = document.getElementById('btn-clear');
+  const micBtn = document.getElementById('mic-btn');
+  const micLabel = document.getElementById('mic-label');
+  const statusDot = document.getElementById('status-dot');
+  const statusText = document.getElementById('status-text');
+  const langEl = document.getElementById('stt-lang');
+  const continuousEl = document.getElementById('stt-continuous');
+  const interimEl = document.getElementById('stt-interim');
+
+  function updateWordCount() {
+    const text = finalText.trim();
+    const words = text ? text.split(/\s+/).length : 0;
+    wordCountEl.textContent = `${words} words · ${text.length} characters`;
+  }
+
+  function renderTranscript() {
+    transcriptBox.innerHTML =
+      (finalText ? finalText.replace(/\n/g,'<br>') : '') +
+      (interimText ? `<span class="interim">${interimText}</span>` : '');
+    transcriptBox.scrollTop = transcriptBox.scrollHeight;
+    updateWordCount();
+  }
+
+  function setRecordingState(on) {
+    isRecording = on;
+    if (on) {
+      micBtn.classList.add('recording');
+      micBtn.textContent = '⏹';
+      micLabel.textContent = 'Recording… click to stop';
+      btnRecord.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="4" width="16" height="16" rx="2"/></svg> Stop Recording`;
+      btnRecord.style.background = 'var(--danger)';
+      btnRecord.style.borderColor = 'var(--danger)';
+      statusDot.className = 'status-dot on';
+      statusText.textContent = 'Recording…';
+    } else {
+      micBtn.classList.remove('recording');
+      micBtn.textContent = '🎤';
+      micLabel.textContent = 'Click to start';
+      btnRecord.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="8"/></svg> Start Recording`;
+      btnRecord.style.background = '';
+      btnRecord.style.borderColor = '';
+      statusDot.className = 'status-dot';
+      statusText.textContent = finalText ? 'Done — transcript ready' : 'Ready — click Start to begin';
+    }
+  }
+
+  function startRecognition() {
+    recognition = new SpeechRecognition();
+    recognition.lang = langEl.value;
+    recognition.continuous = continuousEl.checked;
+    recognition.interimResults = interimEl.checked;
+    recognition.maxAlternatives = 1;
+
+    recognition.onresult = (event) => {
+      interimText = '';
+      for (let i = event.resultIndex; i < event.results.length; i++) {
+        const transcript = event.results[i][0].transcript;
+        if (event.results[i].isFinal) {
+          finalText += transcript + ' ';
+        } else {
+          interimText += transcript;
+        }
+      }
+      renderTranscript();
+    };
+
+    recognition.onend = () => {
+      if (isRecording && continuousEl.checked) {
+        // Auto-restart for continuous mode
+        try { recognition.start(); } catch(e) {}
+      } else {
+        interimText = '';
+        renderTranscript();
+        setRecordingState(false);
+      }
+    };
+
+    recognition.onerror = (event) => {
+      if (event.error === 'no-speech') return;
+      if (event.error === 'aborted') return;
+      statusText.textContent = 'Error: ' + event.error;
+      setRecordingState(false);
+    };
+
+    recognition.start();
+    setRecordingState(true);
+  }
+
+  function stopRecognition() {
+    if (recognition) { try { recognition.stop(); } catch(e) {} }
+    setRecordingState(false);
+  }
+
+  function toggleRecording() {
+    if (isRecording) { stopRecognition(); }
+    else { startRecognition(); }
+  }
+
+  btnRecord.addEventListener('click', toggleRecording);
+  micBtn.addEventListener('click', toggleRecording);
+
+  btnCopy.addEventListener('click', () => {
+    const text = finalText.trim();
+    if (!text) return;
+    navigator.clipboard.writeText(text).then(() => {
+      btnCopy.textContent = '✓ Copied!';
+      setTimeout(() => { btnCopy.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg> Copy`; }, 2000);
+    });
+  });
+
+  btnClear.addEventListener('click', () => {
+    if (isRecording) stopRecognition();
+    finalText = '';
+    interimText = '';
+    transcriptBox.innerHTML = '';
+    updateWordCount();
+    statusText.textContent = 'Ready — click Start to begin';
+  });
+})();
+</script>
+</body>
+</html>

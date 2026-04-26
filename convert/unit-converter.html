@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/img/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/img/apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit Converter — Length, Weight, Area, Volume, Temperature & More | Desi Jugad</title>
+<meta name="description" content="Convert length, weight, volume, area, temperature, speed, time, data, energy and more. Includes Indian units: Tola, Maasha, Bigha, Gaj, Kos, Seer, Maund. Pakistani units: Marla, Kanal. Free, instant, no sign-up.">
+<meta name="keywords" content="unit converter, measurement converter, indian units converter, tola to gram, bigha to square meter, gaj to meter, kos to km, seer to kg, maund, marla, kanal, length weight volume area temperature">
+<link rel="canonical" href="https://desijugad.co.in/convert/unit-converter.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,30..100;1,9..144,300..700,30..100&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400..600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+<style>
+.uc-tabs { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 2rem; }
+.uc-tab {
+  padding: 0.45rem 1rem; border-radius: 999px; border: 1px solid var(--line);
+  background: var(--surface); color: var(--ink); font-size: 0.85rem; cursor: pointer;
+  transition: all 0.15s; font-family: var(--font-sans); font-weight: 500;
+}
+.uc-tab:hover { border-color: var(--indigo); color: var(--indigo); }
+.uc-tab.active { background: var(--indigo); color: #fff; border-color: var(--indigo); }
+.uc-panel { display: none; }
+.uc-panel.active { display: block; }
+.uc-row {
+  display: grid; grid-template-columns: 1fr auto 1fr; gap: 1rem;
+  align-items: end; background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 1.75rem; margin-bottom: 1.5rem;
+}
+@media (max-width: 640px) { .uc-row { grid-template-columns: 1fr; } }
+.uc-field label { display: block; font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--ink-muted); margin-bottom: 0.5rem; }
+.uc-field input {
+  width: 100%; padding: 0.7rem 1rem; border: 1px solid var(--line);
+  border-radius: var(--radius-sm); font-size: 1.25rem; font-family: var(--font-mono);
+  background: var(--bg); color: var(--ink); box-sizing: border-box;
+}
+.uc-field input:focus { outline: none; border-color: var(--indigo); }
+.uc-field select {
+  width: 100%; padding: 0.5rem 0.75rem; border: 1px solid var(--line);
+  border-radius: var(--radius-sm); font-size: 0.9rem; background: var(--surface);
+  color: var(--ink); margin-top: 0.4rem; box-sizing: border-box;
+  font-family: var(--font-sans);
+}
+.uc-swap {
+  display: flex; align-items: center; justify-content: center; padding: 0 0.5rem;
+  padding-top: 2rem;
+}
+.uc-swap button {
+  background: var(--bg-alt); border: 1px solid var(--line); border-radius: 999px;
+  width: 40px; height: 40px; cursor: pointer; font-size: 1.2rem;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.15s;
+}
+.uc-swap button:hover { background: var(--indigo); color: #fff; border-color: var(--indigo); }
+.uc-result-big {
+  font-size: 1.5rem; font-weight: 700; color: var(--indigo);
+  font-family: var(--font-mono); margin-top: 0.5rem; min-height: 2rem;
+}
+.indian-tag {
+  display: inline-block; font-size: 0.7rem; background: #FFF3E0; color: #E65100;
+  border-radius: 4px; padding: 0.1rem 0.4rem; margin-left: 0.3rem;
+  font-family: var(--font-sans); font-weight: 600; vertical-align: middle;
+}
+optgroup { font-weight: 700; }
+.pop-table { width: 100%; border-collapse: collapse; margin-top: 1rem; font-size: 0.88rem; }
+.pop-table th { text-align: left; padding: 0.5rem 0.75rem; background: var(--bg-alt); border-bottom: 2px solid var(--line); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-muted); }
+.pop-table td { padding: 0.5rem 0.75rem; border-bottom: 1px solid var(--line); }
+.pop-table tr:last-child td { border-bottom: none; }
+.pop-table a { color: var(--indigo); text-decoration: none; font-size: 0.82rem; }
+.pop-table a:hover { text-decoration: underline; }
+.section-title { font-size: 1.15rem; font-weight: 700; margin-bottom: 1rem; margin-top: 2rem; }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="../" class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="../#converters">Converters</a></li>
+      <li><a href="../ai/">AI Studio <span class="badge-new">NEW</span></a></li>
+      <li><a href="../blog/">Blog</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../#converters" class="nav-cta">All tools</a></li>
+    </ul>
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</header>
+
+<main class="converter-page">
+  <div class="container">
+    <nav class="breadcrumb">
+      <a href="../">Home</a><span class="sep">/</span>
+      <a href="../#converters">Converters</a><span class="sep">/</span>
+      <span>Unit Converter</span>
+    </nav>
+
+    <div class="converter-header">
+      <h1>Unit converter — <em class="italic">desi & global.</em></h1>
+      <p class="lead">Convert length, weight, volume, area, temperature, speed, time, data, energy and more. Includes Indian units (Tola, Bigha, Gaj, Seer, Maund), Pakistani units (Marla, Kanal) and other regional measurements.</p>
+    </div>
+
+    <!-- Tabs -->
+    <div class="uc-tabs" role="tablist">
+      <button class="uc-tab active" data-tab="length" role="tab">📏 Length</button>
+      <button class="uc-tab" data-tab="weight" role="tab">⚖️ Weight</button>
+      <button class="uc-tab" data-tab="volume" role="tab">🧪 Volume</button>
+      <button class="uc-tab" data-tab="area" role="tab">📐 Area</button>
+      <button class="uc-tab" data-tab="temperature" role="tab">🌡️ Temperature</button>
+      <button class="uc-tab" data-tab="speed" role="tab">🚀 Speed</button>
+      <button class="uc-tab" data-tab="time" role="tab">⏱️ Time</button>
+      <button class="uc-tab" data-tab="data" role="tab">💾 Data</button>
+      <button class="uc-tab" data-tab="energy" role="tab">⚡ Energy</button>
+      <button class="uc-tab" data-tab="pressure" role="tab">💨 Pressure</button>
+      <button class="uc-tab" data-tab="fuel" role="tab">⛽ Fuel</button>
+    </div>
+
+    <!-- LENGTH -->
+    <div class="uc-panel active" id="panel-length">
+      <div class="uc-row">
+        <div class="uc-field">
+          <label>From</label>
+          <input type="number" id="len-from-val" value="1" step="any">
+          <select id="len-from-unit" aria-label="From unit">
+            <optgroup label="Metric">
+              <option value="m">Metre (m)</option>
+              <option value="km">Kilometre (km)</option>
+              <option value="cm">Centimetre (cm)</option>
+              <option value="mm">Millimetre (mm)</option>
+              <option value="um">Micrometre (µm)</option>
+              <option value="nm">Nanometre (nm)</option>
+            </optgroup>
+            <optgroup label="Imperial / US">
+              <option value="in">Inch (in)</option>
+              <option value="ft">Foot (ft)</option>
+              <option value="yd">Yard (yd)</option>
+              <option value="mi">Mile (mi)</option>
+              <option value="nmi">Nautical Mile</option>
+            </optgroup>
+            <optgroup label="Indian / Pakistani (भारतीय)">
+              <option value="angul">Angul — अंगुल</option>
+              <option value="hath">Hath / Hasta — हाथ</option>
+              <option value="gaj">Gaj — गज</option>
+              <option value="kos">Kos — कोस</option>
+              <option value="yojana">Yojana — योजन</option>
+            </optgroup>
+            <optgroup label="Astronomical">
+              <option value="ly">Light-year</option>
+              <option value="au">Astronomical Unit</option>
+            </optgroup>
+          </select>
+        </div>
+        <div class="uc-swap"><button id="len-swap" title="Swap units" aria-label="Swap units">⇄</button></div>
+        <div class="uc-field">
+          <label>To</label>
+          <input type="number" id="len-to-val" readonly tabindex="-1" style="background:var(--bg-alt);cursor:default;">
+          <select id="len-to-unit" aria-label="To unit">
+            <optgroup label="Metric">
+              <option value="m">Metre (m)</option>
+              <option value="km">Kilometre (km)</option>
+              <option value="cm" selected>Centimetre (cm)</option>
+              <option value="mm">Millimetre (mm)</option>
+              <option value="um">Micrometre (µm)</option>
+              <option value="nm">Nanometre (nm)</option>
+            </optgroup>
+            <optgroup label="Imperial / US">
+              <option value="in">Inch (in)</option>
+              <option value="ft">Foot (ft)</option>
+              <option value="yd">Yard (yd)</option>
+              <option value="mi">Mile (mi)</option>
+              <option value="nmi">Nautical Mile</option>
+            </optgroup>
+            <optgroup label="Indian / Pakistani (भारतीय)">
+              <option value="angul">Angul — अंगुल</option>
+              <option value="hath">Hath / Hasta — हाथ</option>
+              <option value="gaj">Gaj — गज</option>
+              <option value="kos">Kos — कोस</option>
+              <option value="yojana">Yojana — योजन</option>
+            </optgroup>
+            <optgroup label="Astronomical">
+              <option value="ly">Light-year</option>
+              <option value="au">Astronomical Unit</option>
+            </optgroup>
+          </select>
+        </div>
+      </div>
+      <p class="section-title">Popular length conversions</p>
+      <table class="pop-table">
+        <thead><tr><th>Conversion</th><th>Result</th></tr></thead>
+        <tbody>
+          <tr><td>1 metre</td><td>100 cm · 3.281 ft · 39.37 in</td></tr>
+          <tr><td>1 kilometre</td><td>1000 m · 0.621 miles · 1094 yards</td></tr>
+          <tr><td>1 mile</td><td>1.609 km · 5280 ft · 1760 yards</td></tr>
+          <tr><td>1 Gaj (गज)</td><td>0.9144 m · 91.44 cm · 3 ft</td></tr>
+          <tr><td>1 Hath/Hasta (हाथ)</td><td>45.72 cm · 18 in · 0.4572 m</td></tr>
+          <tr><td>1 Angul (अंगुल)</td><td>1.905 cm · 0.75 in</td></tr>
+          <tr><td>1 Kos (कोस)</td><td>2 km · 1.243 miles</td></tr>
+          <tr><td>1 Yojana (योजन)</td><td>14.4 km · 8.95 miles</td></tr>
+          <tr><td>1 foot</td><td>30.48 cm · 12 in · 0.3048 m</td></tr>
+          <tr><td>1 inch</td><td>2.54 cm · 25.4 mm</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- WEIGHT -->
+    <div class="uc-panel" id="panel-weight">
+      <div class="uc-row">
+        <div class="uc-field">
+          <label>From</label>
+          <input type="number" id="wt-from-val" value="1" step="any">
+          <select id="wt-from-unit" aria-label="From unit">
+            <optgroup label="Metric">
+              <option value="kg">Kilogram (kg)</option>
+              <option value="g">Gram (g)</option>
+              <option value="mg">Milligram (mg)</option>
+              <option value="t">Tonne (metric)</option>
+              <option value="ug">Microgram (µg)</option>
+            </optgroup>
+            <optgroup label="Imperial / US">
+              <option value="lb">Pound (lb)</option>
+              <option value="oz">Ounce (oz)</option>
+              <option value="st">Stone (st)</option>
+              <option value="ton_us">Ton (US short)</option>
+              <option value="ton_uk">Ton (UK long)</option>
+            </optgroup>
+            <optgroup label="Indian / Pakistani (भारतीय)">
+              <option value="ratti">Ratti — रत्ती</option>
+              <option value="maasha">Maasha — माशा</option>
+              <option value="tola">Tola — तोला</option>
+              <option value="pao">Pao / Chatak — पाव</option>
+              <option value="seer">Seer — सेर</option>
+              <option value="maund">Maund — मन</option>
+              <option value="quintal">Quintal (भारतीय)</option>
+            </optgroup>
+            <optgroup label="Troy (Jewellery)">
+              <option value="troy_oz">Troy Ounce</option>
+              <option value="troy_lb">Troy Pound</option>
+              <option value="carat">Carat (ct)</option>
+            </optgroup>
+          </select>
+        </div>
+        <div class="uc-swap"><button id="wt-swap" title="Swap units" aria-label="Swap units">⇄</button></div>
+        <div class="uc-field">
+          <label>To</label>
+          <input type="number" id="wt-to-val" readonly tabindex="-1" style="background:var(--bg-alt);cursor:default;">
+          <select id="wt-to-unit" aria-label="To unit">
+            <optgroup label="Metric">
+              <option value="kg">Kilogram (kg)</option>
+              <option value="g" selected>Gram (g)</option>
+              <option value="mg">Milligram (mg)</option>
+              <option value="t">Tonne (metric)</option>
+              <option value="ug">Microgram (µg)</option>
+            </optgroup>
+            <optgroup label="Imperial / US">
+              <option value="lb">Pound (lb)</option>
+              <option value="oz">Ounce (oz)</option>
+              <option value="st">Stone (st)</option>
+              <option value="ton_us">Ton (US short)</option>
+              <option value="ton_uk">Ton (UK long)</option>
+            </optgroup>
+            <optgroup label="Indian / Pakistani (भारतीय)">
+              <option value="ratti">Ratti — रत्ती</option>
+              <option value="maasha">Maasha — माशा</option>
+              <option value="tola">Tola — तोला</option>
+              <option value="pao">Pao / Chatak — पाव</option>
+              <option value="seer">Seer — सेर</option>
+              <option value="maund">Maund — मन</option>
+              <option value="quintal">Quintal (भारतीय)</option>
+            </optgroup>
+            <optgroup label="Troy (Jewellery)">
+              <option value="troy_oz">Troy Ounce</option>
+              <option value="troy_lb">Troy Pound</option>
+              <option value="carat">Carat (ct)</option>
+            </optgroup>
+          </select>
+        </div>
+      </div>
+      <p class="section-title">Popular weight conversions</p>
+      <table class="pop-table">
+        <thead><tr><th>Conversion</th><th>Result</th></tr></thead>
+        <tbody>
+          <tr><td>1 kg</td><td>1000 g · 2.205 lb · 35.27 oz</td></tr>
+          <tr><td>1 Tola (तोला)</td><td>11.664 g · 0.375 troy oz — used for gold</td></tr>
+          <tr><td>1 Maasha (माशा)</td><td>0.972 g · 8 Ratti</td></tr>
+          <tr><td>1 Ratti (रत्ती)</td><td>0.1215 g · 0.6075 carat</td></tr>
+          <tr><td>1 Pao / Chatak (पाव)</td><td>233.28 g · 20 Tola</td></tr>
+          <tr><td>1 Seer (सेर)</td><td>933.1 g · 4 Pao · 80 Tola</td></tr>
+          <tr><td>1 Maund (मन)</td><td>37.32 kg · 40 Seer</td></tr>
+          <tr><td>1 lb</td><td>453.59 g · 0.4536 kg</td></tr>
+          <tr><td>1 troy oz</td><td>31.1 g · 2.667 Tola</td></tr>
+          <tr><td>1 carat</td><td>0.2 g · 200 mg</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- VOLUME -->
+    <div class="uc-panel" id="panel-volume">
+      <div class="uc-row">
+        <div class="uc-field">
+          <label>From</label>
+          <input type="number" id="vol-from-val" value="1" step="any">
+          <select id="vol-from-unit" aria-label="From unit">
+            <optgroup label="Metric">
+              <option value="l">Litre (L)</option>
+              <option value="ml">Millilitre (mL)</option>
+              <option value="m3">Cubic metre (m³)</option>
+              <option value="cm3">Cubic centimetre (cm³)</option>
+              <option value="dl">Decilitre (dL)</option>
+            </optgroup>
+            <optgroup label="US / Imperial">
+              <option value="gal_us">Gallon (US)</option>
+              <option value="gal_uk">Gallon (UK/Imperial)</option>
+              <option value="qt">Quart (US)</option>
+              <option value="pt">Pint (US)</option>
+              <option value="cup">Cup (US)</option>
+              <option value="fl_oz">Fluid Ounce (US)</option>
+              <option value="tbsp">Tablespoon (US)</option>
+              <option value="tsp">Teaspoon (US)</option>
+              <option value="ft3">Cubic foot (ft³)</option>
+              <option value="in3">Cubic inch (in³)</option>
+            </optgroup>
+            <optgroup label="Indian cooking (भारतीय)">
+              <option value="pao_v">Pao (पाव) ~250 mL</option>
+              <option value="adhpao">Adhpao (आधपाव) ~125 mL</option>
+              <option value="seer_v">Seer (सेर) ~933 mL</option>
+            </optgroup>
+          </select>
+        </div>
+        <div class="uc-swap"><button id="vol-swap" title="Swap units" aria-label="Swap units">⇄</button></div>
+        <div class="uc-field">
+          <label>To</label>
+          <input type="number" id="vol-to-val" readonly tabindex="-1" style="background:var(--bg-alt);cursor:default;">
+          <select id="vol-to-unit" aria-label="To unit">
+            <optgroup label="Metric">
+              <option value="l">Litre (L)</option>
+              <option value="ml" selected>Millilitre (mL)</option>
+              <option value="m3">Cubic metre (m³)</option>
+              <option value="cm3">Cubic centimetre (cm³)</option>
+              <option value="dl">Decilitre (dL)</option>
+            </optgroup>
+            <optgroup label="US / Imperial">
+              <option value="gal_us">Gallon (US)</option>
+              <option value="gal_uk">Gallon (UK/Imperial)</option>
+              <option value="qt">Quart (US)</option>
+              <option value="pt">Pint (US)</option>
+              <option value="cup">Cup (US)</option>
+              <option value="fl_oz">Fluid Ounce (US)</option>
+              <option value="tbsp">Tablespoon (US)</option>
+              <option value="tsp">Teaspoon (US)</option>
+              <option value="ft3">Cubic foot (ft³)</option>
+              <option value="in3">Cubic inch (in³)</option>
+            </optgroup>
+            <optgroup label="Indian cooking (भारतीय)">
+              <option value="pao_v">Pao (पाव) ~250 mL</option>
+              <option value="adhpao">Adhpao (आधपाव) ~125 mL</option>
+              <option value="seer_v">Seer (सेर) ~933 mL</option>
+            </optgroup>
+          </select>
+        </div>
+      </div>
+      <p class="section-title">Popular volume conversions</p>
+      <table class="pop-table">
+        <thead><tr><th>Conversion</th><th>Result</th></tr></thead>
+        <tbody>
+          <tr><td>1 Litre</td><td>1000 mL · 0.264 US gal · 1.057 US qt</td></tr>
+          <tr><td>1 US Gallon</td><td>3.785 L · 4 qt · 8 pt · 16 cups</td></tr>
+          <tr><td>1 Pao (पाव)</td><td>~250 mL · 1 cup (approx)</td></tr>
+          <tr><td>1 Seer (सेर)</td><td>~933 mL · 4 Pao</td></tr>
+          <tr><td>1 cup (US)</td><td>236.6 mL · 16 tbsp · 8 fl oz</td></tr>
+          <tr><td>1 UK Gallon</td><td>4.546 L · 1.201 US gal</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- AREA -->
+    <div class="uc-panel" id="panel-area">
+      <div class="uc-row">
+        <div class="uc-field">
+          <label>From</label>
+          <input type="number" id="area-from-val" value="1" step="any">
+          <select id="area-from-unit" aria-label="From unit">
+            <optgroup label="Metric">
+              <option value="m2">Square Metre (m²)</option>
+              <option value="km2">Square Kilometre (km²)</option>
+              <option value="cm2">Square Centimetre (cm²)</option>
+              <option value="ha">Hectare (ha)</option>
+            </optgroup>
+            <optgroup label="Imperial / US">
+              <option value="ft2">Square Foot (ft²)</option>
+              <option value="in2">Square Inch (in²)</option>
+              <option value="yd2">Square Yard (yd²)</option>
+              <option value="mi2">Square Mile (mi²)</option>
+              <option value="acre">Acre</option>
+            </optgroup>
+            <optgroup label="Indian / Pakistani (भारतीय)">
+              <option value="chatak">Chatak — चाटक (45 sq ft)</option>
+              <option value="katha">Katha — कट्ठा (1361 sq ft)</option>
+              <option value="bigha_up">Bigha UP — बीघा (27225 sq ft)</option>
+              <option value="bigha_bengal">Bigha Bengal — বিঘা (14400 sq ft)</option>
+              <option value="biswa">Biswa — बिस्वा (1/20 Bigha UP)</option>
+              <option value="gunta">Gunta — गुंठा (1089 sq ft)</option>
+              <option value="cent">Cent — सेंट (435.6 sq ft)</option>
+              <option value="marla">Marla — مرلہ (272.25 sq ft)</option>
+              <option value="kanal">Kanal — کنال (5445 sq ft)</option>
+              <option value="murabba">Murabba — مربع (25 acres)</option>
+            </optgroup>
+          </select>
+        </div>
+        <div class="uc-swap"><button id="area-swap" title="Swap units" aria-label="Swap units">⇄</button></div>
+        <div class="uc-field">
+          <label>To</label>
+          <input type="number" id="area-to-val" readonly tabindex="-1" style="background:var(--bg-alt);cursor:default;">
+          <select id="area-to-unit" aria-label="To unit">
+            <optgroup label="Metric">
+              <option value="m2" selected>Square Metre (m²)</option>
+              <option value="km2">Square Kilometre (km²)</option>
+              <option value="cm2">Square Centimetre (cm²)</option>
+              <option value="ha">Hectare (ha)</option>
+            </optgroup>
+            <optgroup label="Imperial / US">
+              <option value="ft2">Square Foot (ft²)</option>
+              <option value="in2">Square Inch (in²)</option>
+              <option value="yd2">Square Yard (yd²)</option>
+              <option value="mi2">Square Mile (mi²)</option>
+              <option value="acre">Acre</option>
+            </optgroup>
+            <optgroup label="Indian / Pakistani (भारतीय)">
+              <option value="chatak">Chatak — चाटक (45 sq ft)</option>
+              <option value="katha">Katha — कट्ठा (1361 sq ft)</option>
+              <option value="bigha_up">Bigha UP — बीघा (27225 sq ft)</option>
+              <option value="bigha_bengal">Bigha Bengal — বিঘা (14400 sq ft)</option>
+              <option value="biswa">Biswa — बिस्वा (1/20 Bigha UP)</option>
+              <option value="gunta">Gunta — गुंठा (1089 sq ft)</option>
+              <option value="cent">Cent — सेंट (435.6 sq ft)</option>
+              <option value="marla">Marla — مرلہ (272.25 sq ft)</option>
+              <option value="kanal">Kanal — کنال (5445 sq ft)</option>
+              <option value="murabba">Murabba — مربع (25 acres)</option>
+            </optgroup>
+          </select>
+        </div>
+      </div>
+      <p class="section-title">Popular area conversions</p>
+      <table class="pop-table">
+        <thead><tr><th>Conversion</th><th>Result</th></tr></thead>
+        <tbody>
+          <tr><td>1 Bigha (UP/Uttarakhand)</td><td>2529 m² · 0.625 acre · 20 Biswa</td></tr>
+          <tr><td>1 Bigha (Bengal)</td><td>1338 m² · 0.331 acre</td></tr>
+          <tr><td>1 Kanal (کنال)</td><td>505.9 m² · 5445 sq ft · 20 Marla</td></tr>
+          <tr><td>1 Marla (مرلہ)</td><td>25.3 m² · 272.25 sq ft</td></tr>
+          <tr><td>1 Katha (कट्ठा)</td><td>126.4 m² · 1361 sq ft</td></tr>
+          <tr><td>1 Acre</td><td>4047 m² · 43560 sq ft · 0.405 ha</td></tr>
+          <tr><td>1 Hectare</td><td>10000 m² · 2.471 acres</td></tr>
+          <tr><td>1 Gunta (गुंठा)</td><td>101.2 m² · 1089 sq ft · 0.025 acre</td></tr>
+          <tr><td>1 Cent</td><td>40.47 m² · 435.6 sq ft · 0.01 acre</td></tr>
+          <tr><td>1 Murabba</td><td>101.2 ha · 25 acres (Punjab, Pak)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- TEMPERATURE -->
+    <div class="uc-panel" id="panel-temperature">
+      <div class="uc-row">
+        <div class="uc-field">
+          <label>From</label>
+          <input type="number" id="temp-from-val" value="100" step="any">
+          <select id="temp-from-unit" aria-label="From unit">
+            <option value="c">Celsius (°C)</option>
+            <option value="f">Fahrenheit (°F)</option>
+            <option value="k">Kelvin (K)</option>
+            <option value="r">Rankine (°R)</option>
+          </select>
+        </div>
+        <div class="uc-swap"><button id="temp-swap" title="Swap units" aria-label="Swap units">⇄</button></div>
+        <div class="uc-field">
+          <label>To</label>
+          <input type="number" id="temp-to-val" readonly tabindex="-1" style="background:var(--bg-alt);cursor:default;">
+          <select id="temp-to-unit" aria-label="To unit">
+            <option value="c">Celsius (°C)</option>
+            <option value="f" selected>Fahrenheit (°F)</option>
+            <option value="k">Kelvin (K)</option>
+            <option value="r">Rankine (°R)</option>
+          </select>
+        </div>
+      </div>
+      <p class="section-title">Quick reference</p>
+      <table class="pop-table">
+        <thead><tr><th>°C</th><th>°F</th><th>K</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td>−273.15</td><td>−459.67</td><td>0</td><td>Absolute zero</td></tr>
+          <tr><td>0</td><td>32</td><td>273.15</td><td>Water freezes</td></tr>
+          <tr><td>20</td><td>68</td><td>293.15</td><td>Room temperature</td></tr>
+          <tr><td>37</td><td>98.6</td><td>310.15</td><td>Body temperature</td></tr>
+          <tr><td>100</td><td>212</td><td>373.15</td><td>Water boils (sea level)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- SPEED -->
+    <div class="uc-panel" id="panel-speed">
+      <div class="uc-row">
+        <div class="uc-field">
+          <label>From</label>
+          <input type="number" id="spd-from-val" value="1" step="any">
+          <select id="spd-from-unit" aria-label="From unit">
+            <option value="mps">Metres per second (m/s)</option>
+            <option value="kmh" selected>Kilometres per hour (km/h)</option>
+            <option value="mph">Miles per hour (mph)</option>
+            <option value="kn">Knots (kn)</option>
+            <option value="fps">Feet per second (ft/s)</option>
+            <option value="mach">Mach (at sea level)</option>
+            <option value="c">Speed of light (c)</option>
+          </select>
+        </div>
+        <div class="uc-swap"><button id="spd-swap" title="Swap units" aria-label="Swap units">⇄</button></div>
+        <div class="uc-field">
+          <label>To</label>
+          <input type="number" id="spd-to-val" readonly tabindex="-1" style="background:var(--bg-alt);cursor:default;">
+          <select id="spd-to-unit" aria-label="To unit">
+            <option value="mps">Metres per second (m/s)</option>
+            <option value="kmh">Kilometres per hour (km/h)</option>
+            <option value="mph" selected>Miles per hour (mph)</option>
+            <option value="kn">Knots (kn)</option>
+            <option value="fps">Feet per second (ft/s)</option>
+            <option value="mach">Mach (at sea level)</option>
+            <option value="c">Speed of light (c)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- TIME -->
+    <div class="uc-panel" id="panel-time">
+      <div class="uc-row">
+        <div class="uc-field">
+          <label>From</label>
+          <input type="number" id="time-from-val" value="1" step="any">
+          <select id="time-from-unit" aria-label="From unit">
+            <option value="ns">Nanosecond (ns)</option>
+            <option value="us">Microsecond (µs)</option>
+            <option value="ms">Millisecond (ms)</option>
+            <option value="s">Second (s)</option>
+            <option value="min">Minute (min)</option>
+            <option value="hr" selected>Hour (hr)</option>
+            <option value="day">Day</option>
+            <option value="wk">Week</option>
+            <option value="mo">Month (30 days)</option>
+            <option value="yr">Year (365 days)</option>
+            <option value="decade">Decade</option>
+            <option value="century">Century</option>
+          </select>
+        </div>
+        <div class="uc-swap"><button id="time-swap" title="Swap units" aria-label="Swap units">⇄</button></div>
+        <div class="uc-field">
+          <label>To</label>
+          <input type="number" id="time-to-val" readonly tabindex="-1" style="background:var(--bg-alt);cursor:default;">
+          <select id="time-to-unit" aria-label="To unit">
+            <option value="ns">Nanosecond (ns)</option>
+            <option value="us">Microsecond (µs)</option>
+            <option value="ms">Millisecond (ms)</option>
+            <option value="s" selected>Second (s)</option>
+            <option value="min">Minute (min)</option>
+            <option value="hr">Hour (hr)</option>
+            <option value="day">Day</option>
+            <option value="wk">Week</option>
+            <option value="mo">Month (30 days)</option>
+            <option value="yr">Year (365 days)</option>
+            <option value="decade">Decade</option>
+            <option value="century">Century</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- DATA -->
+    <div class="uc-panel" id="panel-data">
+      <div class="uc-row">
+        <div class="uc-field">
+          <label>From</label>
+          <input type="number" id="data-from-val" value="1" step="any">
+          <select id="data-from-unit" aria-label="From unit">
+            <option value="bit">Bit (b)</option>
+            <option value="byte">Byte (B)</option>
+            <option value="kb">Kilobyte (KB)</option>
+            <option value="mb" selected>Megabyte (MB)</option>
+            <option value="gb">Gigabyte (GB)</option>
+            <option value="tb">Terabyte (TB)</option>
+            <option value="pb">Petabyte (PB)</option>
+            <option value="kib">Kibibyte (KiB)</option>
+            <option value="mib">Mebibyte (MiB)</option>
+            <option value="gib">Gibibyte (GiB)</option>
+            <option value="tib">Tebibyte (TiB)</option>
+          </select>
+        </div>
+        <div class="uc-swap"><button id="data-swap" title="Swap units" aria-label="Swap units">⇄</button></div>
+        <div class="uc-field">
+          <label>To</label>
+          <input type="number" id="data-to-val" readonly tabindex="-1" style="background:var(--bg-alt);cursor:default;">
+          <select id="data-to-unit" aria-label="To unit">
+            <option value="bit">Bit (b)</option>
+            <option value="byte">Byte (B)</option>
+            <option value="kb">Kilobyte (KB)</option>
+            <option value="mb">Megabyte (MB)</option>
+            <option value="gb" selected>Gigabyte (GB)</option>
+            <option value="tb">Terabyte (TB)</option>
+            <option value="pb">Petabyte (PB)</option>
+            <option value="kib">Kibibyte (KiB)</option>
+            <option value="mib">Mebibyte (MiB)</option>
+            <option value="gib">Gibibyte (GiB)</option>
+            <option value="tib">Tebibyte (TiB)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- ENERGY -->
+    <div class="uc-panel" id="panel-energy">
+      <div class="uc-row">
+        <div class="uc-field">
+          <label>From</label>
+          <input type="number" id="en-from-val" value="1" step="any">
+          <select id="en-from-unit" aria-label="From unit">
+            <option value="j" selected>Joule (J)</option>
+            <option value="kj">Kilojoule (kJ)</option>
+            <option value="cal">Calorie (cal)</option>
+            <option value="kcal">Kilocalorie / kcal (food Cal)</option>
+            <option value="wh">Watt-hour (Wh)</option>
+            <option value="kwh">Kilowatt-hour (kWh)</option>
+            <option value="btu">BTU</option>
+            <option value="ev">Electronvolt (eV)</option>
+            <option value="ftlb">Foot-pound (ft·lb)</option>
+          </select>
+        </div>
+        <div class="uc-swap"><button id="en-swap" title="Swap units" aria-label="Swap units">⇄</button></div>
+        <div class="uc-field">
+          <label>To</label>
+          <input type="number" id="en-to-val" readonly tabindex="-1" style="background:var(--bg-alt);cursor:default;">
+          <select id="en-to-unit" aria-label="To unit">
+            <option value="j">Joule (J)</option>
+            <option value="kj">Kilojoule (kJ)</option>
+            <option value="cal">Calorie (cal)</option>
+            <option value="kcal" selected>Kilocalorie / kcal (food Cal)</option>
+            <option value="wh">Watt-hour (Wh)</option>
+            <option value="kwh">Kilowatt-hour (kWh)</option>
+            <option value="btu">BTU</option>
+            <option value="ev">Electronvolt (eV)</option>
+            <option value="ftlb">Foot-pound (ft·lb)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRESSURE -->
+    <div class="uc-panel" id="panel-pressure">
+      <div class="uc-row">
+        <div class="uc-field">
+          <label>From</label>
+          <input type="number" id="pres-from-val" value="1" step="any">
+          <select id="pres-from-unit" aria-label="From unit">
+            <option value="pa">Pascal (Pa)</option>
+            <option value="kpa">Kilopascal (kPa)</option>
+            <option value="mpa">Megapascal (MPa)</option>
+            <option value="bar" selected>Bar</option>
+            <option value="mbar">Millibar (mbar)</option>
+            <option value="atm">Atmosphere (atm)</option>
+            <option value="psi">PSI (lb/in²)</option>
+            <option value="mmhg">mmHg (Torr)</option>
+            <option value="inhg">inHg</option>
+          </select>
+        </div>
+        <div class="uc-swap"><button id="pres-swap" title="Swap units" aria-label="Swap units">⇄</button></div>
+        <div class="uc-field">
+          <label>To</label>
+          <input type="number" id="pres-to-val" readonly tabindex="-1" style="background:var(--bg-alt);cursor:default;">
+          <select id="pres-to-unit" aria-label="To unit">
+            <option value="pa">Pascal (Pa)</option>
+            <option value="kpa">Kilopascal (kPa)</option>
+            <option value="mpa">Megapascal (MPa)</option>
+            <option value="bar">Bar</option>
+            <option value="mbar">Millibar (mbar)</option>
+            <option value="atm">Atmosphere (atm)</option>
+            <option value="psi" selected>PSI (lb/in²)</option>
+            <option value="mmhg">mmHg (Torr)</option>
+            <option value="inhg">inHg</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- FUEL -->
+    <div class="uc-panel" id="panel-fuel">
+      <div class="uc-row">
+        <div class="uc-field">
+          <label>From</label>
+          <input type="number" id="fuel-from-val" value="15" step="any">
+          <select id="fuel-from-unit" aria-label="From unit">
+            <option value="kml" selected>km/L (India)</option>
+            <option value="l100">L/100km (EU)</option>
+            <option value="mpg_us">MPG (US)</option>
+            <option value="mpg_uk">MPG (UK)</option>
+            <option value="mpl">Miles per Litre</option>
+          </select>
+        </div>
+        <div class="uc-swap"><button id="fuel-swap" title="Swap units" aria-label="Swap units">⇄</button></div>
+        <div class="uc-field">
+          <label>To</label>
+          <input type="number" id="fuel-to-val" readonly tabindex="-1" style="background:var(--bg-alt);cursor:default;">
+          <select id="fuel-to-unit" aria-label="To unit">
+            <option value="kml">km/L (India)</option>
+            <option value="l100">L/100km (EU)</option>
+            <option value="mpg_us" selected>MPG (US)</option>
+            <option value="mpg_uk">MPG (UK)</option>
+            <option value="mpl">Miles per Litre</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="related-tools">
+      <h3>Related tools</h3>
+      <div class="related-grid">
+        <a href="currency-converter.html" class="related-card">💱 Currency Converter</a>
+        <a href="color-converter.html" class="related-card">🎨 Color Converter</a>
+        <a href="json-to-csv.html" class="related-card">📊 JSON to CSV</a>
+        <a href="qr-code.html" class="related-card">🔳 QR Code Generator</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid footer-grid-5">
+      <div class="footer-brand">
+        <div class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></div>
+        <p>Free, private conversion tools for everyone.</p>
+      </div>
+      <div class="footer-col"><h5>Converters</h5><ul><li><a href="unit-converter.html">Unit Converter</a></li><li><a href="currency-converter.html">Currency</a></li><li><a href="color-converter.html">Color Converter</a></li></ul></div>
+      <div class="footer-col"><h5>AI Studio</h5><ul><li><a href="../ai/image.html">AI Images</a></li><li><a href="../ai/video.html">AI Video</a></li><li><a href="../ai/music.html">AI Music</a></li><li><a href="../ai/writer.html">AI Writer</a></li></ul></div>
+      <div class="footer-col"><h5>Company</h5><ul><li><a href="../about.html">About</a></li><li><a href="../privacy.html">Privacy</a></li><li><a href="../terms.html">Terms</a></li></ul></div>
+      <div class="footer-col"><h5>Help</h5><ul><li><a href="../contact.html">Contact</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <div>© <span data-year>2026</span> Desi Jugad.</div>
+      <div class="made-in"><span class="flag-in"></span>Made in India, built for the world.</div>
+    </div>
+  </div>
+</footer>
+
+<script src="../assets/js/main.js"></script>
+<script>
+(function() {
+  // ── Conversion factors to SI base unit (metres for length, grams for weight, etc.) ──
+  const FACTORS = {
+    length: {
+      m: 1, km: 1000, cm: 0.01, mm: 0.001, um: 1e-6, nm: 1e-9,
+      in: 0.0254, ft: 0.3048, yd: 0.9144, mi: 1609.344, nmi: 1852,
+      angul: 0.01905, hath: 0.4572, gaj: 0.9144, kos: 2000, yojana: 14400,
+      ly: 9.461e15, au: 1.496e11
+    },
+    weight: {
+      kg: 1000, g: 1, mg: 0.001, t: 1e6, ug: 1e-6,
+      lb: 453.592, oz: 28.3495, st: 6350.29, ton_us: 907185, ton_uk: 1016047,
+      ratti: 0.1215, maasha: 0.972, tola: 11.664, pao: 233.28, seer: 933.1, maund: 37320, quintal: 100000,
+      troy_oz: 31.1035, troy_lb: 373.242, carat: 0.2
+    },
+    volume: {
+      l: 1000, ml: 1, m3: 1e6, cm3: 1, dl: 100,
+      gal_us: 3785.41, gal_uk: 4546.09, qt: 946.353, pt: 473.176,
+      cup: 236.588, fl_oz: 29.5735, tbsp: 14.7868, tsp: 4.92892,
+      ft3: 28316.8, in3: 16.3871,
+      pao_v: 250, adhpao: 125, seer_v: 933.1
+    },
+    area: {
+      m2: 1, km2: 1e6, cm2: 0.0001, ha: 10000,
+      ft2: 0.092903, in2: 0.00064516, yd2: 0.836127, mi2: 2.59e6, acre: 4046.86,
+      chatak: 4.18064, katha: 126.445, bigha_up: 2529.29, bigha_bengal: 1337.8,
+      biswa: 126.464, gunta: 101.171, cent: 40.4686,
+      marla: 25.2929, kanal: 505.857, murabba: 101171.5
+    },
+    speed: {
+      mps: 1, kmh: 0.277778, mph: 0.44704, kn: 0.514444,
+      fps: 0.3048, mach: 340.29, c: 299792458
+    },
+    time: {
+      ns: 1e-9, us: 1e-6, ms: 0.001, s: 1, min: 60, hr: 3600,
+      day: 86400, wk: 604800, mo: 2592000, yr: 31536000,
+      decade: 315360000, century: 3153600000
+    },
+    data: {
+      bit: 0.125, byte: 1, kb: 1000, mb: 1e6, gb: 1e9, tb: 1e12, pb: 1e15,
+      kib: 1024, mib: 1048576, gib: 1073741824, tib: 1099511627776
+    },
+    energy: {
+      j: 1, kj: 1000, cal: 4.184, kcal: 4184, wh: 3600, kwh: 3600000,
+      btu: 1055.06, ev: 1.60218e-19, ftlb: 1.35582
+    },
+    pressure: {
+      pa: 1, kpa: 1000, mpa: 1e6, bar: 100000, mbar: 100, atm: 101325,
+      psi: 6894.76, mmhg: 133.322, inhg: 3386.39
+    },
+    fuel: null // special: not a simple factor
+  };
+
+  function convertLinear(value, fromUnit, toUnit, category) {
+    const f = FACTORS[category];
+    const toBase = value * f[fromUnit];
+    return toBase / f[toUnit];
+  }
+
+  function convertTemp(value, from, to) {
+    let c;
+    if (from === 'c') c = value;
+    else if (from === 'f') c = (value - 32) * 5/9;
+    else if (from === 'k') c = value - 273.15;
+    else c = (value - 491.67) * 5/9;
+
+    if (to === 'c') return c;
+    if (to === 'f') return c * 9/5 + 32;
+    if (to === 'k') return c + 273.15;
+    return (c + 273.15) * 9/5;
+  }
+
+  function convertFuel(value, from, to) {
+    // convert to kml first
+    let kml;
+    if (from === 'kml') kml = value;
+    else if (from === 'l100') kml = 100 / value;
+    else if (from === 'mpg_us') kml = value * 0.425144;
+    else if (from === 'mpg_uk') kml = value * 0.354006;
+    else kml = value * 1.60934; // mpl
+
+    if (to === 'kml') return kml;
+    if (to === 'l100') return 100 / kml;
+    if (to === 'mpg_us') return kml / 0.425144;
+    if (to === 'mpg_uk') return kml / 0.354006;
+    return kml / 1.60934;
+  }
+
+  function fmt(n) {
+    if (!isFinite(n)) return '—';
+    if (Math.abs(n) >= 1e12 || (Math.abs(n) < 1e-6 && n !== 0)) return n.toExponential(6);
+    const decimals = Math.abs(n) >= 1000 ? 4 : Math.abs(n) >= 1 ? 6 : 10;
+    const s = parseFloat(n.toPrecision(decimals));
+    return s.toLocaleString('en-IN', { maximumSignificantDigits: 8 });
+  }
+
+  function wireTab(category, fromValId, fromUnitId, toValId, toUnitId, swapId, convertFn) {
+    const fv = document.getElementById(fromValId);
+    const fu = document.getElementById(fromUnitId);
+    const tv = document.getElementById(toValId);
+    const tu = document.getElementById(toUnitId);
+    const sw = document.getElementById(swapId);
+
+    function compute() {
+      const val = parseFloat(fv.value);
+      if (isNaN(val)) { tv.value = ''; return; }
+      tv.value = fmt(convertFn(val, fu.value, tu.value));
+    }
+
+    fv.addEventListener('input', compute);
+    fu.addEventListener('change', compute);
+    tu.addEventListener('change', compute);
+    if (sw) sw.addEventListener('click', () => {
+      const tmp = fu.value; fu.value = tu.value; tu.value = tmp;
+      compute();
+    });
+    compute();
+  }
+
+  // Wire all tabs
+  wireTab('length', 'len-from-val','len-from-unit','len-to-val','len-to-unit','len-swap',
+    (v,f,t) => convertLinear(v,f,t,'length'));
+  wireTab('weight', 'wt-from-val','wt-from-unit','wt-to-val','wt-to-unit','wt-swap',
+    (v,f,t) => convertLinear(v,f,t,'weight'));
+  wireTab('volume', 'vol-from-val','vol-from-unit','vol-to-val','vol-to-unit','vol-swap',
+    (v,f,t) => convertLinear(v,f,t,'volume'));
+  wireTab('area', 'area-from-val','area-from-unit','area-to-val','area-to-unit','area-swap',
+    (v,f,t) => convertLinear(v,f,t,'area'));
+  wireTab('temperature', 'temp-from-val','temp-from-unit','temp-to-val','temp-to-unit','temp-swap',
+    convertTemp);
+  wireTab('speed', 'spd-from-val','spd-from-unit','spd-to-val','spd-to-unit','spd-swap',
+    (v,f,t) => convertLinear(v,f,t,'speed'));
+  wireTab('time', 'time-from-val','time-from-unit','time-to-val','time-to-unit','time-swap',
+    (v,f,t) => convertLinear(v,f,t,'time'));
+  wireTab('data', 'data-from-val','data-from-unit','data-to-val','data-to-unit','data-swap',
+    (v,f,t) => convertLinear(v,f,t,'data'));
+  wireTab('energy', 'en-from-val','en-from-unit','en-to-val','en-to-unit','en-swap',
+    (v,f,t) => convertLinear(v,f,t,'energy'));
+  wireTab('pressure', 'pres-from-val','pres-from-unit','pres-to-val','pres-to-unit','pres-swap',
+    (v,f,t) => convertLinear(v,f,t,'pressure'));
+  wireTab('fuel', 'fuel-from-val','fuel-from-unit','fuel-to-val','fuel-to-unit','fuel-swap',
+    convertFuel);
+
+  // Tab switching
+  document.querySelectorAll('.uc-tab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.uc-tab').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.uc-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('panel-' + btn.dataset.tab).classList.add('active');
+    });
+  });
+
+  // Handle URL hash to open a specific tab
+  const hash = location.hash.replace('#', '');
+  if (hash && document.getElementById('panel-' + hash)) {
+    document.querySelector('[data-tab="' + hash + '"]')?.click();
+  }
+})();
+</script>
+</body>
+</html>

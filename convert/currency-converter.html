@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/img/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/img/apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Currency Converter — Live Exchange Rates INR, USD, PKR, EUR & 160+ More | Desi Jugad</title>
+<meta name="description" content="Convert currencies with live exchange rates. INR, USD, PKR, BDT, EUR, GBP, AED, SGD and 160+ currencies. Free, no sign-up, updated daily.">
+<meta name="keywords" content="currency converter, live exchange rates, INR to USD, USD to PKR, dollar to rupee, euro to rupee, exchange rate today, forex converter">
+<link rel="canonical" href="https://desijugad.co.in/convert/currency-converter.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,30..100;1,9..144,300..700,30..100&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+<style>
+.cc-main { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem; }
+@media (max-width: 680px) { .cc-main { grid-template-columns: 1fr; } }
+.cc-panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.75rem; }
+.cc-label { font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--ink-muted); margin-bottom: 0.5rem; display: block; }
+.cc-amount {
+  width: 100%; font-size: 2rem; font-family: var(--font-mono); font-weight: 700;
+  border: none; outline: none; background: transparent; color: var(--ink);
+  padding: 0; box-sizing: border-box; margin-bottom: 0.75rem;
+}
+.cc-amount:focus { color: var(--indigo); }
+.cc-result-amount {
+  font-size: 2rem; font-family: var(--font-mono); font-weight: 700; color: var(--indigo);
+  margin-bottom: 0.75rem; min-height: 2.5rem; display: flex; align-items: center;
+}
+.cc-select {
+  width: 100%; padding: 0.6rem 0.8rem; border: 1px solid var(--line); border-radius: var(--radius-sm);
+  font-size: 0.95rem; background: var(--bg); color: var(--ink);
+  font-family: var(--font-sans); appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 0.75rem center; padding-right: 2rem;
+}
+.cc-swap-row { display: flex; justify-content: center; align-items: center; }
+.cc-swap-btn {
+  background: var(--bg-alt); border: 1px solid var(--line); border-radius: 999px;
+  width: 44px; height: 44px; cursor: pointer; font-size: 1.3rem;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.15s; margin: 0.5rem 0;
+}
+.cc-swap-btn:hover { background: var(--indigo); color: #fff; border-color: var(--indigo); }
+.cc-meta { font-size: 0.8rem; color: var(--ink-muted); margin-top: 0.5rem; }
+.cc-rate-badge {
+  display: inline-block; background: var(--bg-alt); border: 1px solid var(--line);
+  border-radius: var(--radius-sm); padding: 0.35rem 0.8rem; font-size: 0.85rem;
+  font-family: var(--font-mono); margin-top: 0.75rem;
+}
+.quick-pairs { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
+.pair-chip {
+  padding: 0.38rem 0.9rem; border: 1px solid var(--line); border-radius: 999px;
+  font-size: 0.82rem; cursor: pointer; background: var(--surface); color: var(--ink);
+  transition: all 0.15s; font-family: var(--font-sans);
+}
+.pair-chip:hover, .pair-chip.active { background: var(--indigo); color: #fff; border-color: var(--indigo); }
+.rates-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.75rem;
+  margin-top: 1rem;
+}
+.rate-card {
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm);
+  padding: 0.9rem 1rem; cursor: pointer; transition: all 0.15s;
+}
+.rate-card:hover { border-color: var(--indigo); }
+.rate-card-flag { font-size: 1.2rem; margin-bottom: 0.3rem; }
+.rate-card-code { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-muted); }
+.rate-card-name { font-size: 0.82rem; color: var(--ink); margin-bottom: 0.4rem; }
+.rate-card-val { font-family: var(--font-mono); font-size: 1rem; font-weight: 700; color: var(--indigo); }
+.loading-msg { color: var(--ink-muted); font-size: 0.9rem; padding: 2rem 0; }
+.error-msg { color: var(--danger); font-size: 0.9rem; padding: 1rem 0; background: #FEF2F2; border-radius: var(--radius-sm); padding: 1rem; }
+.offline-badge { background: #FFF9E6; color: #8B6914; border: 1px solid #F5D78E; border-radius: var(--radius-sm); padding: 0.5rem 0.9rem; font-size: 0.8rem; margin-bottom: 1rem; display: none; }
+.section-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 1rem; margin-top: 2rem; }
+optgroup { font-weight: 700; }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="../" class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="../#converters">Converters</a></li>
+      <li><a href="../ai/">AI Studio <span class="badge-new">NEW</span></a></li>
+      <li><a href="../blog/">Blog</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../#converters" class="nav-cta">All tools</a></li>
+    </ul>
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</header>
+
+<main class="converter-page">
+  <div class="container">
+    <nav class="breadcrumb">
+      <a href="../">Home</a><span class="sep">/</span>
+      <a href="../#converters">Converters</a><span class="sep">/</span>
+      <span>Currency Converter</span>
+    </nav>
+
+    <div class="converter-header">
+      <h1>Currency converter — <em class="italic">live rates.</em></h1>
+      <p class="lead">Convert between 160+ currencies with daily-updated exchange rates. INR, USD, EUR, PKR, BDT, AED, GBP and more — free, no sign-up required.</p>
+    </div>
+
+    <div id="offline-badge" class="offline-badge">⚠️ Showing cached rates — connect to internet for live data.</div>
+
+    <!-- Quick pair chips -->
+    <div class="quick-pairs" id="quick-pairs">
+      <button class="pair-chip" data-from="usd" data-to="inr">USD → INR</button>
+      <button class="pair-chip" data-from="inr" data-to="usd">INR → USD</button>
+      <button class="pair-chip" data-from="usd" data-to="pkr">USD → PKR</button>
+      <button class="pair-chip" data-from="usd" data-to="bdt">USD → BDT</button>
+      <button class="pair-chip" data-from="usd" data-to="eur">USD → EUR</button>
+      <button class="pair-chip" data-from="gbp" data-to="inr">GBP → INR</button>
+      <button class="pair-chip" data-from="inr" data-to="pkr">INR → PKR</button>
+      <button class="pair-chip" data-from="aed" data-to="inr">AED → INR</button>
+      <button class="pair-chip" data-from="sgd" data-to="inr">SGD → INR</button>
+      <button class="pair-chip" data-from="eur" data-to="inr">EUR → INR</button>
+    </div>
+
+    <!-- Main converter -->
+    <div class="cc-main">
+      <div class="cc-panel">
+        <span class="cc-label">Amount</span>
+        <input type="number" class="cc-amount" id="cc-from-amount" value="1" step="any" min="0">
+        <span class="cc-label">From currency</span>
+        <select class="cc-select" id="cc-from-cur">
+          <option value="usd">🇺🇸 USD — US Dollar</option>
+        </select>
+        <div id="cc-from-rate" class="cc-rate-badge" style="display:none;"></div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;">
+        <div class="cc-swap-row">
+          <button class="cc-swap-btn" id="cc-swap" title="Swap currencies" aria-label="Swap currencies">⇄</button>
+        </div>
+      </div>
+
+      <div class="cc-panel">
+        <span class="cc-label">Converted amount</span>
+        <div class="cc-result-amount" id="cc-result">—</div>
+        <span class="cc-label">To currency</span>
+        <select class="cc-select" id="cc-to-cur">
+          <option value="inr">🇮🇳 INR — Indian Rupee</option>
+        </select>
+        <div id="cc-to-rate" class="cc-rate-badge" style="display:none;"></div>
+      </div>
+    </div>
+
+    <div id="cc-meta" class="cc-meta"></div>
+
+    <!-- Rate grid -->
+    <p class="section-title">Live rates vs <span id="grid-base-label">USD</span></p>
+    <div id="rates-grid" class="rates-grid">
+      <div class="loading-msg">Loading live exchange rates…</div>
+    </div>
+
+    <div class="related-tools">
+      <h3>Related tools</h3>
+      <div class="related-grid">
+        <a href="unit-converter.html" class="related-card">📏 Unit Converter</a>
+        <a href="translate.html" class="related-card">🌐 Translate</a>
+        <a href="json-to-csv.html" class="related-card">📊 JSON to CSV</a>
+        <a href="csv-to-excel.html" class="related-card">📈 CSV to Excel</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid footer-grid-5">
+      <div class="footer-brand">
+        <div class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></div>
+        <p>Free, private conversion tools for everyone.</p>
+      </div>
+      <div class="footer-col"><h5>Converters</h5><ul><li><a href="currency-converter.html">Currency</a></li><li><a href="unit-converter.html">Unit Converter</a></li><li><a href="color-converter.html">Color Converter</a></li></ul></div>
+      <div class="footer-col"><h5>AI Studio</h5><ul><li><a href="../ai/image.html">AI Images</a></li><li><a href="../ai/video.html">AI Video</a></li><li><a href="../ai/music.html">AI Music</a></li><li><a href="../ai/writer.html">AI Writer</a></li></ul></div>
+      <div class="footer-col"><h5>Company</h5><ul><li><a href="../about.html">About</a></li><li><a href="../privacy.html">Privacy</a></li><li><a href="../terms.html">Terms</a></li></ul></div>
+      <div class="footer-col"><h5>Help</h5><ul><li><a href="../contact.html">Contact</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <div>© <span data-year>2026</span> Desi Jugad.</div>
+      <div class="made-in"><span class="flag-in"></span>Made in India, built for the world.</div>
+    </div>
+  </div>
+</footer>
+
+<script src="../assets/js/main.js"></script>
+<script>
+(function() {
+  const CACHE_KEY = 'dj_currency_v2';
+  const CACHE_TTL = 6 * 3600 * 1000; // 6 hours
+
+  // Currency metadata: code → {name, flag emoji}
+  const CURRENCIES = [
+    // South Asia (prioritised)
+    { c:'inr', n:'Indian Rupee', f:'🇮🇳' },
+    { c:'pkr', n:'Pakistani Rupee', f:'🇵🇰' },
+    { c:'bdt', n:'Bangladeshi Taka', f:'🇧🇩' },
+    { c:'npr', n:'Nepali Rupee', f:'🇳🇵' },
+    { c:'lkr', n:'Sri Lankan Rupee', f:'🇱🇰' },
+    { c:'mvr', n:'Maldivian Rufiyaa', f:'🇲🇻' },
+    { c:'btn', n:'Bhutanese Ngultrum', f:'🇧🇹' },
+    // Major world
+    { c:'usd', n:'US Dollar', f:'🇺🇸' },
+    { c:'eur', n:'Euro', f:'🇪🇺' },
+    { c:'gbp', n:'British Pound', f:'🇬🇧' },
+    { c:'jpy', n:'Japanese Yen', f:'🇯🇵' },
+    { c:'cny', n:'Chinese Yuan', f:'🇨🇳' },
+    { c:'aud', n:'Australian Dollar', f:'🇦🇺' },
+    { c:'cad', n:'Canadian Dollar', f:'🇨🇦' },
+    { c:'chf', n:'Swiss Franc', f:'🇨🇭' },
+    { c:'hkd', n:'Hong Kong Dollar', f:'🇭🇰' },
+    { c:'sgd', n:'Singapore Dollar', f:'🇸🇬' },
+    { c:'nzd', n:'New Zealand Dollar', f:'🇳🇿' },
+    { c:'sek', n:'Swedish Krona', f:'🇸🇪' },
+    { c:'nok', n:'Norwegian Krone', f:'🇳🇴' },
+    { c:'dkk', n:'Danish Krone', f:'🇩🇰' },
+    { c:'mxn', n:'Mexican Peso', f:'🇲🇽' },
+    { c:'brl', n:'Brazilian Real', f:'🇧🇷' },
+    { c:'krw', n:'South Korean Won', f:'🇰🇷' },
+    { c:'idr', n:'Indonesian Rupiah', f:'🇮🇩' },
+    { c:'myr', n:'Malaysian Ringgit', f:'🇲🇾' },
+    { c:'thb', n:'Thai Baht', f:'🇹🇭' },
+    { c:'php', n:'Philippine Peso', f:'🇵🇭' },
+    { c:'vnd', n:'Vietnamese Dong', f:'🇻🇳' },
+    { c:'twd', n:'Taiwan Dollar', f:'🇹🇼' },
+    // Middle East & Africa
+    { c:'aed', n:'UAE Dirham', f:'🇦🇪' },
+    { c:'sar', n:'Saudi Riyal', f:'🇸🇦' },
+    { c:'qar', n:'Qatari Riyal', f:'🇶🇦' },
+    { c:'kwd', n:'Kuwaiti Dinar', f:'🇰🇼' },
+    { c:'bhd', n:'Bahraini Dinar', f:'🇧🇭' },
+    { c:'omr', n:'Omani Rial', f:'🇴🇲' },
+    { c:'jod', n:'Jordanian Dinar', f:'🇯🇴' },
+    { c:'egp', n:'Egyptian Pound', f:'🇪🇬' },
+    { c:'ngn', n:'Nigerian Naira', f:'🇳🇬' },
+    { c:'zar', n:'South African Rand', f:'🇿🇦' },
+    { c:'kes', n:'Kenyan Shilling', f:'🇰🇪' },
+    { c:'ghs', n:'Ghanaian Cedi', f:'🇬🇭' },
+    // Others
+    { c:'rub', n:'Russian Ruble', f:'🇷🇺' },
+    { c:'try', n:'Turkish Lira', f:'🇹🇷' },
+    { c:'pln', n:'Polish Zloty', f:'🇵🇱' },
+    { c:'czk', n:'Czech Koruna', f:'🇨🇿' },
+    { c:'huf', n:'Hungarian Forint', f:'🇭🇺' },
+    { c:'ron', n:'Romanian Leu', f:'🇷🇴' },
+    { c:'uah', n:'Ukrainian Hryvnia', f:'🇺🇦' },
+    { c:'ars', n:'Argentine Peso', f:'🇦🇷' },
+    { c:'clp', n:'Chilean Peso', f:'🇨🇱' },
+    { c:'cop', n:'Colombian Peso', f:'🇨🇴' },
+    { c:'pen', n:'Peruvian Sol', f:'🇵🇪' },
+    { c:'afn', n:'Afghan Afghani', f:'🇦🇫' },
+    { c:'mmk', n:'Myanmar Kyat', f:'🇲🇲' },
+    { c:'khr', n:'Cambodian Riel', f:'🇰🇭' },
+    { c:'lak', n:'Lao Kip', f:'🇱🇦' },
+    { c:'mnt', n:'Mongolian Tögrög', f:'🇲🇳' },
+    { c:'uzs', n:'Uzbekistani Som', f:'🇺🇿' },
+    { c:'kzt', n:'Kazakhstani Tenge', f:'🇰🇿' },
+    { c:'byn', n:'Belarusian Ruble', f:'🇧🇾' },
+    { c:'gel', n:'Georgian Lari', f:'🇬🇪' },
+    { c:'azn', n:'Azerbaijani Manat', f:'🇦🇿' },
+    { c:'amd', n:'Armenian Dram', f:'🇦🇲' },
+    { c:'irr', n:'Iranian Rial', f:'🇮🇷' },
+    { c:'iqd', n:'Iraqi Dinar', f:'🇮🇶' },
+    { c:'tzs', n:'Tanzanian Shilling', f:'🇹🇿' },
+    { c:'ugx', n:'Ugandan Shilling', f:'🇺🇬' },
+    { c:'etb', n:'Ethiopian Birr', f:'🇪🇹' },
+    { c:'dzd', n:'Algerian Dinar', f:'🇩🇿' },
+    { c:'mad', n:'Moroccan Dirham', f:'🇲🇦' },
+    { c:'tnd', n:'Tunisian Dinar', f:'🇹🇳' },
+  ];
+
+  const GRID_CODES = ['inr','pkr','bdt','usd','eur','gbp','jpy','aed','sgd','aud','cad','chf','cny','hkd','krw','thb','myr','sar','qar','kwd'];
+
+  let allRates = {}; // base: USD
+  let lastUpdated = null;
+  let baseCur = 'usd';
+
+  const fromAmountEl = document.getElementById('cc-from-amount');
+  const toCurEl = document.getElementById('cc-to-cur');
+  const fromCurEl = document.getElementById('cc-from-cur');
+  const resultEl = document.getElementById('cc-result');
+  const metaEl = document.getElementById('cc-meta');
+  const gridEl = document.getElementById('rates-grid');
+  const gridBaseLabel = document.getElementById('grid-base-label');
+  const offlineBadge = document.getElementById('offline-badge');
+
+  function buildSelects() {
+    [fromCurEl, toCurEl].forEach((sel, i) => {
+      const defaultVal = i === 0 ? 'usd' : 'inr';
+      sel.innerHTML = CURRENCIES.map(cur =>
+        `<option value="${cur.c}" ${cur.c === defaultVal ? 'selected' : ''}>${cur.f} ${cur.c.toUpperCase()} — ${cur.n}</option>`
+      ).join('');
+    });
+  }
+
+  function fmt(n) {
+    if (!isFinite(n)) return '—';
+    if (n >= 1000) return n.toLocaleString('en-IN', { maximumFractionDigits: 2 });
+    if (n >= 1) return n.toFixed(4);
+    return n.toPrecision(4);
+  }
+
+  function getRate(from, to) {
+    if (!allRates[from] || !allRates[to]) return null;
+    return allRates[to] / allRates[from];
+  }
+
+  function convert() {
+    const from = fromCurEl.value;
+    const to = toCurEl.value;
+    const amount = parseFloat(fromAmountEl.value);
+    if (isNaN(amount) || !Object.keys(allRates).length) { resultEl.textContent = '—'; return; }
+    const rate = getRate(from, to);
+    if (!rate) { resultEl.textContent = '—'; return; }
+    const result = amount * rate;
+    resultEl.textContent = fmt(result) + ' ' + to.toUpperCase();
+
+    const fromMeta = CURRENCIES.find(c => c.c === from);
+    const toMeta = CURRENCIES.find(c => c.c === to);
+    document.getElementById('cc-from-rate').textContent = `1 ${from.toUpperCase()} = ${fmt(getRate(from, to))} ${to.toUpperCase()}`;
+    document.getElementById('cc-from-rate').style.display = '';
+    document.getElementById('cc-to-rate').textContent = `1 ${to.toUpperCase()} = ${fmt(getRate(to, from))} ${from.toUpperCase()}`;
+    document.getElementById('cc-to-rate').style.display = '';
+  }
+
+  function buildGrid(base) {
+    const fromCur = CURRENCIES.find(c => c.c === base) || { f:'💱', n:base.toUpperCase() };
+    gridBaseLabel.textContent = `${fromCur.f} ${base.toUpperCase()}`;
+    if (!allRates[base]) { gridEl.innerHTML = '<div class="loading-msg">Rates not available for this currency.</div>'; return; }
+    gridEl.innerHTML = GRID_CODES.filter(c => c !== base).map(code => {
+      const meta = CURRENCIES.find(c2 => c2.c === code) || { f:'💱', n:code.toUpperCase() };
+      const rate = getRate(base, code);
+      return `<div class="rate-card" onclick="document.getElementById('cc-to-cur').value='${code}';document.getElementById('cc-from-cur').value='${base}';convert();">
+        <div class="rate-card-flag">${meta.f}</div>
+        <div class="rate-card-code">${code.toUpperCase()}</div>
+        <div class="rate-card-name">${meta.n}</div>
+        <div class="rate-card-val">${rate ? fmt(rate) : '—'}</div>
+      </div>`;
+    }).join('');
+  }
+
+  async function fetchRates() {
+    // Try cache first
+    try {
+      const cached = JSON.parse(localStorage.getItem(CACHE_KEY) || 'null');
+      if (cached && Date.now() - cached.ts < CACHE_TTL) {
+        allRates = cached.rates;
+        lastUpdated = new Date(cached.ts);
+        onRatesLoaded(false);
+        return;
+      }
+    } catch(e) {}
+
+    // Try fawazahmed0 CDN API (free, no key, updated daily)
+    const urls = [
+      'https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/usd.json',
+      'https://latest.currency-api.pages.dev/v1/currencies/usd.json'
+    ];
+    for (const url of urls) {
+      try {
+        const res = await fetch(url);
+        if (!res.ok) continue;
+        const data = await res.json();
+        // data.usd is an object of {currency: rate}
+        const raw = data.usd || data;
+        allRates = { usd: 1 };
+        Object.entries(raw).forEach(([k,v]) => { allRates[k] = v; });
+        lastUpdated = new Date();
+        localStorage.setItem(CACHE_KEY, JSON.stringify({ rates: allRates, ts: Date.now() }));
+        onRatesLoaded(true);
+        return;
+      } catch(e) {}
+    }
+
+    // Use stale cache if available
+    try {
+      const cached = JSON.parse(localStorage.getItem(CACHE_KEY) || 'null');
+      if (cached) {
+        allRates = cached.rates;
+        lastUpdated = new Date(cached.ts);
+        offlineBadge.style.display = '';
+        onRatesLoaded(false);
+        return;
+      }
+    } catch(e) {}
+
+    gridEl.innerHTML = '<div class="error-msg">⚠️ Could not load exchange rates. Check your internet connection and refresh.</div>';
+  }
+
+  function onRatesLoaded(fresh) {
+    if (!fresh && lastUpdated) {
+      const diff = Math.round((Date.now() - lastUpdated) / 3600000);
+      if (diff > 8) offlineBadge.style.display = '';
+    }
+    convert();
+    buildGrid(fromCurEl.value);
+    if (lastUpdated) {
+      metaEl.textContent = `Rates last updated: ${lastUpdated.toLocaleString('en-IN', { dateStyle:'medium', timeStyle:'short' })} · Source: Open Exchange Rates`;
+    }
+  }
+
+  buildSelects();
+
+  fromAmountEl.addEventListener('input', convert);
+  fromCurEl.addEventListener('change', () => { buildGrid(fromCurEl.value); convert(); });
+  toCurEl.addEventListener('change', convert);
+
+  document.getElementById('cc-swap').addEventListener('click', () => {
+    const tmp = fromCurEl.value;
+    fromCurEl.value = toCurEl.value;
+    toCurEl.value = tmp;
+    convert();
+    buildGrid(fromCurEl.value);
+  });
+
+  document.querySelectorAll('.pair-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      document.querySelectorAll('.pair-chip').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      fromCurEl.value = chip.dataset.from;
+      toCurEl.value = chip.dataset.to;
+      fromAmountEl.value = 1;
+      convert();
+      buildGrid(chip.dataset.from);
+    });
+  });
+
+  fetchRates();
+
+  // Expose convert globally for onclick in grid cards
+  window.convert = convert;
+})();
+</script>
+</body>
+</html>
