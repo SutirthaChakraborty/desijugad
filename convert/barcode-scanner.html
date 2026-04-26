@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/img/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/img/apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Barcode Scanner — Scan from Camera or Image | Desi Jugad</title>
+<meta name="description" content="Scan barcodes from your camera or upload an image. Supports CODE128, EAN-13, EAN-8, UPC, CODE39, QR and more. Free, no uploads.">
+<meta name="keywords" content="barcode scanner online, scan barcode from image, barcode reader free, EAN-13 scanner, CODE128 reader, online barcode decoder">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://desijugad.co.in/convert/barcode-scanner.html">
+<meta property="og:title" content="Barcode Scanner — Camera & Image Upload | Desi Jugad">
+<meta property="og:description" content="Scan barcodes with your camera or from an image. Supports EAN, UPC, CODE128, QR and more.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://desijugad.co.in/convert/barcode-scanner.html">
+<meta name="twitter:card" content="summary">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,30..100;1,9..144,300..700,30..100&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+<style>
+.scan-tabs { display: flex; gap: 0.5rem; margin-bottom: 1.25rem; }
+.scan-tab { padding: 0.5rem 1.25rem; border: 1.5px solid var(--line); border-radius: 999px; cursor: pointer; font-size: 0.88rem; font-weight: 500; background: var(--surface); transition: all 0.15s; }
+.scan-tab.active { background: var(--indigo); border-color: var(--indigo); color: #fff; }
+.camera-wrap { position: relative; background: #000; border-radius: var(--radius); overflow: hidden; max-width: 480px; margin: 0 auto; aspect-ratio: 1; }
+#cameraVideo { width: 100%; height: 100%; object-fit: cover; display: block; }
+.camera-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; }
+.scan-frame { width: 70%; height: 35%; border: 3px solid var(--saffron); border-radius: 8px; box-shadow: 0 0 0 9999px rgba(0,0,0,0.45); }
+.result-card { background: var(--surface); border: 1.5px solid var(--line); border-radius: var(--radius); padding: 1.25rem; margin-top: 1.25rem; }
+#resultText { font-family: var(--font-mono); font-size: 0.88rem; word-break: break-all; color: var(--ink-soft); background: var(--bg-alt); padding: 0.75rem; border-radius: var(--radius-sm); max-height: 200px; overflow-y: auto; }
+</style>
+</head>
+<body>
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="../" class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="../#converters">Converters</a></li>
+      <li><a href="../ai/">AI Studio <span class="badge-new">NEW</span></a></li>
+      <li><a href="../blog/">Blog</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../#converters" class="nav-cta">All tools</a></li>
+    </ul>
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+  </div>
+</header>
+
+<main class="converter-page">
+  <div class="container">
+    <nav class="breadcrumb"><a href="../">Home</a><span class="sep">/</span><a href="../#converters">Converters</a><span class="sep">/</span><span>Barcode Scanner</span></nav>
+    <div class="converter-header">
+      <h1>Barcode Scanner — <em class="italic">camera or image</em>.</h1>
+      <p class="lead">Scan barcodes from your camera or an uploaded image. Supports EAN-13, EAN-8, UPC-A, CODE128, CODE39, QR codes, and more.</p>
+    </div>
+
+    <div class="scan-tabs">
+      <button class="scan-tab active" id="tabCamera">📷 Camera</button>
+      <button class="scan-tab" id="tabUpload">🖼️ Upload Image</button>
+    </div>
+
+    <div id="panelCamera">
+      <div class="camera-wrap">
+        <video id="cameraVideo" playsinline autoplay muted></video>
+        <div class="camera-overlay"><div class="scan-frame"></div></div>
+      </div>
+      <div style="display:flex;gap:0.75rem;margin-top:1rem;flex-wrap:wrap;">
+        <button class="btn btn-primary" id="startCamBtn">Start Camera</button>
+        <button class="btn btn-secondary" id="stopCamBtn" style="display:none;">Stop Camera</button>
+      </div>
+    </div>
+
+    <div id="panelUpload" style="display:none;">
+      <div class="dropzone" id="dropzone">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--ink-muted);margin-bottom:0.5rem"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        <p>Drop an image with a barcode or <label for="barcodeFileInput" style="color:var(--indigo);cursor:pointer;text-decoration:underline;">browse</label></p>
+        <input type="file" id="barcodeFileInput" accept="image/*" style="display:none">
+      </div>
+    </div>
+
+    <div id="resultCard" class="result-card" style="display:none;">
+      <h4 style="font-size:var(--step-0);margin-bottom:0.5rem;">📋 Scanned Result <span id="formatBadge" style="font-size:0.75rem;background:var(--bg-alt);padding:0.2rem 0.6rem;border-radius:999px;color:var(--ink-muted);margin-left:0.5rem;"></span></h4>
+      <div id="resultText"></div>
+      <div style="display:flex;gap:0.75rem;margin-top:0.75rem;">
+        <button class="btn btn-secondary btn-sm" id="copyBtn">Copy</button>
+      </div>
+    </div>
+
+    <section class="info-section">
+      <h2>Supported barcode formats</h2>
+      <p>CODE-128, CODE-39, EAN-13, EAN-8, UPC-A, UPC-E, Codabar, ITF-14, QR Code, Data Matrix, and more — powered by ZXing-js running entirely in your browser.</p>
+      <h2>FAQ</h2>
+      <details class="faq-item" open><summary>Why does camera scanning work better on mobile?</summary><p>Mobile devices have rear cameras optimized for scanning. On desktop, ensure the barcode is well-lit and fills as much of the frame as possible.</p></details>
+      <details class="faq-item"><summary>Are images uploaded?</summary><p>No — all processing happens in your browser using ZXing-js.</p></details>
+    </section>
+
+    <div class="related-tools">
+      <h3>Related tools</h3>
+      <div class="related-grid">
+        <a href="barcode-generator.html" class="related-card">📊 Barcode Generator</a>
+        <a href="qr-code.html" class="related-card">🔲 QR Code Generator</a>
+        <a href="qr-scanner.html" class="related-card">📷 QR Scanner</a>
+        <a href="image-converter.html" class="related-card">🖼️ Image Converter</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid footer-grid-5">
+      <div class="footer-brand"><div class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></div><p>Free, private file conversion for everyone.</p></div>
+      <div class="footer-col"><h5>Tools</h5><ul><li><a href="barcode-generator.html">Barcode Generator</a></li><li><a href="qr-code.html">QR Code Generator</a></li><li><a href="qr-scanner.html">QR Scanner</a></li><li><a href="image-converter.html">Image Converter</a></li></ul></div>
+      <div class="footer-col"><h5>AI Studio</h5><ul><li><a href="../ai/image.html">AI Images</a></li><li><a href="../ai/video.html">AI Video</a></li><li><a href="../ai/music.html">AI Music</a></li><li><a href="../ai/writer.html">AI Writer</a></li></ul></div>
+      <div class="footer-col"><h5>Company</h5><ul><li><a href="../about.html">About</a></li><li><a href="../blog/">Blog</a></li><li><a href="../privacy.html">Privacy</a></li><li><a href="../terms.html">Terms</a></li></ul></div>
+      <div class="footer-col"><h5>Help</h5><ul><li><a href="../contact.html">Contact</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><div>© <span data-year>2026</span> Desi Jugad.</div><div class="made-in"><span class="flag-in"></span>Made in India, built for the world.</div></div>
+  </div>
+</footer>
+<script src="../assets/js/main.js"></script>
+<script>
+(function(){
+  // Tabs
+  document.getElementById('tabCamera').addEventListener('click',()=>{
+    document.getElementById('panelCamera').style.display='';
+    document.getElementById('panelUpload').style.display='none';
+    document.getElementById('tabCamera').classList.add('active');
+    document.getElementById('tabUpload').classList.remove('active');
+  });
+  document.getElementById('tabUpload').addEventListener('click',()=>{
+    document.getElementById('panelUpload').style.display='';
+    document.getElementById('panelCamera').style.display='none';
+    document.getElementById('tabUpload').classList.add('active');
+    document.getElementById('tabCamera').classList.remove('active');
+    stopCamera();
+  });
+
+  function showResult(text,format){
+    const card=document.getElementById('resultCard');
+    document.getElementById('resultText').textContent=text;
+    document.getElementById('formatBadge').textContent=format||'';
+    card.style.display='block';
+  }
+  document.getElementById('copyBtn').addEventListener('click',()=>copyToClipboard(document.getElementById('resultText').textContent));
+
+  async function loadZXing(){
+    if(window.ZXing)return;
+    await new Promise((res,rej)=>{
+      const s=document.createElement('script');
+      s.src='https://cdn.jsdelivr.net/npm/@zxing/browser@0.1.5/umd/index.min.js';
+      s.onload=res;s.onerror=rej;document.head.appendChild(s);
+    });
+  }
+
+  // Camera
+  let codeReader=null,stream=null;
+  const video=document.getElementById('cameraVideo');
+
+  async function startCamera(){
+    await loadZXing();
+    try{
+      codeReader=new ZXingBrowser.BrowserMultiFormatReader();
+      const devs=await ZXingBrowser.BrowserCodeReader.listVideoInputDevices();
+      const devId=devs.length>1?devs[devs.length-1].deviceId:undefined;
+      codeReader.decodeFromVideoDevice(devId,'cameraVideo',(result,err)=>{
+        if(result){showResult(result.getText(),result.getBarcodeFormat());stopCamera();}
+      });
+      document.getElementById('startCamBtn').style.display='none';
+      document.getElementById('stopCamBtn').style.display='inline-flex';
+    }catch(e){showToast('Camera error: '+e.message,'error');}
+  }
+
+  function stopCamera(){
+    if(codeReader){codeReader.reset();codeReader=null;}
+    document.getElementById('startCamBtn').style.display='inline-flex';
+    document.getElementById('stopCamBtn').style.display='none';
+  }
+
+  document.getElementById('startCamBtn').addEventListener('click',startCamera);
+  document.getElementById('stopCamBtn').addEventListener('click',stopCamera);
+
+  // Upload
+  const dropzone=document.getElementById('dropzone'),fileInput=document.getElementById('barcodeFileInput');
+  async function scanImage(file){
+    await loadZXing();
+    const url=URL.createObjectURL(file);
+    try{
+      const reader=new ZXingBrowser.BrowserMultiFormatReader();
+      const result=await reader.decodeFromImageUrl(url);
+      showResult(result.getText(),result.getBarcodeFormat());
+    }catch(e){showToast('No barcode found in image.','error');}
+    finally{URL.revokeObjectURL(url);}
+  }
+  dropzone.addEventListener('dragover',e=>{e.preventDefault();dropzone.classList.add('dragover');});
+  dropzone.addEventListener('dragleave',()=>dropzone.classList.remove('dragover'));
+  dropzone.addEventListener('drop',e=>{e.preventDefault();dropzone.classList.remove('dragover');if(e.dataTransfer.files[0])scanImage(e.dataTransfer.files[0]);});
+  dropzone.addEventListener('click',()=>fileInput.click());
+  fileInput.addEventListener('change',()=>{if(fileInput.files[0])scanImage(fileInput.files[0]);});
+})();
+</script>
+</body>
+</html>

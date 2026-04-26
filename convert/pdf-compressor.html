@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/img/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/img/apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PDF Compressor — Reduce PDF Size Online Free | Desi Jugad</title>
+<meta name="description" content="Reduce PDF file size online free without losing quality. Compress images inside PDF using pdf-lib. No uploads — runs in your browser.">
+<meta name="keywords" content="PDF compressor, reduce PDF size, compress PDF online free, shrink PDF, PDF file size reducer, small PDF">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://desijugad.co.in/convert/pdf-compressor.html">
+<meta property="og:title" content="PDF Compressor — Reduce PDF Size Online | Desi Jugad">
+<meta property="og:description" content="Compress and reduce PDF file size online free. No upload required.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://desijugad.co.in/convert/pdf-compressor.html">
+<meta name="twitter:card" content="summary">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,30..100;1,9..144,300..700,30..100&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+<style>
+.level-chips { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.25rem; }
+.level-chip { padding: 0.45rem 1.1rem; border: 1.5px solid var(--line); border-radius: 999px; cursor: pointer; font-size: 0.85rem; font-weight: 600; background: var(--surface); transition: all 0.15s; }
+.level-chip.active { background: var(--indigo); border-color: var(--indigo); color: #fff; }
+.level-desc { font-size: 0.82rem; color: var(--ink-muted); margin-bottom: 1.25rem; }
+.result-stats { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1.25rem; }
+.stat-box { background: var(--surface); border: 1.5px solid var(--line); border-radius: var(--radius-sm); padding: 0.75rem 1rem; flex: 1 1 140px; text-align: center; }
+.stat-box .val { font-size: 1.2rem; font-weight: 800; font-family: var(--font-mono); color: var(--indigo); }
+.stat-box .lbl { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--ink-muted); margin-top: 0.2rem; }
+.stat-box.saving .val { color: var(--success); }
+</style>
+</head>
+<body>
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="../" class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="../#converters">Converters</a></li>
+      <li><a href="../ai/">AI Studio <span class="badge-new">NEW</span></a></li>
+      <li><a href="../blog/">Blog</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../#converters" class="nav-cta">All tools</a></li>
+    </ul>
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+  </div>
+</header>
+
+<main class="converter-page">
+  <div class="container">
+    <nav class="breadcrumb"><a href="../">Home</a><span class="sep">/</span><a href="../#converters">Converters</a><span class="sep">/</span><span>PDF Compressor</span></nav>
+    <div class="converter-header">
+      <h1>PDF compressor, <em class="italic">no upload needed</em>.</h1>
+      <p class="lead">Reduce your PDF file size by re-encoding embedded images at lower quality. Choose your compression level — all processing happens in your browser.</p>
+    </div>
+
+    <div class="dropzone" id="dropzone">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--ink-muted);margin-bottom:0.5rem"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      <p>Drop a PDF here or <label for="pdfInput" style="color:var(--indigo);cursor:pointer;text-decoration:underline;">browse</label></p>
+      <input type="file" id="pdfInput" accept=".pdf,application/pdf" style="display:none">
+    </div>
+
+    <div id="fileInfo" style="display:none;margin-top:0.75rem;"></div>
+
+    <div id="compressControls" style="display:none;margin-top:1.25rem;">
+      <div style="margin-bottom:0.75rem;font-size:0.78rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--ink-muted);">Compression Level</div>
+      <div class="level-chips">
+        <button class="level-chip" data-q="0.85">Low (High Quality)</button>
+        <button class="level-chip active" data-q="0.65">Medium</button>
+        <button class="level-chip" data-q="0.45">High (Smaller File)</button>
+        <button class="level-chip" data-q="0.25">Maximum</button>
+      </div>
+      <p class="level-desc" id="levelDesc">Re-encodes embedded images at ~65% JPEG quality. Good balance of size and quality.</p>
+      <button class="btn btn-primary" id="compressBtn">Compress & Download</button>
+    </div>
+
+    <div class="result-stats" id="resultStats" style="display:none;"></div>
+
+    <section class="info-section">
+      <h2>How PDF compression works</h2>
+      <p>PDFs often contain high-resolution images that take up most of the file size. This tool uses <strong>pdf-lib</strong> and the Canvas API to decode embedded JPEG images, re-encode them at a lower quality, and embed them back — resulting in a smaller file. Text, vector graphics, and fonts are not affected.</p>
+      <p><strong>Note:</strong> PDFs that consist entirely of text and vector graphics (no images) will not compress significantly.</p>
+      <h2>FAQ</h2>
+      <details class="faq-item" open><summary>What's the maximum file size?</summary><p>There's no hard limit, but large PDFs (50MB+) may take 30–60 seconds to process. The browser does all work in memory.</p></details>
+      <details class="faq-item"><summary>Are scanned PDFs (image-only PDFs) supported?</summary><p>Yes — scanned PDFs consist entirely of images, so they compress well. For text extraction from scanned PDFs, try the OCR tool.</p></details>
+    </section>
+
+    <div class="related-tools">
+      <h3>Related tools</h3>
+      <div class="related-grid">
+        <a href="pdf-merge.html" class="related-card">📎 PDF Merge</a>
+        <a href="pdf-watermark.html" class="related-card">🔏 PDF Watermark</a>
+        <a href="pdf-rotate.html" class="related-card">🔄 PDF Rotate</a>
+        <a href="pdf-to-image.html" class="related-card">🖼️ PDF to Image</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid footer-grid-5">
+      <div class="footer-brand"><div class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></div><p>Free, private file conversion for everyone.</p></div>
+      <div class="footer-col"><h5>PDF Tools</h5><ul><li><a href="pdf-merge.html">PDF Merge</a></li><li><a href="pdf-watermark.html">PDF Watermark</a></li><li><a href="pdf-rotate.html">PDF Rotate</a></li><li><a href="pdf-to-image.html">PDF to Image</a></li></ul></div>
+      <div class="footer-col"><h5>AI Studio</h5><ul><li><a href="../ai/image.html">AI Images</a></li><li><a href="../ai/video.html">AI Video</a></li><li><a href="../ai/music.html">AI Music</a></li><li><a href="../ai/writer.html">AI Writer</a></li></ul></div>
+      <div class="footer-col"><h5>Company</h5><ul><li><a href="../about.html">About</a></li><li><a href="../blog/">Blog</a></li><li><a href="../privacy.html">Privacy</a></li><li><a href="../terms.html">Terms</a></li></ul></div>
+      <div class="footer-col"><h5>Help</h5><ul><li><a href="../contact.html">Contact</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><div>© <span data-year>2026</span> Desi Jugad.</div><div class="made-in"><span class="flag-in"></span>Made in India, built for the world.</div></div>
+  </div>
+</footer>
+<script src="../assets/js/main.js"></script>
+<script>
+(function(){
+  let pdfFile=null, quality=0.65;
+  const levels={
+    '0.85':'Re-encodes embedded images at ~85% JPEG quality. Slight size reduction, best quality.',
+    '0.65':'Re-encodes embedded images at ~65% JPEG quality. Good balance of size and quality.',
+    '0.45':'Re-encodes embedded images at ~45% JPEG quality. Significant size reduction, noticeable quality drop.',
+    '0.25':'Re-encodes embedded images at ~25% JPEG quality. Maximum compression. Visible quality loss.',
+  };
+  document.querySelectorAll('.level-chip').forEach(c=>{
+    c.addEventListener('click',()=>{
+      document.querySelectorAll('.level-chip').forEach(x=>x.classList.remove('active'));
+      c.classList.add('active');
+      quality=parseFloat(c.dataset.q);
+      document.getElementById('levelDesc').textContent=levels[c.dataset.q]||'';
+    });
+  });
+
+  const dropzone=document.getElementById('dropzone'),fileInput=document.getElementById('pdfInput');
+  function setFile(f){
+    if(!f||!f.name.endsWith('.pdf')){showToast('Please select a PDF file.','error');return;}
+    pdfFile=f;
+    document.getElementById('fileInfo').style.display='block';
+    document.getElementById('fileInfo').innerHTML=`<div class="file-item"><div class="file-item-icon">PDF</div><div><div class="file-item-name">${f.name}</div><div class="file-item-meta"><span>${formatBytes(f.size)}</span></div></div></div>`;
+    document.getElementById('compressControls').style.display='block';
+    document.getElementById('resultStats').style.display='none';
+  }
+  dropzone.addEventListener('dragover',e=>{e.preventDefault();dropzone.classList.add('dragover');});
+  dropzone.addEventListener('dragleave',()=>dropzone.classList.remove('dragover'));
+  dropzone.addEventListener('drop',e=>{e.preventDefault();dropzone.classList.remove('dragover');setFile(e.dataTransfer.files[0]);});
+  dropzone.addEventListener('click',()=>fileInput.click());
+  fileInput.addEventListener('change',()=>setFile(fileInput.files[0]));
+
+  document.getElementById('compressBtn').addEventListener('click',async()=>{
+    if(!pdfFile)return;
+    const btn=document.getElementById('compressBtn');
+    btn.disabled=true;btn.textContent='Compressing…';
+    try{
+      if(!window.PDFLib){
+        await new Promise((res,rej)=>{const s=document.createElement('script');s.src='https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js';s.onload=res;s.onerror=rej;document.head.appendChild(s);});
+      }
+      const {PDFDocument}=PDFLib;
+      const origAB=await pdfFile.arrayBuffer();
+      const doc=await PDFDocument.load(origAB,{ignoreEncryption:true});
+
+      // Re-encode all JPEG images
+      const refs=doc.context.enumerateIndirectObjects();
+      const canvas=document.createElement('canvas');
+      const ctx=canvas.getContext('2d');
+      let reencoded=0;
+
+      for(const [ref,obj] of refs){
+        if(obj && obj.constructor && obj.constructor.name==='PDFRawStream'){
+          const dict=obj.dict;
+          const filter=dict.get(PDFLib.PDFName.of('Filter'));
+          const subtype=dict.get(PDFLib.PDFName.of('Subtype'));
+          if(filter&&filter.toString()==='/DCTDecode'&&subtype&&subtype.toString()==='/Image'){
+            try{
+              const w=dict.get(PDFLib.PDFName.of('Width'))?.value()||1;
+              const h=dict.get(PDFLib.PDFName.of('Height'))?.value()||1;
+              const jpegBytes=obj.contents;
+              const blob=new Blob([jpegBytes],{type:'image/jpeg'});
+              const url=URL.createObjectURL(blob);
+              await new Promise((res,rej)=>{
+                const img=new Image();img.onload=()=>{
+                  canvas.width=w;canvas.height=h;ctx.drawImage(img,0,0);URL.revokeObjectURL(url);res();
+                };img.onerror=rej;img.src=url;
+              });
+              const newBlob=await new Promise(r=>canvas.toBlob(r,'image/jpeg',quality));
+              const newBytes=new Uint8Array(await newBlob.arrayBuffer());
+              // Replace stream contents
+              obj.contents=newBytes;
+              dict.set(PDFLib.PDFName.of('Length'),PDFLib.PDFNumber.of(newBytes.length));
+              reencoded++;
+            }catch{}
+          }
+        }
+      }
+
+      const newBytes=await doc.save({useObjectStreams:false});
+      const origSize=pdfFile.size, newSize=newBytes.length;
+      const saving=Math.round((1-newSize/origSize)*100);
+      downloadBlob(new Blob([newBytes],{type:'application/pdf'}),pdfFile.name.replace('.pdf','-compressed.pdf'));
+      const stats=document.getElementById('resultStats');
+      stats.style.display='flex';
+      stats.innerHTML=`
+        <div class="stat-box"><div class="val">${formatBytes(origSize)}</div><div class="lbl">Original Size</div></div>
+        <div class="stat-box"><div class="val">${formatBytes(newSize)}</div><div class="lbl">New Size</div></div>
+        <div class="stat-box saving"><div class="val">${saving>0?'−'+saving+'%':'~0%'}</div><div class="lbl">Reduction</div></div>
+        <div class="stat-box"><div class="val">${reencoded}</div><div class="lbl">Images re-encoded</div></div>
+      `;
+    }catch(e){showToast('Error: '+e.message,'error');}
+    btn.disabled=false;btn.textContent='Compress & Download';
+  });
+})();
+</script>
+</body>
+</html>

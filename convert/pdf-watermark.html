@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/img/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/img/apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PDF Watermark — Add Text or Image Watermark to PDF | Desi Jugad</title>
+<meta name="description" content="Add text or image watermark to every page of a PDF online free. Customize font, opacity, angle, and position. No uploads — runs in your browser.">
+<meta name="keywords" content="PDF watermark, add watermark to PDF, PDF text watermark, watermark PDF online free, stamp PDF, PDF branding">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://desijugad.co.in/convert/pdf-watermark.html">
+<meta property="og:title" content="PDF Watermark — Add Text Watermark to PDF | Desi Jugad">
+<meta property="og:description" content="Add text watermarks to PDFs. Customize opacity, angle, color. No upload needed.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://desijugad.co.in/convert/pdf-watermark.html">
+<meta name="twitter:card" content="summary">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,30..100;1,9..144,300..700,30..100&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+<style>
+.wm-controls { background: var(--surface); border: 1.5px solid var(--line); border-radius: var(--radius); padding: 1.25rem; margin-bottom: 1.25rem; }
+.ctrl-row { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem; align-items: flex-end; }
+.ctrl { display: flex; flex-direction: column; gap: 0.35rem; flex: 1 1 140px; }
+.ctrl label { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--ink-muted); }
+.ctrl input, .ctrl select { padding: 0.5rem 0.75rem; border: 1.5px solid var(--line); border-radius: var(--radius-sm); font-size: 0.9rem; background: var(--surface); }
+.ctrl input:focus, .ctrl select:focus { outline: none; border-color: var(--indigo); }
+.ctrl input[type=range] { padding: 0; }
+</style>
+</head>
+<body>
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="../" class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="../#converters">Converters</a></li>
+      <li><a href="../ai/">AI Studio <span class="badge-new">NEW</span></a></li>
+      <li><a href="../blog/">Blog</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../#converters" class="nav-cta">All tools</a></li>
+    </ul>
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+  </div>
+</header>
+
+<main class="converter-page">
+  <div class="container">
+    <nav class="breadcrumb"><a href="../">Home</a><span class="sep">/</span><a href="../#converters">Converters</a><span class="sep">/</span><span>PDF Watermark</span></nav>
+    <div class="converter-header">
+      <h1>Add watermark to PDF, <em class="italic">instantly</em>.</h1>
+      <p class="lead">Stamp every page of your PDF with a custom text watermark. Control font size, color, opacity, rotation, and position. No uploads.</p>
+    </div>
+
+    <div class="dropzone" id="dropzone">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--ink-muted);margin-bottom:0.5rem"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      <p>Drop a PDF here or <label for="pdfInput" style="color:var(--indigo);cursor:pointer;text-decoration:underline;">browse</label></p>
+      <input type="file" id="pdfInput" accept=".pdf,application/pdf" style="display:none">
+    </div>
+
+    <div id="fileInfo" style="display:none;margin-top:0.75rem;"></div>
+
+    <div class="wm-controls" id="wmControls" style="display:none;margin-top:1.25rem;">
+      <div class="ctrl-row">
+        <div class="ctrl" style="flex:2 1 260px;">
+          <label>Watermark Text</label>
+          <input type="text" id="wmText" value="CONFIDENTIAL" placeholder="e.g. DRAFT, CONFIDENTIAL…">
+        </div>
+        <div class="ctrl">
+          <label>Color</label>
+          <input type="color" id="wmColor" value="#7051BC" style="height:42px;cursor:pointer;">
+        </div>
+      </div>
+      <div class="ctrl-row">
+        <div class="ctrl">
+          <label>Font Size (pt)</label>
+          <input type="number" id="wmSize" value="60" min="8" max="200">
+        </div>
+        <div class="ctrl">
+          <label>Opacity (<span id="opacityLabel">40</span>%)</label>
+          <input type="range" id="wmOpacity" min="5" max="100" value="40">
+        </div>
+        <div class="ctrl">
+          <label>Rotation (°)</label>
+          <input type="number" id="wmAngle" value="-45" min="-180" max="180">
+        </div>
+      </div>
+      <button class="btn btn-primary" id="applyBtn">Apply Watermark & Download</button>
+    </div>
+
+    <section class="info-section">
+      <h2>About PDF watermarking</h2>
+      <p>Watermarks are text or graphics overlaid on document pages to indicate confidentiality (CONFIDENTIAL, DRAFT, DO NOT COPY), ownership, or status. This tool uses <strong>pdf-lib</strong> to embed the watermark natively in the PDF — not as a rendering layer.</p>
+      <h2>FAQ</h2>
+      <details class="faq-item" open><summary>Is the original PDF modified?</summary><p>No — a new PDF file is created in your browser with the watermark. Your original file remains unchanged.</p></details>
+      <details class="faq-item"><summary>Can the watermark be removed by recipients?</summary><p>Because it is embedded at the PDF content level, removing it requires PDF editing tools. It is not trivially removable. For maximum protection combine with PDF password protection.</p></details>
+    </section>
+
+    <div class="related-tools">
+      <h3>Related tools</h3>
+      <div class="related-grid">
+        <a href="pdf-merge.html" class="related-card">📎 PDF Merge</a>
+        <a href="pdf-to-image.html" class="related-card">🖼️ PDF to Image</a>
+        <a href="image-to-pdf.html" class="related-card">📄 Image to PDF</a>
+        <a href="pdf-compressor.html" class="related-card">🗜️ PDF Compressor</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid footer-grid-5">
+      <div class="footer-brand"><div class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></div><p>Free, private file conversion for everyone.</p></div>
+      <div class="footer-col"><h5>PDF Tools</h5><ul><li><a href="pdf-merge.html">PDF Merge</a></li><li><a href="pdf-to-image.html">PDF to Image</a></li><li><a href="image-to-pdf.html">Image to PDF</a></li><li><a href="pdf-compressor.html">PDF Compressor</a></li></ul></div>
+      <div class="footer-col"><h5>AI Studio</h5><ul><li><a href="../ai/image.html">AI Images</a></li><li><a href="../ai/video.html">AI Video</a></li><li><a href="../ai/music.html">AI Music</a></li><li><a href="../ai/writer.html">AI Writer</a></li></ul></div>
+      <div class="footer-col"><h5>Company</h5><ul><li><a href="../about.html">About</a></li><li><a href="../blog/">Blog</a></li><li><a href="../privacy.html">Privacy</a></li><li><a href="../terms.html">Terms</a></li></ul></div>
+      <div class="footer-col"><h5>Help</h5><ul><li><a href="../contact.html">Contact</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><div>© <span data-year>2026</span> Desi Jugad.</div><div class="made-in"><span class="flag-in"></span>Made in India, built for the world.</div></div>
+  </div>
+</footer>
+<script src="../assets/js/main.js"></script>
+<script>
+(function(){
+  let pdfFile=null;
+  const dropzone=document.getElementById('dropzone'), fileInput=document.getElementById('pdfInput');
+
+  document.getElementById('wmOpacity').addEventListener('input',e=>{document.getElementById('opacityLabel').textContent=e.target.value;});
+
+  function setFile(file){
+    if(!file||file.type!=='application/pdf'&&!file.name.endsWith('.pdf')){showToast('Please select a PDF file.','error');return;}
+    pdfFile=file;
+    document.getElementById('fileInfo').style.display='block';
+    document.getElementById('fileInfo').innerHTML=`<div class="file-item"><div class="file-item-icon">PDF</div><div><div class="file-item-name">${file.name}</div><div class="file-item-meta"><span>${formatBytes(file.size)}</span></div></div></div>`;
+    document.getElementById('wmControls').style.display='block';
+  }
+  dropzone.addEventListener('dragover',e=>{e.preventDefault();dropzone.classList.add('dragover');});
+  dropzone.addEventListener('dragleave',()=>dropzone.classList.remove('dragover'));
+  dropzone.addEventListener('drop',e=>{e.preventDefault();dropzone.classList.remove('dragover');setFile(e.dataTransfer.files[0]);});
+  dropzone.addEventListener('click',()=>fileInput.click());
+  fileInput.addEventListener('change',()=>setFile(fileInput.files[0]));
+
+  document.getElementById('applyBtn').addEventListener('click',async()=>{
+    if(!pdfFile){showToast('Please load a PDF first.','error');return;}
+    const btn=document.getElementById('applyBtn');
+    btn.disabled=true;btn.textContent='Processing…';
+    try{
+      // Lazy load pdf-lib
+      if(!window.PDFLib){
+        await new Promise((res,rej)=>{
+          const s=document.createElement('script');s.src='https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js';
+          s.onload=res;s.onerror=rej;document.head.appendChild(s);
+        });
+      }
+      const {PDFDocument,rgb,degrees}=window.PDFLib;
+      const arrayBuffer=await pdfFile.arrayBuffer();
+      const pdfDoc=await PDFDocument.load(arrayBuffer,{ignoreEncryption:true});
+      const pages=pdfDoc.getPages();
+      const text=document.getElementById('wmText').value||'WATERMARK';
+      const size=Math.max(8,parseInt(document.getElementById('wmSize').value)||60);
+      const opacity=parseInt(document.getElementById('wmOpacity').value)/100;
+      const angleDeg=parseInt(document.getElementById('wmAngle').value)||0;
+      const hex=document.getElementById('wmColor').value;
+      const r=parseInt(hex.slice(1,3),16)/255,g=parseInt(hex.slice(3,5),16)/255,b=parseInt(hex.slice(5,7),16)/255;
+      const color=rgb(r,g,b);
+
+      for(const page of pages){
+        const {width,height}=page.getSize();
+        page.drawText(text,{
+          x:width/2-(text.length*size*0.3),y:height/2,
+          size,color,opacity,rotate:degrees(angleDeg),
+        });
+      }
+      const bytes=await pdfDoc.save();
+      downloadBlob(new Blob([bytes],{type:'application/pdf'}),pdfFile.name.replace('.pdf','-watermarked.pdf'));
+    }catch(e){showToast('Error: '+e.message,'error');}
+    btn.disabled=false;btn.textContent='Apply Watermark & Download';
+  });
+})();
+</script>
+</body>
+</html>

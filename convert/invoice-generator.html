@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/img/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/img/apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Invoice Generator — Free PDF Invoice Maker | Desi Jugad</title>
+<meta name="description" content="Create professional invoices online free. Add your logo, line items, taxes (GST), and download as PDF. No signup required.">
+<meta name="keywords" content="invoice generator free, PDF invoice maker, GST invoice online, create invoice online, free billing tool, invoice template">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://desijugad.co.in/convert/invoice-generator.html">
+<meta property="og:title" content="Invoice Generator — Free PDF Invoice Maker | Desi Jugad">
+<meta property="og:description" content="Create professional GST invoices and download as PDF. Free, no signup.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://desijugad.co.in/convert/invoice-generator.html">
+<meta name="twitter:card" content="summary">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,30..100;1,9..144,300..700,30..100&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+<style>
+.inv-form { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+@media(max-width:680px){ .inv-form { grid-template-columns: 1fr; } }
+.inv-section { background: var(--surface); border: 1.5px solid var(--line); border-radius: var(--radius); padding: 1.25rem; }
+.inv-section h4 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--ink-muted); font-weight: 700; margin-bottom: 0.75rem; font-family: var(--font-sans); }
+.field { display: flex; flex-direction: column; gap: 0.3rem; margin-bottom: 0.75rem; }
+.field label { font-size: 0.75rem; color: var(--ink-muted); font-weight: 600; }
+.field input, .field textarea, .field select { padding: 0.5rem 0.75rem; border: 1.5px solid var(--line); border-radius: var(--radius-sm); font-size: 0.88rem; background: var(--surface); font-family: var(--font-sans); }
+.field input:focus, .field textarea:focus, .field select:focus { outline: none; border-color: var(--indigo); }
+.field textarea { resize: vertical; min-height: 70px; }
+.items-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin: 1rem 0; }
+.items-table th { background: var(--bg-alt); padding: 0.5rem 0.6rem; text-align: left; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--ink-muted); font-weight: 700; }
+.items-table td { padding: 0.4rem 0.5rem; border-bottom: 1px solid var(--line); }
+.items-table input { border: 1px solid var(--line); border-radius: 4px; padding: 0.3rem 0.5rem; width: 100%; font-size: 0.85rem; background: var(--bg-alt); }
+.items-table input:focus { outline: none; border-color: var(--indigo); }
+.del-btn { background: none; border: none; cursor: pointer; color: var(--danger); font-size: 1rem; padding: 0.2rem; }
+.totals-panel { max-width: 320px; margin-left: auto; background: var(--bg-alt); border-radius: var(--radius-sm); padding: 1rem; }
+.total-row { display: flex; justify-content: space-between; padding: 0.3rem 0; font-size: 0.88rem; }
+.total-row.grand { font-weight: 800; font-size: 1rem; border-top: 2px solid var(--line); padding-top: 0.5rem; margin-top: 0.25rem; }
+</style>
+</head>
+<body>
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="../" class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="../#converters">Converters</a></li>
+      <li><a href="../ai/">AI Studio <span class="badge-new">NEW</span></a></li>
+      <li><a href="../blog/">Blog</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../#converters" class="nav-cta">All tools</a></li>
+    </ul>
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+  </div>
+</header>
+
+<main class="converter-page">
+  <div class="container">
+    <nav class="breadcrumb"><a href="../">Home</a><span class="sep">/</span><a href="../#converters">Converters</a><span class="sep">/</span><span>Invoice Generator</span></nav>
+    <div class="converter-header">
+      <h1>Invoice generator, <em class="italic">free PDF download</em>.</h1>
+      <p class="lead">Create professional GST invoices in seconds. Fill in your details, add line items, and download a clean PDF — no signup, no watermark.</p>
+    </div>
+
+    <!-- Invoice meta -->
+    <div class="inv-form" style="margin-bottom:1.25rem;">
+      <div class="inv-section">
+        <h4>From (Your Business)</h4>
+        <div class="field"><label>Business Name</label><input type="text" id="fromName" placeholder="Your Company Pvt. Ltd."></div>
+        <div class="field"><label>Address</label><textarea id="fromAddr" placeholder="123 Main Street, Mumbai 400001"></textarea></div>
+        <div class="field"><label>GSTIN</label><input type="text" id="fromGST" placeholder="27AABCU9603R1ZX"></div>
+        <div class="field"><label>Email / Phone</label><input type="text" id="fromContact" placeholder="billing@company.com"></div>
+      </div>
+      <div class="inv-section">
+        <h4>Bill To (Client)</h4>
+        <div class="field"><label>Client Name</label><input type="text" id="toName" placeholder="Client Name"></div>
+        <div class="field"><label>Address</label><textarea id="toAddr" placeholder="Client address"></textarea></div>
+        <div class="field"><label>GSTIN (optional)</label><input type="text" id="toGST" placeholder="Client GSTIN"></div>
+        <div class="field"><label>Email / Phone</label><input type="text" id="toContact" placeholder="client@email.com"></div>
+      </div>
+    </div>
+
+    <!-- Invoice details -->
+    <div class="inv-section" style="margin-bottom:1.25rem;">
+      <h4>Invoice Details</h4>
+      <div style="display:flex;gap:1rem;flex-wrap:wrap;">
+        <div class="field" style="flex:1 1 160px;"><label>Invoice #</label><input type="text" id="invNumber" value="INV-001"></div>
+        <div class="field" style="flex:1 1 160px;"><label>Invoice Date</label><input type="date" id="invDate"></div>
+        <div class="field" style="flex:1 1 160px;"><label>Due Date</label><input type="date" id="dueDate"></div>
+        <div class="field" style="flex:1 1 120px;"><label>Currency</label>
+          <select id="currency"><option value="₹">₹ INR</option><option value="$">$ USD</option><option value="€">€ EUR</option><option value="£">£ GBP</option></select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Line items -->
+    <div class="inv-section" style="margin-bottom:1.25rem;">
+      <h4>Line Items</h4>
+      <table class="items-table" id="itemsTable">
+        <thead><tr><th style="width:38%">Description</th><th>Qty</th><th>Unit Price</th><th>GST%</th><th>Amount</th><th></th></tr></thead>
+        <tbody id="itemsBody"></tbody>
+      </table>
+      <button class="btn btn-secondary btn-sm" id="addItemBtn">+ Add Item</button>
+
+      <div class="totals-panel" style="margin-top:1rem;">
+        <div class="total-row"><span>Subtotal</span><span id="tSubtotal">0.00</span></div>
+        <div class="total-row"><span>GST Total</span><span id="tGST">0.00</span></div>
+        <div class="total-row grand"><span>Grand Total</span><span id="tGrand">0.00</span></div>
+      </div>
+    </div>
+
+    <!-- Notes -->
+    <div class="inv-section" style="margin-bottom:1.25rem;">
+      <h4>Notes / Terms</h4>
+      <textarea id="notes" style="width:100%;min-height:80px;padding:0.5rem 0.75rem;border:1.5px solid var(--line);border-radius:var(--radius-sm);font-family:var(--font-sans);font-size:0.88rem;" placeholder="Payment terms, bank details, thank you note…"></textarea>
+    </div>
+
+    <div class="action-row">
+      <button class="btn btn-primary" id="downloadBtn">⬇ Download Invoice PDF</button>
+    </div>
+
+    <section class="info-section">
+      <h2>FAQ</h2>
+      <details class="faq-item" open><summary>Is the PDF generated on the server?</summary><p>No — the PDF is generated entirely in your browser using jsPDF. Your invoice data never leaves your device.</p></details>
+      <details class="faq-item"><summary>Can I include a logo?</summary><p>Logo upload support is coming soon. Currently, the business name and details are rendered in text format.</p></details>
+    </section>
+
+    <div class="related-tools">
+      <h3>Related tools</h3>
+      <div class="related-grid">
+        <a href="gst-calculator.html" class="related-card">📊 GST Calculator</a>
+        <a href="emi-calculator.html" class="related-card">🏦 EMI Calculator</a>
+        <a href="pdf-merge.html" class="related-card">📎 PDF Merge</a>
+        <a href="currency-converter.html" class="related-card">💱 Currency Converter</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid footer-grid-5">
+      <div class="footer-brand"><div class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></div><p>Free, private file conversion for everyone.</p></div>
+      <div class="footer-col"><h5>Tools</h5><ul><li><a href="gst-calculator.html">GST Calculator</a></li><li><a href="emi-calculator.html">EMI Calculator</a></li><li><a href="pdf-merge.html">PDF Merge</a></li><li><a href="currency-converter.html">Currency Converter</a></li></ul></div>
+      <div class="footer-col"><h5>AI Studio</h5><ul><li><a href="../ai/image.html">AI Images</a></li><li><a href="../ai/video.html">AI Video</a></li><li><a href="../ai/music.html">AI Music</a></li><li><a href="../ai/writer.html">AI Writer</a></li></ul></div>
+      <div class="footer-col"><h5>Company</h5><ul><li><a href="../about.html">About</a></li><li><a href="../blog/">Blog</a></li><li><a href="../privacy.html">Privacy</a></li><li><a href="../terms.html">Terms</a></li></ul></div>
+      <div class="footer-col"><h5>Help</h5><ul><li><a href="../contact.html">Contact</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><div>© <span data-year>2026</span> Desi Jugad.</div><div class="made-in"><span class="flag-in"></span>Made in India, built for the world.</div></div>
+  </div>
+</footer>
+<script src="../assets/js/main.js"></script>
+<script>
+(function(){
+  // Set today's date defaults
+  const today=new Date().toISOString().split('T')[0];
+  document.getElementById('invDate').value=today;
+  const due=new Date();due.setDate(due.getDate()+30);
+  document.getElementById('dueDate').value=due.toISOString().split('T')[0];
+
+  let items=[];
+
+  function recalc(){
+    let sub=0,gstTotal=0;
+    items.forEach((it,i)=>{
+      const qty=parseFloat(it.qty)||0,price=parseFloat(it.price)||0,gst=parseFloat(it.gst)||0;
+      const lineAmt=qty*price;
+      const lineGST=lineAmt*gst/100;
+      sub+=lineAmt;gstTotal+=lineGST;
+      const amtCell=document.getElementById('amt-'+i);
+      if(amtCell)amtCell.textContent=(lineAmt+lineGST).toFixed(2);
+    });
+    const cur=document.getElementById('currency').value;
+    document.getElementById('tSubtotal').textContent=cur+sub.toFixed(2);
+    document.getElementById('tGST').textContent=cur+gstTotal.toFixed(2);
+    document.getElementById('tGrand').textContent=cur+(sub+gstTotal).toFixed(2);
+  }
+
+  function renderItems(){
+    const tbody=document.getElementById('itemsBody');
+    tbody.innerHTML=items.map((it,i)=>`<tr>
+      <td><input value="${it.desc}" oninput="window._invUpdate(${i},'desc',this.value)" placeholder="Item description"></td>
+      <td><input type="number" value="${it.qty}" oninput="window._invUpdate(${i},'qty',this.value)" style="width:70px" min="0"></td>
+      <td><input type="number" value="${it.price}" oninput="window._invUpdate(${i},'price',this.value)" style="width:90px" min="0"></td>
+      <td><input type="number" value="${it.gst}" oninput="window._invUpdate(${i},'gst',this.value)" style="width:60px" min="0" max="100"></td>
+      <td id="amt-${i}">0.00</td>
+      <td><button class="del-btn" onclick="window._invDel(${i})">✕</button></td>
+    </tr>`).join('');
+    recalc();
+  }
+
+  window._invUpdate=(i,k,v)=>{items[i][k]=v;recalc();};
+  window._invDel=(i)=>{items.splice(i,1);renderItems();};
+
+  function addItem(){items.push({desc:'',qty:1,price:0,gst:18});renderItems();}
+  document.getElementById('addItemBtn').addEventListener('click',addItem);
+  document.getElementById('currency').addEventListener('change',recalc);
+
+  // Add default first item
+  addItem();
+
+  document.getElementById('downloadBtn').addEventListener('click',async()=>{
+    const btn=document.getElementById('downloadBtn');
+    btn.disabled=true;btn.textContent='Generating PDF…';
+    try{
+      if(!window.jspdf){
+        await new Promise((res,rej)=>{
+          const s=document.createElement('script');
+          s.src='https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+          s.onload=res;s.onerror=rej;document.head.appendChild(s);
+        });
+      }
+      const {jsPDF}=window.jspdf;
+      const doc=new jsPDF({orientation:'portrait',unit:'mm',format:'a4'});
+      const cur=document.getElementById('currency').value;
+      const fromName=document.getElementById('fromName').value||'Your Business';
+      const fromAddr=document.getElementById('fromAddr').value;
+      const fromGST=document.getElementById('fromGST').value;
+      const toName=document.getElementById('toName').value||'Client';
+      const toAddr=document.getElementById('toAddr').value;
+      const toGST=document.getElementById('toGST').value;
+      const invNo=document.getElementById('invNumber').value;
+      const invDate=document.getElementById('invDate').value;
+      const dueDate=document.getElementById('dueDate').value;
+      const notes=document.getElementById('notes').value;
+
+      // Header
+      doc.setFillColor(112,81,188);doc.rect(0,0,210,28,'F');
+      doc.setTextColor(255,255,255);doc.setFontSize(20);doc.setFont(undefined,'bold');
+      doc.text('INVOICE',14,16);
+      doc.setFontSize(9);doc.setFont(undefined,'normal');
+      doc.text(`Invoice #: ${invNo}`,140,10);doc.text(`Date: ${invDate}`,140,15);doc.text(`Due: ${dueDate}`,140,20);
+
+      // From / To
+      doc.setTextColor(30,30,30);doc.setFontSize(10);doc.setFont(undefined,'bold');
+      doc.text('FROM',14,36);doc.text('TO',110,36);
+      doc.setFont(undefined,'normal');doc.setFontSize(9);
+      const fromLines=[fromName,...(fromAddr?fromAddr.split('\n'):[]),...(fromGST?['GSTIN: '+fromGST]:[])];
+      const toLines=[toName,...(toAddr?toAddr.split('\n'):[]),...(toGST?['GSTIN: '+toGST]:[])];
+      fromLines.forEach((l,i)=>doc.text(l,14,42+i*5));
+      toLines.forEach((l,i)=>doc.text(l,110,42+i*5));
+
+      // Line items table header
+      let y=70;
+      doc.setFillColor(240,237,230);doc.rect(14,y,182,7,'F');
+      doc.setFontSize(8);doc.setFont(undefined,'bold');doc.setTextColor(74,71,66);
+      doc.text('Description',15,y+5);doc.text('Qty',110,y+5);doc.text('Price',128,y+5);doc.text('GST%',152,y+5);doc.text('Amount',175,y+5);
+      y+=9;
+      doc.setFont(undefined,'normal');doc.setTextColor(20,20,19);
+      items.forEach(it=>{
+        const qty=parseFloat(it.qty)||0,price=parseFloat(it.price)||0,gst=parseFloat(it.gst)||0;
+        const amt=qty*price*(1+gst/100);
+        doc.setFontSize(8);
+        doc.text((it.desc||'').substring(0,40),15,y+4);
+        doc.text(String(qty),112,y+4);
+        doc.text(price.toFixed(2),128,y+4);
+        doc.text(gst+'%',153,y+4);
+        doc.text(cur+amt.toFixed(2),175,y+4);
+        doc.setDrawColor(230,225,211);doc.line(14,y+7,196,y+7);
+        y+=8;
+      });
+
+      // Totals
+      y+=4;
+      const sub=parseFloat(document.getElementById('tSubtotal').textContent.replace(cur,''))||0;
+      const gstT=parseFloat(document.getElementById('tGST').textContent.replace(cur,''))||0;
+      const grand=parseFloat(document.getElementById('tGrand').textContent.replace(cur,''))||0;
+      doc.setFontSize(9);
+      doc.text('Subtotal:',140,y);doc.text(cur+sub.toFixed(2),185,y,{align:'right'});y+=6;
+      doc.text('GST Total:',140,y);doc.text(cur+gstT.toFixed(2),185,y,{align:'right'});y+=6;
+      doc.setFont(undefined,'bold');doc.setFontSize(11);
+      doc.text('Grand Total:',140,y);doc.text(cur+grand.toFixed(2),185,y,{align:'right'});
+
+      // Notes
+      if(notes){
+        y+=12;doc.setFont(undefined,'bold');doc.setFontSize(8);doc.text('Notes:',14,y);y+=5;
+        doc.setFont(undefined,'normal');doc.setFontSize(8);doc.setTextColor(74,71,66);
+        doc.text(doc.splitTextToSize(notes,180),14,y);
+      }
+
+      // Footer
+      doc.setFontSize(7);doc.setTextColor(150,140,130);
+      doc.text('Generated by Desi Jugad — desijugad.co.in',14,285);
+
+      doc.save(`invoice-${invNo}.pdf`);
+    }catch(e){showToast('Error: '+e.message,'error');}
+    btn.disabled=false;btn.textContent='⬇ Download Invoice PDF';
+  });
+})();
+</script>
+</body>
+</html>

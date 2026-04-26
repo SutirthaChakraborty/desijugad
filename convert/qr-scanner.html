@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/img/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/img/apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QR Code Scanner — Scan from Camera or Image | Desi Jugad</title>
+<meta name="description" content="Scan QR codes from your camera or upload an image. Works entirely in your browser — no uploads, no app needed. Supports all QR code types.">
+<meta name="keywords" content="QR code scanner, scan QR code online, QR reader, QR code from image, camera QR scanner, decode QR code">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://desijugad.co.in/convert/qr-scanner.html">
+<meta property="og:title" content="QR Code Scanner — Camera & Image Upload | Desi Jugad">
+<meta property="og:description" content="Scan QR codes from camera or image. Free, private, works offline after load.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://desijugad.co.in/convert/qr-scanner.html">
+<meta name="twitter:card" content="summary">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,30..100;1,9..144,300..700,30..100&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+<style>
+.scan-tabs { display: flex; gap: 0.5rem; margin-bottom: 1.25rem; }
+.scan-tab { padding: 0.5rem 1.25rem; border: 1.5px solid var(--line); border-radius: 999px; cursor: pointer; font-size: 0.88rem; font-weight: 500; background: var(--surface); transition: all 0.15s; }
+.scan-tab.active { background: var(--indigo); border-color: var(--indigo); color: #fff; }
+.camera-wrap { position: relative; background: #000; border-radius: var(--radius); overflow: hidden; max-width: 480px; margin: 0 auto; aspect-ratio: 1; }
+#cameraVideo { width: 100%; height: 100%; object-fit: cover; display: block; }
+.camera-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; }
+.scan-frame { width: 60%; aspect-ratio: 1; border: 3px solid var(--indigo); border-radius: 12px; box-shadow: 0 0 0 9999px rgba(0,0,0,0.45); }
+.result-card { background: var(--surface); border: 1.5px solid var(--line); border-radius: var(--radius); padding: 1.25rem; margin-top: 1.25rem; }
+.result-card h4 { font-size: var(--step-0); margin-bottom: 0.5rem; }
+#resultText { font-family: var(--font-mono); font-size: 0.88rem; word-break: break-all; color: var(--ink-soft); background: var(--bg-alt); padding: 0.75rem; border-radius: var(--radius-sm); max-height: 200px; overflow-y: auto; }
+</style>
+</head>
+<body>
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="../" class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="../#converters">Converters</a></li>
+      <li><a href="../ai/">AI Studio <span class="badge-new">NEW</span></a></li>
+      <li><a href="../blog/">Blog</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../#converters" class="nav-cta">All tools</a></li>
+    </ul>
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+  </div>
+</header>
+
+<main class="converter-page">
+  <div class="container">
+    <nav class="breadcrumb"><a href="../">Home</a><span class="sep">/</span><a href="../#converters">Converters</a><span class="sep">/</span><span>QR Scanner</span></nav>
+    <div class="converter-header">
+      <h1>QR Code Scanner — <em class="italic">camera or image</em>.</h1>
+      <p class="lead">Scan any QR code with your device camera, or upload an image containing a QR code. All scanning happens in your browser.</p>
+    </div>
+
+    <div class="scan-tabs">
+      <button class="scan-tab active" id="tabCamera">📷 Camera</button>
+      <button class="scan-tab" id="tabUpload">🖼️ Upload Image</button>
+    </div>
+
+    <!-- Camera tab -->
+    <div id="panelCamera">
+      <div class="camera-wrap" id="cameraWrap">
+        <video id="cameraVideo" playsinline autoplay muted></video>
+        <div class="camera-overlay"><div class="scan-frame"></div></div>
+      </div>
+      <div style="display:flex;gap:0.75rem;margin-top:1rem;flex-wrap:wrap;">
+        <button class="btn btn-primary" id="startCamBtn">Start Camera</button>
+        <button class="btn btn-secondary" id="stopCamBtn" style="display:none;">Stop Camera</button>
+        <select id="camSelect" style="padding:0.5rem 0.75rem;border:1.5px solid var(--line);border-radius:var(--radius-sm);background:var(--surface);font-size:0.88rem;display:none;"></select>
+      </div>
+    </div>
+
+    <!-- Upload tab -->
+    <div id="panelUpload" style="display:none;">
+      <div class="dropzone" id="qrDropzone">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--ink-muted);margin-bottom:0.5rem"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        <p>Drop an image with a QR code or <label for="qrFileInput" style="color:var(--indigo);cursor:pointer;text-decoration:underline;">browse</label></p>
+        <input type="file" id="qrFileInput" accept="image/*" style="display:none">
+      </div>
+    </div>
+
+    <div id="resultCard" class="result-card" style="display:none;">
+      <h4>📋 Scanned Result</h4>
+      <div id="resultText"></div>
+      <div style="display:flex;gap:0.75rem;margin-top:0.75rem;flex-wrap:wrap;">
+        <button class="btn btn-secondary btn-sm" id="copyBtn">Copy</button>
+        <a id="openLinkBtn" class="btn btn-primary btn-sm" href="#" target="_blank" rel="noopener" style="display:none;">Open Link</a>
+      </div>
+    </div>
+
+    <section class="info-section">
+      <h2>Supported QR code types</h2>
+      <p>URL, plain text, Wi-Fi credentials, vCard contact, email, phone number, SMS, and more. The raw decoded string is shown — if it's a URL, an "Open Link" button appears.</p>
+      <h2>FAQ</h2>
+      <details class="faq-item" open><summary>Does this work on mobile?</summary><p>Yes — tap "Start Camera" and it will request camera permission and scan in real-time.</p></details>
+      <details class="faq-item"><summary>Why does camera scanning need HTTPS?</summary><p>The browser's getUserMedia API requires a secure context (HTTPS) to access the camera. This site uses HTTPS so everything works fine.</p></details>
+    </section>
+
+    <div class="related-tools">
+      <h3>Related tools</h3>
+      <div class="related-grid">
+        <a href="qr-code.html" class="related-card">🔲 QR Code Generator</a>
+        <a href="barcode-generator.html" class="related-card">📊 Barcode Generator</a>
+        <a href="barcode-scanner.html" class="related-card">📷 Barcode Scanner</a>
+        <a href="image-converter.html" class="related-card">🖼️ Image Converter</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid footer-grid-5">
+      <div class="footer-brand"><div class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></div><p>Free, private file conversion for everyone.</p></div>
+      <div class="footer-col"><h5>Tools</h5><ul><li><a href="qr-code.html">QR Code Generator</a></li><li><a href="barcode-generator.html">Barcode Generator</a></li><li><a href="image-converter.html">Image Converter</a></li><li><a href="image-compress.html">Image Compressor</a></li></ul></div>
+      <div class="footer-col"><h5>AI Studio</h5><ul><li><a href="../ai/image.html">AI Images</a></li><li><a href="../ai/video.html">AI Video</a></li><li><a href="../ai/music.html">AI Music</a></li><li><a href="../ai/writer.html">AI Writer</a></li></ul></div>
+      <div class="footer-col"><h5>Company</h5><ul><li><a href="../about.html">About</a></li><li><a href="../blog/">Blog</a></li><li><a href="../privacy.html">Privacy</a></li><li><a href="../terms.html">Terms</a></li></ul></div>
+      <div class="footer-col"><h5>Help</h5><ul><li><a href="../contact.html">Contact</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><div>© <span data-year>2026</span> Desi Jugad.</div><div class="made-in"><span class="flag-in"></span>Made in India, built for the world.</div></div>
+  </div>
+</footer>
+<script src="../assets/js/main.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js" integrity="sha384-tllyQFtU2ZT7sVmIWklJjCiPJpSS+jUJHHVaFpj3RnLMqCm+7TlJDpzoxzRl99z" crossorigin="anonymous"></script>
+<script>
+(function(){
+  // Tabs
+  document.getElementById('tabCamera').addEventListener('click',()=>{
+    document.getElementById('panelCamera').style.display='';
+    document.getElementById('panelUpload').style.display='none';
+    document.getElementById('tabCamera').classList.add('active');
+    document.getElementById('tabUpload').classList.remove('active');
+  });
+  document.getElementById('tabUpload').addEventListener('click',()=>{
+    document.getElementById('panelUpload').style.display='';
+    document.getElementById('panelCamera').style.display='none';
+    document.getElementById('tabUpload').classList.add('active');
+    document.getElementById('tabCamera').classList.remove('active');
+    stopCamera();
+  });
+
+  // Result display
+  function showResult(text){
+    const card=document.getElementById('resultCard');
+    document.getElementById('resultText').textContent=text;
+    card.style.display='block';
+    const linkBtn=document.getElementById('openLinkBtn');
+    try{new URL(text);linkBtn.href=text;linkBtn.style.display='inline-flex';}
+    catch{linkBtn.style.display='none';}
+  }
+
+  document.getElementById('copyBtn').addEventListener('click',()=>{
+    copyToClipboard(document.getElementById('resultText').textContent);
+  });
+
+  // Camera scanning
+  let stream=null, raf=null;
+  const video=document.getElementById('cameraVideo');
+  const canvas=document.createElement('canvas');
+  const ctx=canvas.getContext('2d');
+
+  async function startCamera(){
+    try{
+      stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'}});
+      video.srcObject=stream;
+      video.play();
+      document.getElementById('startCamBtn').style.display='none';
+      document.getElementById('stopCamBtn').style.display='inline-flex';
+      scanLoop();
+    }catch(e){showToast('Camera error: '+e.message,'error');}
+  }
+
+  function stopCamera(){
+    if(stream){stream.getTracks().forEach(t=>t.stop());stream=null;}
+    if(raf){cancelAnimationFrame(raf);raf=null;}
+    document.getElementById('startCamBtn').style.display='inline-flex';
+    document.getElementById('stopCamBtn').style.display='none';
+    video.srcObject=null;
+  }
+
+  function scanLoop(){
+    if(!stream)return;
+    if(video.readyState===video.HAVE_ENOUGH_DATA){
+      canvas.width=video.videoWidth; canvas.height=video.videoHeight;
+      ctx.drawImage(video,0,0);
+      const imageData=ctx.getImageData(0,0,canvas.width,canvas.height);
+      const code=jsQR(imageData.data,imageData.width,imageData.height);
+      if(code){showResult(code.data);stopCamera();return;}
+    }
+    raf=requestAnimationFrame(scanLoop);
+  }
+
+  document.getElementById('startCamBtn').addEventListener('click',startCamera);
+  document.getElementById('stopCamBtn').addEventListener('click',stopCamera);
+
+  // Upload scanning
+  const dropzone=document.getElementById('qrDropzone'),fileInput=document.getElementById('qrFileInput');
+  function scanImage(file){
+    const url=URL.createObjectURL(file);
+    const img=new Image();
+    img.onload=()=>{
+      canvas.width=img.naturalWidth; canvas.height=img.naturalHeight;
+      ctx.drawImage(img,0,0); URL.revokeObjectURL(url);
+      const imageData=ctx.getImageData(0,0,canvas.width,canvas.height);
+      const code=jsQR(imageData.data,imageData.width,imageData.height);
+      if(code)showResult(code.data);
+      else showToast('No QR code found in image.','error');
+    };
+    img.src=url;
+  }
+  dropzone.addEventListener('dragover',e=>{e.preventDefault();dropzone.classList.add('dragover');});
+  dropzone.addEventListener('dragleave',()=>dropzone.classList.remove('dragover'));
+  dropzone.addEventListener('drop',e=>{e.preventDefault();dropzone.classList.remove('dragover');if(e.dataTransfer.files[0])scanImage(e.dataTransfer.files[0]);});
+  dropzone.addEventListener('click',()=>fileInput.click());
+  fileInput.addEventListener('change',()=>{if(fileInput.files[0])scanImage(fileInput.files[0]);});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/img/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/img/apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EMI Calculator — Loan, Home, Car, Personal | Desi Jugad</title>
+<meta name="description" content="Free EMI calculator for home loan, car loan, and personal loan. Calculate monthly EMI, total interest, and full amortization schedule instantly.">
+<meta name="keywords" content="EMI calculator, home loan EMI, car loan EMI, personal loan calculator, loan amortization, monthly installment India">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://desijugad.co.in/convert/emi-calculator.html">
+<meta property="og:title" content="EMI Calculator — Loan, Home, Car, Personal | Desi Jugad">
+<meta property="og:description" content="Calculate loan EMI, total interest, and amortization schedule for any loan type. Free, instant, no sign-up.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://desijugad.co.in/convert/emi-calculator.html">
+<meta name="twitter:card" content="summary">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,30..100;1,9..144,300..700,30..100&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"EMI Calculator","url":"https://desijugad.co.in/convert/emi-calculator.html","description":"Free EMI calculator for home, car, and personal loans.","applicationCategory":"FinanceApplication","offers":{"@type":"Offer","price":"0","priceCurrency":"INR"}}</script>
+<style>
+.calc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
+@media(max-width:640px){ .calc-grid { grid-template-columns: 1fr; } }
+.calc-panel { background: var(--surface); border: 1.5px solid var(--line); border-radius: var(--radius); padding: 1.75rem; }
+.field-group { margin-bottom: 1.1rem; }
+.field-group label { display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--ink-muted); margin-bottom: 0.5rem; }
+.field-group label span { font-family: var(--font-mono); color: var(--indigo); font-size: 0.9rem; text-transform: none; letter-spacing: 0; }
+.field-group input[type=range] { width: 100%; accent-color: var(--indigo); }
+.field-group input[type=number] { width: 100%; padding: 0.55rem 0.75rem; border: 1.5px solid var(--line); border-radius: var(--radius-sm); font-size: 1rem; font-family: var(--font-mono); background: var(--bg); }
+.field-group input[type=number]:focus { outline: none; border-color: var(--indigo); }
+.result-cards { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.75rem; margin-bottom: 1.25rem; }
+@media(max-width:480px){ .result-cards { grid-template-columns: 1fr; } }
+.res-card { background: var(--bg-alt); border-radius: var(--radius-sm); padding: 1rem; text-align: center; }
+.res-card .label { font-size: 0.75rem; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+.res-card .value { font-family: var(--font-mono); font-size: 1.25rem; font-weight: 700; color: var(--indigo); }
+.res-card.highlight { background: var(--indigo); }
+.res-card.highlight .label { color: rgba(255,255,255,0.75); }
+.res-card.highlight .value { color: #fff; }
+.donut-wrap { display: flex; align-items: center; justify-content: center; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 1.25rem; }
+.donut-legend { display: flex; flex-direction: column; gap: 0.5rem; }
+.legend-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.82rem; }
+.legend-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+.amort-btn { font-size: 0.82rem; color: var(--indigo); cursor: pointer; background: none; border: none; text-decoration: underline; margin-bottom: 0.75rem; }
+.amort-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; display: none; }
+.amort-table.show { display: table; }
+.amort-table th { background: var(--bg-alt); padding: 0.5rem 0.6rem; text-align: left; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-muted); }
+.amort-table td { padding: 0.45rem 0.6rem; border-bottom: 1px solid var(--line); font-family: var(--font-mono); }
+.amort-table tr:last-child td { border-bottom: none; }
+</style>
+</head>
+<body>
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="../" class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="../#converters">Converters</a></li>
+      <li><a href="../ai/">AI Studio <span class="badge-new">NEW</span></a></li>
+      <li><a href="../blog/">Blog</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../#converters" class="nav-cta">All tools</a></li>
+    </ul>
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+  </div>
+</header>
+
+<main class="converter-page">
+  <div class="container">
+    <nav class="breadcrumb"><a href="../">Home</a><span class="sep">/</span><a href="../#converters">Converters</a><span class="sep">/</span><span>EMI Calculator</span></nav>
+    <div class="converter-header">
+      <h1>Loan EMI, <em class="italic">calculated instantly</em>.</h1>
+      <p class="lead">Find your monthly instalment, total interest, and full amortization schedule for home, car, or personal loans.</p>
+    </div>
+
+    <div class="calc-grid">
+      <div class="calc-panel">
+        <div class="field-group">
+          <label>Loan Amount <span id="lbl-p">₹10,00,000</span></label>
+          <input type="range" id="r-p" min="10000" max="10000000" step="10000" value="1000000">
+          <input type="number" id="n-p" value="1000000" min="1">
+        </div>
+        <div class="field-group">
+          <label>Annual Interest Rate <span id="lbl-r">8.5%</span></label>
+          <input type="range" id="r-r" min="1" max="30" step="0.1" value="8.5">
+          <input type="number" id="n-r" value="8.5" min="0.1" max="99" step="0.1">
+        </div>
+        <div class="field-group">
+          <label>Loan Tenure <span id="lbl-t">20 yr</span></label>
+          <input type="range" id="r-t" min="1" max="360" step="1" value="240">
+          <div style="display:flex;gap:0.5rem;align-items:center;margin-top:0.35rem;">
+            <input type="number" id="n-t" value="240" min="1" max="360">
+            <select id="t-unit" style="padding:0.45rem 0.6rem;border:1.5px solid var(--line);border-radius:var(--radius-sm);background:var(--surface);font-size:0.88rem;">
+              <option value="months" selected>Months</option>
+              <option value="years">Years</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="calc-panel" style="display:flex;flex-direction:column;gap:1rem;">
+        <div class="result-cards">
+          <div class="res-card highlight"><div class="label">Monthly EMI</div><div class="value" id="res-emi">—</div></div>
+          <div class="res-card"><div class="label">Total Interest</div><div class="value" id="res-int">—</div></div>
+          <div class="res-card"><div class="label">Total Amount</div><div class="value" id="res-total">—</div></div>
+        </div>
+        <div class="donut-wrap">
+          <canvas id="donut" width="130" height="130"></canvas>
+          <div class="donut-legend">
+            <div class="legend-item"><span class="legend-dot" style="background:var(--indigo)"></span>Principal</div>
+            <div class="legend-item"><span class="legend-dot" style="background:var(--saffron)"></span>Interest</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button class="amort-btn" id="amortBtn">▶ Show amortization schedule</button>
+    <div style="overflow-x:auto;">
+      <table class="amort-table" id="amortTable">
+        <thead><tr><th>#</th><th>EMI</th><th>Principal</th><th>Interest</th><th>Balance</th></tr></thead>
+        <tbody id="amortBody"></tbody>
+      </table>
+    </div>
+
+    <section class="info-section">
+      <h2>How EMI is calculated</h2>
+      <p>EMI = P × r × (1+r)<sup>n</sup> / ((1+r)<sup>n</sup> − 1) — where P is the principal, r is the monthly interest rate (annual rate ÷ 12 ÷ 100), and n is the total number of months.</p>
+      <h3>Tips to reduce EMI</h3>
+      <ul>
+        <li>Make a larger down payment to reduce principal.</li>
+        <li>Negotiate a lower interest rate — even 0.5% less saves lakhs on a home loan.</li>
+        <li>Prepay whenever you have a surplus; principal prepayment cuts interest drastically.</li>
+        <li>Choose a longer tenure to lower EMI, but note the total interest increases.</li>
+      </ul>
+      <h2>FAQ</h2>
+      <details class="faq-item" open><summary>Is this calculator accurate?</summary><p>Yes — it uses the standard reducing-balance formula used by all banks and NBFCs in India.</p></details>
+      <details class="faq-item"><summary>Does this work for home, car, and personal loans?</summary><p>Yes — the formula is the same for all fixed-rate EMI loans. Just enter your loan's rate and tenure.</p></details>
+    </section>
+
+    <div class="related-tools">
+      <h3>Related tools</h3>
+      <div class="related-grid">
+        <a href="currency-converter.html" class="related-card">💱 Currency Converter</a>
+        <a href="unit-converter.html" class="related-card">📏 Unit Converter</a>
+        <a href="adsense-calculator.html" class="related-card">📈 AdSense Calculator</a>
+        <a href="invoice-generator.html" class="related-card">🧾 Invoice Generator</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid footer-grid-5">
+      <div class="footer-brand"><div class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></div><p>Free, private file conversion for everyone.</p></div>
+      <div class="footer-col"><h5>Tools</h5><ul><li><a href="currency-converter.html">Currency Converter</a></li><li><a href="unit-converter.html">Unit Converter</a></li><li><a href="invoice-generator.html">Invoice Generator</a></li><li><a href="json-to-csv.html">JSON to CSV</a></li></ul></div>
+      <div class="footer-col"><h5>AI Studio</h5><ul><li><a href="../ai/image.html">AI Images</a></li><li><a href="../ai/video.html">AI Video</a></li><li><a href="../ai/music.html">AI Music</a></li><li><a href="../ai/writer.html">AI Writer</a></li></ul></div>
+      <div class="footer-col"><h5>Company</h5><ul><li><a href="../about.html">About</a></li><li><a href="../blog/">Blog</a></li><li><a href="../privacy.html">Privacy</a></li><li><a href="../terms.html">Terms</a></li></ul></div>
+      <div class="footer-col"><h5>Help</h5><ul><li><a href="../contact.html">Contact</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><div>© <span data-year>2026</span> Desi Jugad.</div><div class="made-in"><span class="flag-in"></span>Made in India, built for the world.</div></div>
+  </div>
+</footer>
+<script src="../assets/js/main.js"></script>
+<script>
+(function(){
+  const INR = v => '₹' + Math.round(v).toLocaleString('en-IN');
+  function getP(){ return parseFloat(document.getElementById('n-p').value)||0; }
+  function getR(){ return parseFloat(document.getElementById('n-r').value)||0; }
+  function getT(){
+    const v = parseFloat(document.getElementById('n-t').value)||0;
+    return document.getElementById('t-unit').value === 'years' ? v*12 : v;
+  }
+
+  function calc(){
+    const P = getP(), annual = getR(), n = getT();
+    if(!P||!annual||!n){ return; }
+    const r = annual/12/100;
+    const emi = P*r*Math.pow(1+r,n)/(Math.pow(1+r,n)-1);
+    const total = emi*n;
+    const interest = total-P;
+    document.getElementById('res-emi').textContent = INR(emi);
+    document.getElementById('res-int').textContent = INR(interest);
+    document.getElementById('res-total').textContent = INR(total);
+    drawDonut(P,interest);
+    buildAmort(P,r,n,emi);
+    // sync labels
+    document.getElementById('lbl-p').textContent = INR(P);
+    document.getElementById('lbl-r').textContent = annual+'%';
+    const tu = document.getElementById('t-unit').value;
+    document.getElementById('lbl-t').textContent = tu==='years'?(getT()/12).toFixed(1)+' yr':n+' mo';
+  }
+
+  function drawDonut(principal, interest){
+    const c = document.getElementById('donut');
+    const ctx = c.getContext('2d');
+    const cx=65,cy=65,r=50,lw=18;
+    const total=principal+interest;
+    const pAngle = (principal/total)*2*Math.PI;
+    ctx.clearRect(0,0,130,130);
+    // interest arc
+    ctx.beginPath(); ctx.arc(cx,cy,r,-Math.PI/2,-Math.PI/2+2*Math.PI,false);
+    ctx.strokeStyle='#E87C3E'; ctx.lineWidth=lw; ctx.stroke();
+    // principal arc
+    ctx.beginPath(); ctx.arc(cx,cy,r,-Math.PI/2,-Math.PI/2+pAngle,false);
+    ctx.strokeStyle='#7051BC'; ctx.lineWidth=lw; ctx.stroke();
+    // center text
+    ctx.fillStyle='#141413'; ctx.textAlign='center'; ctx.textBaseline='middle';
+    ctx.font='bold 11px sans-serif';
+    ctx.fillText(Math.round(interest/total*100)+'% int.',cx,cy);
+  }
+
+  function buildAmort(P,r,n,emi){
+    const tbody = document.getElementById('amortBody');
+    tbody.innerHTML=''; let bal=P;
+    for(let i=1;i<=n;i++){
+      const int=bal*r, prin=emi-int; bal=Math.max(0,bal-prin);
+      const tr=document.createElement('tr');
+      tr.innerHTML=`<td>${i}</td><td>${INR(emi)}</td><td>${INR(prin)}</td><td>${INR(int)}</td><td>${INR(bal)}</td>`;
+      tbody.appendChild(tr);
+    }
+  }
+
+  // Sync sliders ↔ number inputs
+  function wire(sliderId, numId, min, max){
+    const s=document.getElementById(sliderId), n=document.getElementById(numId);
+    s.addEventListener('input',()=>{ n.value=s.value; calc(); });
+    n.addEventListener('input',()=>{ s.value=Math.max(min,Math.min(max,n.value)); calc(); });
+  }
+  wire('r-p','n-p',10000,10000000);
+  wire('r-r','n-r',1,30);
+  wire('r-t','n-t',1,360);
+  document.getElementById('t-unit').addEventListener('change', calc);
+
+  document.getElementById('amortBtn').addEventListener('click',()=>{
+    const t=document.getElementById('amortTable');
+    const btn=document.getElementById('amortBtn');
+    t.classList.toggle('show');
+    btn.textContent = t.classList.contains('show') ? '▼ Hide amortization schedule' : '▶ Show amortization schedule';
+  });
+
+  calc();
+})();
+</script>
+</body>
+</html>
