@@ -120,7 +120,7 @@
     if (monthlyRate === 0) {
       emi = principal / months;
     } else {
-      emi = (principal * monthlyRate * Math.pow(1 + monthlyRate, months)) / 
+      emi = (principal * monthlyRate * Math.pow(1 + monthlyRate, months)) /
             (Math.pow(1 + monthlyRate, months) - 1);
     }
 

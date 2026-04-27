@@ -53,7 +53,7 @@
 <script>
   function validateEmail(email) {
     email = email.trim().toLowerCase();
-    
+
     if (!email) return null;
 
     // Check basic format
@@ -102,14 +102,14 @@
   function validateEmails() {
     const input = document.getElementById('emailInput').value;
     const emails = input.split('\n').filter(e => e.trim());
-    
+
     if (emails.length === 0) {
       alert('Please enter at least one email');
       return;
     }
 
     const results = emails.map(validateEmail).filter(r => r !== null);
-    
+
     const stats = {
       total: results.length,
       valid: results.filter(r => r.valid && !r.warning).length,
@@ -139,7 +139,7 @@
     results.forEach(result => {
       let className = 'result-item ';
       let icon = '❌';
-      
+
       if (result.valid && !result.warning) {
         className += 'valid';
         icon = '✓';

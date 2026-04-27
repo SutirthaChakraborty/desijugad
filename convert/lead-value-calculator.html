@@ -36,7 +36,7 @@
   <div class="calc-grid">
     <div>
       <h3>Marketing Campaign Details</h3>
-      
+
       <div class="input-group">
         <label for="marketingSpend">Total Marketing Spend (₹)</label>
         <input type="number" id="marketingSpend" value="100000" min="0" step="10000">
@@ -119,7 +119,7 @@
     }
 
     let insightsHTML = '<h3>Campaign Insights</h3>';
-    
+
     insightsHTML += `<p><strong>Sales Customers:</strong> ${customersConverted.toFixed(0)} out of ${leadsGenerated} leads</p>`;
     insightsHTML += `<p><strong>Lifetime Value from Campaign:</strong> ₹${totalLTV.toLocaleString('en-IN', { maximumFractionDigits: 0 })}</p>`;
 
