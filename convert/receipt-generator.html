@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Receipt Generator - Create Free Receipt Online</title>
+  <meta name="description" content="Generate professional receipts instantly. Free receipt maker for small businesses, shops, and freelancers with GST calculation.">
+  <meta name="keywords" content="receipt generator, receipt maker, free receipt, GST receipt, invoice receipt">
+  <link rel="canonical" href="https://desijugad.co.in/convert/receipt-generator.html">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <style>
+    .receipt-builder { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 2rem 0; }
+    .form-section { background: #f9f9f9; padding: 1.5rem; border-radius: 8px; margin-bottom: 1rem; }
+    .form-group { margin: 1rem 0; }
+    .form-group label { display: block; font-weight: 600; margin-bottom: 0.5rem; font-size: 14px; }
+    input, textarea, select { width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; }
+    #receipt { border: 1px solid #ddd; padding: 1.5rem; background: white; border-radius: 8px; font-family: 'Courier New', monospace; font-size: 12px; line-height: 1.6; max-height: 500px; overflow-y: auto; }
+    .receipt-center { text-align: center; }
+    .receipt-divider { border-top: 1px dashed #000; margin: 0.5rem 0; }
+    .receipt-row { display: flex; justify-content: space-between; }
+    button { padding: 0.75rem 1.5rem; background: #0066cc; color: white; border: none; border-radius: 4px; cursor: pointer; margin-top: 0.5rem; }
+    @media (max-width: 768px) { .receipt-builder { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="/" class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></a>
+    <ul class="nav-links"><li><a href="/">Back to Tools</a></li></ul>
+  </div>
+</header>
+
+<main class="container" style="padding: 2rem 0;">
+  <h1>Receipt Generator</h1>
+  <p>Create professional receipts in seconds. Perfect for retail stores, cafes, salons, and service businesses.</p>
+
+  <div class="receipt-builder">
+    <div style="overflow-y: auto; max-height: 500px;">
+      <div class="form-section">
+        <h3>Business Details</h3>
+        <div class="form-group">
+          <label>Business Name</label>
+          <input type="text" id="businessName" placeholder="Your Shop Name" value="Desi Store" onchange="updateReceipt()">
+        </div>
+        <div class="form-group">
+          <label>Receipt #</label>
+          <input type="text" id="receiptNo" placeholder="RCP001" value="RCP001" onchange="updateReceipt()">
+        </div>
+        <div class="form-group">
+          <label>Date</label>
+          <input type="date" id="receiptDate" onchange="updateReceipt()">
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3>Items</h3>
+        <div id="itemsList"></div>
+        <button onclick="addItem()" style="width: 100%;">+ Add Item</button>
+      </div>
+
+      <div class="form-section">
+        <div class="form-group">
+          <label>GST Rate (%)</label>
+          <input type="number" id="gstRate" value="18" min="0" max="100" step="0.5" onchange="updateReceipt()">
+        </div>
+        <div class="form-group">
+          <label>Payment Method</label>
+          <select id="paymentMethod" onchange="updateReceipt()">
+            <option>Cash</option>
+            <option>Card</option>
+            <option>UPI</option>
+            <option>Cheque</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Thank You Message</label>
+          <textarea id="thankYou" placeholder="Thank you for your purchase!" rows="2" onchange="updateReceipt()"></textarea>
+        </div>
+      </div>
+
+      <button onclick="printReceipt()" style="width: 100%; background: #16a34a;">Print Receipt</button>
+    </div>
+
+    <div id="receipt"></div>
+  </div>
+</main>
+
+<script>
+  let itemCount = 0;
+
+  document.getElementById('receiptDate').valueAsDate = new Date();
+
+  function addItem() {
+    itemCount++;
+    const container = document.getElementById('itemsList');
+    const div = document.createElement('div');
+    div.id = 'item' + itemCount;
+    div.style.marginBottom = '0.75rem';
+    div.innerHTML = `
+      <input type="text" placeholder="Item name" class="itemName" onchange="updateReceipt()" style="width: 60%; display: inline-block; margin-right: 0.25rem;">
+      <input type="number" placeholder="Qty" class="itemQty" value="1" min="1" onchange="updateReceipt()" style="width: 15%; display: inline-block; margin-right: 0.25rem;">
+      <input type="number" placeholder="Price" class="itemPrice" step="0.01" onchange="updateReceipt()" style="width: 20%; display: inline-block;">
+      <button onclick="document.getElementById('item${itemCount}').remove(); updateReceipt();" style="padding: 0.2rem 0.5rem; margin-top: 0; background: #dc2626; width: auto;">×</button>
+    `;
+    container.appendChild(div);
+  }
+
+  function updateReceipt() {
+    const businessName = document.getElementById('businessName').value || 'Store';
+    const receiptNo = document.getElementById('receiptNo').value || 'RCP001';
+    const receiptDate = document.getElementById('receiptDate').value || new Date().toLocaleDateString();
+    const gstRate = parseFloat(document.getElementById('gstRate').value) || 0;
+    const paymentMethod = document.getElementById('paymentMethod').value;
+    const thankYou = document.getElementById('thankYou').value;
+
+    const items = Array.from(document.querySelectorAll('[id^="item"]')).map(el => ({
+      name: el.querySelector('.itemName').value,
+      qty: parseFloat(el.querySelector('.itemQty').value) || 0,
+      price: parseFloat(el.querySelector('.itemPrice').value) || 0
+    }));
+
+    let subtotal = 0;
+    let itemsHTML = '';
+    items.forEach(item => {
+      const amount = item.qty * item.price;
+      subtotal += amount;
+      itemsHTML += `<div class="receipt-row"><span>${item.name} x${item.qty}</span><span>₹${amount.toFixed(2)}</span></div>`;
+    });
+
+    const gst = subtotal * gstRate / 100;
+    const total = subtotal + gst;
+
+    let receipt = `
+      <div class="receipt-center"><strong>${businessName}</strong></div>
+      <div class="receipt-center" style="font-size: 11px; color: #666;">Receipt #${receiptNo}</div>
+      <div class="receipt-center" style="font-size: 11px; color: #666;">${receiptDate}</div>
+      <div class="receipt-divider"></div>
+      ${itemsHTML}
+      <div class="receipt-divider"></div>
+      <div class="receipt-row"><span>Subtotal:</span><span>₹${subtotal.toFixed(2)}</span></div>
+      ${gstRate > 0 ? `<div class="receipt-row"><span>GST (${gstRate}%):</span><span>₹${gst.toFixed(2)}</span></div>` : ''}
+      <div class="receipt-row" style="font-weight: bold;"><span>TOTAL:</span><span>₹${total.toFixed(2)}</span></div>
+      <div class="receipt-divider"></div>
+      <div class="receipt-center" style="font-size: 11px;">Payment: ${paymentMethod}</div>
+      ${thankYou ? `<div class="receipt-center" style="font-size: 11px; margin-top: 0.5rem;">${thankYou}</div>` : ''}
+    `;
+
+    document.getElementById('receipt').innerHTML = receipt;
+  }
+
+  function printReceipt() {
+    const printWindow = window.open('', '', 'width=400,height=600');
+    printWindow.document.write(document.getElementById('receipt').innerHTML);
+    printWindow.document.close();
+    printWindow.print();
+  }
+
+  addItem();
+  updateReceipt();
+</script>
+
+<footer style="text-align: center; padding: 2rem 0; color: #999; font-size: 14px;">
+  <p><a href="/blog/receipt-generator-free.html">Learn more about business receipts →</a></p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CAGR Calculator - Compound Annual Growth Rate Calculator Free</title>
+  <meta name="description" content="Calculate CAGR (Compound Annual Growth Rate) for your investments. Free CAGR calculator to measure investment returns and growth performance.">
+  <meta name="keywords" content="CAGR calculator, compound annual growth rate, investment growth, CAGR formula, investment returns">
+  <link rel="canonical" href="https://desijugad.co.in/convert/cagr-calculator.html">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <style>
+    .calc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 2rem 0; }
+    .input-group { margin: 1.5rem 0; }
+    .input-group label { display: block; font-weight: 600; margin-bottom: 0.5rem; }
+    input { width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 4px; }
+    .result-card { background: #f0f7ff; padding: 1.5rem; border-radius: 8px; border-left: 4px solid #0066cc; margin: 1rem 0; }
+    .result-value { font-size: 2.5rem; font-weight: bold; color: #0066cc; }
+    .result-label { color: #666; font-size: 14px; }
+    .comparison { background: #f9f9f9; padding: 1.5rem; border-radius: 8px; margin-top: 2rem; }
+    @media (max-width: 768px) { .calc-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="/" class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></a>
+    <ul class="nav-links"><li><a href="/">Back to Tools</a></li></ul>
+  </div>
+</header>
+
+<main class="container" style="padding: 2rem 0;">
+  <h1>CAGR Calculator</h1>
+  <p>Calculate your investment's Compound Annual Growth Rate (CAGR) to understand true investment performance over time.</p>
+
+  <div class="calc-grid">
+    <div>
+      <div class="input-group">
+        <label for="initialValue">Initial Investment (₹)</label>
+        <input type="number" id="initialValue" value="100000" min="1000" step="10000">
+      </div>
+
+      <div class="input-group">
+        <label for="finalValue">Final Value (₹)</label>
+        <input type="number" id="finalValue" value="250000" min="1000" step="10000">
+      </div>
+
+      <div class="input-group">
+        <label for="years">Time Period (Years)</label>
+        <input type="number" id="years" value="5" min="0.25" max="50" step="0.25">
+      </div>
+
+      <button onclick="calculateCAGR()" style="width: 100%; padding: 0.75rem; background: #0066cc; color: white; border: none; border-radius: 4px; cursor: pointer; margin-top: 1rem;">Calculate CAGR</button>
+    </div>
+
+    <div>
+      <div class="result-card">
+        <div class="result-label">CAGR (Compound Annual Growth Rate)</div>
+        <div class="result-value" id="cagrResult">0%</div>
+      </div>
+
+      <div class="result-card" style="background: #dcfce7; border-left-color: #16a34a;">
+        <div class="result-label">Total Return</div>
+        <div class="result-value" id="totalReturn" style="color: #16a34a;">0%</div>
+      </div>
+
+      <div class="result-card" style="background: #fef3c7; border-left-color: #f59e0b;">
+        <div class="result-label">Absolute Gain</div>
+        <div class="result-value" id="absoluteGain" style="color: #d97706;">₹ 0</div>
+      </div>
+
+      <div class="result-card" style="background: #dbeafe; border-left-color: #0284c7;">
+        <div class="result-label">Your Money Multiplied</div>
+        <div class="result-value" id="multiplier" style="color: #0284c7;">0x</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="comparison">
+    <h3>What This Means</h3>
+    <p id="interpretation">Enter values and click Calculate to see the interpretation</p>
+
+    <div id="comparisonTable"></div>
+  </div>
+</main>
+
+<script>
+  function calculateCAGR() {
+    const initialValue = parseFloat(document.getElementById('initialValue').value) || 0;
+    const finalValue = parseFloat(document.getElementById('finalValue').value) || 0;
+    const years = parseFloat(document.getElementById('years').value) || 1;
+
+    if (initialValue <= 0 || finalValue <= 0) {
+      alert('Please enter valid investment amounts');
+      return;
+    }
+
+    // CAGR = (Ending Value / Beginning Value)^(1/n) - 1
+    const cagr = (Math.pow(finalValue / initialValue, 1 / years) - 1) * 100;
+    const totalReturn = ((finalValue - initialValue) / initialValue) * 100;
+    const absoluteGain = finalValue - initialValue;
+    const multiplier = finalValue / initialValue;
+
+    document.getElementById('cagrResult').textContent = cagr.toFixed(2) + '%';
+    document.getElementById('totalReturn').textContent = totalReturn.toFixed(2) + '%';
+    document.getElementById('absoluteGain').textContent = '₹ ' + absoluteGain.toLocaleString('en-IN', { maximumFractionDigits: 0 });
+    document.getElementById('multiplier').textContent = multiplier.toFixed(2) + 'x';
+
+    let interpretation = '';
+    if (cagr > 0) {
+      if (cagr < 5) interpretation = 'Low growth (< 5% CAGR) — Conservative investment like bonds or savings accounts';
+      else if (cagr < 10) interpretation = 'Moderate growth (5-10% CAGR) — Typical for diversified portfolios';
+      else if (cagr < 15) interpretation = 'Good growth (10-15% CAGR) — Strong equity market performance';
+      else if (cagr < 25) interpretation = 'Excellent growth (15-25% CAGR) — Above-average investment returns';
+      else interpretation = 'Exceptional growth (> 25% CAGR) — Outstanding performance, rare to sustain';
+    } else {
+      interpretation = 'Negative return — Your investment has decreased in value';
+    }
+
+    document.getElementById('interpretation').textContent = interpretation;
+
+    // Generate comparison table
+    let comparisonHTML = '<h3 style="margin-top: 1.5rem;">Growth Comparison</h3><table><tr><th>Benchmark</th><th>Average CAGR</th><th>Your CAGR</th></tr>';
+    
+    const benchmarks = [
+      { name: 'Bank Fixed Deposit', rate: 6.5 },
+      { name: 'Inflation Rate (India)', rate: 6 },
+      { name: 'Nifty 50 Average', rate: 12 },
+      { name: 'S&P 500 Average', rate: 10 }
+    ];
+
+    benchmarks.forEach(b => {
+      const isGood = cagr >= b.rate ? '✓' : '';
+      const style = cagr >= b.rate ? 'color: #16a34a; font-weight: bold;' : '';
+      comparisonHTML += `<tr><td>${b.name}</td><td>${b.rate}%</td><td style="${style}">${cagr.toFixed(2)}% ${isGood}</td></tr>`;
+    });
+    comparisonHTML += '</table>';
+
+    document.getElementById('comparisonTable').innerHTML = comparisonHTML;
+  }
+
+  document.getElementById('initialValue').addEventListener('change', calculateCAGR);
+  document.getElementById('finalValue').addEventListener('change', calculateCAGR);
+  document.getElementById('years').addEventListener('change', calculateCAGR);
+
+  calculateCAGR();
+</script>
+
+<footer style="text-align: center; padding: 2rem 0; color: #999; font-size: 14px;">
+  <p><a href="/blog/cagr-calculator-free.html">Learn more about CAGR and investment returns →</a></p>
+</footer>
+
+</body>
+</html>

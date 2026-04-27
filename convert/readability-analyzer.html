@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Readability Analyzer - Check Text Readability Score Free</title>
+  <meta name="description" content="Analyze your content's readability with Flesch-Kincaid, Flesch Reading Ease, and Dale-Chall scores. Free readability checker tool for writers, bloggers, and SEO professionals.">
+  <meta name="keywords" content="readability analyzer, readability checker, Flesch Kincaid, reading level, text analysis free, content readability">
+  <link rel="canonical" href="https://desijugad.co.in/convert/readability-analyzer.html">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <style>
+    .metric-card { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 1.5rem; border-radius: 8px; text-align: center; margin: 1rem 0; }
+    .metric-value { font-size: 2.5rem; font-weight: bold; }
+    .metric-label { font-size: 14px; opacity: 0.9; }
+    textarea { width: 100%; padding: 1rem; border: 1px solid #ddd; border-radius: 4px; font-family: monospace; min-height: 200px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin: 2rem 0; }
+  </style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="/" class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></a>
+    <ul class="nav-links"><li><a href="/">Back to Tools</a></li></ul>
+  </div>
+</header>
+
+<main class="container" style="padding: 2rem 0;">
+  <h1>Readability Analyzer</h1>
+  <p>Paste your content and get detailed readability metrics. Optimize for your target audience with Flesch-Kincaid, Flesch Reading Ease, and more.</p>
+
+  <label for="textInput" style="display: block; font-weight: 600; margin: 1rem 0;">Paste your text here:</label>
+  <textarea id="textInput" placeholder="Paste your article, blog post, or content..."></textarea>
+
+  <div class="stats-grid">
+    <div class="metric-card">
+      <div class="metric-label">Flesch Reading Ease</div>
+      <div class="metric-value" id="fleschReading">0</div>
+      <small id="fleschReadingLevel">Grade Level</small>
+    </div>
+    <div class="metric-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+      <div class="metric-label">Grade Level</div>
+      <div class="metric-value" id="gradeLevel">0</div>
+      <small id="gradeLevelDesc">US School Grade</small>
+    </div>
+    <div class="metric-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+      <div class="metric-label">Words</div>
+      <div class="metric-value" id="wordCount">0</div>
+      <small>Total Words</small>
+    </div>
+    <div class="metric-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+      <div class="metric-label">Sentences</div>
+      <div class="metric-value" id="sentenceCount">0</div>
+      <small>Total Sentences</small>
+    </div>
+    <div class="metric-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+      <div class="metric-label">Avg Words/Sentence</div>
+      <div class="metric-value" id="avgWordsPerSent">0</div>
+      <small>Word Density</small>
+    </div>
+    <div class="metric-card" style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);">
+      <div class="metric-label">Syllables</div>
+      <div class="metric-value" id="syllableCount">0</div>
+      <small>Total Syllables</small>
+    </div>
+  </div>
+
+  <div style="background: #f9f9f9; padding: 1.5rem; border-radius: 8px; margin-top: 2rem;">
+    <h3>Readability Interpretation</h3>
+    <p id="interpretation">Start typing to analyze readability</p>
+    <ul id="recommendations" style="list-style-position: inside; margin-top: 1rem;"></ul>
+  </div>
+</main>
+
+<script>
+  const textInput = document.getElementById('textInput');
+  const fleschReading = document.getElementById('fleschReading');
+  const gradeLevel = document.getElementById('gradeLevel');
+  const wordCount = document.getElementById('wordCount');
+  const sentenceCount = document.getElementById('sentenceCount');
+  const avgWordsPerSent = document.getElementById('avgWordsPerSent');
+  const syllableCount = document.getElementById('syllableCount');
+  const interpretation = document.getElementById('interpretation');
+  const recommendations = document.getElementById('recommendations');
+
+  function countSyllables(word) {
+    word = word.toLowerCase();
+    let count = 0;
+    let vowels = 'aeiouy';
+    let previousWasVowel = false;
+
+    for (let char of word) {
+      const isVowel = vowels.includes(char);
+      if (isVowel && !previousWasVowel) count++;
+      previousWasVowel = isVowel;
+    }
+
+    if (word.endsWith('e')) count--;
+    if (word.endsWith('le')) count++;
+    return Math.max(1, count);
+  }
+
+  function analyzeText() {
+    const text = textInput.value.trim();
+    if (!text) {
+      wordCount.textContent = '0';
+      sentenceCount.textContent = '0';
+      fleschReading.textContent = '0';
+      gradeLevel.textContent = '0';
+      return;
+    }
+
+    const words = text.match(/\b[a-z]+\b/gi) || [];
+    const sentences = text.match(/[.!?]+/g) || [];
+    let syllables = 0;
+
+    words.forEach(word => {
+      syllables += countSyllables(word);
+    });
+
+    const w = words.length;
+    const s = Math.max(1, sentences.length);
+    const sy = Math.max(1, syllables);
+
+    const flesch = 206.835 - 1.015 * (w / s) - 84.6 * (sy / w);
+    const grade = 0.39 * (w / s) + 11.8 * (sy / w) - 15.59;
+
+    wordCount.textContent = w;
+    sentenceCount.textContent = s;
+    avgWordsPerSent.textContent = (w / s).toFixed(1);
+    syllableCount.textContent = sy;
+    fleschReading.textContent = Math.max(0, Math.min(100, Math.round(flesch)));
+    gradeLevel.textContent = Math.max(0, Math.round(grade));
+
+    const fleschScore = Math.max(0, Math.min(100, flesch));
+    let level = '';
+    let advice = [];
+
+    if (fleschScore >= 90) {
+      level = '5th Grade (Very Easy) — Best for general audience';
+      advice.push('✓ Excellent for web content');
+    } else if (fleschScore >= 70) {
+      level = '8th Grade (Easy) — Most blogs use this level';
+      advice.push('✓ Good readability for most users');
+    } else if (fleschScore >= 50) {
+      level = '10th Grade (Fairly Difficult) — College level';
+      advice.push('✓ Good for educated audience');
+    } else if (fleschScore >= 30) {
+      level = '13th Grade (Difficult) — College graduate';
+      advice.push('⚠️ May be too complex for casual readers');
+      advice.push('Consider breaking sentences into shorter ones');
+    } else {
+      level = '16+ Grade (Very Difficult) — Expert content';
+      advice.push('⚠️ Very complex, not for general audience');
+      advice.push('Use shorter sentences and simpler words');
+    }
+
+    if (w / s > 20) advice.push('⚠️ Sentences are long; consider breaking them up');
+    if (sy / w > 0.3) advice.push('⚠️ Too many complex words; use simpler vocabulary');
+    if (w < 100) advice.push('📝 Add more content for better analysis');
+
+    interpretation.textContent = level;
+    recommendations.innerHTML = advice.map(a => `<li>${a}</li>`).join('');
+  }
+
+  textInput.addEventListener('input', analyzeText);
+</script>
+
+<footer style="text-align: center; padding: 2rem 0; color: #999; font-size: 14px;">
+  <p><a href="/blog/readability-analyzer-free.html">Learn more about readability metrics →</a></p>
+</footer>
+
+</body>
+</html>

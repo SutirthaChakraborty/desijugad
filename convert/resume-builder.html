@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resume Builder - Create Professional Resume Free</title>
+  <meta name="description" content="Create a professional resume instantly. Free resume builder with templates, instant preview, and PDF download for job applications.">
+  <meta name="keywords" content="resume builder, resume maker, free resume, CV builder, professional resume">
+  <link rel="canonical" href="https://desijugad.co.in/convert/resume-builder.html">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <style>
+    .builder-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 2rem 0; }
+    .form-section { background: #f9f9f9; padding: 1.5rem; border-radius: 8px; margin-bottom: 1rem; }
+    .form-group { margin: 1rem 0; }
+    .form-group label { display: block; font-weight: 600; margin-bottom: 0.5rem; }
+    input, textarea { width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px; font-family: inherit; }
+    textarea { resize: vertical; min-height: 60px; }
+    #preview { border: 1px solid #ddd; padding: 2rem; background: white; border-radius: 8px; font-family: 'Georgia', serif; line-height: 1.6; max-height: 600px; overflow-y: auto; }
+    .resume-name { font-size: 1.8rem; font-weight: bold; margin-bottom: 0.5rem; }
+    .resume-contact { font-size: 0.9rem; color: #666; margin-bottom: 1rem; }
+    .resume-section { margin: 1.5rem 0; }
+    .resume-section-title { font-size: 1.1rem; font-weight: bold; border-bottom: 2px solid #333; padding-bottom: 0.5rem; }
+    .resume-entry { margin: 0.75rem 0; }
+    .resume-entry-title { font-weight: bold; }
+    .resume-entry-subtitle { color: #666; font-size: 0.9rem; }
+    button { padding: 0.75rem 1.5rem; background: #0066cc; color: white; border: none; border-radius: 4px; cursor: pointer; margin-top: 0.5rem; margin-right: 0.5rem; }
+    .add-btn { background: #0066cc; }
+    .remove-btn { background: #dc2626; padding: 0.3rem 0.75rem; margin: 0; }
+    @media (max-width: 768px) { .builder-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="/" class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></a>
+    <ul class="nav-links"><li><a href="/">Back to Tools</a></li></ul>
+  </div>
+</header>
+
+<main class="container" style="padding: 2rem 0;">
+  <h1>Resume Builder</h1>
+  <p>Create a professional resume in minutes with our free resume builder. Add your experience, education, and skills.</p>
+
+  <div class="builder-grid">
+    <div style="overflow-y: auto; max-height: 600px;">
+      <div class="form-section">
+        <h3>Personal Details</h3>
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" id="fullName" placeholder="John Doe" onchange="updatePreview()">
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="email" placeholder="john@example.com" onchange="updatePreview()">
+        </div>
+        <div class="form-group">
+          <label>Phone</label>
+          <input type="tel" id="phone" placeholder="+91 XXXXX XXXXX" onchange="updatePreview()">
+        </div>
+        <div class="form-group">
+          <label>Professional Summary</label>
+          <textarea id="summary" placeholder="Brief overview of your skills and experience" onchange="updatePreview()"></textarea>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3>Work Experience</h3>
+        <div id="experienceList"></div>
+        <button class="add-btn" onclick="addExperience()">+ Add Experience</button>
+      </div>
+
+      <div class="form-section">
+        <h3>Education</h3>
+        <div id="educationList"></div>
+        <button class="add-btn" onclick="addEducation()">+ Add Education</button>
+      </div>
+
+      <div class="form-section">
+        <h3>Skills</h3>
+        <div class="form-group">
+          <label>Skills (comma separated)</label>
+          <textarea id="skills" placeholder="JavaScript, Python, Project Management" onchange="updatePreview()"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div id="preview"></div>
+  </div>
+
+  <button onclick="printResume()" style="width: 100%; padding: 1rem; background: #16a34a; font-size: 1rem; margin-top: 1rem;">Print Resume</button>
+</main>
+
+<script>
+  let expCount = 0, eduCount = 0;
+
+  function addExperience() {
+    expCount++;
+    const container = document.getElementById('experienceList');
+    const div = document.createElement('div');
+    div.id = 'exp' + expCount;
+    div.style.marginBottom = '1rem';
+    div.innerHTML = `
+      <input type="text" placeholder="Job Title" class="expTitle" onchange="updatePreview()">
+      <input type="text" placeholder="Company" class="expCompany" onchange="updatePreview()">
+      <input type="text" placeholder="Duration (e.g., Jan 2022 - Present)" class="expDuration" onchange="updatePreview()">
+      <textarea placeholder="Description" class="expDesc" onchange="updatePreview()"></textarea>
+      <button class="remove-btn" onclick="document.getElementById('exp${expCount}').remove(); updatePreview();">Remove</button>
+    `;
+    container.appendChild(div);
+  }
+
+  function addEducation() {
+    eduCount++;
+    const container = document.getElementById('educationList');
+    const div = document.createElement('div');
+    div.id = 'edu' + eduCount;
+    div.style.marginBottom = '1rem';
+    div.innerHTML = `
+      <input type="text" placeholder="Degree/Certification" class="eduDegree" onchange="updatePreview()">
+      <input type="text" placeholder="Institution" class="eduInst" onchange="updatePreview()">
+      <input type="text" placeholder="Year (e.g., 2020)" class="eduYear" onchange="updatePreview()">
+      <button class="remove-btn" onclick="document.getElementById('edu${eduCount}').remove(); updatePreview();">Remove</button>
+    `;
+    container.appendChild(div);
+  }
+
+  function updatePreview() {
+    const fullName = document.getElementById('fullName').value || 'Your Name';
+    const email = document.getElementById('email').value;
+    const phone = document.getElementById('phone').value;
+    const summary = document.getElementById('summary').value;
+    const skills = document.getElementById('skills').value;
+
+    let html = `
+      <div class="resume-name">${fullName}</div>
+      <div class="resume-contact">${email}${phone ? ' • ' + phone : ''}</div>
+    `;
+
+    if (summary) {
+      html += `<div class="resume-section"><div class="resume-section-title">Professional Summary</div><p>${summary}</p></div>`;
+    }
+
+    // Experience
+    const experiences = Array.from(document.querySelectorAll('[id^="exp"]'));
+    if (experiences.length > 0) {
+      html += '<div class="resume-section"><div class="resume-section-title">Experience</div>';
+      experiences.forEach(exp => {
+        const title = exp.querySelector('.expTitle').value;
+        const company = exp.querySelector('.expCompany').value;
+        const duration = exp.querySelector('.expDuration').value;
+        const desc = exp.querySelector('.expDesc').value;
+        if (title || company) {
+          html += `<div class="resume-entry">
+            <div class="resume-entry-title">${title}${company ? ' • ' + company : ''}</div>
+            <div class="resume-entry-subtitle">${duration}</div>
+            <p>${desc}</p>
+          </div>`;
+        }
+      });
+      html += '</div>';
+    }
+
+    // Education
+    const educations = Array.from(document.querySelectorAll('[id^="edu"]'));
+    if (educations.length > 0) {
+      html += '<div class="resume-section"><div class="resume-section-title">Education</div>';
+      educations.forEach(edu => {
+        const degree = edu.querySelector('.eduDegree').value;
+        const inst = edu.querySelector('.eduInst').value;
+        const year = edu.querySelector('.eduYear').value;
+        if (degree || inst) {
+          html += `<div class="resume-entry">
+            <div class="resume-entry-title">${degree}</div>
+            <div class="resume-entry-subtitle">${inst}${year ? ' • ' + year : ''}</div>
+          </div>`;
+        }
+      });
+      html += '</div>';
+    }
+
+    if (skills) {
+      html += `<div class="resume-section"><div class="resume-section-title">Skills</div><p>${skills.split(',').map(s => s.trim()).join(' • ')}</p></div>`;
+    }
+
+    document.getElementById('preview').innerHTML = html;
+  }
+
+  function printResume() {
+    const printWindow = window.open('', '', 'width=900,height=1200');
+    printWindow.document.write(document.getElementById('preview').innerHTML);
+    printWindow.document.close();
+    printWindow.print();
+  }
+
+  addExperience();
+  addEducation();
+  updatePreview();
+</script>
+
+<footer style="text-align: center; padding: 2rem 0; color: #999; font-size: 14px;">
+  <p><a href="/blog/resume-builder-free.html">Learn more about resume writing →</a></p>
+</footer>
+
+</body>
+</html>

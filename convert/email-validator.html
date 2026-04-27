@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Email Validator - Check Email Address Format Free</title>
+  <meta name="description" content="Validate email addresses in bulk. Free email validator to check email format, syntax, and deliverability without sending messages.">
+  <meta name="keywords" content="email validator, email checker, email verification free, bulk email validator, email format">
+  <link rel="canonical" href="https://desijugad.co.in/convert/email-validator.html">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <style>
+    .validator-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 2rem 0; }
+    textarea { width: 100%; padding: 1rem; border: 1px solid #ddd; border-radius: 4px; font-family: monospace; min-height: 300px; }
+    .result-item { display: flex; align-items: center; padding: 0.75rem; border-radius: 4px; margin: 0.5rem 0; }
+    .result-item.valid { background: #dcfce7; color: #16a34a; }
+    .result-item.invalid { background: #fee2e2; color: #dc2626; }
+    .result-item.warning { background: #fef3c7; color: #d97706; }
+    .stats { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin: 1rem 0; }
+    .stat-card { background: #f9f9f9; padding: 1rem; border-radius: 8px; text-align: center; }
+    .stat-value { font-size: 2rem; font-weight: bold; color: #0066cc; }
+    .stat-label { color: #666; font-size: 14px; margin-top: 0.5rem; }
+    button { padding: 0.75rem 1.5rem; background: #0066cc; color: white; border: none; border-radius: 4px; cursor: pointer; width: 100%; margin-top: 1rem; }
+    @media (max-width: 768px) { .validator-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="/" class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></a>
+    <ul class="nav-links"><li><a href="/">Back to Tools</a></li></ul>
+  </div>
+</header>
+
+<main class="container" style="padding: 2rem 0;">
+  <h1>Email Validator</h1>
+  <p>Check email addresses for format validity, domain issues, and common mistakes. Perfect for cleaning email lists.</p>
+
+  <div class="validator-grid">
+    <div>
+      <h3>Paste Emails (one per line)</h3>
+      <textarea id="emailInput" placeholder="john@example.com&#10;jane@company.co.uk&#10;invalid.email@&#10;test@domain.co"></textarea>
+      <button onclick="validateEmails()">Validate Emails</button>
+    </div>
+
+    <div>
+      <div class="stats" id="stats"></div>
+      <div id="results"></div>
+    </div>
+  </div>
+</main>
+
+<script>
+  function validateEmail(email) {
+    email = email.trim().toLowerCase();
+    
+    if (!email) return null;
+
+    // Check basic format
+    const basicRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!basicRegex.test(email)) {
+      return { email, valid: false, reason: 'Invalid format' };
+    }
+
+    // More strict RFC 5322 check
+    const strictRegex = /^[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!strictRegex.test(email)) {
+      return { email, valid: false, reason: 'Invalid characters' };
+    }
+
+    const [localPart, domain] = email.split('@');
+
+    // Check local part
+    if (localPart.length > 64) {
+      return { email, valid: false, reason: 'Local part too long (>64 chars)' };
+    }
+    if (localPart.startsWith('.') || localPart.endsWith('.')) {
+      return { email, valid: false, reason: 'Local part starts/ends with dot' };
+    }
+    if (localPart.includes('..')) {
+      return { email, valid: false, reason: 'Consecutive dots in local part' };
+    }
+
+    // Check domain
+    if (domain.length > 255) {
+      return { email, valid: false, reason: 'Domain too long (>255 chars)' };
+    }
+    if (domain.startsWith('-') || domain.endsWith('-')) {
+      return { email, valid: false, reason: 'Domain starts/ends with hyphen' };
+    }
+
+    // Check for common typos
+    const commonDomains = ['gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com', 'aol.com'];
+    const typos = ['gmial.com', 'gmai.com', 'yahooo.com', 'hotmial.com', 'outlok.com'];
+    if (typos.includes(domain)) {
+      return { email, valid: true, reason: 'Warning: Possible domain typo', warning: true };
+    }
+
+    return { email, valid: true, reason: 'Valid format' };
+  }
+
+  function validateEmails() {
+    const input = document.getElementById('emailInput').value;
+    const emails = input.split('\n').filter(e => e.trim());
+    
+    if (emails.length === 0) {
+      alert('Please enter at least one email');
+      return;
+    }
+
+    const results = emails.map(validateEmail).filter(r => r !== null);
+    
+    const stats = {
+      total: results.length,
+      valid: results.filter(r => r.valid && !r.warning).length,
+      warning: results.filter(r => r.warning).length,
+      invalid: results.filter(r => !r.valid).length
+    };
+
+    // Display stats
+    const statsHTML = `
+      <div class="stat-card">
+        <div class="stat-value">${stats.total}</div>
+        <div class="stat-label">Total Emails</div>
+      </div>
+      <div class="stat-card" style="background: #dcfce7;">
+        <div class="stat-value" style="color: #16a34a;">${stats.valid}</div>
+        <div class="stat-label">Valid</div>
+      </div>
+      <div class="stat-card" style="background: #fee2e2;">
+        <div class="stat-value" style="color: #dc2626;">${stats.invalid}</div>
+        <div class="stat-label">Invalid</div>
+      </div>
+    `;
+    document.getElementById('stats').innerHTML = statsHTML;
+
+    // Display results
+    let resultsHTML = '<h3>Results</h3>';
+    results.forEach(result => {
+      let className = 'result-item ';
+      let icon = '❌';
+      
+      if (result.valid && !result.warning) {
+        className += 'valid';
+        icon = '✓';
+      } else if (result.warning) {
+        className += 'warning';
+        icon = '⚠️';
+      } else {
+        className += 'invalid';
+      }
+
+      resultsHTML += `<div class="${className}"><span style="margin-right: 0.5rem;">${icon}</span><span><strong>${result.email}</strong> — ${result.reason}</span></div>`;
+    });
+
+    document.getElementById('results').innerHTML = resultsHTML;
+  }
+
+  // Auto-validate on paste
+  document.getElementById('emailInput').addEventListener('paste', () => {
+    setTimeout(validateEmails, 100);
+  });
+</script>
+
+<footer style="text-align: center; padding: 2rem 0; color: #999; font-size: 14px;">
+  <p><a href="/blog/email-validator-free.html">Learn more about email validation →</a></p>
+</footer>
+
+</body>
+</html>

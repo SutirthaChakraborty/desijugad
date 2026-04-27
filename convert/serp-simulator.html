@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SERP Simulator - Preview Your Google Search Result</title>
+  <meta name="description" content="Preview exactly how your webpage will appear in Google search results. Optimize title tags and meta descriptions for maximum CTR with our free SERP simulator.">
+  <meta name="keywords" content="SERP simulator, Google search preview, meta description preview, title tag optimizer, SERP preview free">
+  <link rel="canonical" href="https://desijugad.co.in/convert/serp-simulator.html">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://desijugad.co.in/convert/serp-simulator.html">
+  <meta property="og:title" content="SERP Simulator — Preview Google Search Results">
+  <meta property="og:description" content="See exactly how your website appears in Google search results. Optimize title and meta description for higher CTR.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="SERP Simulator">
+  <meta name="twitter:description" content="Preview how your page appears in Google search results.">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <style>
+    .preview-container { margin: 2rem 0; padding: 1.5rem; background: #f9f9f9; border-radius: 8px; }
+    .google-preview { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto; font-size: 14px; max-width: 600px; }
+    .preview-url { color: #006621; font-size: 13px; }
+    .preview-title { color: #1a0dbe; font-size: 18px; font-weight: 500; text-decoration: none; }
+    .preview-description { color: #545454; font-size: 14px; line-height: 1.6; margin-top: 4px; }
+    .character-counter { font-size: 12px; color: #666; margin-top: 0.5rem; }
+    .warning { color: #e37400; font-weight: 500; }
+    .good { color: #188038; font-weight: 500; }
+    input, textarea { width: 100%; padding: 0.75rem; margin: 0.5rem 0 1rem; border: 1px solid #ddd; border-radius: 4px; font-family: inherit; }
+    label { display: block; font-weight: 600; margin-top: 1.5rem; color: #333; }
+  </style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="/" class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></a>
+    <ul class="nav-links"><li><a href="/">Back to Converters</a></li></ul>
+  </div>
+</header>
+
+<main class="container" style="padding: 2rem 0;">
+  <h1>SERP Simulator</h1>
+  <p>Preview exactly how your webpage will appear in Google search results. Optimize your title tag and meta description to maximize click-through rates.</p>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+    <div>
+      <label for="url">Website URL</label>
+      <input type="text" id="url" placeholder="https://example.com/page" value="https://desijugad.co.in">
+
+      <label for="title">Title Tag (60 chars ideal)</label>
+      <textarea id="title" rows="2" placeholder="Your page title here">SERP Simulator — Preview Your Google Search Result</textarea>
+      <div class="character-counter"><span id="titleCount">0</span>/60 chars | <span id="titlePixels">0</span>px width</div>
+
+      <label for="description">Meta Description (160 chars ideal)</label>
+      <textarea id="description" rows="3" placeholder="Your meta description here">Preview exactly how your webpage will appear in Google search results. Optimize title tags and meta descriptions for maximum CTR with our free SERP simulator.</textarea>
+      <div class="character-counter"><span id="descCount">0</span>/160 chars | <span id="descPixels">0</span>px width</div>
+
+      <label for="keyword">Focus Keyword (optional)</label>
+      <input type="text" id="keyword" placeholder="e.g., free SERP simulator">
+    </div>
+
+    <div>
+      <h3>Google Search Preview</h3>
+      <div class="preview-container">
+        <div class="google-preview">
+          <div class="preview-url" id="previewUrl">https://desijugad.co.in</div>
+          <div class="preview-title" id="previewTitle">SERP Simulator — Preview Your Google Search Result</div>
+          <div class="preview-description" id="previewDescription">Preview exactly how your webpage will appear in Google search results. Optimize title tags and meta descriptions for maximum CTR with our free SERP simulator.</div>
+        </div>
+      </div>
+
+      <h3>SEO Analysis</h3>
+      <div id="seoAnalysis" style="padding: 1rem; background: #f0f0f0; border-radius: 4px; font-size: 14px;">
+        <p>Fill in your content to get SEO recommendations</p>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+  const urlInput = document.getElementById('url');
+  const titleInput = document.getElementById('title');
+  const descInput = document.getElementById('description');
+  const keywordInput = document.getElementById('keyword');
+
+  const previewUrl = document.getElementById('previewUrl');
+  const previewTitle = document.getElementById('previewTitle');
+  const previewDescription = document.getElementById('previewDescription');
+  const titleCount = document.getElementById('titleCount');
+  const descCount = document.getElementById('descCount');
+  const titlePixels = document.getElementById('titlePixels');
+  const descPixels = document.getElementById('descPixels');
+  const seoAnalysis = document.getElementById('seoAnalysis');
+
+  function measurePixelWidth(text, fontSize = '18px') {
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    ctx.font = fontSize + ' -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto';
+    return Math.round(ctx.measureText(text).width);
+  }
+
+  function updatePreview() {
+    const url = urlInput.value || 'https://example.com';
+    const title = titleInput.value || '';
+    const desc = descInput.value || '';
+    const keyword = keywordInput.value.toLowerCase();
+
+    previewUrl.textContent = url.replace('https://', '').replace('http://', '').split('/')[0];
+    previewTitle.textContent = title;
+    previewDescription.textContent = desc;
+
+    titleCount.textContent = title.length;
+    descCount.textContent = desc.length;
+    titlePixels.textContent = measurePixelWidth(title);
+    descPixels.textContent = measurePixelWidth(desc, '14px');
+
+    let analysis = '';
+    let issues = [];
+
+    // Title analysis
+    if (title.length === 0) issues.push('⚠️ Add a title tag');
+    else if (title.length < 30) issues.push('⚠️ Title too short (< 30 chars)');
+    else if (title.length < 50) issues.push('📝 Consider longer title (50+ chars)');
+    else if (title.length > 60) issues.push('⚠️ Title will be truncated (>60 chars)');
+    else issues.push('✓ Title length is good');
+
+    // Description analysis
+    if (desc.length === 0) issues.push('⚠️ Add a meta description');
+    else if (desc.length < 120) issues.push('📝 Description could be longer (120+ chars)');
+    else if (desc.length > 160) issues.push('⚠️ Description will be truncated (>160 chars)');
+    else issues.push('✓ Description length is good');
+
+    // Keyword analysis
+    if (keyword) {
+      const titleHasKeyword = title.toLowerCase().includes(keyword);
+      const descHasKeyword = desc.toLowerCase().includes(keyword);
+      if (titleHasKeyword && descHasKeyword) issues.push('✓ Keyword appears in title & description');
+      else if (titleHasKeyword) issues.push('📝 Add keyword to description');
+      else if (descHasKeyword) issues.push('📝 Add keyword to title for better ranking');
+      else issues.push('⚠️ Keyword not found in title or description');
+    }
+
+    seoAnalysis.innerHTML = issues.map(i => `<p>${i}</p>`).join('');
+  }
+
+  urlInput.addEventListener('input', updatePreview);
+  titleInput.addEventListener('input', updatePreview);
+  descInput.addEventListener('input', updatePreview);
+  keywordInput.addEventListener('input', updatePreview);
+
+  updatePreview();
+</script>
+
+<footer style="text-align: center; padding: 2rem 0; color: #999; font-size: 14px;">
+  <p><a href="/blog/serp-simulator-preview-google-results.html">Learn more about optimizing for Google SERPs →</a></p>
+</footer>
+
+</body>
+</html>

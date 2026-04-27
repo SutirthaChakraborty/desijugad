@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lead Value Calculator - Sales ROI Calculator Free</title>
+  <meta name="description" content="Calculate the value of each lead and your marketing ROI. Free lead value calculator for sales teams and marketing professionals.">
+  <meta name="keywords" content="lead value calculator, lead ROI calculator, sales calculator, marketing ROI, cost per lead">
+  <link rel="canonical" href="https://desijugad.co.in/convert/lead-value-calculator.html">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <style>
+    .calc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 2rem 0; }
+    .input-group { margin: 1.5rem 0; }
+    .input-group label { display: block; font-weight: 600; margin-bottom: 0.5rem; }
+    input { width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 4px; }
+    .result-card { background: #f0f7ff; padding: 1.5rem; border-radius: 8px; border-left: 4px solid #0066cc; }
+    .result-value { font-size: 1.8rem; font-weight: bold; color: #0066cc; }
+    .result-label { color: #666; font-size: 14px; }
+    .insights { background: #f9f9f9; padding: 1.5rem; border-radius: 8px; margin-top: 2rem; }
+    @media (max-width: 768px) { .calc-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="/" class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></a>
+    <ul class="nav-links"><li><a href="/">Back to Tools</a></li></ul>
+  </div>
+</header>
+
+<main class="container" style="padding: 2rem 0;">
+  <h1>Lead Value Calculator</h1>
+  <p>Calculate how much each lead is worth and measure your marketing campaign ROI.</p>
+
+  <div class="calc-grid">
+    <div>
+      <h3>Marketing Campaign Details</h3>
+      
+      <div class="input-group">
+        <label for="marketingSpend">Total Marketing Spend (₹)</label>
+        <input type="number" id="marketingSpend" value="100000" min="0" step="10000">
+      </div>
+
+      <div class="input-group">
+        <label for="leadsGenerated">Leads Generated</label>
+        <input type="number" id="leadsGenerated" value="500" min="0" step="1">
+      </div>
+
+      <div class="input-group">
+        <label for="conversionRate">Conversion Rate (%)</label>
+        <input type="number" id="conversionRate" value="5" min="0" max="100" step="0.1">
+      </div>
+
+      <div class="input-group">
+        <label for="avgOrderValue">Average Order Value (₹)</label>
+        <input type="number" id="avgOrderValue" value="10000" min="0" step="1000">
+      </div>
+
+      <div class="input-group">
+        <label for="customerLTV">Customer Lifetime Value (₹)</label>
+        <input type="number" id="customerLTV" value="50000" min="0" step="5000">
+        <small style="color: #999;">Average total revenue from one customer</small>
+      </div>
+
+      <button onclick="calculate()" style="width: 100%; padding: 0.75rem; background: #0066cc; color: white; border: none; border-radius: 4px; cursor: pointer;">Calculate Lead Value</button>
+    </div>
+
+    <div>
+      <div class="result-card">
+        <div class="result-label">Cost Per Lead</div>
+        <div class="result-value" id="costPerLead">₹ 0</div>
+      </div>
+
+      <div class="result-card" style="background: #dcfce7; border-left-color: #16a34a;">
+        <div class="result-label">Total Sales Generated</div>
+        <div class="result-value" id="totalSales" style="color: #16a34a;">₹ 0</div>
+      </div>
+
+      <div class="result-card" style="background: #fef3c7; border-left-color: #f59e0b;">
+        <div class="result-label">Marketing ROI</div>
+        <div class="result-value" id="roi" style="color: #d97706;">0%</div>
+      </div>
+
+      <div class="result-card" style="background: #dbeafe; border-left-color: #0284c7;">
+        <div class="result-label">Profit/Loss</div>
+        <div class="result-value" id="profit" style="color: #0284c7;">₹ 0</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="insights" id="insights"></div>
+</main>
+
+<script>
+  function calculate() {
+    const marketingSpend = parseFloat(document.getElementById('marketingSpend').value) || 0;
+    const leadsGenerated = parseInt(document.getElementById('leadsGenerated').value) || 1;
+    const conversionRate = parseFloat(document.getElementById('conversionRate').value) || 0;
+    const avgOrderValue = parseFloat(document.getElementById('avgOrderValue').value) || 0;
+    const customerLTV = parseFloat(document.getElementById('customerLTV').value) || 0;
+
+    const costPerLead = marketingSpend / leadsGenerated;
+    const customersConverted = leadsGenerated * (conversionRate / 100);
+    const totalSales = customersConverted * avgOrderValue;
+    const totalLTV = customersConverted * customerLTV;
+    const roi = ((totalSales - marketingSpend) / marketingSpend) * 100;
+    const profit = totalSales - marketingSpend;
+
+    document.getElementById('costPerLead').textContent = '₹ ' + costPerLead.toFixed(2);
+    document.getElementById('totalSales').textContent = '₹ ' + totalSales.toLocaleString('en-IN', { maximumFractionDigits: 0 });
+    document.getElementById('roi').textContent = roi.toFixed(1) + '%';
+    document.getElementById('profit').textContent = (profit > 0 ? '+ ' : '') + '₹ ' + profit.toLocaleString('en-IN', { maximumFractionDigits: 0 });
+
+    if (profit < 0) {
+      document.getElementById('profit').style.color = '#dc2626';
+    } else {
+      document.getElementById('profit').style.color = '#0284c7';
+    }
+
+    let insightsHTML = '<h3>Campaign Insights</h3>';
+    
+    insightsHTML += `<p><strong>Sales Customers:</strong> ${customersConverted.toFixed(0)} out of ${leadsGenerated} leads</p>`;
+    insightsHTML += `<p><strong>Lifetime Value from Campaign:</strong> ₹${totalLTV.toLocaleString('en-IN', { maximumFractionDigits: 0 })}</p>`;
+
+    if (roi > 0) {
+      insightsHTML += `<p style="color: #16a34a; font-weight: bold;">✓ Profitable campaign! Every ₹1 spent generates ₹${(1 + roi/100).toFixed(2)}</p>`;
+    } else {
+      insightsHTML += `<p style="color: #dc2626; font-weight: bold;">✗ Campaign not profitable yet</p>`;
+    }
+
+    if (costPerLead > avgOrderValue) {
+      insightsHTML += `<p style="color: #f59e0b; font-weight: bold;">⚠️ Cost per lead (₹${costPerLead.toFixed(0)}) exceeds average order value</p>`;
+    }
+
+    if (conversionRate < 2) {
+      insightsHTML += `<p style="color: #f59e0b;">📊 Improve conversion rate to increase profitability</p>`;
+    }
+
+    document.getElementById('insights').innerHTML = insightsHTML;
+  }
+
+  document.getElementById('marketingSpend').addEventListener('input', calculate);
+  document.getElementById('leadsGenerated').addEventListener('input', calculate);
+  document.getElementById('conversionRate').addEventListener('input', calculate);
+  document.getElementById('avgOrderValue').addEventListener('input', calculate);
+  document.getElementById('customerLTV').addEventListener('input', calculate);
+
+  calculate();
+</script>
+
+<footer style="text-align: center; padding: 2rem 0; color: #999; font-size: 14px;">
+  <p><a href="/blog/lead-value-calculator-free.html">Learn more about marketing ROI →</a></p>
+</footer>
+
+</body>
+</html>
