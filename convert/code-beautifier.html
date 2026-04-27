@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/img/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/img/apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Code Beautifier & Minifier — Format HTML, CSS, JS Free | Desi Jugad</title>
+<meta name="description" content="Beautify and minify HTML, CSS, and JavaScript code online free. Instant formatting with customizable indentation. No sign-up, completely private.">
+<meta name="keywords" content="code beautifier, code formatter, HTML beautifier, CSS formatter, JS beautifier, minify JavaScript, minify CSS, format code online">
+<link rel="canonical" href="https://desijugad.co.in/convert/code-beautifier.html">
+<meta property="og:title" content="Code Beautifier & Minifier — Format HTML, CSS, JS Free">
+<meta property="og:description" content="Beautify and minify HTML, CSS, and JavaScript instantly in your browser. No sign-up needed.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,30..100;1,9..144,300..700,30..100&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+<style>
+.lang-tabs { display:flex; gap:0.5rem; flex-wrap:wrap; margin-top:1.5rem; }
+.lang-btn { padding:0.4rem 1rem; border:2px solid var(--line); border-radius:999px; background:none; font-size:0.88rem; font-weight:600; cursor:pointer; transition:all 0.15s; }
+.lang-btn.active { border-color:var(--indigo); background:var(--indigo); color:#fff; }
+.editor-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.25rem; margin-top:1.25rem; }
+@media (max-width:700px) { .editor-grid { grid-template-columns:1fr; } }
+.editor-pane { display:flex; flex-direction:column; gap:0.5rem; }
+.pane-header { display:flex; justify-content:space-between; align-items:center; }
+.pane-label { font-size:0.82rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--ink-muted); }
+.pane-actions { display:flex; gap:0.4rem; }
+.icon-btn { padding:0.25rem 0.55rem; border:1px solid var(--line); border-radius:6px; background:none; cursor:pointer; font-size:0.8rem; }
+.icon-btn:hover { background:var(--bg-alt); }
+.code-area { width:100%; min-height:340px; padding:1rem; background:var(--surface); border:1.5px solid var(--line); border-radius:var(--radius); font-family:var(--font-mono); font-size:0.85rem; line-height:1.65; resize:vertical; color:var(--ink); }
+.code-area:focus { outline:none; border-color:var(--indigo); }
+.code-area[readonly] { background:var(--bg-alt); }
+.options-bar { display:flex; gap:1rem; flex-wrap:wrap; align-items:center; margin-top:0.75rem; }
+.option-group { display:flex; align-items:center; gap:0.5rem; }
+.option-group label { font-size:0.82rem; color:var(--ink-muted); }
+.option-group select { padding:0.3rem 0.6rem; border:1.5px solid var(--line); border-radius:6px; font-size:0.87rem; background:var(--surface); }
+.char-count { font-size:0.8rem; color:var(--ink-muted); font-family:var(--font-mono); }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="../" class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="../#converters">Converters</a></li>
+      <li><a href="../ai/">AI Studio <span class="badge-new">NEW</span></a></li>
+      <li><a href="../blog/">Blog</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../#converters" class="nav-cta">All tools</a></li>
+    </ul>
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</header>
+
+<main class="converter-page">
+  <div class="container">
+    <nav class="breadcrumb">
+      <a href="../">Home</a><span class="sep">/</span>
+      <a href="../#converters">Converters</a><span class="sep">/</span>
+      <span>Code Beautifier</span>
+    </nav>
+
+    <div class="converter-header">
+      <h1>Code beautifier, <em class="italic">format & minify instantly.</em></h1>
+      <p class="lead">Beautify or minify HTML, CSS, and JavaScript code in your browser. No upload, no server, completely private. Uses js-beautify for formatting.</p>
+    </div>
+
+    <div class="lang-tabs">
+      <button class="lang-btn active" data-lang="js">JavaScript</button>
+      <button class="lang-btn" data-lang="css">CSS</button>
+      <button class="lang-btn" data-lang="html">HTML</button>
+    </div>
+
+    <div class="options-bar">
+      <div class="option-group">
+        <label for="indentSize">Indent</label>
+        <select id="indentSize">
+          <option value="2" selected>2 spaces</option>
+          <option value="4">4 spaces</option>
+          <option value="tab">Tab</option>
+        </select>
+      </div>
+      <button class="btn btn-primary" id="beautifyBtn">Beautify</button>
+      <button class="btn btn-secondary" id="minifyBtn">Minify</button>
+      <button class="btn btn-secondary" id="clearBtn">Clear</button>
+    </div>
+
+    <div class="editor-grid">
+      <div class="editor-pane">
+        <div class="pane-header">
+          <div class="pane-label">Input</div>
+          <div class="pane-actions">
+            <span class="char-count" id="inputCount">0 chars</span>
+            <button class="icon-btn" id="pasteBtn">Paste</button>
+          </div>
+        </div>
+        <textarea class="code-area" id="inputCode" placeholder="Paste your code here…" spellcheck="false"></textarea>
+      </div>
+      <div class="editor-pane">
+        <div class="pane-header">
+          <div class="pane-label">Output</div>
+          <div class="pane-actions">
+            <span class="char-count" id="outputCount">0 chars</span>
+            <button class="icon-btn" id="copyBtn">Copy</button>
+            <button class="icon-btn" id="swapBtn">⇄ Swap</button>
+          </div>
+        </div>
+        <textarea class="code-area" id="outputCode" readonly spellcheck="false"></textarea>
+      </div>
+    </div>
+
+    <section class="info-section" style="margin-top:2rem;">
+      <h2>Beautify vs Minify</h2>
+      <p><strong>Beautify</strong> — adds whitespace, newlines, and indentation to make code human-readable. Use this when working with minified third-party code or debugging.</p>
+      <p><strong>Minify</strong> — removes all unnecessary whitespace, comments, and newlines to produce the smallest possible file. Use before deploying to production for faster page loads.</p>
+      <h2>FAQ</h2>
+      <details class="faq-item" open>
+        <summary>Does minification change how my code works?</summary>
+        <p>No — minification only removes whitespace and comments. It does not rename variables or change logic. The output runs identically to the input.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Does beautifying JSON work here?</summary>
+        <p>For JSON, use the dedicated <a href="json-formatter.html" style="color:var(--indigo);">JSON Formatter</a> — it has better error messages and JSON-specific features.</p>
+      </details>
+    </section>
+
+    <div class="related-tools">
+      <h3>Related tools</h3>
+      <div class="related-grid">
+        <a href="json-formatter.html" class="related-card">📋 JSON Formatter</a>
+        <a href="markdown-to-html.html" class="related-card">📄 Markdown to HTML</a>
+        <a href="diff-checker.html" class="related-card">↔️ Diff Checker</a>
+        <a href="regex-tester.html" class="related-card">🔍 Regex Tester</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid footer-grid-5">
+      <div class="footer-brand">
+        <div class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></div>
+        <p>Free, private file conversion for everyone.</p>
+      </div>
+      <div class="footer-col"><h5>Developer Tools</h5><ul><li><a href="code-beautifier.html">Code Beautifier</a></li><li><a href="json-formatter.html">JSON Formatter</a></li><li><a href="diff-checker.html">Diff Checker</a></li><li><a href="regex-tester.html">Regex Tester</a></li></ul></div>
+      <div class="footer-col"><h5>AI Studio</h5><ul><li><a href="../ai/writer.html">AI Writer</a></li></ul></div>
+      <div class="footer-col"><h5>Company</h5><ul><li><a href="../about.html">About</a></li><li><a href="../blog/">Blog</a></li><li><a href="../privacy.html">Privacy</a></li></ul></div>
+      <div class="footer-col"><h5>Help</h5><ul><li><a href="../contact.html">Contact</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <div>© <span data-year>2026</span> Desi Jugad.</div>
+      <div class="made-in"><span class="flag-in"></span>Made in India, built for the world.</div>
+    </div>
+  </div>
+</footer>
+
+<script src="../assets/js/main.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/js-beautify@1.15.1/js/lib/beautify.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/js-beautify@1.15.1/js/lib/beautify-css.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/js-beautify@1.15.1/js/lib/beautify-html.min.js"></script>
+<script>
+const inputCode  = document.getElementById('inputCode');
+const outputCode = document.getElementById('outputCode');
+const inputCount = document.getElementById('inputCount');
+const outputCount= document.getElementById('outputCount');
+let currentLang  = 'js';
+
+document.querySelectorAll('.lang-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentLang = btn.dataset.lang;
+  });
+});
+
+inputCode.addEventListener('input', () => {
+  inputCount.textContent = inputCode.value.length.toLocaleString() + ' chars';
+});
+
+function getIndent() {
+  const v = document.getElementById('indentSize').value;
+  return v === 'tab' ? '\t' : ' '.repeat(+v);
+}
+
+document.getElementById('beautifyBtn').addEventListener('click', () => {
+  const code = inputCode.value;
+  const indent = getIndent();
+  let out = '';
+  const opts = { indent_char: indent === '\t' ? '\t' : ' ', indent_size: indent === '\t' ? 1 : indent.length };
+  try {
+    if (currentLang === 'js') out = js_beautify(code, opts);
+    else if (currentLang === 'css') out = css_beautify(code, opts);
+    else out = html_beautify(code, opts);
+    outputCode.value = out;
+    outputCount.textContent = out.length.toLocaleString() + ' chars';
+  } catch(e) { outputCode.value = 'Error: ' + e.message; }
+});
+
+document.getElementById('minifyBtn').addEventListener('click', () => {
+  const code = inputCode.value;
+  let out = '';
+  try {
+    if (currentLang === 'js') {
+      out = code.replace(/\/\*[\s\S]*?\*\//g,'').replace(/\/\/.*/g,'').replace(/\s+/g,' ').trim();
+    } else if (currentLang === 'css') {
+      out = code.replace(/\/\*[\s\S]*?\*\//g,'').replace(/\s+/g,' ').replace(/\s*([{};:,>~+])\s*/g,'$1').trim();
+    } else {
+      out = code.replace(/<!--[\s\S]*?-->/g,'').replace(/\s+/g,' ').replace(/>\s+</g,'><').trim();
+    }
+    outputCode.value = out;
+    outputCount.textContent = out.length.toLocaleString() + ' chars';
+  } catch(e) { outputCode.value = 'Error: ' + e.message; }
+});
+
+document.getElementById('clearBtn').addEventListener('click', () => { inputCode.value = ''; outputCode.value = ''; inputCount.textContent = '0 chars'; outputCount.textContent = '0 chars'; });
+document.getElementById('copyBtn').addEventListener('click', () => { navigator.clipboard.writeText(outputCode.value).then(() => showToast('Copied!')); });
+document.getElementById('swapBtn').addEventListener('click', () => { inputCode.value = outputCode.value; outputCode.value = ''; inputCount.textContent = inputCode.value.length.toLocaleString() + ' chars'; outputCount.textContent = '0 chars'; });
+document.getElementById('pasteBtn').addEventListener('click', () => { navigator.clipboard.readText().then(t => { inputCode.value = t; inputCount.textContent = t.length.toLocaleString() + ' chars'; }).catch(() => showToast('Clipboard access denied')); });
+</script>
+</body>
+</html>

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/img/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/img/apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SIP Calculator — Monthly Investment Returns Calculator Free | Desi Jugad</title>
+<meta name="description" content="Calculate SIP returns on your monthly mutual fund investment. See total investment, expected returns, and wealth gained with an interactive chart. Free, instant, no sign-up.">
+<meta name="keywords" content="SIP calculator, SIP return calculator, mutual fund SIP calculator, monthly investment calculator, systematic investment plan, SIP calculator India">
+<link rel="canonical" href="https://desijugad.co.in/convert/sip-calculator.html">
+<meta property="og:title" content="SIP Calculator — Free Monthly Investment Returns Calculator">
+<meta property="og:description" content="Calculate SIP mutual fund returns instantly. See charts, wealth gained, and year-by-year breakdown. Free, no sign-up.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,30..100;1,9..144,300..700,30..100&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+<style>
+.calc-layout { display:grid; grid-template-columns:380px 1fr; gap:2rem; margin-top:1.75rem; }
+@media (max-width:860px) { .calc-layout { grid-template-columns:1fr; } }
+.calc-form { display:flex; flex-direction:column; gap:1.25rem; }
+.field { display:flex; flex-direction:column; gap:0.4rem; }
+.field label { font-size:0.82rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--ink-muted); display:flex; justify-content:space-between; }
+.field-value { font-size:0.95rem; font-weight:700; color:var(--indigo); }
+.range-input { width:100%; accent-color:var(--indigo); cursor:pointer; }
+.number-input { padding:0.55rem 0.85rem; border:1.5px solid var(--line); border-radius:8px; font-family:var(--font-mono); font-size:1rem; background:var(--surface); color:var(--ink); width:100%; }
+.number-input:focus { outline:none; border-color:var(--indigo); }
+.result-cards { display:grid; grid-template-columns:1fr 1fr 1fr; gap:1rem; }
+@media (max-width:600px) { .result-cards { grid-template-columns:1fr; } }
+.result-card { padding:1.25rem; background:var(--bg-alt); border:1px solid var(--line); border-radius:var(--radius); }
+.rc-label { font-size:0.78rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--ink-muted); font-weight:600; }
+.rc-value { font-size:1.5rem; font-weight:700; margin-top:0.35rem; font-family:var(--font-mono); }
+.rc-value.invested { color:var(--ink); }
+.rc-value.returns { color:#16A34A; }
+.rc-value.total { color:var(--indigo); }
+.chart-wrap { margin-top:1.5rem; }
+.donut-wrap { display:flex; align-items:center; gap:2rem; flex-wrap:wrap; }
+.donut-legend { display:flex; flex-direction:column; gap:0.5rem; }
+.legend-item { display:flex; align-items:center; gap:0.6rem; font-size:0.88rem; }
+.legend-dot { width:12px; height:12px; border-radius:50%; flex-shrink:0; }
+.year-table { margin-top:1.5rem; width:100%; border-collapse:collapse; font-size:0.85rem; }
+.year-table th { text-align:right; padding:0.5rem 0.75rem; background:var(--bg-alt); border:1px solid var(--line); font-weight:700; color:var(--ink-muted); font-size:0.78rem; text-transform:uppercase; }
+.year-table th:first-child { text-align:left; }
+.year-table td { padding:0.45rem 0.75rem; border:1px solid var(--line); text-align:right; font-family:var(--font-mono); }
+.year-table td:first-child { text-align:left; }
+.year-table tr:nth-child(even) td { background:var(--bg-alt); }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="../" class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="../#converters">Converters</a></li>
+      <li><a href="../ai/">AI Studio <span class="badge-new">NEW</span></a></li>
+      <li><a href="../blog/">Blog</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../#converters" class="nav-cta">All tools</a></li>
+    </ul>
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</header>
+
+<main class="converter-page">
+  <div class="container">
+    <nav class="breadcrumb">
+      <a href="../">Home</a><span class="sep">/</span>
+      <a href="../#converters">Calculators</a><span class="sep">/</span>
+      <span>SIP Calculator</span>
+    </nav>
+
+    <div class="converter-header">
+      <h1>SIP calculator, <em class="italic">plan your wealth.</em></h1>
+      <p class="lead">Calculate how much your monthly SIP (Systematic Investment Plan) will grow over time. See total investment, expected returns, and a year-by-year breakdown.</p>
+    </div>
+
+    <div class="calc-layout">
+      <div class="calc-form">
+        <div class="field">
+          <label for="monthly">Monthly Investment <span class="field-value" id="monthlyVal">₹5,000</span></label>
+          <input type="range" class="range-input" id="monthly" min="500" max="100000" step="500" value="5000">
+          <input type="number" class="number-input" id="monthlyNum" value="5000" min="500" max="1000000">
+        </div>
+        <div class="field">
+          <label for="rate">Expected Annual Return <span class="field-value" id="rateVal">12%</span></label>
+          <input type="range" class="range-input" id="rate" min="1" max="30" step="0.5" value="12">
+          <input type="number" class="number-input" id="rateNum" value="12" min="1" max="30" step="0.5">
+        </div>
+        <div class="field">
+          <label for="years">Investment Period <span class="field-value" id="yearsVal">10 years</span></label>
+          <input type="range" class="range-input" id="years" min="1" max="40" step="1" value="10">
+          <input type="number" class="number-input" id="yearsNum" value="10" min="1" max="40">
+        </div>
+      </div>
+
+      <div>
+        <div class="result-cards">
+          <div class="result-card"><div class="rc-label">Invested</div><div class="rc-value invested" id="rcInvested">₹6,00,000</div></div>
+          <div class="result-card"><div class="rc-label">Est. Returns</div><div class="rc-value returns" id="rcReturns">₹5,61,695</div></div>
+          <div class="result-card"><div class="rc-label">Total Value</div><div class="rc-value total" id="rcTotal">₹11,61,695</div></div>
+        </div>
+
+        <div class="chart-wrap">
+          <div class="donut-wrap">
+            <canvas id="donutChart" width="160" height="160"></canvas>
+            <div class="donut-legend">
+              <div class="legend-item"><div class="legend-dot" style="background:#6366F1;"></div><span id="legendInvested">Invested: ₹6,00,000</span></div>
+              <div class="legend-item"><div class="legend-dot" style="background:#10B981;"></div><span id="legendReturns">Returns: ₹5,61,695</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chart-wrap">
+      <h3 style="margin-bottom:1rem;">Year-by-year breakdown</h3>
+      <div style="overflow-x:auto;">
+        <table class="year-table">
+          <thead>
+            <tr>
+              <th>Year</th>
+              <th>Invested</th>
+              <th>Est. Returns</th>
+              <th>Total Value</th>
+            </tr>
+          </thead>
+          <tbody id="yearTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <section class="info-section" style="margin-top:2rem;">
+      <h2>How SIP returns are calculated</h2>
+      <p>SIP returns use the <strong>compound interest formula for periodic payments</strong>:</p>
+      <p><code>FV = P × ((1 + r)^n − 1) / r × (1 + r)</code></p>
+      <p>Where P = monthly investment, r = monthly rate (annual ÷ 12), n = total months.</p>
+      <p><strong>Disclaimer:</strong> Results are estimates based on assumed constant returns. Actual mutual fund returns vary. Past performance is not indicative of future results. This is not financial advice.</p>
+      <h2>FAQ</h2>
+      <details class="faq-item" open>
+        <summary>What is a realistic expected return for SIP?</summary>
+        <p>Indian equity mutual funds have historically returned 12–15% CAGR over long periods (10+ years). Debt funds typically return 6–8%. Use 10–12% as a conservative estimate for equity SIPs.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Does this calculate step-up SIP?</summary>
+        <p>Not currently — this calculator assumes a fixed monthly investment. Step-up SIP (where you increase monthly investment annually) would show even higher returns.</p>
+      </details>
+    </section>
+
+    <div class="related-tools">
+      <h3>Related tools</h3>
+      <div class="related-grid">
+        <a href="emi-calculator.html" class="related-card">🏦 EMI Calculator</a>
+        <a href="percentage-calculator.html" class="related-card">% Percentage Calc</a>
+        <a href="income-tax-calculator.html" class="related-card">📊 Income Tax Calc</a>
+        <a href="gst-calculator.html" class="related-card">🧾 GST Calculator</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid footer-grid-5">
+      <div class="footer-brand">
+        <div class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></div>
+        <p>Free, private file conversion for everyone.</p>
+      </div>
+      <div class="footer-col"><h5>Calculators</h5><ul><li><a href="sip-calculator.html">SIP Calculator</a></li><li><a href="emi-calculator.html">EMI Calculator</a></li><li><a href="gst-calculator.html">GST Calculator</a></li><li><a href="age-calculator.html">Age Calculator</a></li></ul></div>
+      <div class="footer-col"><h5>AI Studio</h5><ul><li><a href="../ai/writer.html">AI Writer</a></li></ul></div>
+      <div class="footer-col"><h5>Company</h5><ul><li><a href="../about.html">About</a></li><li><a href="../blog/">Blog</a></li><li><a href="../privacy.html">Privacy</a></li></ul></div>
+      <div class="footer-col"><h5>Help</h5><ul><li><a href="../contact.html">Contact</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <div>© <span data-year>2026</span> Desi Jugad.</div>
+      <div class="made-in"><span class="flag-in"></span>Made in India, built for the world.</div>
+    </div>
+  </div>
+</footer>
+
+<script src="../assets/js/main.js"></script>
+<script>
+const fields = {
+  monthly: { range: document.getElementById('monthly'), num: document.getElementById('monthlyNum'), val: document.getElementById('monthlyVal'), fmt: v => '₹' + (+v).toLocaleString('en-IN') },
+  rate:    { range: document.getElementById('rate'),    num: document.getElementById('rateNum'),    val: document.getElementById('rateVal'),    fmt: v => v + '%' },
+  years:   { range: document.getElementById('years'),   num: document.getElementById('yearsNum'),   val: document.getElementById('yearsVal'),   fmt: v => v + ' year' + (+v !== 1 ? 's' : '') },
+};
+
+Object.keys(fields).forEach(key => {
+  const f = fields[key];
+  f.range.addEventListener('input', () => { f.num.value = f.range.value; f.val.textContent = f.fmt(f.range.value); calculate(); });
+  f.num.addEventListener('input', () => { f.range.value = f.num.value; f.val.textContent = f.fmt(f.num.value); calculate(); });
+});
+
+function calculate() {
+  const P = +fields.monthly.num.value || 5000;
+  const r = (+fields.rate.num.value || 12) / 100 / 12;
+  const n = (+fields.years.num.value || 10) * 12;
+
+  const totalInvested = P * n;
+  const fv = P * ((Math.pow(1+r, n) - 1) / r) * (1 + r);
+  const returns = fv - totalInvested;
+
+  document.getElementById('rcInvested').textContent = '₹' + Math.round(totalInvested).toLocaleString('en-IN');
+  document.getElementById('rcReturns').textContent = '₹' + Math.round(returns).toLocaleString('en-IN');
+  document.getElementById('rcTotal').textContent = '₹' + Math.round(fv).toLocaleString('en-IN');
+  document.getElementById('legendInvested').textContent = 'Invested: ₹' + Math.round(totalInvested).toLocaleString('en-IN');
+  document.getElementById('legendReturns').textContent = 'Returns: ₹' + Math.round(returns).toLocaleString('en-IN');
+
+  drawDonut(totalInvested, returns);
+  buildTable(P, r, +fields.years.num.value || 10);
+}
+
+function buildTable(P, r, years) {
+  let rows = '';
+  for (let y = 1; y <= years; y++) {
+    const n = y * 12;
+    const invested = P * n;
+    const fv = P * ((Math.pow(1+r, n) - 1) / r) * (1 + r);
+    const ret = fv - invested;
+    rows += `<tr>
+      <td>Year ${y}</td>
+      <td>₹${Math.round(invested).toLocaleString('en-IN')}</td>
+      <td>₹${Math.round(ret).toLocaleString('en-IN')}</td>
+      <td>₹${Math.round(fv).toLocaleString('en-IN')}</td>
+    </tr>`;
+  }
+  document.getElementById('yearTableBody').innerHTML = rows;
+}
+
+function drawDonut(invested, returns) {
+  const canvas = document.getElementById('donutChart');
+  const ctx = canvas.getContext('2d');
+  const cx = 80, cy = 80, r = 60, lineW = 22;
+  ctx.clearRect(0, 0, 160, 160);
+  const total = invested + returns;
+  const investedAngle = (invested / total) * 2 * Math.PI;
+
+  ctx.beginPath(); ctx.arc(cx, cy, r, -Math.PI/2, -Math.PI/2 + investedAngle);
+  ctx.strokeStyle = '#6366F1'; ctx.lineWidth = lineW; ctx.lineCap = 'butt'; ctx.stroke();
+
+  ctx.beginPath(); ctx.arc(cx, cy, r, -Math.PI/2 + investedAngle, -Math.PI/2 + 2*Math.PI);
+  ctx.strokeStyle = '#10B981'; ctx.lineWidth = lineW; ctx.stroke();
+
+  ctx.fillStyle = 'var(--ink)'; ctx.font = 'bold 13px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  const pct = Math.round((returns/total)*100);
+  ctx.fillText(pct + '%', cx, cy - 8);
+  ctx.font = '10px sans-serif'; ctx.fillStyle = 'var(--ink-muted)';
+  ctx.fillText('returns', cx, cy + 8);
+}
+
+calculate();
+</script>
+</body>
+</html>

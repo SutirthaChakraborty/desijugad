@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/img/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/img/apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Favicon Generator — Create .ico & PNG Favicons Free | Desi Jugad</title>
+<meta name="description" content="Generate favicons (16×16, 32×32, 180×180 and more) from any image or text. Download all sizes as PNG. Free, private, runs in your browser.">
+<meta name="keywords" content="favicon generator, create favicon, favicon maker, ICO generator, PNG favicon, free favicon generator, favicon from image">
+<link rel="canonical" href="https://desijugad.co.in/convert/favicon-generator.html">
+<meta property="og:title" content="Favicon Generator — Free .ico & PNG Favicon Creator">
+<meta property="og:description" content="Generate favicons in all standard sizes from any image or letter. Download as PNG. No upload needed.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,30..100;1,9..144,300..700,30..100&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+<style>
+.tab-bar { display:flex; gap:0; border-bottom:2px solid var(--line); margin-top:1.5rem; }
+.tab-btn { padding:0.6rem 1.25rem; border:none; background:none; cursor:pointer; font-size:0.93rem; font-weight:600; color:var(--ink-muted); border-bottom:2px solid transparent; margin-bottom:-2px; }
+.tab-btn.active { color:var(--indigo); border-bottom-color:var(--indigo); }
+.tab-panel { display:none; padding-top:1.5rem; }
+.tab-panel.active { display:block; }
+.gen-layout { display:grid; grid-template-columns:280px 1fr; gap:2rem; }
+@media (max-width:720px) { .gen-layout { grid-template-columns:1fr; } }
+.field { display:flex; flex-direction:column; gap:0.35rem; margin-bottom:1rem; }
+.field label { font-size:0.82rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--ink-muted); }
+.field input[type=text], .field select { padding:0.5rem 0.75rem; border:1.5px solid var(--line); border-radius:8px; font-size:0.95rem; background:var(--surface); color:var(--ink); width:100%; }
+.field input:focus, .field select:focus { outline:none; border-color:var(--indigo); }
+.color-row { display:flex; gap:0.75rem; }
+.color-field { display:flex; flex-direction:column; gap:0.35rem; flex:1; }
+.color-field label { font-size:0.82rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--ink-muted); }
+.color-field input[type=color] { width:100%; height:40px; border:1.5px solid var(--line); border-radius:8px; cursor:pointer; padding:0 4px; }
+.preview-grid { display:flex; flex-wrap:wrap; gap:1.25rem; align-items:flex-end; margin-top:0.5rem; }
+.preview-item { display:flex; flex-direction:column; align-items:center; gap:0.4rem; }
+.preview-item canvas { border:1px solid var(--line); border-radius:4px; image-rendering:pixelated; }
+.preview-item .size-label { font-size:0.78rem; color:var(--ink-muted); font-family:var(--font-mono); }
+.download-all { margin-top:1.25rem; }
+.download-list { display:flex; flex-wrap:wrap; gap:0.5rem; margin-top:0.75rem; }
+.dl-btn { padding:0.3rem 0.75rem; border:1.5px solid var(--line); border-radius:999px; background:none; font-size:0.82rem; cursor:pointer; text-decoration:none; color:var(--ink); transition:all 0.15s; }
+.dl-btn:hover { border-color:var(--indigo); color:var(--indigo); }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="../" class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="../#converters">Converters</a></li>
+      <li><a href="../ai/">AI Studio <span class="badge-new">NEW</span></a></li>
+      <li><a href="../blog/">Blog</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../#converters" class="nav-cta">All tools</a></li>
+    </ul>
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</header>
+
+<main class="converter-page">
+  <div class="container">
+    <nav class="breadcrumb">
+      <a href="../">Home</a><span class="sep">/</span>
+      <a href="../#converters">Converters</a><span class="sep">/</span>
+      <span>Favicon Generator</span>
+    </nav>
+
+    <div class="converter-header">
+      <h1>Favicon generator, <em class="italic">all sizes at once.</em></h1>
+      <p class="lead">Generate favicons in all standard sizes (16×16, 32×32, 48×48, 180×180, 512×512) from an image or a single letter. Download each size individually as PNG.</p>
+    </div>
+
+    <div class="tab-bar">
+      <button class="tab-btn active" data-tab="image">From Image</button>
+      <button class="tab-btn" data-tab="text">From Text / Letter</button>
+    </div>
+
+    <div class="tab-panel active" id="tab-image">
+      <div class="gen-layout">
+        <div>
+          <input type="file" id="imageInput" accept="image/*" style="display:none;">
+          <button class="btn btn-primary" id="pickBtn" style="width:100%;margin-bottom:1rem;">Choose image</button>
+          <div class="field">
+            <label>Shape</label>
+            <select id="imgShape">
+              <option value="square">Square</option>
+              <option value="circle">Circle</option>
+              <option value="rounded">Rounded</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Background</label>
+            <input type="color" id="imgBg" value="#ffffff" style="width:100%;height:40px;border:1.5px solid var(--line);border-radius:8px;padding:0 4px;">
+          </div>
+          <button class="btn btn-primary" id="genImageBtn" style="width:100%;" disabled>Generate Favicons</button>
+        </div>
+        <div>
+          <div class="preview-grid" id="imgPreviews"></div>
+          <div class="download-all" id="imgDownloads" style="display:none;">
+            <strong>Download:</strong>
+            <div class="download-list" id="imgDlList"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-panel" id="tab-text">
+      <div class="gen-layout">
+        <div>
+          <div class="field">
+            <label for="faviconLetter">Letter / Text (1–3 chars)</label>
+            <input type="text" id="faviconLetter" value="D" maxlength="3" style="font-size:2rem;font-weight:700;text-align:center;height:64px;">
+          </div>
+          <div class="color-row">
+            <div class="color-field">
+              <label>Background</label>
+              <input type="color" id="bgColor" value="#6366F1">
+            </div>
+            <div class="color-field">
+              <label>Text color</label>
+              <input type="color" id="txtColor" value="#ffffff">
+            </div>
+          </div>
+          <div class="field" style="margin-top:0.75rem;">
+            <label>Shape</label>
+            <select id="txtShape">
+              <option value="square">Square</option>
+              <option value="circle">Circle</option>
+              <option value="rounded">Rounded (like iOS)</option>
+            </select>
+          </div>
+          <button class="btn btn-primary" id="genTextBtn" style="width:100%;margin-top:0.75rem;">Generate Favicons</button>
+        </div>
+        <div>
+          <div class="preview-grid" id="txtPreviews"></div>
+          <div class="download-all" id="txtDownloads" style="display:none;">
+            <strong>Download:</strong>
+            <div class="download-list" id="txtDlList"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section class="info-section" style="margin-top:2rem;">
+      <h2>Which favicon sizes do I need?</h2>
+      <ul>
+        <li><strong>16×16</strong> — Browser tab favicon, bookmarks bar</li>
+        <li><strong>32×32</strong> — Browser tab on high-DPI screens, taskbar</li>
+        <li><strong>48×48</strong> — Windows site icon</li>
+        <li><strong>180×180</strong> — Apple Touch Icon (iOS home screen)</li>
+        <li><strong>512×512</strong> — Progressive Web App (PWA) icon, Android splash</li>
+      </ul>
+      <h2>How to add favicons to your website</h2>
+      <pre style="background:var(--bg-alt);padding:1rem;border-radius:8px;font-size:0.84rem;overflow-x:auto;">&lt;link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"&gt;
+&lt;link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png"&gt;
+&lt;link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"&gt;</pre>
+    </section>
+
+    <div class="related-tools">
+      <h3>Related tools</h3>
+      <div class="related-grid">
+        <a href="image-cropper.html" class="related-card">✂️ Image Cropper</a>
+        <a href="image-converter.html" class="related-card">🖼 Image Converter</a>
+        <a href="image-compress.html" class="related-card">📦 Image Compress</a>
+        <a href="svg-to-png.html" class="related-card">🔷 SVG to PNG</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid footer-grid-5">
+      <div class="footer-brand">
+        <div class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></div>
+        <p>Free, private file conversion for everyone.</p>
+      </div>
+      <div class="footer-col"><h5>Image Tools</h5><ul><li><a href="favicon-generator.html">Favicon Generator</a></li><li><a href="image-cropper.html">Image Cropper</a></li><li><a href="svg-to-png.html">SVG to PNG</a></li></ul></div>
+      <div class="footer-col"><h5>Company</h5><ul><li><a href="../about.html">About</a></li><li><a href="../blog/">Blog</a></li><li><a href="../privacy.html">Privacy</a></li></ul></div>
+      <div class="footer-col"><h5>Help</h5><ul><li><a href="../contact.html">Contact</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <div>© <span data-year>2026</span> Desi Jugad.</div>
+      <div class="made-in"><span class="flag-in"></span>Made in India, built for the world.</div>
+    </div>
+  </div>
+</footer>
+
+<script src="../assets/js/main.js"></script>
+<script>
+const SIZES = [16, 32, 48, 180, 512];
+
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+  });
+});
+
+// --- FROM IMAGE ---
+const imageInput = document.getElementById('imageInput');
+const pickBtn = document.getElementById('pickBtn');
+const genImageBtn = document.getElementById('genImageBtn');
+let srcImg = null;
+
+pickBtn.addEventListener('click', () => imageInput.click());
+imageInput.addEventListener('change', e => {
+  const file = e.target.files[0];
+  if (!file) return;
+  const img = new Image();
+  img.onload = () => { srcImg = img; genImageBtn.disabled = false; };
+  img.src = URL.createObjectURL(file);
+});
+
+genImageBtn.addEventListener('click', () => {
+  if (!srcImg) return;
+  const shape = document.getElementById('imgShape').value;
+  const bg = document.getElementById('imgBg').value;
+  generateFromImage(srcImg, shape, bg, 'imgPreviews', 'imgDownloads', 'imgDlList');
+});
+
+function generateFromImage(img, shape, bg, previewId, dlId, dlListId) {
+  const container = document.getElementById(previewId);
+  const dlSection = document.getElementById(dlId);
+  const dlList = document.getElementById(dlListId);
+  container.innerHTML = '';
+  dlList.innerHTML = '';
+
+  SIZES.forEach(size => {
+    const canvas = document.createElement('canvas');
+    canvas.width = size; canvas.height = size;
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = bg;
+    applyShape(ctx, size, shape);
+    ctx.fill();
+    ctx.save();
+    applyShape(ctx, size, shape);
+    ctx.clip();
+    ctx.drawImage(img, 0, 0, size, size);
+    ctx.restore();
+
+    canvas.style.width = Math.max(size, 48) + 'px';
+    canvas.style.height = Math.max(size, 48) + 'px';
+
+    const item = document.createElement('div');
+    item.className = 'preview-item';
+    const label = document.createElement('div');
+    label.className = 'size-label';
+    label.textContent = size + '×' + size;
+    item.appendChild(canvas);
+    item.appendChild(label);
+    container.appendChild(item);
+
+    const dlBtn = document.createElement('a');
+    dlBtn.className = 'dl-btn';
+    dlBtn.textContent = size + 'px';
+    dlBtn.href = canvas.toDataURL('image/png');
+    dlBtn.download = 'favicon-' + size + '.png';
+    dlList.appendChild(dlBtn);
+  });
+  dlSection.style.display = 'block';
+}
+
+// --- FROM TEXT ---
+document.getElementById('genTextBtn').addEventListener('click', () => {
+  const letter = document.getElementById('faviconLetter').value || 'A';
+  const bg = document.getElementById('bgColor').value;
+  const fg = document.getElementById('txtColor').value;
+  const shape = document.getElementById('txtShape').value;
+  generateFromText(letter, bg, fg, shape, 'txtPreviews', 'txtDownloads', 'txtDlList');
+});
+
+['faviconLetter','bgColor','txtColor','txtShape'].forEach(id => {
+  document.getElementById(id).addEventListener('input', () => {
+    if (document.getElementById('txtPreviews').children.length > 0) document.getElementById('genTextBtn').click();
+  });
+});
+
+function generateFromText(letter, bg, fg, shape, previewId, dlId, dlListId) {
+  const container = document.getElementById(previewId);
+  const dlSection = document.getElementById(dlId);
+  const dlList = document.getElementById(dlListId);
+  container.innerHTML = '';
+  dlList.innerHTML = '';
+
+  SIZES.forEach(size => {
+    const canvas = document.createElement('canvas');
+    canvas.width = size; canvas.height = size;
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = bg;
+    applyShape(ctx, size, shape);
+    ctx.fill();
+
+    const fsize = Math.round(size * (letter.length > 1 ? 0.35 : 0.55));
+    ctx.font = `bold ${fsize}px Arial, sans-serif`;
+    ctx.fillStyle = fg;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(letter.toUpperCase(), size/2, size/2 + fsize*0.05);
+
+    canvas.style.width = Math.max(size, 48) + 'px';
+    canvas.style.height = Math.max(size, 48) + 'px';
+
+    const item = document.createElement('div');
+    item.className = 'preview-item';
+    const label = document.createElement('div');
+    label.className = 'size-label';
+    label.textContent = size + '×' + size;
+    item.appendChild(canvas);
+    item.appendChild(label);
+    container.appendChild(item);
+
+    const dlBtn = document.createElement('a');
+    dlBtn.className = 'dl-btn';
+    dlBtn.textContent = size + 'px';
+    dlBtn.href = canvas.toDataURL('image/png');
+    dlBtn.download = 'favicon-' + size + '.png';
+    dlList.appendChild(dlBtn);
+  });
+  dlSection.style.display = 'block';
+}
+
+function applyShape(ctx, size, shape) {
+  ctx.beginPath();
+  if (shape === 'circle') {
+    ctx.arc(size/2, size/2, size/2, 0, Math.PI*2);
+  } else if (shape === 'rounded') {
+    const r = size * 0.22;
+    ctx.roundRect(0, 0, size, size, r);
+  } else {
+    ctx.rect(0, 0, size, size);
+  }
+}
+
+// Generate text preview on load
+document.getElementById('genTextBtn').click();
+</script>
+</body>
+</html>

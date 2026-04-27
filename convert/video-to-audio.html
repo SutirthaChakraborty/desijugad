@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/img/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/img/apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Video to Audio — Extract MP3, WAV, AAC from Video Free | Desi Jugad</title>
+<meta name="description" content="Extract audio from any video file — MP4, MKV, MOV, AVI — and save as MP3, WAV, AAC, or OGG. Free, private, runs entirely in your browser.">
+<meta name="keywords" content="video to audio, extract audio from video, video to MP3, MP4 to MP3, convert video to audio, free audio extractor">
+<link rel="canonical" href="https://desijugad.co.in/convert/video-to-audio.html">
+<meta property="og:title" content="Video to Audio Extractor — Free In-Browser MP3 Extraction">
+<meta property="og:description" content="Extract MP3, WAV, AAC or OGG audio from any video file. No upload, no account, 100% private.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,30..100;1,9..144,300..700,30..100&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+<script src="../coi-serviceworker.js"></script>
+<style>
+.options-row { display:flex; flex-wrap:wrap; gap:1rem; margin-top:1.5rem; }
+.option { display:flex; flex-direction:column; gap:0.35rem; }
+.option label { font-size:0.82rem; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:var(--ink-muted); }
+.option select { padding:0.5rem 0.75rem; border:1.5px solid var(--line); border-radius:8px; background:var(--surface); color:var(--ink); font-size:0.93rem; font-family:var(--font-sans); cursor:pointer; }
+.option select:focus { outline:none; border-color:var(--indigo); }
+.progress-wrap { margin:1.5rem 0; padding:1.25rem; background:var(--bg-alt); border:1px solid var(--line); border-radius:var(--radius); display:none; }
+.progress-label { font-weight:500; margin-bottom:0.75rem; font-size:0.95rem; }
+.progress-bar-bg { height:6px; background:var(--line); border-radius:999px; overflow:hidden; }
+.progress-bar-fill { height:100%; width:0%; background:var(--indigo); border-radius:999px; transition:width 0.3s; }
+.result-area { margin-top:1rem; display:none; }
+.result-card { display:flex; align-items:center; gap:1rem; padding:1rem 1.25rem; background:var(--bg-alt); border:1px solid var(--line); border-radius:var(--radius); }
+.result-icon { font-size:2rem; }
+.result-info { flex:1; }
+.result-name { font-weight:600; word-break:break-all; }
+.result-meta { font-size:0.85rem; color:var(--ink-muted); margin-top:0.2rem; }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="../" class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="../#converters">Converters</a></li>
+      <li><a href="../ai/">AI Studio <span class="badge-new">NEW</span></a></li>
+      <li><a href="../blog/">Blog</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../#converters" class="nav-cta">All tools</a></li>
+    </ul>
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</header>
+
+<main class="converter-page">
+  <div class="container">
+    <nav class="breadcrumb">
+      <a href="../">Home</a><span class="sep">/</span>
+      <a href="../#converters">Converters</a><span class="sep">/</span>
+      <span>Video to Audio</span>
+    </nav>
+
+    <div class="converter-header">
+      <h1>Video to audio, <em class="italic">right in your browser.</em></h1>
+      <p class="lead">Extract the audio track from any video file as MP3, WAV, AAC, or OGG. Uses FFmpeg WebAssembly — 100% private, no upload needed.</p>
+    </div>
+
+    <div class="dropzone" id="dropzone">
+      <div class="dropzone-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13M9 18a3 3 0 01-3 3 3 3 0 01-3-3 3 3 0 013-3 3 3 0 013 3zm12-2a3 3 0 01-3 3 3 3 0 01-3-3 3 3 0 013-3 3 3 0 013 3z"/></svg>
+      </div>
+      <h2>Drop a video file here</h2>
+      <p class="sub">MP4, MKV, MOV, AVI, WebM, FLV — any video format</p>
+      <input type="file" id="fileInput" class="dropzone-input" accept="video/*,.mkv,.avi,.mov,.flv,.webm">
+      <button class="btn btn-primary" id="pickBtn">Choose video file</button>
+      <small>No upload. No sign-up. Runs locally.</small>
+
+      <div class="options-row">
+        <div class="option">
+          <label for="outputFormat">Audio format</label>
+          <select id="outputFormat">
+            <option value="mp3">MP3</option>
+            <option value="wav">WAV (lossless)</option>
+            <option value="aac">AAC (M4A)</option>
+            <option value="ogg">OGG Vorbis</option>
+            <option value="flac">FLAC (lossless)</option>
+          </select>
+        </div>
+        <div class="option">
+          <label for="bitrate">MP3/AAC Bitrate</label>
+          <select id="bitrate">
+            <option value="128k">128 kbps</option>
+            <option value="192k" selected>192 kbps</option>
+            <option value="256k">256 kbps</option>
+            <option value="320k">320 kbps</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div id="fileList" class="file-list"></div>
+
+    <div class="convert-btn-row" id="actionRow" style="display:none;">
+      <button class="btn btn-secondary" id="clearBtn">Clear</button>
+      <button class="btn btn-primary" id="convertBtn">Extract audio</button>
+    </div>
+
+    <div class="progress-wrap" id="progressBox">
+      <div class="progress-label" id="progressLabel">Loading FFmpeg…</div>
+      <div class="progress-bar-bg"><div class="progress-bar-fill" id="progressBar"></div></div>
+    </div>
+
+    <div class="result-area" id="resultArea">
+      <div class="result-card">
+        <div class="result-icon">🎵</div>
+        <div class="result-info">
+          <div class="result-name" id="resultName"></div>
+          <div class="result-meta" id="resultMeta"></div>
+        </div>
+        <a class="btn btn-primary" id="downloadBtn">Download</a>
+      </div>
+    </div>
+
+    <section class="info-section" style="margin-top:2rem;">
+      <h2>How audio extraction works</h2>
+      <p>FFmpeg WebAssembly reads your video file and strips the video stream entirely, keeping only the audio track. For MP3/AAC output, the audio is re-encoded at your chosen bitrate. For WAV/FLAC, the audio is decoded losslessly. No re-encoding of video means extraction is fast.</p>
+      <h2>FAQ</h2>
+      <details class="faq-item" open>
+        <summary>Which format should I pick?</summary>
+        <p><strong>MP3</strong> — best compatibility everywhere. <strong>AAC</strong> — better quality at same bitrate, great for Apple devices. <strong>WAV/FLAC</strong> — lossless, large files, best for music production. <strong>OGG</strong> — open format, great for web/games.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Will the audio quality match the original?</summary>
+        <p>If the source video has a high-quality audio track and you choose 320 kbps or WAV/FLAC, yes. Choosing lower bitrate introduces compression. The original video audio quality is the ceiling.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Can I extract from YouTube videos?</summary>
+        <p>This tool only works with files already on your device. To use it with online videos, first download the video to your device, then extract the audio here.</p>
+      </details>
+    </section>
+
+    <div class="related-tools">
+      <h3>Related tools</h3>
+      <div class="related-grid">
+        <a href="video-converter.html" class="related-card">🎬 Video Converter</a>
+        <a href="video-trimmer.html" class="related-card">✂️ Video Trimmer</a>
+        <a href="audio-converter.html" class="related-card">🔊 Audio Converter</a>
+        <a href="video-to-gif.html" class="related-card">🎞 Video to GIF</a>
+        <a href="../ai/music.html" class="related-card">🎵 AI Music Studio</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid footer-grid-5">
+      <div class="footer-brand">
+        <div class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></div>
+        <p>Free, private file conversion for everyone.</p>
+      </div>
+      <div class="footer-col"><h5>Video Tools</h5><ul><li><a href="video-converter.html">Video Converter</a></li><li><a href="video-to-audio.html">Video to Audio</a></li><li><a href="video-trimmer.html">Video Trimmer</a></li><li><a href="video-compressor.html">Video Compressor</a></li></ul></div>
+      <div class="footer-col"><h5>AI Studio</h5><ul><li><a href="../ai/video.html">AI Video</a></li><li><a href="../ai/music.html">AI Music</a></li><li><a href="../ai/image.html">AI Images</a></li></ul></div>
+      <div class="footer-col"><h5>Company</h5><ul><li><a href="../about.html">About</a></li><li><a href="../blog/">Blog</a></li><li><a href="../privacy.html">Privacy</a></li></ul></div>
+      <div class="footer-col"><h5>Help</h5><ul><li><a href="../contact.html">Contact</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <div>© <span data-year>2026</span> Desi Jugad.</div>
+      <div class="made-in"><span class="flag-in"></span>Made in India, built for the world.</div>
+    </div>
+  </div>
+</footer>
+
+<script src="../assets/js/main.js"></script>
+<script type="module">
+const { FFmpeg } = await import('https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.10/dist/esm/index.js');
+const { fetchFile, toBlobURL } = await import('https://cdn.jsdelivr.net/npm/@ffmpeg/util@0.12.1/dist/esm/index.js');
+
+const dropzone   = document.getElementById('dropzone');
+const fileInput  = document.getElementById('fileInput');
+const pickBtn    = document.getElementById('pickBtn');
+const fileList   = document.getElementById('fileList');
+const clearBtn   = document.getElementById('clearBtn');
+const convertBtn = document.getElementById('convertBtn');
+const actionRow  = document.getElementById('actionRow');
+const progressBox= document.getElementById('progressBox');
+const progressLabel = document.getElementById('progressLabel');
+const progressBar   = document.getElementById('progressBar');
+const resultArea    = document.getElementById('resultArea');
+const resultName    = document.getElementById('resultName');
+const resultMeta    = document.getElementById('resultMeta');
+const downloadBtn   = document.getElementById('downloadBtn');
+
+let currentFile = null;
+let ffmpeg = null;
+
+pickBtn.addEventListener('click', () => fileInput.click());
+fileInput.addEventListener('change', e => stageFile(e.target.files[0]));
+dropzone.addEventListener('dragover', e => { e.preventDefault(); dropzone.classList.add('drag-over'); });
+dropzone.addEventListener('dragleave', () => dropzone.classList.remove('drag-over'));
+dropzone.addEventListener('drop', e => { e.preventDefault(); dropzone.classList.remove('drag-over'); stageFile(e.dataTransfer.files[0]); });
+
+function stageFile(file) {
+  if (!file) return;
+  currentFile = file;
+  fileList.innerHTML = `
+    <div class="file-item">
+      <div class="file-item-icon">🎬</div>
+      <div><div class="file-item-name">${file.name}</div><div class="file-item-meta">${formatBytes(file.size)}</div></div>
+      <span class="file-item-status">Ready</span>
+    </div>`;
+  actionRow.style.display = 'flex';
+  resultArea.style.display = 'none';
+}
+
+clearBtn.addEventListener('click', () => {
+  currentFile = null;
+  fileList.innerHTML = '';
+  actionRow.style.display = 'none';
+  resultArea.style.display = 'none';
+  fileInput.value = '';
+});
+
+convertBtn.addEventListener('click', async () => {
+  if (!currentFile) return;
+  const fmt = document.getElementById('outputFormat').value;
+  const bitrate = document.getElementById('bitrate').value;
+
+  convertBtn.disabled = true;
+  progressBox.style.display = 'block';
+  resultArea.style.display = 'none';
+
+  try {
+    if (!ffmpeg) {
+      progressLabel.textContent = 'Loading FFmpeg WebAssembly (~30 MB)…';
+      progressBar.style.width = '10%';
+      ffmpeg = new FFmpeg();
+      ffmpeg.on('progress', ({ progress }) => {
+        const pct = Math.round(progress * 100);
+        progressBar.style.width = Math.max(pct, 20) + '%';
+        progressLabel.textContent = `Extracting audio… ${pct}%`;
+      });
+      const baseURL = 'https://cdn.jsdelivr.net/npm/@ffmpeg/core@0.12.6/dist/esm';
+      await ffmpeg.load({
+        coreURL: await toBlobURL(`${baseURL}/ffmpeg-core.js`, 'text/javascript'),
+        wasmURL: await toBlobURL(`${baseURL}/ffmpeg-core.wasm`, 'application/wasm'),
+      });
+      progressBar.style.width = '30%';
+    }
+
+    progressLabel.textContent = 'Reading file…';
+    progressBar.style.width = '35%';
+
+    const inputName = 'input.' + (currentFile.name.split('.').pop() || 'mp4');
+    const extMap = { mp3:'mp3', wav:'wav', aac:'m4a', ogg:'ogg', flac:'flac' };
+    const outputExt = extMap[fmt];
+    const outputName = 'output.' + outputExt;
+
+    await ffmpeg.writeFile(inputName, await fetchFile(currentFile));
+
+    progressLabel.textContent = 'Extracting audio…';
+    progressBar.style.width = '40%';
+
+    const codecArgs = {
+      mp3:  ['-vn', '-acodec', 'libmp3lame', '-b:a', bitrate],
+      wav:  ['-vn', '-acodec', 'pcm_s16le'],
+      aac:  ['-vn', '-acodec', 'aac', '-b:a', bitrate],
+      ogg:  ['-vn', '-acodec', 'libvorbis', '-b:a', bitrate],
+      flac: ['-vn', '-acodec', 'flac'],
+    };
+
+    await ffmpeg.exec(['-i', inputName, ...codecArgs[fmt], outputName]);
+
+    const data = await ffmpeg.readFile(outputName);
+    const mimeMap = { mp3:'audio/mpeg', wav:'audio/wav', m4a:'audio/mp4', ogg:'audio/ogg', flac:'audio/flac' };
+    const blob = new Blob([data.buffer], { type: mimeMap[outputExt] || 'audio/mpeg' });
+    const url = URL.createObjectURL(blob);
+    const baseName = currentFile.name.replace(/\.[^.]+$/, '');
+
+    downloadBtn.href = url;
+    downloadBtn.download = baseName + '.' + outputExt;
+    resultName.textContent = baseName + '.' + outputExt;
+    resultMeta.textContent = formatBytes(blob.size) + ' · ' + fmt.toUpperCase();
+
+    progressBar.style.width = '100%';
+    progressLabel.textContent = 'Done!';
+    resultArea.style.display = 'block';
+
+    await ffmpeg.deleteFile(inputName);
+    await ffmpeg.deleteFile(outputName);
+  } catch (err) {
+    console.error(err);
+    progressLabel.textContent = 'Error: ' + err.message;
+    progressBar.style.background = '#EF4444';
+  } finally {
+    convertBtn.disabled = false;
+  }
+});
+
+function formatBytes(b) {
+  if (b < 1024) return b + ' B';
+  if (b < 1048576) return (b/1024).toFixed(1) + ' KB';
+  return (b/1048576).toFixed(1) + ' MB';
+}
+</script>
+</body>
+</html>

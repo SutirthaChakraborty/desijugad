@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/img/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/img/apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Income Tax Calculator India FY 2025-26 — Old vs New Regime | Desi Jugad</title>
+<meta name="description" content="Calculate income tax for FY 2025-26 (AY 2026-27) under both old and new tax regime. Compare and find which regime saves more tax. Free, private, instant.">
+<meta name="keywords" content="income tax calculator India, income tax calculator 2025-26, old regime vs new regime, income tax calculator FY 2025-26, India tax calculator">
+<link rel="canonical" href="https://desijugad.co.in/convert/income-tax-calculator.html">
+<meta property="og:title" content="Income Tax Calculator India FY 2025-26 — Old vs New Regime">
+<meta property="og:description" content="Compare tax liability under old and new regime for FY 2025-26. See which regime saves you more. Free, no sign-up.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,30..100;1,9..144,300..700,30..100&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+<style>
+.tax-layout { display:grid; grid-template-columns:380px 1fr; gap:2rem; margin-top:1.75rem; }
+@media (max-width:860px) { .tax-layout { grid-template-columns:1fr; } }
+.field { display:flex; flex-direction:column; gap:0.4rem; margin-bottom:1rem; }
+.field label { font-size:0.82rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--ink-muted); }
+.number-input { padding:0.55rem 0.85rem; border:1.5px solid var(--line); border-radius:8px; font-family:var(--font-mono); font-size:1rem; background:var(--surface); color:var(--ink); width:100%; }
+.number-input:focus { outline:none; border-color:var(--indigo); }
+.section-head { font-weight:700; font-size:0.95rem; margin:1.25rem 0 0.5rem; padding-bottom:0.4rem; border-bottom:2px solid var(--line); }
+.regime-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+@media (max-width:600px) { .regime-grid { grid-template-columns:1fr; } }
+.regime-card { border:2px solid var(--line); border-radius:var(--radius); padding:1.25rem; }
+.regime-card.winner { border-color:#16A34A; background:#F0FDF4; }
+.regime-card.loser { border-color:var(--line); background:var(--bg-alt); }
+.regime-name { font-weight:700; font-size:1rem; margin-bottom:0.75rem; display:flex; justify-content:space-between; }
+.winner-badge { font-size:0.75rem; background:#16A34A; color:#fff; padding:0.15rem 0.5rem; border-radius:999px; }
+.tax-row { display:flex; justify-content:space-between; font-size:0.9rem; padding:0.35rem 0; border-bottom:1px dashed var(--line); }
+.tax-row:last-child { border-bottom:none; font-weight:700; font-size:1rem; margin-top:0.35rem; }
+.tax-label { color:var(--ink-muted); }
+.tax-val { font-family:var(--font-mono); font-weight:600; }
+.savings-box { margin-top:1.25rem; padding:1rem 1.25rem; background:#EEF2FF; border:1px solid #C7D2FE; border-radius:var(--radius); font-size:0.95rem; }
+.slab-table { width:100%; border-collapse:collapse; font-size:0.85rem; margin-top:1rem; }
+.slab-table th { text-align:left; padding:0.4rem 0.75rem; background:var(--bg-alt); border:1px solid var(--line); font-weight:700; font-size:0.78rem; text-transform:uppercase; }
+.slab-table td { padding:0.4rem 0.75rem; border:1px solid var(--line); }
+.slab-table tr.active-slab td { background:#EEF2FF; font-weight:600; }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="../" class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="../#converters">Converters</a></li>
+      <li><a href="../ai/">AI Studio <span class="badge-new">NEW</span></a></li>
+      <li><a href="../blog/">Blog</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../#converters" class="nav-cta">All tools</a></li>
+    </ul>
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</header>
+
+<main class="converter-page">
+  <div class="container">
+    <nav class="breadcrumb">
+      <a href="../">Home</a><span class="sep">/</span>
+      <a href="../#converters">Calculators</a><span class="sep">/</span>
+      <span>Income Tax Calculator</span>
+    </nav>
+
+    <div class="converter-header">
+      <h1>Income tax calculator, <em class="italic">old vs new regime.</em></h1>
+      <p class="lead">Calculate your income tax for FY 2025-26 (AY 2026-27) under both old and new tax regimes. Enter your income and deductions to find which regime saves more.</p>
+    </div>
+
+    <div class="tax-layout">
+      <div>
+        <div class="section-head">Income Details</div>
+        <div class="field">
+          <label>Gross Annual Income (₹)</label>
+          <input type="number" class="number-input" id="grossIncome" value="800000" min="0" step="10000">
+        </div>
+        <div class="field">
+          <label>Age Category</label>
+          <select class="number-input" id="ageCategory">
+            <option value="general">Below 60 years</option>
+            <option value="senior">Senior Citizen (60–79)</option>
+            <option value="super">Super Senior (80+)</option>
+          </select>
+        </div>
+
+        <div class="section-head">Deductions (Old Regime Only)</div>
+        <div class="field">
+          <label>80C (PF, PPF, ELSS, LIC, etc.) max ₹1.5L</label>
+          <input type="number" class="number-input" id="d80c" value="150000" min="0" max="150000" step="5000">
+        </div>
+        <div class="field">
+          <label>80D (Health Insurance)</label>
+          <input type="number" class="number-input" id="d80d" value="25000" min="0" step="1000">
+        </div>
+        <div class="field">
+          <label>HRA Exemption</label>
+          <input type="number" class="number-input" id="dhra" value="0" min="0" step="5000">
+        </div>
+        <div class="field">
+          <label>Home Loan Interest (Sec 24b) max ₹2L</label>
+          <input type="number" class="number-input" id="dhome" value="0" min="0" max="200000" step="5000">
+        </div>
+        <div class="field">
+          <label>Other Deductions (80G, 80E, NPS etc.)</label>
+          <input type="number" class="number-input" id="dother" value="0" min="0" step="1000">
+        </div>
+
+        <button class="btn btn-primary" id="calcBtn" style="width:100%;margin-top:0.5rem;">Calculate Tax</button>
+      </div>
+
+      <div id="resultSection" style="display:none;">
+        <div class="regime-grid" id="regimeGrid"></div>
+        <div class="savings-box" id="savingsBox"></div>
+
+        <div class="section-head" style="margin-top:1.5rem;">New Regime Tax Slabs (FY 2025-26)</div>
+        <table class="slab-table">
+          <thead><tr><th>Income Range</th><th>Rate</th></tr></thead>
+          <tbody>
+            <tr><td>Up to ₹4,00,000</td><td>Nil</td></tr>
+            <tr><td>₹4,00,001 – ₹8,00,000</td><td>5%</td></tr>
+            <tr><td>₹8,00,001 – ₹12,00,000</td><td>10%</td></tr>
+            <tr><td>₹12,00,001 – ₹16,00,000</td><td>15%</td></tr>
+            <tr><td>₹16,00,001 – ₹20,00,000</td><td>20%</td></tr>
+            <tr><td>₹20,00,001 – ₹24,00,000</td><td>25%</td></tr>
+            <tr><td>Above ₹24,00,000</td><td>30%</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <section class="info-section" style="margin-top:2rem;">
+      <h2>New Regime vs Old Regime — which is better?</h2>
+      <p>The <strong>new regime</strong> (default from FY 2024-25) offers lower slab rates but most deductions (80C, HRA, home loan interest) are not available. The <strong>old regime</strong> has higher slab rates but allows all deductions. If you have significant deductions (80C + HRA + home loan), the old regime may save more. Otherwise, the new regime is usually better.</p>
+      <h2>FAQ</h2>
+      <details class="faq-item" open>
+        <summary>Is the ₹12 lakh threshold under new regime correct?</summary>
+        <p>Yes. Under the new regime for FY 2025-26, income up to ₹12,00,000 is effectively zero tax due to the rebate under Section 87A (₹60,000 rebate). Above ₹12L, normal slab rates apply.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Does this include surcharge and cess?</summary>
+        <p>Yes — this calculator includes the 4% Health and Education Cess on tax payable. Surcharge (for income above ₹50L) is included at applicable rates.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Is this calculation accurate?</summary>
+        <p>This is an estimate for salaried individuals. The actual tax liability may differ based on specific income sources, exemptions not covered here, and provisions applicable to your situation. Consult a CA for exact calculations.</p>
+      </details>
+    </section>
+
+    <div class="related-tools">
+      <h3>Related tools</h3>
+      <div class="related-grid">
+        <a href="sip-calculator.html" class="related-card">📈 SIP Calculator</a>
+        <a href="emi-calculator.html" class="related-card">🏦 EMI Calculator</a>
+        <a href="gst-calculator.html" class="related-card">🧾 GST Calculator</a>
+        <a href="percentage-calculator.html" class="related-card">% Percentage Calc</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid footer-grid-5">
+      <div class="footer-brand">
+        <div class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></div>
+        <p>Free, private file conversion for everyone.</p>
+      </div>
+      <div class="footer-col"><h5>Calculators</h5><ul><li><a href="income-tax-calculator.html">Income Tax</a></li><li><a href="sip-calculator.html">SIP Calculator</a></li><li><a href="emi-calculator.html">EMI Calculator</a></li><li><a href="gst-calculator.html">GST Calculator</a></li></ul></div>
+      <div class="footer-col"><h5>AI Studio</h5><ul><li><a href="../ai/writer.html">AI Writer</a></li></ul></div>
+      <div class="footer-col"><h5>Company</h5><ul><li><a href="../about.html">About</a></li><li><a href="../blog/">Blog</a></li><li><a href="../privacy.html">Privacy</a></li></ul></div>
+      <div class="footer-col"><h5>Help</h5><ul><li><a href="../contact.html">Contact</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <div>© <span data-year>2026</span> Desi Jugad.</div>
+      <div class="made-in"><span class="flag-in"></span>Made in India, built for the world.</div>
+    </div>
+  </div>
+</footer>
+
+<script src="../assets/js/main.js"></script>
+<script>
+document.getElementById('calcBtn').addEventListener('click', calculate);
+
+function calculateNewRegimeTax(income, age) {
+  // FY 2025-26 new regime slabs
+  const slabs = [
+    [400000, 0],
+    [400000, 0.05],
+    [400000, 0.10],
+    [400000, 0.15],
+    [400000, 0.20],
+    [400000, 0.25],
+    [Infinity, 0.30],
+  ];
+  let tax = 0, rem = income, thresholds = [0, 400000, 800000, 1200000, 1600000, 2000000, 2400000];
+  slabs.forEach((s, i) => {
+    if (rem <= 0) return;
+    const taxable = Math.min(rem, s[0]);
+    tax += taxable * s[1];
+    rem -= taxable;
+  });
+  // Rebate u/s 87A: if income <= 12L, rebate of up to 60000
+  if (income <= 1200000) tax = Math.max(0, tax - Math.min(tax, 60000));
+  return tax;
+}
+
+function calculateOldRegimeTax(income, age) {
+  let slabs;
+  if (age === 'super') {
+    slabs = [[500000,0],[500000,0.20],[Infinity,0.30]];
+  } else if (age === 'senior') {
+    slabs = [[300000,0],[200000,0.05],[300000,0.20],[Infinity,0.30]];
+  } else {
+    slabs = [[250000,0],[250000,0.05],[500000,0.20],[Infinity,0.30]];
+  }
+  let tax = 0, rem = income;
+  slabs.forEach(s => {
+    if (rem <= 0) return;
+    const taxable = Math.min(rem, s[0]);
+    tax += taxable * s[1];
+    rem -= taxable;
+  });
+  // Rebate u/s 87A: if income <= 5L, rebate of up to 12500
+  if (income <= 500000) tax = Math.max(0, tax - Math.min(tax, 12500));
+  return tax;
+}
+
+function addSurcharge(tax, income) {
+  let surcharge = 0;
+  if (income > 5000000 && income <= 10000000) surcharge = tax * 0.10;
+  else if (income > 10000000 && income <= 20000000) surcharge = tax * 0.15;
+  else if (income > 20000000 && income <= 50000000) surcharge = tax * 0.25;
+  else if (income > 50000000) surcharge = tax * 0.37;
+  return (tax + surcharge) * 1.04; // 4% cess
+}
+
+function fmt(v) { return '₹' + Math.round(v).toLocaleString('en-IN'); }
+
+function calculate() {
+  const gross = +document.getElementById('grossIncome').value || 0;
+  const age = document.getElementById('ageCategory').value;
+  const d80c = Math.min(+document.getElementById('d80c').value || 0, 150000);
+  const d80d = +document.getElementById('d80d').value || 0;
+  const dhra = +document.getElementById('dhra').value || 0;
+  const dhome = Math.min(+document.getElementById('dhome').value || 0, 200000);
+  const dother = +document.getElementById('dother').value || 0;
+
+  // Old regime
+  const stdDeductionOld = 50000;
+  const totalDeductions = d80c + d80d + dhra + dhome + dother + stdDeductionOld;
+  const oldTaxableIncome = Math.max(0, gross - totalDeductions);
+  const oldBaseTax = calculateOldRegimeTax(oldTaxableIncome, age);
+  const oldTotalTax = addSurcharge(oldBaseTax, oldTaxableIncome);
+
+  // New regime
+  const stdDeductionNew = 75000;
+  const newTaxableIncome = Math.max(0, gross - stdDeductionNew);
+  const newBaseTax = calculateNewRegimeTax(newTaxableIncome, age);
+  const newTotalTax = addSurcharge(newBaseTax, newTaxableIncome);
+
+  const winner = newTotalTax <= oldTotalTax ? 'new' : 'old';
+  const savings = Math.abs(oldTotalTax - newTotalTax);
+
+  document.getElementById('regimeGrid').innerHTML = `
+    <div class="regime-card ${winner === 'new' ? 'winner' : 'loser'}">
+      <div class="regime-name">New Regime ${winner === 'new' ? '<span class="winner-badge">Better ✓</span>' : ''}</div>
+      <div class="tax-row"><span class="tax-label">Gross Income</span><span class="tax-val">${fmt(gross)}</span></div>
+      <div class="tax-row"><span class="tax-label">Std. Deduction</span><span class="tax-val">−${fmt(stdDeductionNew)}</span></div>
+      <div class="tax-row"><span class="tax-label">Taxable Income</span><span class="tax-val">${fmt(newTaxableIncome)}</span></div>
+      <div class="tax-row"><span class="tax-label">Tax + Cess</span><span class="tax-val">${fmt(newTotalTax)}</span></div>
+      <div class="tax-row"><span class="tax-label">Monthly TDS</span><span class="tax-val">${fmt(newTotalTax/12)}/mo</span></div>
+    </div>
+    <div class="regime-card ${winner === 'old' ? 'winner' : 'loser'}">
+      <div class="regime-name">Old Regime ${winner === 'old' ? '<span class="winner-badge">Better ✓</span>' : ''}</div>
+      <div class="tax-row"><span class="tax-label">Gross Income</span><span class="tax-val">${fmt(gross)}</span></div>
+      <div class="tax-row"><span class="tax-label">Total Deductions</span><span class="tax-val">−${fmt(totalDeductions)}</span></div>
+      <div class="tax-row"><span class="tax-label">Taxable Income</span><span class="tax-val">${fmt(oldTaxableIncome)}</span></div>
+      <div class="tax-row"><span class="tax-label">Tax + Cess</span><span class="tax-val">${fmt(oldTotalTax)}</span></div>
+      <div class="tax-row"><span class="tax-label">Monthly TDS</span><span class="tax-val">${fmt(oldTotalTax/12)}/mo</span></div>
+    </div>`;
+
+  document.getElementById('savingsBox').innerHTML = savings < 100
+    ? 'Both regimes result in <strong>similar tax liability</strong>. Choose new regime for simplicity (no deduction tracking needed).'
+    : `The <strong>${winner === 'new' ? 'New' : 'Old'} Regime saves you <span style="color:${winner==='new'?'#16A34A':'var(--indigo)'};">${fmt(savings)}</span></strong> per year (${fmt(savings/12)}/month).`;
+
+  document.getElementById('resultSection').style.display = 'block';
+}
+
+calculate();
+</script>
+</body>
+</html>

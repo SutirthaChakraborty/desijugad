@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/img/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/img/apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Percentage Calculator — Calculate % of Number Free | Desi Jugad</title>
+<meta name="description" content="Calculate percentages instantly — X% of Y, what % is X of Y, percentage change, increase, decrease, and more. Free, private, no sign-up.">
+<meta name="keywords" content="percentage calculator, percent calculator, calculate percentage, percentage change calculator, percentage of number, discount calculator">
+<link rel="canonical" href="https://desijugad.co.in/convert/percentage-calculator.html">
+<meta property="og:title" content="Percentage Calculator — Free % Calculator for All Use Cases">
+<meta property="og:description" content="6 types of percentage calculations: X% of Y, X is what % of Y, change, increase, decrease, and markup. Instant, private.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,30..100;1,9..144,300..700,30..100&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+<style>
+.calc-cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.25rem; margin-top:1.75rem; }
+.calc-card { background:var(--surface); border:1.5px solid var(--line); border-radius:var(--radius); padding:1.25rem; }
+.calc-card h3 { font-size:0.95rem; font-weight:700; margin-bottom:1rem; color:var(--ink); }
+.calc-row { display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap; margin-bottom:0.75rem; font-size:0.93rem; }
+.calc-label { color:var(--ink-muted); white-space:nowrap; }
+.num-field { padding:0.4rem 0.65rem; border:1.5px solid var(--line); border-radius:7px; font-family:var(--font-mono); font-size:0.97rem; width:90px; background:var(--surface); color:var(--ink); }
+.num-field:focus { outline:none; border-color:var(--indigo); }
+.calc-result { margin-top:0.75rem; padding:0.75rem 1rem; background:var(--bg-alt); border-radius:8px; border:1px solid var(--line); font-family:var(--font-mono); font-size:1.1rem; font-weight:700; color:var(--indigo); min-height:44px; }
+.calc-result.error { color:#EF4444; font-size:0.88rem; }
+.go-btn { padding:0.35rem 0.85rem; background:var(--indigo); color:#fff; border:none; border-radius:7px; cursor:pointer; font-size:0.88rem; font-weight:600; }
+.go-btn:hover { opacity:0.85; }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="../" class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="../#converters">Converters</a></li>
+      <li><a href="../ai/">AI Studio <span class="badge-new">NEW</span></a></li>
+      <li><a href="../blog/">Blog</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../#converters" class="nav-cta">All tools</a></li>
+    </ul>
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</header>
+
+<main class="converter-page">
+  <div class="container">
+    <nav class="breadcrumb">
+      <a href="../">Home</a><span class="sep">/</span>
+      <a href="../#converters">Calculators</a><span class="sep">/</span>
+      <span>Percentage Calculator</span>
+    </nav>
+
+    <div class="converter-header">
+      <h1>Percentage calculator, <em class="italic">all the ways you need it.</em></h1>
+      <p class="lead">Six types of percentage calculations in one place — from basic "X% of Y" to discount prices, markup, percentage change, and more. Instant results, no sign-up.</p>
+    </div>
+
+    <div class="calc-cards">
+
+      <!-- 1: X% of Y -->
+      <div class="calc-card">
+        <h3>1. What is X% of Y?</h3>
+        <div class="calc-row">
+          <input type="number" class="num-field" id="c1x" value="15" placeholder="X">
+          <span class="calc-label">% of</span>
+          <input type="number" class="num-field" id="c1y" value="200" placeholder="Y">
+          <span class="calc-label">= ?</span>
+          <button class="go-btn" onclick="calc1()">Go</button>
+        </div>
+        <div class="calc-result" id="c1r"></div>
+      </div>
+
+      <!-- 2: X is what % of Y -->
+      <div class="calc-card">
+        <h3>2. X is what % of Y?</h3>
+        <div class="calc-row">
+          <input type="number" class="num-field" id="c2x" value="30" placeholder="X">
+          <span class="calc-label">is what % of</span>
+          <input type="number" class="num-field" id="c2y" value="200" placeholder="Y">
+          <button class="go-btn" onclick="calc2()">Go</button>
+        </div>
+        <div class="calc-result" id="c2r"></div>
+      </div>
+
+      <!-- 3: Percentage change -->
+      <div class="calc-card">
+        <h3>3. Percentage change (from X to Y)</h3>
+        <div class="calc-row">
+          <span class="calc-label">From</span>
+          <input type="number" class="num-field" id="c3x" value="80" placeholder="Original">
+          <span class="calc-label">to</span>
+          <input type="number" class="num-field" id="c3y" value="100" placeholder="New">
+          <button class="go-btn" onclick="calc3()">Go</button>
+        </div>
+        <div class="calc-result" id="c3r"></div>
+      </div>
+
+      <!-- 4: Increase by % -->
+      <div class="calc-card">
+        <h3>4. Increase Y by X%</h3>
+        <div class="calc-row">
+          <input type="number" class="num-field" id="c4y" value="500" placeholder="Value">
+          <span class="calc-label">+</span>
+          <input type="number" class="num-field" id="c4x" value="18" placeholder="X%">
+          <span class="calc-label">% = ?</span>
+          <button class="go-btn" onclick="calc4()">Go</button>
+        </div>
+        <div class="calc-result" id="c4r"></div>
+      </div>
+
+      <!-- 5: Decrease / discount -->
+      <div class="calc-card">
+        <h3>5. Discount / Decrease Y by X%</h3>
+        <div class="calc-row">
+          <input type="number" class="num-field" id="c5y" value="1000" placeholder="Price">
+          <span class="calc-label">−</span>
+          <input type="number" class="num-field" id="c5x" value="25" placeholder="X%">
+          <span class="calc-label">% = ?</span>
+          <button class="go-btn" onclick="calc5()">Go</button>
+        </div>
+        <div class="calc-result" id="c5r"></div>
+      </div>
+
+      <!-- 6: X is Y% → find original -->
+      <div class="calc-card">
+        <h3>6. X is Y% of what number?</h3>
+        <div class="calc-row">
+          <input type="number" class="num-field" id="c6x" value="60" placeholder="X">
+          <span class="calc-label">is</span>
+          <input type="number" class="num-field" id="c6y" value="30" placeholder="Y%">
+          <span class="calc-label">% of ?</span>
+          <button class="go-btn" onclick="calc6()">Go</button>
+        </div>
+        <div class="calc-result" id="c6r"></div>
+      </div>
+
+    </div>
+
+    <section class="info-section" style="margin-top:2rem;">
+      <h2>Percentage formula quick reference</h2>
+      <ul>
+        <li><strong>X% of Y</strong> = Y × X ÷ 100</li>
+        <li><strong>X is what % of Y</strong> = (X ÷ Y) × 100</li>
+        <li><strong>% change from X to Y</strong> = ((Y − X) ÷ X) × 100</li>
+        <li><strong>Discount price</strong> = Original × (1 − Discount% ÷ 100)</li>
+        <li><strong>Original price</strong> = Discounted ÷ (1 − Discount% ÷ 100)</li>
+      </ul>
+    </section>
+
+    <div class="related-tools">
+      <h3>Related tools</h3>
+      <div class="related-grid">
+        <a href="gst-calculator.html" class="related-card">🧾 GST Calculator</a>
+        <a href="sip-calculator.html" class="related-card">📈 SIP Calculator</a>
+        <a href="emi-calculator.html" class="related-card">🏦 EMI Calculator</a>
+        <a href="bmi-calculator.html" class="related-card">⚖️ BMI Calculator</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid footer-grid-5">
+      <div class="footer-brand">
+        <div class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></div>
+        <p>Free, private file conversion for everyone.</p>
+      </div>
+      <div class="footer-col"><h5>Calculators</h5><ul><li><a href="percentage-calculator.html">Percentage Calc</a></li><li><a href="sip-calculator.html">SIP Calculator</a></li><li><a href="gst-calculator.html">GST Calculator</a></li><li><a href="emi-calculator.html">EMI Calculator</a></li></ul></div>
+      <div class="footer-col"><h5>Company</h5><ul><li><a href="../about.html">About</a></li><li><a href="../blog/">Blog</a></li><li><a href="../privacy.html">Privacy</a></li></ul></div>
+      <div class="footer-col"><h5>Help</h5><ul><li><a href="../contact.html">Contact</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <div>© <span data-year>2026</span> Desi Jugad.</div>
+      <div class="made-in"><span class="flag-in"></span>Made in India, built for the world.</div>
+    </div>
+  </div>
+</footer>
+
+<script src="../assets/js/main.js"></script>
+<script>
+function fmt(v) { return isNaN(v) || !isFinite(v) ? 'Invalid input' : (+v.toFixed(4)).toLocaleString(); }
+
+function showResult(id, val, extra) {
+  const el = document.getElementById(id);
+  el.classList.remove('error');
+  if (isNaN(val) || !isFinite(val)) { el.textContent = 'Invalid input'; el.classList.add('error'); return; }
+  el.textContent = fmt(val) + (extra || '');
+}
+
+function calc1() {
+  const x = +document.getElementById('c1x').value, y = +document.getElementById('c1y').value;
+  showResult('c1r', (x/100)*y, '  (' + x + '% of ' + y + ')');
+}
+function calc2() {
+  const x = +document.getElementById('c2x').value, y = +document.getElementById('c2y').value;
+  showResult('c2r', (x/y)*100, '%');
+}
+function calc3() {
+  const x = +document.getElementById('c3x').value, y = +document.getElementById('c3y').value;
+  const pct = ((y-x)/x)*100;
+  const el = document.getElementById('c3r');
+  el.classList.remove('error');
+  el.textContent = (pct >= 0 ? '+' : '') + fmt(pct) + '% ' + (pct >= 0 ? '(increase)' : '(decrease)');
+}
+function calc4() {
+  const y = +document.getElementById('c4y').value, x = +document.getElementById('c4x').value;
+  const result = y * (1 + x/100);
+  const el = document.getElementById('c4r');
+  el.classList.remove('error');
+  el.textContent = fmt(result) + '  (increase: +' + fmt(result-y) + ')';
+}
+function calc5() {
+  const y = +document.getElementById('c5y').value, x = +document.getElementById('c5x').value;
+  const result = y * (1 - x/100);
+  const el = document.getElementById('c5r');
+  el.classList.remove('error');
+  el.textContent = fmt(result) + '  (saving: −' + fmt(y-result) + ')';
+}
+function calc6() {
+  const x = +document.getElementById('c6x').value, y = +document.getElementById('c6y').value;
+  showResult('c6r', (x/y)*100);
+}
+
+// Calculate all on load with defaults
+[calc1,calc2,calc3,calc4,calc5,calc6].forEach(f => f());
+
+// Auto-calculate on Enter
+document.querySelectorAll('.num-field').forEach(f => {
+  f.addEventListener('keydown', e => { if (e.key === 'Enter') f.closest('.calc-card').querySelector('.go-btn').click(); });
+});
+</script>
+</body>
+</html>

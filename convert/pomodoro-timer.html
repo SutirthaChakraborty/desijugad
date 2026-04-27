@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/img/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/img/apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pomodoro Timer — Free Focus & Productivity Timer | Desi Jugad</title>
+<meta name="description" content="Free Pomodoro timer for focused work sessions. Customizable work and break durations, session tracking, and sound alerts. No sign-up, works offline.">
+<meta name="keywords" content="pomodoro timer, focus timer, productivity timer, pomodoro technique, work timer, study timer, free pomodoro">
+<link rel="canonical" href="https://desijugad.co.in/convert/pomodoro-timer.html">
+<meta property="og:title" content="Pomodoro Timer — Free Focus & Productivity Timer">
+<meta property="og:description" content="Stay focused with the Pomodoro technique. Customizable timer with session tracking and sound alerts.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,30..100;1,9..144,300..700,30..100&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+<style>
+.pomo-center { text-align:center; max-width:480px; margin:2rem auto; }
+.mode-tabs { display:flex; gap:0.5rem; justify-content:center; margin-bottom:2rem; }
+.mode-tab { padding:0.45rem 1.25rem; border:2px solid var(--line); border-radius:999px; background:none; cursor:pointer; font-size:0.88rem; font-weight:600; transition:all 0.15s; }
+.mode-tab.active { background:var(--indigo); border-color:var(--indigo); color:#fff; }
+.timer-circle-wrap { position:relative; width:240px; height:240px; margin:0 auto 1.5rem; }
+.timer-circle-wrap svg { transform:rotate(-90deg); }
+.timer-svg-bg { fill:none; stroke:var(--line); stroke-width:8; }
+.timer-svg-progress { fill:none; stroke:var(--indigo); stroke-width:8; stroke-linecap:round; transition:stroke-dashoffset 0.9s linear, stroke 0.3s; }
+.timer-display { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); text-align:center; }
+.timer-time { font-size:3rem; font-weight:800; font-family:var(--font-mono); line-height:1; letter-spacing:2px; }
+.timer-mode-label { font-size:0.85rem; color:var(--ink-muted); margin-top:0.3rem; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; }
+.timer-controls { display:flex; gap:0.75rem; justify-content:center; margin-bottom:1.5rem; }
+.ctrl-btn { padding:0.55rem 1.5rem; border-radius:999px; font-size:0.95rem; font-weight:700; cursor:pointer; transition:all 0.15s; border:2px solid transparent; }
+.ctrl-btn.start { background:var(--indigo); color:#fff; border-color:var(--indigo); }
+.ctrl-btn.start:hover { opacity:0.88; }
+.ctrl-btn.reset { background:none; color:var(--ink-muted); border-color:var(--line); }
+.ctrl-btn.skip { background:none; color:var(--ink-muted); border-color:var(--line); }
+.sessions-row { display:flex; gap:0.5rem; justify-content:center; align-items:center; margin-bottom:1.5rem; }
+.session-dot { width:12px; height:12px; border-radius:50%; background:var(--line); transition:background 0.3s; }
+.session-dot.done { background:var(--indigo); }
+.sessions-label { font-size:0.85rem; color:var(--ink-muted); }
+.settings-wrap { margin-top:1.5rem; padding-top:1.5rem; border-top:1px solid var(--line); display:grid; grid-template-columns:1fr 1fr 1fr; gap:1rem; }
+.setting-field { display:flex; flex-direction:column; gap:0.35rem; text-align:left; }
+.setting-field label { font-size:0.78rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--ink-muted); }
+.setting-input { padding:0.4rem 0.65rem; border:1.5px solid var(--line); border-radius:8px; font-family:var(--font-mono); font-size:0.97rem; background:var(--surface); color:var(--ink); width:100%; }
+.setting-input:focus { outline:none; border-color:var(--indigo); }
+.stats-row { display:flex; gap:1.5rem; justify-content:center; margin-bottom:1rem; }
+.stat-item { text-align:center; }
+.stat-val { font-size:1.4rem; font-weight:700; font-family:var(--font-mono); color:var(--indigo); }
+.stat-label { font-size:0.78rem; color:var(--ink-muted); text-transform:uppercase; letter-spacing:0.06em; margin-top:0.1rem; }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="../" class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="../#converters">Converters</a></li>
+      <li><a href="../ai/">AI Studio <span class="badge-new">NEW</span></a></li>
+      <li><a href="../blog/">Blog</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../#converters" class="nav-cta">All tools</a></li>
+    </ul>
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</header>
+
+<main class="converter-page">
+  <div class="container">
+    <nav class="breadcrumb">
+      <a href="../">Home</a><span class="sep">/</span>
+      <a href="../#converters">Converters</a><span class="sep">/</span>
+      <span>Pomodoro Timer</span>
+    </nav>
+
+    <div class="converter-header">
+      <h1>Pomodoro timer, <em class="italic">stay in the zone.</em></h1>
+      <p class="lead">The Pomodoro Technique: work for 25 minutes, then take a 5-minute break. After 4 sessions, take a longer 15-minute break. Customizable, with sound alerts and session tracking.</p>
+    </div>
+
+    <div class="pomo-center">
+      <div class="stats-row">
+        <div class="stat-item"><div class="stat-val" id="statSessions">0</div><div class="stat-label">Sessions</div></div>
+        <div class="stat-item"><div class="stat-val" id="statFocus">0m</div><div class="stat-label">Focus time</div></div>
+      </div>
+
+      <div class="mode-tabs">
+        <button class="mode-tab active" data-mode="work">Focus</button>
+        <button class="mode-tab" data-mode="short">Short Break</button>
+        <button class="mode-tab" data-mode="long">Long Break</button>
+      </div>
+
+      <div class="timer-circle-wrap">
+        <svg width="240" height="240" viewBox="0 0 240 240">
+          <circle class="timer-svg-bg" cx="120" cy="120" r="108"/>
+          <circle class="timer-svg-progress" id="progressCircle" cx="120" cy="120" r="108" stroke-dasharray="678.58" stroke-dashoffset="0"/>
+        </svg>
+        <div class="timer-display">
+          <div class="timer-time" id="timerDisplay">25:00</div>
+          <div class="timer-mode-label" id="modeLabel">Focus</div>
+        </div>
+      </div>
+
+      <div class="sessions-row" id="sessionDots">
+        <span class="sessions-label">Session:</span>
+      </div>
+
+      <div class="timer-controls">
+        <button class="ctrl-btn start" id="startBtn">Start</button>
+        <button class="ctrl-btn reset" id="resetBtn">Reset</button>
+        <button class="ctrl-btn skip" id="skipBtn">Skip ›</button>
+      </div>
+
+      <div class="settings-wrap">
+        <div class="setting-field">
+          <label>Focus (min)</label>
+          <input type="number" class="setting-input" id="workMin" value="25" min="1" max="90">
+        </div>
+        <div class="setting-field">
+          <label>Short break</label>
+          <input type="number" class="setting-input" id="shortMin" value="5" min="1" max="30">
+        </div>
+        <div class="setting-field">
+          <label>Long break</label>
+          <input type="number" class="setting-input" id="longMin" value="15" min="1" max="60">
+        </div>
+      </div>
+    </div>
+
+    <section class="info-section" style="margin-top:2rem;">
+      <h2>What is the Pomodoro Technique?</h2>
+      <p>Developed by Francesco Cirillo in the late 1980s, the Pomodoro Technique uses a timer to break work into intervals — traditionally 25 minutes — separated by short breaks. The name "Pomodoro" (Italian for tomato) comes from the tomato-shaped kitchen timer Cirillo used as a university student.</p>
+      <p>Research shows that regular breaks improve mental agility, reduce fatigue, and increase overall productivity.</p>
+      <h2>FAQ</h2>
+      <details class="faq-item" open>
+        <summary>Why 25 minutes?</summary>
+        <p>25 minutes is long enough to make meaningful progress but short enough to stay focused without mental fatigue. You can customize the duration — some people prefer 45-minute or 50-minute sessions.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Does the timer keep running if I switch tabs?</summary>
+        <p>Yes — the timer uses <code>setInterval</code> which continues even when the tab is hidden. You'll hear the alert sound when the session ends.</p>
+      </details>
+    </section>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid footer-grid-5">
+      <div class="footer-brand">
+        <div class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></div>
+        <p>Free, private file conversion for everyone.</p>
+      </div>
+      <div class="footer-col"><h5>Utility</h5><ul><li><a href="pomodoro-timer.html">Pomodoro Timer</a></li><li><a href="word-counter.html">Word Counter</a></li><li><a href="text-tools.html">Text Tools</a></li></ul></div>
+      <div class="footer-col"><h5>Company</h5><ul><li><a href="../about.html">About</a></li><li><a href="../blog/">Blog</a></li><li><a href="../privacy.html">Privacy</a></li></ul></div>
+      <div class="footer-col"><h5>Help</h5><ul><li><a href="../contact.html">Contact</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <div>© <span data-year>2026</span> Desi Jugad.</div>
+      <div class="made-in"><span class="flag-in"></span>Made in India, built for the world.</div>
+    </div>
+  </div>
+</footer>
+
+<script src="../assets/js/main.js"></script>
+<script>
+const CIRCUMFERENCE = 2 * Math.PI * 108;
+const modes = { work: 'Focus', short: 'Short Break', long: 'Long Break' };
+const modeColors = { work: '#6366F1', short: '#10B981', long: '#F59E0B' };
+
+let currentMode = 'work';
+let running = false;
+let timer = null;
+let remaining = 25 * 60;
+let totalSeconds = 25 * 60;
+let sessionCount = 0;
+let totalFocusSecs = 0;
+let sessionInCycle = 0;
+let audioCtx = null;
+
+function getMinutes(mode) {
+  const map = { work: 'workMin', short: 'shortMin', long: 'longMin' };
+  return +document.getElementById(map[mode]).value || (mode === 'work' ? 25 : mode === 'short' ? 5 : 15);
+}
+
+function setMode(mode) {
+  currentMode = mode;
+  document.querySelectorAll('.mode-tab').forEach(t => t.classList.toggle('active', t.dataset.mode === mode));
+  document.getElementById('modeLabel').textContent = modes[mode];
+  document.getElementById('progressCircle').style.stroke = modeColors[mode];
+  document.body.style.setProperty('--indigo', modeColors[mode]);
+  reset();
+}
+
+document.querySelectorAll('.mode-tab').forEach(btn => btn.addEventListener('click', () => setMode(btn.dataset.mode)));
+
+document.getElementById('startBtn').addEventListener('click', toggle);
+document.getElementById('resetBtn').addEventListener('click', reset);
+document.getElementById('skipBtn').addEventListener('click', nextSession);
+['workMin','shortMin','longMin'].forEach(id => document.getElementById(id).addEventListener('change', () => { if (currentMode === 'work' && id === 'workMin') reset(); if (currentMode === 'short' && id === 'shortMin') reset(); if (currentMode === 'long' && id === 'longMin') reset(); }));
+
+function toggle() {
+  running ? pause() : start();
+}
+
+function start() {
+  running = true;
+  document.getElementById('startBtn').textContent = 'Pause';
+  timer = setInterval(tick, 1000);
+}
+
+function pause() {
+  running = false;
+  clearInterval(timer);
+  document.getElementById('startBtn').textContent = 'Resume';
+}
+
+function reset() {
+  running = false;
+  clearInterval(timer);
+  const mins = getMinutes(currentMode);
+  remaining = mins * 60;
+  totalSeconds = mins * 60;
+  updateDisplay();
+  document.getElementById('startBtn').textContent = 'Start';
+}
+
+function tick() {
+  remaining--;
+  if (currentMode === 'work') totalFocusSecs++;
+  updateDisplay();
+  updateStats();
+  if (remaining <= 0) {
+    clearInterval(timer);
+    running = false;
+    beep();
+    nextSession();
+  }
+}
+
+function nextSession() {
+  if (currentMode === 'work') {
+    sessionCount++;
+    sessionInCycle++;
+    updateStats();
+    if (sessionInCycle >= 4) {
+      sessionInCycle = 0;
+      setMode('long');
+    } else {
+      setMode('short');
+    }
+  } else {
+    setMode('work');
+  }
+  renderDots();
+}
+
+function updateDisplay() {
+  const m = Math.floor(remaining / 60);
+  const s = remaining % 60;
+  const str = String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+  document.getElementById('timerDisplay').textContent = str;
+  document.title = str + ' · Pomodoro — Desi Jugad';
+  const offset = CIRCUMFERENCE * (1 - remaining / totalSeconds);
+  document.getElementById('progressCircle').style.strokeDashoffset = offset;
+}
+
+function updateStats() {
+  document.getElementById('statSessions').textContent = sessionCount;
+  const m = Math.round(totalFocusSecs / 60);
+  document.getElementById('statFocus').textContent = m + 'm';
+}
+
+function renderDots() {
+  const container = document.getElementById('sessionDots');
+  container.innerHTML = '<span class="sessions-label">Cycle:</span>';
+  for (let i = 0; i < 4; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'session-dot' + (i < sessionInCycle ? ' done' : '');
+    container.appendChild(dot);
+  }
+}
+
+function beep() {
+  try {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.frequency.value = 880;
+    gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.8);
+    osc.start();
+    osc.stop(audioCtx.currentTime + 0.8);
+    setTimeout(() => {
+      const osc2 = audioCtx.createOscillator();
+      const g2 = audioCtx.createGain();
+      osc2.connect(g2); g2.connect(audioCtx.destination);
+      osc2.frequency.value = 1100;
+      g2.gain.setValueAtTime(0.3, audioCtx.currentTime);
+      g2.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.6);
+      osc2.start(); osc2.stop(audioCtx.currentTime + 0.6);
+    }, 400);
+  } catch(e) {}
+}
+
+renderDots();
+updateDisplay();
+</script>
+</body>
+</html>

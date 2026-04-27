@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/img/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/img/apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meme Generator — Add Text to Images Free Online | Desi Jugad</title>
+<meta name="description" content="Create memes online free — add top and bottom text to any image. Custom fonts, colors, outlines. Download as PNG. No upload, runs in your browser.">
+<meta name="keywords" content="meme generator, meme maker online, add text to image, make meme online free, meme creator, free meme generator">
+<link rel="canonical" href="https://desijugad.co.in/convert/meme-generator.html">
+<meta property="og:title" content="Meme Generator — Free Online Meme Maker">
+<meta property="og:description" content="Add top and bottom text to any image and create memes. Custom fonts, colors, outlines. Download as PNG.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,30..100;1,9..144,300..700,30..100&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+<style>
+.meme-layout { display:grid; grid-template-columns:300px 1fr; gap:2rem; margin-top:1.5rem; align-items:start; }
+@media (max-width:780px) { .meme-layout { grid-template-columns:1fr; } }
+.controls { display:flex; flex-direction:column; gap:1rem; }
+.field { display:flex; flex-direction:column; gap:0.35rem; }
+.field label { font-size:0.82rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--ink-muted); }
+.text-input { width:100%; padding:0.5rem 0.75rem; border:1.5px solid var(--line); border-radius:8px; background:var(--surface); color:var(--ink); font-size:0.95rem; font-family:var(--font-sans); }
+.text-input:focus { outline:none; border-color:var(--indigo); }
+.row-two { display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; }
+.color-picker { width:48px; height:36px; padding:0; border:1.5px solid var(--line); border-radius:7px; cursor:pointer; background:none; }
+.slider-wrap { display:flex; flex-direction:column; gap:0.2rem; }
+.slider-wrap input[type=range] { accent-color:var(--indigo); }
+.slider-val { font-size:0.8rem; font-family:var(--font-mono); color:var(--ink-muted); }
+.canvas-area { background:var(--bg-alt); border:1.5px solid var(--line); border-radius:var(--radius); padding:1rem; display:flex; flex-direction:column; align-items:center; gap:1rem; }
+#memeCanvas { max-width:100%; border-radius:8px; cursor:default; }
+.canvas-placeholder { width:100%; min-height:240px; display:flex; align-items:center; justify-content:center; color:var(--ink-muted); font-size:0.95rem; border:2px dashed var(--line); border-radius:8px; }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="../" class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="../#converters">Converters</a></li>
+      <li><a href="../ai/">AI Studio <span class="badge-new">NEW</span></a></li>
+      <li><a href="../blog/">Blog</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../#converters" class="nav-cta">All tools</a></li>
+    </ul>
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</header>
+
+<main class="converter-page">
+  <div class="container">
+    <nav class="breadcrumb">
+      <a href="../">Home</a><span class="sep">/</span>
+      <a href="../#converters">Converters</a><span class="sep">/</span>
+      <span>Meme Generator</span>
+    </nav>
+
+    <div class="converter-header">
+      <h1>Meme generator, <em class="italic">make it yours.</em></h1>
+      <p class="lead">Upload any image and add top and bottom text with classic meme-style font. Customize color, size, and outline. Download as PNG instantly, no sign-up.</p>
+    </div>
+
+    <div class="meme-layout">
+      <div class="controls">
+        <div class="field">
+          <label>Image</label>
+          <input type="file" id="imageInput" accept="image/*" style="display:none;">
+          <button class="btn btn-primary" id="pickBtn">Choose image</button>
+        </div>
+        <div class="field">
+          <label for="topText">Top text</label>
+          <input type="text" class="text-input" id="topText" placeholder="WHEN YOU MAKE A MEME" maxlength="120">
+        </div>
+        <div class="field">
+          <label for="bottomText">Bottom text</label>
+          <input type="text" class="text-input" id="bottomText" placeholder="AND IT'S ACTUALLY FUNNY" maxlength="120">
+        </div>
+        <div class="row-two">
+          <div class="field">
+            <label>Text color</label>
+            <input type="color" class="color-picker" id="textColor" value="#ffffff">
+          </div>
+          <div class="field">
+            <label>Outline color</label>
+            <input type="color" class="color-picker" id="outlineColor" value="#000000">
+          </div>
+        </div>
+        <div class="slider-wrap">
+          <label style="font-size:0.82rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink-muted);">Font size <span class="slider-val" id="fontSizeVal">48px</span></label>
+          <input type="range" id="fontSize" min="18" max="120" value="48" step="2">
+        </div>
+        <div class="slider-wrap">
+          <label style="font-size:0.82rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink-muted);">Outline width <span class="slider-val" id="outlineWidthVal">4px</span></label>
+          <input type="range" id="outlineWidth" min="0" max="12" value="4" step="1">
+        </div>
+        <button class="btn btn-primary" id="downloadBtn" style="display:none;">Download PNG</button>
+      </div>
+
+      <div class="canvas-area">
+        <div class="canvas-placeholder" id="placeholder">Choose an image to start</div>
+        <canvas id="memeCanvas" style="display:none;"></canvas>
+      </div>
+    </div>
+
+    <section class="info-section" style="margin-top:2rem;">
+      <h2>How to make a meme</h2>
+      <ol>
+        <li>Click <strong>Choose image</strong> and pick any photo</li>
+        <li>Type your top and bottom text (all caps works great for classic meme style)</li>
+        <li>Adjust font size, text color, and outline</li>
+        <li>Click <strong>Download PNG</strong></li>
+      </ol>
+    </section>
+
+    <div class="related-tools">
+      <h3>Related tools</h3>
+      <div class="related-grid">
+        <a href="image-cropper.html" class="related-card">✂️ Image Cropper</a>
+        <a href="image-converter.html" class="related-card">🖼 Image Converter</a>
+        <a href="image-compress.html" class="related-card">📦 Image Compress</a>
+        <a href="../ai/image.html" class="related-card">🤖 AI Image Studio</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid footer-grid-5">
+      <div class="footer-brand">
+        <div class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></div>
+        <p>Free, private file conversion for everyone.</p>
+      </div>
+      <div class="footer-col"><h5>Image Tools</h5><ul><li><a href="meme-generator.html">Meme Generator</a></li><li><a href="image-cropper.html">Image Cropper</a></li><li><a href="image-compress.html">Image Compress</a></li></ul></div>
+      <div class="footer-col"><h5>Company</h5><ul><li><a href="../about.html">About</a></li><li><a href="../blog/">Blog</a></li><li><a href="../privacy.html">Privacy</a></li></ul></div>
+      <div class="footer-col"><h5>Help</h5><ul><li><a href="../contact.html">Contact</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <div>© <span data-year>2026</span> Desi Jugad.</div>
+      <div class="made-in"><span class="flag-in"></span>Made in India, built for the world.</div>
+    </div>
+  </div>
+</footer>
+
+<script src="../assets/js/main.js"></script>
+<script>
+const imageInput  = document.getElementById('imageInput');
+const pickBtn     = document.getElementById('pickBtn');
+const canvas      = document.getElementById('memeCanvas');
+const ctx         = canvas.getContext('2d');
+const placeholder = document.getElementById('placeholder');
+const downloadBtn = document.getElementById('downloadBtn');
+
+let img = null;
+
+pickBtn.addEventListener('click', () => imageInput.click());
+imageInput.addEventListener('change', e => {
+  const file = e.target.files[0];
+  if (!file) return;
+  const url = URL.createObjectURL(file);
+  const image = new Image();
+  image.onload = () => {
+    img = image;
+    canvas.width = image.width;
+    canvas.height = image.height;
+    placeholder.style.display = 'none';
+    canvas.style.display = 'block';
+    downloadBtn.style.display = 'block';
+    render();
+  };
+  image.src = url;
+});
+
+const fields = ['topText','bottomText','textColor','outlineColor','fontSize','outlineWidth'];
+fields.forEach(id => document.getElementById(id).addEventListener('input', render));
+
+document.getElementById('fontSize').addEventListener('input', e => { document.getElementById('fontSizeVal').textContent = e.target.value + 'px'; });
+document.getElementById('outlineWidth').addEventListener('input', e => { document.getElementById('outlineWidthVal').textContent = e.target.value + 'px'; });
+
+function render() {
+  if (!img) return;
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.drawImage(img, 0, 0);
+
+  const top    = document.getElementById('topText').value.toUpperCase();
+  const bottom = document.getElementById('bottomText').value.toUpperCase();
+  const color  = document.getElementById('textColor').value;
+  const outline= document.getElementById('outlineColor').value;
+  const size   = +document.getElementById('fontSize').value;
+  const outW   = +document.getElementById('outlineWidth').value;
+  const font   = `bold ${size}px Impact, Arial Black, sans-serif`;
+  const pad    = Math.round(size * 0.25);
+
+  ctx.font = font;
+  ctx.textAlign = 'center';
+  ctx.lineJoin = 'round';
+
+  function drawText(text, x, y) {
+    if (!text) return;
+    ctx.lineWidth = outW * 2;
+    ctx.strokeStyle = outline;
+    ctx.strokeText(text, x, y);
+    ctx.fillStyle = color;
+    ctx.fillText(text, x, y);
+  }
+
+  drawText(top, canvas.width / 2, size + pad);
+  drawText(bottom, canvas.width / 2, canvas.height - pad);
+}
+
+downloadBtn.addEventListener('click', () => {
+  if (!img) return;
+  const a = document.createElement('a');
+  a.download = 'meme.png';
+  a.href = canvas.toDataURL('image/png');
+  a.click();
+});
+</script>
+</body>
+</html>

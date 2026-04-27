@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/img/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/img/apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Regex Tester — Test Regular Expressions Online Free | Desi Jugad</title>
+<meta name="description" content="Test and debug regular expressions online. Live match highlighting, capture groups, flags, and match details. Free, private, runs in your browser.">
+<meta name="keywords" content="regex tester, regular expression tester, test regex online, regex debugger, regex matcher, regex validator, free regex tool">
+<link rel="canonical" href="https://desijugad.co.in/convert/regex-tester.html">
+<meta property="og:title" content="Regex Tester — Live Regular Expression Debugger">
+<meta property="og:description" content="Test regular expressions with live match highlighting. See capture groups and match details instantly.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,30..100;1,9..144,300..700,30..100&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+<style>
+.regex-row {
+  display: flex; align-items: center; gap: 0.5rem; margin-top: 1.5rem;
+  background: var(--surface); border: 1.5px solid var(--line); border-radius: var(--radius);
+  padding: 0.5rem 0.75rem; flex-wrap: wrap;
+}
+.regex-slash { font-family: var(--font-mono); font-size: 1.2rem; color: var(--ink-muted); }
+.regex-input {
+  flex: 1; min-width: 200px; border: none; outline: none;
+  font-family: var(--font-mono); font-size: 1rem; color: var(--ink);
+  background: transparent;
+}
+.regex-row.error { border-color: #EF4444; }
+.flag-toggles { display: flex; gap: 0.3rem; }
+.flag-btn {
+  padding: 0.2rem 0.5rem; border: 1.5px solid var(--line); border-radius: 6px;
+  background: none; color: var(--ink-muted); font-family: var(--font-mono);
+  font-size: 0.88rem; cursor: pointer; transition: all 0.15s;
+}
+.flag-btn.active { border-color: var(--indigo); background: var(--indigo); color: #fff; }
+.test-area-wrap { margin-top: 1.25rem; position: relative; }
+.test-label { font-size: 0.82rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-muted); margin-bottom: 0.5rem; }
+.test-area {
+  width: 100%; min-height: 220px; padding: 1rem; font-family: var(--font-mono);
+  font-size: 0.87rem; line-height: 1.65; border: 1.5px solid var(--line);
+  border-radius: var(--radius); background: var(--surface); color: var(--ink);
+  resize: vertical;
+}
+.test-area:focus { outline: none; border-color: var(--indigo); }
+.highlight-overlay {
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  pointer-events: none; padding: 1rem; font-family: var(--font-mono);
+  font-size: 0.87rem; line-height: 1.65; white-space: pre-wrap;
+  word-break: break-word; overflow: hidden; border-radius: var(--radius);
+  color: transparent;
+}
+mark.match {
+  background: rgba(99, 102, 241, 0.2); border-radius: 3px;
+  border-bottom: 2px solid #6366F1; color: transparent;
+}
+.match-info { margin-top: 1rem; }
+.match-count { font-size: 0.9rem; font-weight: 600; color: var(--indigo); margin-bottom: 0.75rem; }
+.match-list { display: flex; flex-direction: column; gap: 0.5rem; max-height: 320px; overflow-y: auto; }
+.match-item {
+  padding: 0.6rem 0.85rem; background: var(--bg-alt); border: 1px solid var(--line);
+  border-radius: 8px; font-family: var(--font-mono); font-size: 0.85rem;
+}
+.match-index { font-weight: 700; color: var(--indigo); margin-right: 0.5rem; }
+.match-value { color: var(--ink); }
+.match-groups { margin-top: 0.25rem; font-size: 0.8rem; color: var(--ink-muted); }
+.error-msg { color: #EF4444; font-size: 0.88rem; font-family: var(--font-mono); margin-top: 0.5rem; }
+.quick-patterns { margin-top: 1.25rem; }
+.quick-label { font-size: 0.82rem; color: var(--ink-muted); margin-bottom: 0.5rem; }
+.pattern-chips { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.pattern-chip {
+  padding: 0.25rem 0.65rem; border: 1px solid var(--line); border-radius: 999px;
+  font-size: 0.8rem; cursor: pointer; background: var(--surface);
+  transition: all 0.15s;
+}
+.pattern-chip:hover { border-color: var(--indigo); color: var(--indigo); }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="../" class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="../#converters">Converters</a></li>
+      <li><a href="../ai/">AI Studio <span class="badge-new">NEW</span></a></li>
+      <li><a href="../blog/">Blog</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../#converters" class="nav-cta">All tools</a></li>
+    </ul>
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</header>
+
+<main class="converter-page">
+  <div class="container">
+    <nav class="breadcrumb">
+      <a href="../">Home</a><span class="sep">/</span>
+      <a href="../#converters">Converters</a><span class="sep">/</span>
+      <span>Regex Tester</span>
+    </nav>
+
+    <div class="converter-header">
+      <h1>Regex tester, <em class="italic">live & private.</em></h1>
+      <p class="lead">Type a regular expression and see matches highlighted in real time. View capture groups, match positions, and all flags. Runs entirely in your browser.</p>
+    </div>
+
+    <div class="regex-row" id="regexRow">
+      <span class="regex-slash">/</span>
+      <input type="text" class="regex-input" id="regexInput" placeholder="([a-z]+)\d+" spellcheck="false" autocomplete="off">
+      <span class="regex-slash">/</span>
+      <div class="flag-toggles">
+        <button class="flag-btn active" data-flag="g" title="Global — find all matches">g</button>
+        <button class="flag-btn active" data-flag="i" title="Case insensitive">i</button>
+        <button class="flag-btn" data-flag="m" title="Multiline — ^ and $ match line starts/ends">m</button>
+        <button class="flag-btn" data-flag="s" title="Dot-all — . matches newlines">s</button>
+      </div>
+    </div>
+    <div class="error-msg" id="errorMsg" style="display:none;"></div>
+
+    <div class="quick-patterns">
+      <div class="quick-label">Common patterns:</div>
+      <div class="pattern-chips">
+        <span class="pattern-chip" data-pattern="^[\w.-]+@[\w.-]+\.\w{2,}$">Email</span>
+        <span class="pattern-chip" data-pattern="https?://[\w./\-?=&#%+]+">URL</span>
+        <span class="pattern-chip" data-pattern="\b\d{10}\b">Phone (10 digits)</span>
+        <span class="pattern-chip" data-pattern="#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})\b">Hex color</span>
+        <span class="pattern-chip" data-pattern="\b\d{1,3}(?:\.\d{1,3}){3}\b">IP address</span>
+        <span class="pattern-chip" data-pattern="\d{4}-\d{2}-\d{2}">Date (YYYY-MM-DD)</span>
+        <span class="pattern-chip" data-pattern="^\d{6}$">Indian PIN code</span>
+        <span class="pattern-chip" data-pattern="[A-Z]{2}\d{2}[A-Z]{1,2}\d{1,4}[A-Z]{1,3}">Vehicle number</span>
+      </div>
+    </div>
+
+    <div class="test-area-wrap" style="margin-top:1.25rem;">
+      <div class="test-label">Test string</div>
+      <div style="position:relative;">
+        <textarea class="test-area" id="testInput" placeholder="Type or paste test text here…" spellcheck="false">Hello World! Contact us at hello@example.com or visit https://desijugad.co.in for more info. Call 9876543210.</textarea>
+        <div class="highlight-overlay" id="overlay" aria-hidden="true"></div>
+      </div>
+    </div>
+
+    <div class="match-info" id="matchInfo" style="display:none;">
+      <div class="match-count" id="matchCount"></div>
+      <div class="match-list" id="matchList"></div>
+    </div>
+
+    <section class="info-section" style="margin-top:2rem;">
+      <h2>Regex flag reference</h2>
+      <ul>
+        <li><code>g</code> — Global: find all matches, not just the first</li>
+        <li><code>i</code> — Case insensitive: match regardless of uppercase/lowercase</li>
+        <li><code>m</code> — Multiline: <code>^</code> and <code>$</code> match start/end of each line</li>
+        <li><code>s</code> — Dot-all: <code>.</code> matches newline characters too</li>
+      </ul>
+      <h2>FAQ</h2>
+      <details class="faq-item" open>
+        <summary>What regex syntax is supported?</summary>
+        <p>JavaScript's built-in RegExp engine, which supports most common regex features: character classes, quantifiers, groups, lookahead, lookbehind, named groups, and Unicode categories.</p>
+      </details>
+      <details class="faq-item">
+        <summary>How do I use capture groups?</summary>
+        <p>Wrap part of your pattern in parentheses: <code>(\d+)-(\w+)</code>. Each matched group is shown in the match details below.</p>
+      </details>
+    </section>
+
+    <div class="related-tools">
+      <h3>Related tools</h3>
+      <div class="related-grid">
+        <a href="diff-checker.html" class="related-card">↔️ Diff Checker</a>
+        <a href="json-formatter.html" class="related-card">📋 JSON Formatter</a>
+        <a href="text-tools.html" class="related-card">📝 Text Tools</a>
+        <a href="url-tools.html" class="related-card">🔗 URL Tools</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid footer-grid-5">
+      <div class="footer-brand">
+        <div class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></div>
+        <p>Free, private file conversion for everyone.</p>
+      </div>
+      <div class="footer-col"><h5>Developer Tools</h5><ul><li><a href="diff-checker.html">Diff Checker</a></li><li><a href="regex-tester.html">Regex Tester</a></li><li><a href="json-formatter.html">JSON Formatter</a></li><li><a href="code-beautifier.html">Code Beautifier</a></li></ul></div>
+      <div class="footer-col"><h5>AI Studio</h5><ul><li><a href="../ai/writer.html">AI Writer</a></li><li><a href="../ai/image.html">AI Images</a></li></ul></div>
+      <div class="footer-col"><h5>Company</h5><ul><li><a href="../about.html">About</a></li><li><a href="../blog/">Blog</a></li><li><a href="../privacy.html">Privacy</a></li></ul></div>
+      <div class="footer-col"><h5>Help</h5><ul><li><a href="../contact.html">Contact</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <div>© <span data-year>2026</span> Desi Jugad.</div>
+      <div class="made-in"><span class="flag-in"></span>Made in India, built for the world.</div>
+    </div>
+  </div>
+</footer>
+
+<script src="../assets/js/main.js"></script>
+<script>
+const regexInput = document.getElementById('regexInput');
+const testInput  = document.getElementById('testInput');
+const errorMsg   = document.getElementById('errorMsg');
+const regexRow   = document.getElementById('regexRow');
+const overlay    = document.getElementById('overlay');
+const matchInfo  = document.getElementById('matchInfo');
+const matchCount = document.getElementById('matchCount');
+const matchList  = document.getElementById('matchList');
+
+let flags = new Set(['g','i']);
+
+document.querySelectorAll('.flag-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    if (flags.has(btn.dataset.flag)) { flags.delete(btn.dataset.flag); btn.classList.remove('active'); }
+    else { flags.add(btn.dataset.flag); btn.classList.add('active'); }
+    runTest();
+  });
+});
+
+document.querySelectorAll('.pattern-chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    regexInput.value = chip.dataset.pattern;
+    runTest();
+  });
+});
+
+regexInput.addEventListener('input', runTest);
+testInput.addEventListener('input', () => { syncOverlay(); runTest(); });
+testInput.addEventListener('scroll', syncOverlay);
+
+function runTest() {
+  const pattern = regexInput.value;
+  const text = testInput.value;
+  errorMsg.style.display = 'none';
+  regexRow.classList.remove('error');
+  overlay.innerHTML = '';
+  matchInfo.style.display = 'none';
+
+  if (!pattern) return;
+
+  let re;
+  try {
+    re = new RegExp(pattern, [...flags].join(''));
+  } catch(e) {
+    errorMsg.textContent = e.message;
+    errorMsg.style.display = 'block';
+    regexRow.classList.add('error');
+    return;
+  }
+
+  const matches = [...text.matchAll(new RegExp(pattern, ([...flags].includes('g') ? [...flags].join('') : [...flags].join('') + 'g')))];
+
+  let highlighted = escHtml(text);
+  if (matches.length) {
+    // Build highlighted HTML with marks
+    let result = '', last = 0;
+    const allMatches = [...text.matchAll(new RegExp(pattern, ([...flags].join('').includes('g') ? [...flags].join('') : [...flags].join('') + 'g')))];
+    allMatches.forEach(m => {
+      result += escHtml(text.slice(last, m.index));
+      result += `<mark class="match">${escHtml(m[0])}</mark>`;
+      last = m.index + m[0].length;
+    });
+    result += escHtml(text.slice(last));
+    overlay.innerHTML = result;
+
+    matchCount.textContent = `${matches.length} match${matches.length !== 1 ? 'es' : ''} found`;
+    matchList.innerHTML = matches.map((m, i) => {
+      const groups = m.slice(1).map((g,gi) => `Group ${gi+1}: ${g ?? 'undefined'}`).join(' | ');
+      return `<div class="match-item">
+        <span class="match-index">#${i+1}</span>
+        <span class="match-value">${escHtml(m[0] || '(empty)')}</span>
+        ${groups ? `<div class="match-groups">${escHtml(groups)}</div>` : ''}
+        <div class="match-groups">Index: ${m.index}–${m.index + m[0].length}</div>
+      </div>`;
+    }).join('');
+    matchInfo.style.display = 'block';
+  } else {
+    overlay.innerHTML = escHtml(text);
+    matchCount.textContent = 'No matches found';
+    matchList.innerHTML = '';
+    matchInfo.style.display = 'block';
+  }
+  syncOverlay();
+}
+
+function syncOverlay() {
+  overlay.scrollTop = testInput.scrollTop;
+  overlay.scrollLeft = testInput.scrollLeft;
+}
+
+function escHtml(t) {
+  return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+runTest();
+</script>
+</body>
+</html>

@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/img/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/img/apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BMI Calculator — Body Mass Index Free Online | Desi Jugad</title>
+<meta name="description" content="Calculate your BMI (Body Mass Index) instantly. See your weight category, healthy weight range, and BMI gauge. Supports metric and imperial units. Free, private.">
+<meta name="keywords" content="BMI calculator, body mass index calculator, BMI calculator India, healthy weight calculator, BMI online, underweight overweight BMI">
+<link rel="canonical" href="https://desijugad.co.in/convert/bmi-calculator.html">
+<meta property="og:title" content="BMI Calculator — Free Body Mass Index Tool">
+<meta property="og:description" content="Calculate your BMI and healthy weight range instantly. Metric and imperial units supported.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,30..100;1,9..144,300..700,30..100&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+<style>
+.unit-toggle { display:flex; gap:0.5rem; margin-top:1.5rem; }
+.unit-btn { padding:0.4rem 1.25rem; border:2px solid var(--line); border-radius:999px; background:none; font-size:0.9rem; font-weight:600; cursor:pointer; transition:all 0.15s; }
+.unit-btn.active { border-color:var(--indigo); background:var(--indigo); color:#fff; }
+.bmi-layout { display:grid; grid-template-columns:300px 1fr; gap:2rem; margin-top:1.5rem; align-items:start; }
+@media (max-width:720px) { .bmi-layout { grid-template-columns:1fr; } }
+.field { display:flex; flex-direction:column; gap:0.4rem; margin-bottom:1rem; }
+.field label { font-size:0.82rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--ink-muted); }
+.num-input { padding:0.6rem 0.9rem; border:1.5px solid var(--line); border-radius:8px; font-family:var(--font-mono); font-size:1.1rem; background:var(--surface); color:var(--ink); width:100%; }
+.num-input:focus { outline:none; border-color:var(--indigo); }
+.bmi-result { display:none; }
+.bmi-number { font-size:4rem; font-weight:800; font-family:var(--font-mono); line-height:1; }
+.bmi-category { font-size:1.25rem; font-weight:700; margin-top:0.4rem; }
+.bmi-gauge-wrap { margin:1.5rem 0; }
+.bmi-gauge { position:relative; height:28px; border-radius:999px; background:linear-gradient(to right,#3B82F6 0%,#22C55E 18.5%,#F59E0B 37%,#EF4444 60%,#7C3AED 100%); overflow:visible; }
+.bmi-needle { position:absolute; top:50%; transform:translate(-50%,-50%); width:4px; height:40px; background:#111; border-radius:2px; transition:left 0.4s ease; }
+.gauge-labels { display:flex; justify-content:space-between; font-size:0.75rem; color:var(--ink-muted); margin-top:0.4rem; }
+.info-grid { display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; margin-top:1rem; }
+.info-card { padding:1rem; background:var(--bg-alt); border:1px solid var(--line); border-radius:var(--radius); }
+.info-card .ic-label { font-size:0.78rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--ink-muted); font-weight:600; }
+.info-card .ic-val { font-size:1.1rem; font-weight:700; font-family:var(--font-mono); margin-top:0.2rem; }
+.category-table { width:100%; border-collapse:collapse; margin-top:1.25rem; font-size:0.86rem; }
+.category-table th { text-align:left; padding:0.4rem 0.75rem; background:var(--bg-alt); border:1px solid var(--line); font-weight:700; font-size:0.78rem; text-transform:uppercase; }
+.category-table td { padding:0.4rem 0.75rem; border:1px solid var(--line); }
+.category-table tr.current-row td { font-weight:700; }
+.cat-dot { display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:5px; }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="../" class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="../#converters">Converters</a></li>
+      <li><a href="../ai/">AI Studio <span class="badge-new">NEW</span></a></li>
+      <li><a href="../blog/">Blog</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../#converters" class="nav-cta">All tools</a></li>
+    </ul>
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</header>
+
+<main class="converter-page">
+  <div class="container">
+    <nav class="breadcrumb">
+      <a href="../">Home</a><span class="sep">/</span>
+      <a href="../#converters">Calculators</a><span class="sep">/</span>
+      <span>BMI Calculator</span>
+    </nav>
+
+    <div class="converter-header">
+      <h1>BMI calculator, <em class="italic">check your health score.</em></h1>
+      <p class="lead">Calculate your Body Mass Index (BMI) and see your weight category, healthy weight range, and how you compare to WHO standards. Metric and imperial units supported.</p>
+    </div>
+
+    <div class="unit-toggle">
+      <button class="unit-btn active" data-unit="metric">Metric (kg, cm)</button>
+      <button class="unit-btn" data-unit="imperial">Imperial (lbs, ft)</button>
+    </div>
+
+    <div class="bmi-layout">
+      <div>
+        <div id="metricFields">
+          <div class="field">
+            <label for="weight">Weight (kg)</label>
+            <input type="number" class="num-input" id="weight" value="70" min="20" max="300" step="0.5">
+          </div>
+          <div class="field">
+            <label for="height">Height (cm)</label>
+            <input type="number" class="num-input" id="height" value="170" min="50" max="250" step="1">
+          </div>
+        </div>
+        <div id="imperialFields" style="display:none;">
+          <div class="field">
+            <label for="weightLbs">Weight (lbs)</label>
+            <input type="number" class="num-input" id="weightLbs" value="154" min="44" max="660" step="1">
+          </div>
+          <div class="field" style="display:flex;flex-direction:row;gap:0.75rem;">
+            <div style="flex:1;display:flex;flex-direction:column;gap:0.4rem;">
+              <label>Feet</label>
+              <input type="number" class="num-input" id="heightFt" value="5" min="1" max="8" step="1">
+            </div>
+            <div style="flex:1;display:flex;flex-direction:column;gap:0.4rem;">
+              <label>Inches</label>
+              <input type="number" class="num-input" id="heightIn" value="7" min="0" max="11" step="1">
+            </div>
+          </div>
+        </div>
+        <button class="btn btn-primary" id="calcBtn" style="width:100%;margin-top:0.5rem;">Calculate BMI</button>
+      </div>
+
+      <div class="bmi-result" id="bmiResult">
+        <div class="bmi-number" id="bmiNumber" style="color:#22C55E;">22.5</div>
+        <div class="bmi-category" id="bmiCategory" style="color:#22C55E;">Normal weight</div>
+
+        <div class="bmi-gauge-wrap">
+          <div class="bmi-gauge"><div class="bmi-needle" id="bmiNeedle" style="left:40%;"></div></div>
+          <div class="gauge-labels"><span>15</span><span>Underweight</span><span>Normal</span><span>Overweight</span><span>Obese</span><span>40</span></div>
+        </div>
+
+        <div class="info-grid">
+          <div class="info-card"><div class="ic-label">Healthy weight range</div><div class="ic-val" id="healthyRange"></div></div>
+          <div class="info-card"><div class="ic-label">Weight to gain/lose</div><div class="ic-val" id="weightDiff"></div></div>
+        </div>
+
+        <table class="category-table" style="margin-top:1.5rem;">
+          <thead><tr><th>Category</th><th>BMI Range</th></tr></thead>
+          <tbody>
+            <tr id="row-uw"><td><span class="cat-dot" style="background:#3B82F6;"></span>Underweight</td><td>&lt; 18.5</td></tr>
+            <tr id="row-nw"><td><span class="cat-dot" style="background:#22C55E;"></span>Normal weight</td><td>18.5 – 24.9</td></tr>
+            <tr id="row-ow"><td><span class="cat-dot" style="background:#F59E0B;"></span>Overweight</td><td>25 – 29.9</td></tr>
+            <tr id="row-ob"><td><span class="cat-dot" style="background:#EF4444;"></span>Obese Class I</td><td>30 – 34.9</td></tr>
+            <tr id="row-ob2"><td><span class="cat-dot" style="background:#7C3AED;"></span>Obese Class II+</td><td>≥ 35</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <section class="info-section" style="margin-top:2rem;">
+      <h2>What is BMI?</h2>
+      <p>BMI (Body Mass Index) = weight (kg) ÷ height² (m²). It's a screening tool, not a diagnostic measure. A high BMI may indicate excess body fat, but athletes with high muscle mass can have high BMI without health risks. Always consult a doctor for health advice.</p>
+      <p><strong>Note for South Asians:</strong> Research suggests South Asians (including Indians) have higher health risks at lower BMI values. Consider 23 as the upper limit of normal and 27.5 as the overweight threshold.</p>
+      <h2>FAQ</h2>
+      <details class="faq-item" open>
+        <summary>Is BMI accurate for everyone?</summary>
+        <p>BMI doesn't account for muscle mass, bone density, age, sex, or ethnicity. It's a population-level screening tool, not a personal health diagnosis. Athletes may have "overweight" BMI despite being very healthy.</p>
+      </details>
+    </section>
+
+    <div class="related-tools">
+      <h3>Related tools</h3>
+      <div class="related-grid">
+        <a href="sip-calculator.html" class="related-card">📈 SIP Calculator</a>
+        <a href="age-calculator.html" class="related-card">🎂 Age Calculator</a>
+        <a href="unit-converter.html" class="related-card">📏 Unit Converter</a>
+        <a href="percentage-calculator.html" class="related-card">% Percentage Calc</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid footer-grid-5">
+      <div class="footer-brand">
+        <div class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></div>
+        <p>Free, private file conversion for everyone.</p>
+      </div>
+      <div class="footer-col"><h5>Calculators</h5><ul><li><a href="bmi-calculator.html">BMI Calculator</a></li><li><a href="sip-calculator.html">SIP Calculator</a></li><li><a href="emi-calculator.html">EMI Calculator</a></li><li><a href="age-calculator.html">Age Calculator</a></li></ul></div>
+      <div class="footer-col"><h5>Company</h5><ul><li><a href="../about.html">About</a></li><li><a href="../blog/">Blog</a></li><li><a href="../privacy.html">Privacy</a></li></ul></div>
+      <div class="footer-col"><h5>Help</h5><ul><li><a href="../contact.html">Contact</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <div>© <span data-year>2026</span> Desi Jugad.</div>
+      <div class="made-in"><span class="flag-in"></span>Made in India, built for the world.</div>
+    </div>
+  </div>
+</footer>
+
+<script src="../assets/js/main.js"></script>
+<script>
+let unit = 'metric';
+document.querySelectorAll('.unit-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.unit-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    unit = btn.dataset.unit;
+    document.getElementById('metricFields').style.display = unit === 'metric' ? 'block' : 'none';
+    document.getElementById('imperialFields').style.display = unit === 'imperial' ? 'block' : 'none';
+  });
+});
+
+document.getElementById('calcBtn').addEventListener('click', calculate);
+
+function calculate() {
+  let weightKg, heightM;
+  if (unit === 'metric') {
+    weightKg = +document.getElementById('weight').value;
+    heightM = (+document.getElementById('height').value) / 100;
+  } else {
+    weightKg = (+document.getElementById('weightLbs').value) * 0.453592;
+    const totalIn = (+document.getElementById('heightFt').value) * 12 + (+document.getElementById('heightIn').value);
+    heightM = totalIn * 0.0254;
+  }
+
+  if (!weightKg || !heightM) return;
+
+  const bmi = weightKg / (heightM * heightM);
+  const bmiRound = Math.round(bmi * 10) / 10;
+
+  let category, color, rowId;
+  if (bmi < 18.5) { category = 'Underweight'; color = '#3B82F6'; rowId = 'row-uw'; }
+  else if (bmi < 25) { category = 'Normal weight'; color = '#22C55E'; rowId = 'row-nw'; }
+  else if (bmi < 30) { category = 'Overweight'; color = '#F59E0B'; rowId = 'row-ow'; }
+  else if (bmi < 35) { category = 'Obese (Class I)'; color = '#EF4444'; rowId = 'row-ob'; }
+  else { category = 'Obese (Class II+)'; color = '#7C3AED'; rowId = 'row-ob2'; }
+
+  document.getElementById('bmiNumber').textContent = bmiRound;
+  document.getElementById('bmiNumber').style.color = color;
+  document.getElementById('bmiCategory').textContent = category;
+  document.getElementById('bmiCategory').style.color = color;
+
+  // Gauge: BMI 15–40 mapped to 0–100%
+  const pct = Math.min(100, Math.max(0, ((bmi - 15) / 25) * 100));
+  document.getElementById('bmiNeedle').style.left = pct + '%';
+
+  // Healthy weight range
+  const minW = 18.5 * heightM * heightM;
+  const maxW = 24.9 * heightM * heightM;
+  if (unit === 'metric') {
+    document.getElementById('healthyRange').textContent = minW.toFixed(1) + ' – ' + maxW.toFixed(1) + ' kg';
+    const diff = bmi < 18.5 ? (minW - weightKg) : bmi >= 25 ? (weightKg - maxW) : 0;
+    document.getElementById('weightDiff').textContent = diff < 0.5 ? 'Healthy ✓' : (bmi < 18.5 ? '+' : '−') + diff.toFixed(1) + ' kg';
+  } else {
+    document.getElementById('healthyRange').textContent = (minW * 2.205).toFixed(1) + ' – ' + (maxW * 2.205).toFixed(1) + ' lbs';
+    const diff = bmi < 18.5 ? ((minW - weightKg)*2.205) : bmi >= 25 ? ((weightKg - maxW)*2.205) : 0;
+    document.getElementById('weightDiff').textContent = diff < 1 ? 'Healthy ✓' : (bmi < 18.5 ? '+' : '−') + diff.toFixed(1) + ' lbs';
+  }
+
+  // Highlight current row
+  ['row-uw','row-nw','row-ow','row-ob','row-ob2'].forEach(id => document.getElementById(id).classList.remove('current-row'));
+  document.getElementById(rowId).classList.add('current-row');
+
+  document.getElementById('bmiResult').style.display = 'block';
+}
+
+calculate();
+</script>
+</body>
+</html>

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/img/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/img/apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unix Timestamp Converter — Epoch Time to Date Free | Desi Jugad</title>
+<meta name="description" content="Convert Unix timestamps to human-readable dates and vice versa. Live countdown, timezone support, milliseconds and seconds. Free, private, runs in your browser.">
+<meta name="keywords" content="unix timestamp converter, epoch time converter, timestamp to date, date to timestamp, epoch converter, unix time online">
+<link rel="canonical" href="https://desijugad.co.in/convert/timestamp-converter.html">
+<meta property="og:title" content="Unix Timestamp Converter — Free Epoch Time Tool">
+<meta property="og:description" content="Convert Unix timestamps to dates and dates to timestamps. Supports milliseconds, timezones, and live clock.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,30..100;1,9..144,300..700,30..100&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+<style>
+.live-clock {
+  background: var(--bg-alt); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 1.25rem 1.5rem; margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: center;
+}
+.clock-ts { font-family: var(--font-mono); font-size: 2rem; font-weight: 700; color: var(--indigo); }
+.clock-meta { font-size: 0.9rem; color: var(--ink-muted); }
+.clock-date { font-size: 1rem; font-weight: 600; margin-top: 0.2rem; }
+.converter-section { margin-top: 1.75rem; }
+.section-title { font-weight: 700; font-size: 1.05rem; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--line); }
+.input-row { display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: flex-end; }
+.input-group { display: flex; flex-direction: column; gap: 0.35rem; flex: 1; min-width: 160px; }
+.input-group label { font-size: 0.82rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-muted); }
+.ts-input { padding: 0.6rem 0.9rem; border: 1.5px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--ink); font-family: var(--font-mono); font-size: 1rem; width: 100%; }
+.ts-input:focus { outline: none; border-color: var(--indigo); }
+.result-box { margin-top: 1rem; padding: 1rem 1.25rem; background: var(--bg-alt); border: 1px solid var(--line); border-radius: var(--radius); font-family: var(--font-mono); display: none; }
+.result-row { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 0.3rem 0; flex-wrap: wrap; }
+.result-key { font-size: 0.82rem; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.06em; }
+.result-val { font-size: 0.95rem; font-weight: 600; word-break: break-all; }
+.copy-inline { font-size: 0.75rem; padding: 0.15rem 0.45rem; border: 1px solid var(--line); border-radius: 5px; cursor: pointer; background: none; }
+.copy-inline:hover { background: var(--bg-alt); }
+.tz-note { font-size: 0.82rem; color: var(--ink-muted); margin-top: 0.5rem; }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="../" class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="../#converters">Converters</a></li>
+      <li><a href="../ai/">AI Studio <span class="badge-new">NEW</span></a></li>
+      <li><a href="../blog/">Blog</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../#converters" class="nav-cta">All tools</a></li>
+    </ul>
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</header>
+
+<main class="converter-page">
+  <div class="container">
+    <nav class="breadcrumb">
+      <a href="../">Home</a><span class="sep">/</span>
+      <a href="../#converters">Converters</a><span class="sep">/</span>
+      <span>Timestamp Converter</span>
+    </nav>
+
+    <div class="converter-header">
+      <h1>Unix timestamp converter, <em class="italic">live & instant.</em></h1>
+      <p class="lead">Convert Unix timestamps (epoch time) to human-readable dates — and back. See the current timestamp live, convert in milliseconds or seconds, and handle any timezone.</p>
+    </div>
+
+    <div class="live-clock">
+      <div>
+        <div class="clock-meta">Current Unix timestamp (seconds)</div>
+        <div class="clock-ts" id="liveSec">0</div>
+      </div>
+      <div>
+        <div class="clock-meta">Milliseconds</div>
+        <div style="font-family:var(--font-mono);font-size:1.2rem;font-weight:600;" id="liveMs">0</div>
+      </div>
+      <div>
+        <div class="clock-meta">Your local time</div>
+        <div class="clock-date" id="liveDate"></div>
+      </div>
+    </div>
+
+    <div class="converter-section">
+      <div class="section-title">Timestamp → Human Date</div>
+      <div class="input-row">
+        <div class="input-group">
+          <label for="tsInput">Unix timestamp</label>
+          <input type="text" class="ts-input" id="tsInput" placeholder="e.g. 1714234567" spellcheck="false">
+        </div>
+        <div class="input-group" style="max-width:160px;">
+          <label for="tsUnit">Unit</label>
+          <select class="ts-input" id="tsUnit">
+            <option value="s">Seconds</option>
+            <option value="ms">Milliseconds</option>
+          </select>
+        </div>
+        <button class="btn btn-primary" id="tsConvertBtn" style="align-self:flex-end;">Convert</button>
+      </div>
+      <div class="result-box" id="tsResult">
+        <div class="result-row"><span class="result-key">UTC</span><span class="result-val" id="resUtc"></span></div>
+        <div class="result-row"><span class="result-key">Local</span><span class="result-val" id="resLocal"></span></div>
+        <div class="result-row"><span class="result-key">IST (India)</span><span class="result-val" id="resIst"></span></div>
+        <div class="result-row"><span class="result-key">ISO 8601</span><span class="result-val" id="resIso"></span></div>
+        <div class="result-row"><span class="result-key">Relative</span><span class="result-val" id="resRelative"></span></div>
+      </div>
+    </div>
+
+    <div class="converter-section">
+      <div class="section-title">Human Date → Timestamp</div>
+      <div class="input-row">
+        <div class="input-group">
+          <label for="dateInput">Date & time</label>
+          <input type="datetime-local" class="ts-input" id="dateInput">
+        </div>
+        <button class="btn btn-primary" id="dateConvertBtn" style="align-self:flex-end;">Convert</button>
+      </div>
+      <div class="result-box" id="dateResult">
+        <div class="result-row"><span class="result-key">Seconds</span><span class="result-val" id="resSec"></span><button class="copy-inline" data-target="resSec">Copy</button></div>
+        <div class="result-row"><span class="result-key">Milliseconds</span><span class="result-val" id="resMs"></span><button class="copy-inline" data-target="resMs">Copy</button></div>
+      </div>
+      <div class="tz-note">Note: Date input uses your local timezone.</div>
+    </div>
+
+    <section class="info-section" style="margin-top:2rem;">
+      <h2>What is a Unix timestamp?</h2>
+      <p>A Unix timestamp is the number of seconds (or milliseconds) elapsed since <strong>January 1, 1970, 00:00:00 UTC</strong> (the Unix Epoch). It's timezone-independent and universally used in programming, databases, and APIs to represent moments in time.</p>
+      <h2>FAQ</h2>
+      <details class="faq-item" open>
+        <summary>How do I know if my timestamp is in seconds or milliseconds?</summary>
+        <p>A 10-digit number is almost certainly seconds (valid through year 2286). A 13-digit number is milliseconds. JavaScript's <code>Date.now()</code> returns milliseconds; most Unix system tools and databases use seconds.</p>
+      </details>
+      <details class="faq-item">
+        <summary>What is the Year 2038 problem?</summary>
+        <p>32-bit systems store Unix timestamps as signed integers, which overflow on January 19, 2038. Modern 64-bit systems are not affected.</p>
+      </details>
+    </section>
+
+    <div class="related-tools">
+      <h3>Related tools</h3>
+      <div class="related-grid">
+        <a href="age-calculator.html" class="related-card">🎂 Age Calculator</a>
+        <a href="url-tools.html" class="related-card">🔗 URL Tools</a>
+        <a href="json-formatter.html" class="related-card">📋 JSON Formatter</a>
+        <a href="diff-checker.html" class="related-card">↔️ Diff Checker</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid footer-grid-5">
+      <div class="footer-brand">
+        <div class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></div>
+        <p>Free, private file conversion for everyone.</p>
+      </div>
+      <div class="footer-col"><h5>Developer Tools</h5><ul><li><a href="timestamp-converter.html">Timestamp</a></li><li><a href="diff-checker.html">Diff Checker</a></li><li><a href="regex-tester.html">Regex Tester</a></li><li><a href="url-tools.html">URL Tools</a></li></ul></div>
+      <div class="footer-col"><h5>Calculators</h5><ul><li><a href="age-calculator.html">Age Calculator</a></li><li><a href="emi-calculator.html">EMI Calculator</a></li></ul></div>
+      <div class="footer-col"><h5>Company</h5><ul><li><a href="../about.html">About</a></li><li><a href="../blog/">Blog</a></li><li><a href="../privacy.html">Privacy</a></li></ul></div>
+      <div class="footer-col"><h5>Help</h5><ul><li><a href="../contact.html">Contact</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <div>© <span data-year>2026</span> Desi Jugad.</div>
+      <div class="made-in"><span class="flag-in"></span>Made in India, built for the world.</div>
+    </div>
+  </div>
+</footer>
+
+<script src="../assets/js/main.js"></script>
+<script>
+// Live clock
+function updateClock() {
+  const now = Date.now();
+  document.getElementById('liveSec').textContent = Math.floor(now / 1000).toLocaleString();
+  document.getElementById('liveMs').textContent = now.toLocaleString();
+  document.getElementById('liveDate').textContent = new Date().toLocaleString();
+}
+updateClock();
+setInterval(updateClock, 1000);
+
+// Timestamp → Date
+document.getElementById('tsConvertBtn').addEventListener('click', convertTs);
+document.getElementById('tsInput').addEventListener('keydown', e => { if (e.key === 'Enter') convertTs(); });
+
+function convertTs() {
+  const raw = document.getElementById('tsInput').value.trim();
+  const unit = document.getElementById('tsUnit').value;
+  if (!raw) return;
+
+  const num = parseFloat(raw);
+  if (isNaN(num)) return;
+
+  const ms = unit === 'ms' ? num : num * 1000;
+  const d = new Date(ms);
+  if (isNaN(d)) return;
+
+  const now = Date.now();
+  const diff = Math.abs(now - ms);
+  const rel = diff < 60000 ? 'just now' : diff < 3600000 ? Math.round(diff/60000) + 'm ago' : diff < 86400000 ? Math.round(diff/3600000) + 'h ago' : Math.round(diff/86400000) + 'd ' + (ms > now ? 'from now' : 'ago');
+
+  document.getElementById('resUtc').textContent = d.toUTCString();
+  document.getElementById('resLocal').textContent = d.toLocaleString();
+  document.getElementById('resIst').textContent = d.toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }) + ' IST';
+  document.getElementById('resIso').textContent = d.toISOString();
+  document.getElementById('resRelative').textContent = rel;
+  document.getElementById('tsResult').style.display = 'block';
+}
+
+// Date → Timestamp
+document.getElementById('dateConvertBtn').addEventListener('click', convertDate);
+document.getElementById('dateInput').valueAsNumber = Date.now() - new Date().getTimezoneOffset() * 60000;
+
+function convertDate() {
+  const val = document.getElementById('dateInput').value;
+  if (!val) return;
+  const ms = new Date(val).getTime();
+  document.getElementById('resSec').textContent = Math.floor(ms / 1000).toString();
+  document.getElementById('resMs').textContent = ms.toString();
+  document.getElementById('dateResult').style.display = 'block';
+}
+
+// Inline copy buttons
+document.querySelectorAll('.copy-inline').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const text = document.getElementById(btn.dataset.target).textContent;
+    navigator.clipboard.writeText(text).then(() => showToast('Copied!'));
+  });
+});
+</script>
+</body>
+</html>
