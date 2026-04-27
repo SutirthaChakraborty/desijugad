@@ -13,6 +13,8 @@ A production-ready static website you can deploy in about 5 minutes. Everything 
 
 ### Included converters
 
+**Image & Graphics**
+
 | Tool | What it does | Library used |
 |------|--------------|--------------|
 | HEIC to JPG | iPhone photos → JPG/PNG | heic2any |
@@ -20,13 +22,103 @@ A production-ready static website you can deploy in about 5 minutes. Everything 
 | Images to PDF | Stitch images into a single PDF | jsPDF |
 | PDF to Images | Extract pages as PNG/JPG | pdf.js |
 | SVG to PNG | Rasterize vectors with custom size | Canvas API |
+| Image Compress | Reduce image file size | Canvas API |
+| Image Resize | Resize images to custom dimensions | Canvas API |
+| Image Cropper | Crop and edit images | Canvas API |
+| Image Metadata | Extract EXIF and other metadata | exifr.js |
+| JPG to WebP | Convert JPG to modern WebP format | Canvas API |
+| WebP to JPG | Convert WebP to JPG format | Canvas API |
+| QR Code Generator | Generate QR codes from text/URLs/WiFi | qrcodejs |
+| Barcode Generator | Create various barcode formats | JSBarcode |
+| Favicon Generator | Create favicons from images | Canvas API |
+| Meme Generator | Create memes from images | Canvas API |
+
+**Audio & Video**
+
+| Tool | What it does | Library used |
+|------|--------------|--------------|
+| Audio Converter | MP3, WAV, OGG, M4A, FLAC conversion | lame.js, Web Audio API |
+| Video Converter | MP4, WebM, MOV, AVI, MKV conversion | FFmpeg.wasm |
+| Video Compressor | Reduce video file size | FFmpeg.wasm |
+| Video Trimmer | Trim and cut video clips | FFmpeg.wasm |
+| Video to Audio | Extract audio from video files | FFmpeg.wasm |
+| Video to GIF | Convert video to animated GIF | FFmpeg.wasm |
+| GIF to Video | Convert GIF to video format | FFmpeg.wasm |
+| Speech to Text | Convert audio to text transcription | Web Speech API |
+| Text to Speech | Convert text to audio | Web Speech API |
+
+**Data & Formatting**
+
+| Tool | What it does | Library used |
+|------|--------------|--------------|
 | JSON ⇄ CSV | Flatten nested JSON or parse CSV | Pure JS |
 | JSON ⇄ YAML | Convert between JSON and YAML | js-yaml |
+| XML to JSON | Convert XML to JSON format | xml2js |
 | CSV to Excel | Export CSV as a real .xlsx file | SheetJS |
+| JSON Formatter | Format and validate JSON | Pure JS |
 | Markdown to HTML | Render MD with live preview | marked.js |
 | Base64 | Encode/decode text & files | Web APIs |
 | SRT ⇄ VTT | Subtitle format conversion | Pure JS |
 | Text Tools | Case convert, counter, slugify, trim | Pure JS |
+| Diff Checker | Compare two text documents | difflib.js |
+| Email Validator | Validate email addresses | Pure JS |
+| Regex Tester | Test and debug regex patterns | Pure JS |
+| Code Beautifier | Format and beautify code | prettier.js |
+| Hash Generator | Generate MD5, SHA hashes | crypto-js |
+| URL Tools | Encode, decode, parse URLs | Pure JS |
+| OCR | Extract text from images | Tesseract.js |
+| QR Scanner | Scan QR codes from images/camera | jsQR |
+
+**PDF Tools**
+
+| Tool | What it does | Library used |
+|------|--------------|--------------|
+| PDF Compressor | Reduce PDF file size | pdf.js, jsPDF |
+| PDF Merge | Combine multiple PDFs | jsPDF |
+| PDF Rotate | Rotate PDF pages | pdf.js, jsPDF |
+| PDF Watermark | Add watermarks to PDFs | jsPDF |
+
+**Calculators & Tools**
+
+| Tool | What it does | Library used |
+|------|--------------|--------------|
+| Loan Calculator | Calculate EMI, interest, amortization | Pure JS |
+| EMI Calculator | Compute monthly loan payments | Pure JS |
+| BMI Calculator | Calculate body mass index | Pure JS |
+| Age Calculator | Calculate exact age from birthdate | date-fns |
+| Currency Converter | Live exchange rates (160+ currencies) | Exchange rate API |
+| Unit Converter | Convert length, weight, temperature | Pure JS |
+| Percentage Calculator | Calculate percentages and ratios | Pure JS |
+| Compound Interest Calculator | Calculate investment growth | Pure JS |
+| SIP Calculator | Calculate SIP returns | Pure JS |
+| CAGR Calculator | Compound annual growth rate | Pure JS |
+| Income Tax Calculator | Calculate tax for India | Pure JS |
+| GST Calculator | Calculate GST for India | Pure JS |
+| Debt Payoff Calculator | Plan debt repayment | Pure JS |
+| Lead Value Calculator | Calculate marketing lead value | Pure JS |
+| AdSense Calculator | Estimate AdSense earnings | Pure JS |
+| Churn Rate Calculator | Analyze customer retention | Pure JS |
+| Retirement Calculator | Plan retirement savings | Pure JS |
+| Pomodoro Timer | Productivity timer | Pure JS |
+| Word Counter | Count words, characters, readability | Pure JS |
+| Timestamp Converter | Convert Unix timestamps | Pure JS |
+| Readability Analyzer | Analyze text readability | readability-scores.js |
+| Password Generator | Generate secure passwords | crypto-js |
+| Translate | Translate text between languages | Translation API |
+
+**Document Generators**
+
+| Tool | What it does | Library used |
+|------|--------------|--------------|
+| Invoice Generator | Create professional invoices | jsPDF |
+| Receipt Generator | Generate receipts | jsPDF |
+| Resume Builder | Create formatted resumes | jsPDF |
+| Serp Simulator | Preview search engine results | Pure JS |
+| Secret Message | Hide text in images | Canvas API |
+| Color Converter | Convert between color formats | Pure JS |
+| Color Palette | Generate color palettes | Pure JS |
+| Password Generator | Generate secure passwords | crypto-js |
+| Photo Editor | Basic photo editing tools | Canvas API |
 
 ---
 
