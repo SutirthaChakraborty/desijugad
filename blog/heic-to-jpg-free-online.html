@@ -24,6 +24,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,30..100;1,9..144,300..700,30..100&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<meta property="og:site_name" content="Desi Jugad">
 <link rel="stylesheet" href="../assets/css/style.css">
 <script type="application/ld+json">
 {
@@ -58,10 +59,80 @@
   "@context": "https://schema.org",
   "@type": "FAQPage",
   "mainEntity": [
-    {"@type": "Question", "name": "Why do iPhone photos use HEIC?", "acceptedAnswer": {"@type": "Answer", "text": "Apple uses HEIC because it stores similar image quality at smaller file sizes than JPG. It is efficient, but many apps and websites still expect JPG."}},
-    {"@type": "Question", "name": "Will converting HEIC to JPG reduce quality?", "acceptedAnswer": {"@type": "Answer", "text": "JPG is a lossy format, but at high quality settings the difference is usually invisible for normal sharing and uploading. If you need editing flexibility, keep the original HEIC as well."}},
-    {"@type": "Question", "name": "Is it safe to convert private iPhone photos online?", "acceptedAnswer": {"@type": "Answer", "text": "It is safer when the conversion happens inside your browser and the file never uploads. Browser-based tools avoid sending personal photos to third-party servers."}},
-    {"@type": "Question", "name": "Can I batch convert HEIC files?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Desi Jugad supports batch conversion so you can convert multiple HEIC files to JPG in one run."}}
+    {
+      "@type": "Question",
+      "name": "how to convert heic to jpg free online",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Upload your HEIC files on this page and click Convert. Output downloads as JPG instantly. No software, no sign-up — all conversion happens in your browser."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "why are my iphone photos heic format",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Apple switched to HEIC (High Efficiency Image Container) in iOS 11 to save storage — HEIC files are roughly half the size of equivalent JPG. However, HEIC is not universally supported on Windows or Android."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "how to convert heic to jpg on windows free",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Use this browser-based converter — works in Chrome, Edge, and Firefox on Windows. No app download needed. Alternatively, in Windows Photos app, open the HEIC and save as JPG (requires the HEIC Codec from Microsoft Store)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "can android open heic files",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Most Android devices cannot open HEIC files natively. Convert to JPG first using this tool, then share the JPG file."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "heic to jpg batch converter free",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Drag and drop multiple HEIC files at once. The converter processes them all in parallel and lets you download all converted JPGs at once."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "does converting heic to jpg lose quality",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, slight quality loss is possible when converting to JPG due to lossy compression. At 90%+ quality setting, the difference is invisible to the human eye. Choose WebP output for lossless quality."
+      }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://desijugad.co.in/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Blog",
+      "item": "https://desijugad.co.in/blog/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "HEIC to JPG free: the private way to convert iPhone photos",
+      "item": "https://desijugad.co.in/blog/heic-to-jpg-free-online.html"
+    }
   ]
 }
 </script>
@@ -141,7 +212,43 @@
         <a href="../convert/heic-to-jpg.html" class="btn btn-primary">Open HEIC to JPG →</a>
       </div>
     </div>
-  </article>
+  
+<!-- Related posts — auto-injected for SEO internal linking -->
+<aside style="margin-top:3rem;padding-top:2rem;border-top:1px solid var(--line,#E8E1D3)">
+  <h3 style="font-size:1.1rem;font-weight:600;margin-bottom:1rem">Related resources</h3>
+  <div id="related-posts" style="display:flex;flex-wrap:wrap;gap:0.75rem"></div>
+</aside>
+<script>
+(function(){
+  var posts=[
+    {t:"HEIC to JPG Converter",u:"../convert/heic-to-jpg.html"},
+    {t:"Image Compressor",u:"../convert/image-compress.html"},
+    {t:"PDF Merge & Split",u:"../convert/pdf-merge.html"},
+    {t:"SIP Calculator",u:"../convert/sip-calculator.html"},
+    {t:"GST Calculator",u:"../convert/gst-calculator.html"},
+    {t:"QR Code Generator",u:"../convert/qr-code.html"},
+    {t:"Income Tax Calculator",u:"../convert/income-tax-calculator.html"},
+    {t:"Background Remover",u:"../ai/bg-remove.html"},
+    {t:"Invoice Generator",u:"../convert/invoice-generator.html"},
+    {t:"Image Converter",u:"../convert/image-converter.html"}
+  ];
+  // pick 4 that don't match current page
+  var cur=window.location.pathname;
+  var filtered=posts.filter(function(p){return cur.indexOf(p.u.replace('../',''))===-1;}).slice(0,4);
+  var div=document.getElementById('related-posts');
+  if(!div)return;
+  filtered.forEach(function(p){
+    var a=document.createElement('a');
+    a.href=p.u;
+    a.textContent='→ '+p.t;
+    a.style.cssText='display:inline-block;padding:0.45rem 1rem;border:1px solid var(--line,#E8E1D3);border-radius:999px;font-size:0.85rem;text-decoration:none;color:var(--ink,#141413);background:var(--surface,#fff);transition:border-color 0.15s';
+    a.onmouseover=function(){this.style.borderColor='var(--indigo,#7051BC)'};
+    a.onmouseout=function(){this.style.borderColor='var(--line,#E8E1D3)'};
+    div.appendChild(a);
+  });
+})();
+</script>
+</article>
 </main>
 
 <footer class="footer">

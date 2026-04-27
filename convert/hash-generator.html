@@ -45,18 +45,66 @@
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "Are hashes generated locally?",
+      "name": "how to generate sha256 hash online free",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes. Text and files are hashed entirely in your browser using the Web Crypto API. Nothing is uploaded to a server."
+        "text": "Paste your text into the input field, select SHA-256, and click Generate. The 64-character hexadecimal hash appears instantly. No server, no upload — completely private."
       }
     },
     {
       "@type": "Question",
-      "name": "Can I verify a file checksum?",
+      "name": "what is the difference between md5 sha1 and sha256",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes. Generate the checksum, paste an expected hash, and the tool will compare them after normalizing case and spacing."
+        "text": "MD5 (128-bit) and SHA-1 (160-bit) are considered cryptographically broken — do not use for security. SHA-256 (256-bit) is the current standard for checksums and password hashing. SHA-512 offers more security but produces a longer hash."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "how to verify file integrity using checksum hash",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Generate the SHA-256 hash of your downloaded file and compare it to the hash published by the software provider. If they match exactly, the file is authentic and unmodified. Even one changed bit produces a completely different hash."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "can i reverse or decrypt a hash",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Hash functions are one-way — you cannot mathematically reverse a SHA-256 or SHA-512 hash. Attackers use rainbow tables (precomputed hash databases) to crack weak passwords, which is why salted hashing is used for password storage."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "sha256 hash of the same text always the same",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Hashing is deterministic — the same input always produces the same output. This is why it works for checksums and data integrity verification."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "how long does a sha-256 hash take to crack",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A random SHA-256 hash is computationally infeasible to crack by brute force — it would take longer than the age of the universe with all computing power on Earth. Only weak/short inputs are vulnerable to dictionary attacks."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "how to hash a file not just text",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Use the File hash tab to upload any file. SHA-256 is calculated on the file contents in your browser. Useful for verifying downloaded ISO files, software installers, or documents."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "what is hmac and how is it different from a hash",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "HMAC (Hash-based Message Authentication Code) uses a secret key along with the data to produce a hash. Unlike a plain SHA-256 hash, HMAC cannot be recalculated without knowing the key, making it useful for API signatures and data authentication."
       }
     }
   ]
@@ -350,7 +398,7 @@
     <div class="footer-grid footer-grid-5">
       <div class="footer-brand"><div class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></div><p>Free, private file conversion for everyone.</p></div>
       <div class="footer-col"><h5>Tools</h5><ul><li><a href="heic-to-jpg.html">HEIC to JPG</a></li><li><a href="json-to-csv.html">JSON to CSV</a></li><li><a href="base64.html">Base64</a></li><li><a href="password-gen.html">Password Generator</a></li></ul></div>
-      <div class="footer-col"><h5>AI Studio</h5><ul><li><a href="../ai/image.html">AI Images</a></li><li><a href="../ai/video.html">AI Video</a></li><li><a href="../ai/music.html">AI Music</a></li><li><a href="../ai/writer.html">AI Writer</a></li></ul></div>
+      <div class="footer-col"><h5>AI Studio</h5><ul><li><a href="../ai/image.html">AI Images</a></li><li><a href="../ai/writer.html">AI Writer</a></li></ul></div>
       <div class="footer-col"><h5>Company</h5><ul><li><a href="../about.html">About</a></li><li><a href="../blog/">Blog</a></li><li><a href="../sitemap.html">HTML Sitemap</a></li><li><a href="../privacy.html">Privacy</a></li><li><a href="../terms.html">Terms</a></li></ul></div>
       <div class="footer-col"><h5>Help</h5><ul><li><a href="../contact.html">Contact</a></li></ul></div>
     </div>

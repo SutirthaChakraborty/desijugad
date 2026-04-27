@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/img/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/img/apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Salary Calculator — Take-Home Pay After Tax | USA, UK, Nigeria, Pakistan, Global | Desi Jugad</title>
+<meta name="description" content="Calculate your take-home salary after tax for USA, UK, Nigeria, Pakistan, Bangladesh, Kenya and more. Free net pay calculator — instant, no sign-up, 100% in-browser.">
+<meta name="keywords" content="salary calculator, take home pay calculator, net pay calculator, salary after tax, paycheck calculator USA, net salary UK, Nigeria salary calculator, Pakistan salary calculator, gross to net calculator, income tax calculator">
+<meta name="author" content="Desi Jugad">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://desijugad.co.in/convert/salary-calculator.html">
+<meta property="og:title" content="Salary Calculator — Take-Home Pay After Tax | USA, UK, Nigeria & More">
+<meta property="og:description" content="Calculate net take-home pay after tax for USA, UK, Nigeria, Pakistan, India and 10+ countries. Free, instant.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://desijugad.co.in/convert/salary-calculator.html">
+<meta property="og:image" content="https://desijugad.co.in/assets/img/og.png">
+<meta property="og:site_name" content="Desi Jugad">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://desijugad.co.in/assets/img/og.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,30..100;1,9..144,300..700,30..100&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+<style>
+.sc-form { background: var(--surface); border: 1.5px solid var(--line); border-radius: var(--radius); padding: 1.5rem; max-width: 580px; margin-bottom: 1.5rem; }
+.form-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem; align-items: flex-end; }
+.form-group { display: flex; flex-direction: column; gap: 0.35rem; flex: 1 1 160px; }
+.form-group label { font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--ink-muted); }
+.form-group input, .form-group select { padding: 0.55rem 0.75rem; border: 1.5px solid var(--line); border-radius: var(--radius-sm); font-size: 0.95rem; background: var(--surface); color: var(--ink); }
+.form-group input:focus, .form-group select:focus { outline: none; border-color: var(--indigo); }
+.sc-results { display: grid; grid-template-columns: repeat(auto-fill,minmax(165px,1fr)); gap: 0.75rem; margin-bottom: 1.5rem; }
+.sc-card { background: var(--surface); border: 1.5px solid var(--line); border-radius: var(--radius); padding: 1rem 1.25rem; }
+.sc-card .label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--ink-muted); font-weight: 600; margin-bottom: 0.25rem; }
+.sc-card .amount { font-size: 1.25rem; font-weight: 800; font-family: var(--font-mono); color: var(--indigo); }
+.sc-card.highlight { background: var(--indigo); border-color: var(--indigo); }
+.sc-card.highlight .label { color: rgba(255,255,255,0.75); }
+.sc-card.highlight .amount { color: #fff; }
+.country-chips { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.25rem; }
+.country-chip { padding: 0.3rem 0.8rem; border: 1.5px solid var(--line); border-radius: 999px; cursor: pointer; font-size: 0.82rem; font-weight: 600; transition: all 0.15s; background: var(--surface); color: var(--ink); }
+.country-chip:hover { border-color: var(--indigo); color: var(--indigo); }
+.country-chip.active { background: var(--indigo); border-color: var(--indigo); color: #fff; }
+.breakdown-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; margin-top: 1rem; }
+.breakdown-table td { padding: 0.5rem 0.75rem; border-bottom: 1px solid var(--line); }
+.breakdown-table td:last-child { text-align: right; font-family: var(--font-mono); font-weight: 600; }
+.breakdown-table tr:last-child td { border-bottom: none; font-weight: 700; color: var(--indigo); }
+.breakdown-table tr.total td { background: var(--bg-alt); }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Salary Take-Home Pay Calculator",
+  "url": "https://desijugad.co.in/convert/salary-calculator.html",
+  "description": "Calculate take-home salary after tax for USA, UK, Nigeria, Pakistan, India, Kenya, Bangladesh, and more countries.",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://desijugad.co.in/" },
+    { "@type": "ListItem", "position": 2, "name": "Free Tools", "item": "https://desijugad.co.in/#converters" },
+    { "@type": "ListItem", "position": 3, "name": "Salary Calculator", "item": "https://desijugad.co.in/convert/salary-calculator.html" }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "take home salary calculator india",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Enter your gross annual CTC (Cost to Company), select India, and see your approximate monthly in-hand salary after income tax and PF deductions. For the exact figure, use the income tax calculator with your actual deductions."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "net salary calculator uk after tax and national insurance",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "For UK, the calculator applies the 20% basic rate income tax (after £12,570 personal allowance) and 8% National Insurance on earnings between £12,570-£50,270. These are 2025-26 rates for a standard employee."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "nigeria salary calculator take home pay after tax",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "For Nigerian salaries, deductions include PAYE (7-24% progressive on chargeable income after CRA), pension (8%), and NHF (2.5% of basic). Select Nigeria in the country chips and enter gross annual salary."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "pakistan salary after tax calculator pkr",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Pakistan applies income tax at 0-35% (FY 2025-26 slabs) plus EOBI (1%). Enter gross annual salary in PKR and select Pakistan. The calculator shows approximate net take-home."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "kenya salary calculator after paye nhif nssf",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Kenya deductions include PAYE tax (10-30% progressive), NHIF (KSh 150-1,700/month by band), NSSF contributions, and 1.5% Housing Levy. Select Kenya for a combined estimate."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "gross salary vs net salary vs ctc difference",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "CTC (Cost to Company) includes employer's PF, gratuity, and benefits. Gross salary is CTC minus employer contributions. Net salary (take-home) is gross minus employee tax, PF, and other deductions. Take-home is typically 60-75% of CTC for Indian employees."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "uae salary no tax take home",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "UAE has zero personal income tax. Your entire gross salary is your take-home pay. Select UAE in the calculator — tax rate shows 0%. This is why UAE salaries attract professionals from India, Pakistan, and Philippines."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "how to calculate monthly salary from annual salary",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Divide annual gross salary by 12 for the monthly gross. For net monthly: apply monthly tax rate (annual tax/12) and other monthly deductions. Example: Rs 12,00,000 annual / 12 = Rs 1,00,000 monthly gross."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "minimum wage calculator",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "This calculator accepts any gross salary. For minimum wage reference: India (varies by state, ~Rs 9,000-18,000/month), UK (£11.44/hour, 2024-25), USA ($7.25/hour federal, higher by state), Nigeria (₦70,000/month NMW 2024)."
+      }
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="../" class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="../#converters">Converters</a></li>
+      <li><a href="../ai/">AI Studio <span class="badge-new">NEW</span></a></li>
+      <li><a href="../blog/">Blog</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../#converters" class="nav-cta">All tools</a></li>
+    </ul>
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</header>
+
+<main class="converter-page">
+  <div class="container">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="../">Home</a> <span>›</span> <a href="../#converters">Tools</a> <span>›</span> <span>Salary Calculator</span>
+    </nav>
+
+    <div class="converter-header">
+      <h1>Salary Calculator — <em class="italic">Take-Home Pay After Tax.</em></h1>
+      <p class="lead">Calculate your net take-home pay after income tax and deductions. Covers USA, UK, Nigeria, Kenya, Pakistan, Bangladesh, India, and more. Free, instant, no sign-up.</p>
+    </div>
+
+    <!-- Country chips -->
+    <div class="country-chips" id="country-chips">
+      <button class="country-chip" data-country="uk">🇬🇧 UK</button>
+      <button class="country-chip" data-country="usa">🇺🇸 USA</button>
+      <button class="country-chip active" data-country="india">🇮🇳 India</button>
+      <button class="country-chip" data-country="nigeria">🇳🇬 Nigeria</button>
+      <button class="country-chip" data-country="kenya">🇰🇪 Kenya</button>
+      <button class="country-chip" data-country="pakistan">🇵🇰 Pakistan</button>
+      <button class="country-chip" data-country="bangladesh">🇧🇩 Bangladesh</button>
+      <button class="country-chip" data-country="ghana">🇬🇭 Ghana</button>
+      <button class="country-chip" data-country="uae">🇦🇪 UAE</button>
+    </div>
+
+    <div class="sc-form">
+      <div class="form-row">
+        <div class="form-group" style="flex:2">
+          <label for="gross-salary">Gross Annual Salary</label>
+          <input type="number" id="gross-salary" placeholder="50000" min="0" inputmode="decimal">
+        </div>
+        <div class="form-group">
+          <label for="sal-currency">Currency</label>
+          <select id="sal-currency">
+            <option value="₹">₹ INR</option>
+            <option value="£">£ GBP</option>
+            <option value="$">$ USD</option>
+            <option value="₦">₦ NGN</option>
+            <option value="KSh">KSh KES</option>
+            <option value="₨">₨ PKR</option>
+            <option value="৳">৳ BDT</option>
+            <option value="GH₵">GH₵ GHS</option>
+            <option value="AED">AED</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="tax-rate">Income Tax Rate (%)</label>
+          <input type="number" id="tax-rate" value="20" min="0" max="60" step="0.1" inputmode="decimal">
+        </div>
+        <div class="form-group">
+          <label for="other-deductions">Other Deductions (annual)</label>
+          <input type="number" id="other-deductions" value="0" min="0" inputmode="decimal" placeholder="0">
+        </div>
+      </div>
+      <p style="font-size:0.8rem;color:var(--ink-muted);margin-top:0.25rem">Tip: Select your country above to auto-fill typical tax rates. Adjust manually for accuracy.</p>
+    </div>
+
+    <div class="sc-results" id="sc-results" style="display:none">
+      <div class="sc-card">
+        <div class="label">Gross Annual</div>
+        <div class="amount" id="res-gross-annual">—</div>
+      </div>
+      <div class="sc-card">
+        <div class="label">Income Tax</div>
+        <div class="amount" id="res-tax">—</div>
+      </div>
+      <div class="sc-card">
+        <div class="label">Other Deductions</div>
+        <div class="amount" id="res-deductions">—</div>
+      </div>
+      <div class="sc-card highlight">
+        <div class="label">Net Annual Take-Home</div>
+        <div class="amount" id="res-net-annual">—</div>
+      </div>
+      <div class="sc-card">
+        <div class="label">Net Monthly</div>
+        <div class="amount" id="res-net-monthly">—</div>
+      </div>
+    </div>
+
+    <!-- Country tax guides -->
+    <section class="info-section" style="margin-top:2.5rem">
+      <h2>Tax & Deductions Guide by Country</h2>
+
+      <h3>🇬🇧 United Kingdom</h3>
+      <p>Personal allowance: £12,570/year (tax-free). Basic rate: 20% on £12,570–£50,270. Higher rate: 40% on £50,271–£125,140. Additional rate: 45% above £125,140. National Insurance: 8% on £12,570–£50,270, 2% above.</p>
+
+      <h3>🇺🇸 United States</h3>
+      <p>Federal standard deduction: $14,600 (single, 2025). Tax brackets: 10%→12%→22%→24%→32%→35%→37%. Plus Social Security (6.2%) and Medicare (1.45%). State taxes vary 0%–13%.</p>
+
+      <h3>🇮🇳 India (New Regime)</h3>
+      <p>Tax-free up to ₹12 lakh (after rebate u/s 87A). Slabs: 5% (₹3–7L), 10% (₹7–10L), 15% (₹10–12L), 20% (₹12–15L), 30% above ₹15L. Standard deduction ₹75,000.</p>
+
+      <h3>🇳🇬 Nigeria</h3>
+      <p>PAYE: 7% (up to ₦600K) → 11% → 15% → 19% → 21% → 24% (above ₦3.2M). Pension: 8% employee contribution. NHF: 2.5%. Tax-free threshold: ₦800,000/year (CRA + reliefs).</p>
+
+      <h3>🇰🇪 Kenya</h3>
+      <p>PAYE: 10% (KSh 0–24K/month) → 25% → 30% (above KSh 57,334). Personal relief: KSh 2,400/month. NHIF: up to KSh 1,700/month. NSSF: up to KSh 2,160/month. Housing Levy: 1.5%.</p>
+
+      <h3>🇵🇰 Pakistan (FY 2025-26)</h3>
+      <p>Tax-free: up to PKR 600,000. Then: 5% → 15% → 20% → 25% → 30% → 35% (above PKR 6M). EOBI: 1% employee contribution. Provincial social security: 1–2%.</p>
+
+      <h3>🇧🇩 Bangladesh</h3>
+      <p>Tax-free: up to BDT 350,000 (men), BDT 400,000 (women/senior). Rates: 5% → 10% → 15% → 20% → 25% → 30%. Minimum tax applies in 11 districts.</p>
+
+      <h3>🇦🇪 UAE</h3>
+      <p>UAE has no personal income tax. All salary is tax-free for employees. Corporate tax (9%) applies to companies, not employees. No deductions from your paycheck.</p>
+    </section>
+
+    <section class="info-section" style="margin-top:2rem">
+      <h2>Frequently Asked Questions</h2>
+      <details open>
+        <summary>What is gross salary vs net salary?</summary>
+        <p>Gross salary is your total pay before any deductions. Net salary (take-home pay) is what you receive after income tax, social security, pension, and other deductions are removed.</p>
+      </details>
+      <details>
+        <summary>How accurate is this salary calculator?</summary>
+        <p>This tool uses simplified flat-rate tax estimates for quick comparison. For exact figures — especially with progressive tax brackets, state/provincial taxes, or complex deductions — consult a tax professional or your country's official tax portal.</p>
+      </details>
+      <details>
+        <summary>Does the UAE have income tax on salary?</summary>
+        <p>No. The UAE has no personal income tax. Employees keep their entire gross salary. A 9% corporate tax was introduced in 2023 for businesses, but it does not affect employee take-home pay.</p>
+      </details>
+      <details>
+        <summary>What is a typical income tax rate in Nigeria?</summary>
+        <p>Nigeria uses PAYE (Pay As You Earn) with progressive rates from 7% to 24%. Most middle-income earners (₦2M–₦5M annual) pay an effective rate of 12–18%. The Consolidated Relief Allowance significantly reduces taxable income.</p>
+      </details>
+    </section>
+
+    <div class="related-tools">
+      <h3>Related tools</h3>
+      <a href="income-tax-calculator.html">Income Tax Calculator India</a>
+      <a href="vat-calculator.html">VAT Calculator</a>
+      <a href="gst-calculator.html">GST Calculator India</a>
+      <a href="emi-calculator.html">EMI Calculator</a>
+      <a href="sip-calculator.html">SIP Calculator</a>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid footer-grid-5">
+      <div class="footer-brand"><div class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></div><p>Free, private tools for everyone.</p></div>
+      <div class="footer-col"><h5>Finance</h5><ul><li><a href="income-tax-calculator.html">Income Tax India</a></li><li><a href="vat-calculator.html">VAT Calculator</a></li><li><a href="gst-calculator.html">GST Calculator</a></li><li><a href="emi-calculator.html">EMI Calculator</a></li></ul></div>
+      <div class="footer-col"><h5>Company</h5><ul><li><a href="../about.html">About</a></li><li><a href="../privacy.html">Privacy</a></li><li><a href="../contact.html">Contact</a></li></ul></div>
+      <div class="footer-col"><h5>Blog</h5><ul><li><a href="../blog/income-tax-calculator-india.html">Income Tax Guide</a></li><li><a href="../blog/tds-calculator-india-free.html">TDS Guide</a></li><li><a href="../blog/gst-calculator-india-guide.html">GST Guide</a></li></ul></div>
+      <div class="footer-col"><h5>More Tools</h5><ul><li><a href="currency-converter.html">Currency Converter</a></li><li><a href="sip-calculator.html">SIP Calculator</a></li><li><a href="retirement-calculator.html">Retirement Calc</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><div>© <span data-year>2026</span> Desi Jugad.</div><div class="made-in"><span class="flag-in"></span>Made in India, built for the world.</div></div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var COUNTRIES = {
+    india:      { cur:'₹', rate:20, other:0, label:'India — New Regime (simplified avg)' },
+    uk:         { cur:'£', rate:20, other:8,  label:'UK — Income Tax + NI (basic rate)' },
+    usa:        { cur:'$', rate:22, other:7.65, label:'USA — Federal Tax + FICA (simplified)' },
+    nigeria:    { cur:'₦', rate:15, other:10.5, label:'Nigeria — PAYE + Pension + NHF' },
+    kenya:      { cur:'KSh', rate:25, other:5, label:'Kenya — PAYE + NHIF + NSSF' },
+    pakistan:   { cur:'₨', rate:15, other:3,  label:'Pakistan — Income Tax + EOBI' },
+    bangladesh: { cur:'৳', rate:15, other:0,  label:'Bangladesh — Income Tax' },
+    ghana:      { cur:'GH₵', rate:20, other:13.5, label:'Ghana — PAYE + Pension + NHIL' },
+    uae:        { cur:'AED', rate:0, other:0,  label:'UAE — No income tax' },
+  };
+
+  var chips = document.getElementById('country-chips');
+  var grossEl = document.getElementById('gross-salary');
+  var taxEl = document.getElementById('tax-rate');
+  var dedEl = document.getElementById('other-deductions');
+  var curEl = document.getElementById('sal-currency');
+  var resultsEl = document.getElementById('sc-results');
+
+  chips.addEventListener('click', function(e){
+    var chip = e.target.closest('.country-chip');
+    if(!chip) return;
+    document.querySelectorAll('.country-chip').forEach(function(c){ c.classList.remove('active'); });
+    chip.classList.add('active');
+    var c = COUNTRIES[chip.dataset.country];
+    if(!c) return;
+    taxEl.value = c.rate;
+    dedEl.value = 0;
+    // Set currency selector
+    Array.from(curEl.options).forEach(function(o){ if(o.value===c.cur) o.selected=true; });
+    calculate();
+  });
+
+  function fmt(n, sym){ return sym + Math.round(n).toLocaleString(); }
+
+  function calculate(){
+    var gross = parseFloat(grossEl.value);
+    var taxRate = parseFloat(taxEl.value) || 0;
+    var otherPct = parseFloat(dedEl.value) || 0;
+    var sym = curEl.value;
+    if(isNaN(gross) || gross <= 0){ resultsEl.style.display='none'; return; }
+    resultsEl.style.display = 'grid';
+    var tax = gross * taxRate / 100;
+    var other = gross * otherPct / 100;
+    var net = gross - tax - other;
+    document.getElementById('res-gross-annual').textContent = fmt(gross, sym);
+    document.getElementById('res-tax').textContent = fmt(tax, sym);
+    document.getElementById('res-deductions').textContent = fmt(other, sym);
+    document.getElementById('res-net-annual').textContent = fmt(net, sym);
+    document.getElementById('res-net-monthly').textContent = fmt(net/12, sym);
+  }
+
+  [grossEl, taxEl, dedEl, curEl].forEach(function(el){ el.addEventListener('input', calculate); });
+})();
+</script>
+<script src="../assets/js/main.js" defer></script>
+</body>
+</html>

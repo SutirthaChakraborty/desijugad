@@ -25,7 +25,90 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,30..100;1,9..144,300..700,30..100&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400..600&display=swap" rel="stylesheet">
+<meta property="og:site_name" content="Desi Jugad">
 <link rel="stylesheet" href="../assets/css/style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://desijugad.co.in/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Blog",
+      "item": "https://desijugad.co.in/blog/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "GST calculator India 2026 \u2014 all slabs, CGST SGST IGST explained",
+      "item": "https://desijugad.co.in/blog/gst-calculator-india-guide.html"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "gst calculation india online free",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Use the GST calculator: enter amount, select rate (5%, 12%, 18%, 28%), choose add or remove GST mode. Instantly see base price, GST amount, CGST/SGST breakdown, and grand total."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "how gst is calculated in india with example",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Example: Rs 10,000 product at 18% GST. Add GST: Rs 10,000 x 1.18 = Rs 11,800 total. GST = Rs 1,800. CGST = Rs 900, SGST = Rs 900 (intra-state). For inter-state: IGST = Rs 1,800."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "gst inclusive exclusive meaning",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Exclusive price = base price without GST. Inclusive price = final price with GST already added. 'MRP inclusive of all taxes' means the price shown already includes GST — use the Remove GST calculation."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "gst slab rates 2025-26 india",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "0%: essentials (fresh food, medicines, education). 5%: basic goods. 12%: processed food, some medicines. 18%: electronics, AC restaurants. 28%: luxury, cars, tobacco."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "how to calculate cgst sgst from total gst",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "For intra-state: CGST = Total GST / 2. SGST = Total GST / 2. Example: 18% GST on Rs 100 = Rs 18 total GST = Rs 9 CGST + Rs 9 SGST."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "gst calculator india excel formula",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Excel: GST Amount = Base x Rate/100. Gross = Base x (1 + Rate/100). Reverse GST (from inclusive): Base = Inclusive / (1 + Rate/100). GST = Inclusive - Base."
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body>
 <header class="nav">
@@ -130,14 +213,50 @@
         <li><a href="../convert/currency-converter.html">Currency Converter — INR to USD, EUR and 160+ currencies</a></li>
       </ul>
     </div>
-  </article>
+  
+<!-- Related posts — auto-injected for SEO internal linking -->
+<aside style="margin-top:3rem;padding-top:2rem;border-top:1px solid var(--line,#E8E1D3)">
+  <h3 style="font-size:1.1rem;font-weight:600;margin-bottom:1rem">Related resources</h3>
+  <div id="related-posts" style="display:flex;flex-wrap:wrap;gap:0.75rem"></div>
+</aside>
+<script>
+(function(){
+  var posts=[
+    {t:"HEIC to JPG Converter",u:"../convert/heic-to-jpg.html"},
+    {t:"Image Compressor",u:"../convert/image-compress.html"},
+    {t:"PDF Merge & Split",u:"../convert/pdf-merge.html"},
+    {t:"SIP Calculator",u:"../convert/sip-calculator.html"},
+    {t:"GST Calculator",u:"../convert/gst-calculator.html"},
+    {t:"QR Code Generator",u:"../convert/qr-code.html"},
+    {t:"Income Tax Calculator",u:"../convert/income-tax-calculator.html"},
+    {t:"Background Remover",u:"../ai/bg-remove.html"},
+    {t:"Invoice Generator",u:"../convert/invoice-generator.html"},
+    {t:"Image Converter",u:"../convert/image-converter.html"}
+  ];
+  // pick 4 that don't match current page
+  var cur=window.location.pathname;
+  var filtered=posts.filter(function(p){return cur.indexOf(p.u.replace('../',''))===-1;}).slice(0,4);
+  var div=document.getElementById('related-posts');
+  if(!div)return;
+  filtered.forEach(function(p){
+    var a=document.createElement('a');
+    a.href=p.u;
+    a.textContent='→ '+p.t;
+    a.style.cssText='display:inline-block;padding:0.45rem 1rem;border:1px solid var(--line,#E8E1D3);border-radius:999px;font-size:0.85rem;text-decoration:none;color:var(--ink,#141413);background:var(--surface,#fff);transition:border-color 0.15s';
+    a.onmouseover=function(){this.style.borderColor='var(--indigo,#7051BC)'};
+    a.onmouseout=function(){this.style.borderColor='var(--line,#E8E1D3)'};
+    div.appendChild(a);
+  });
+})();
+</script>
+</article>
 </main>
 <footer class="footer">
   <div class="container">
     <div class="footer-grid footer-grid-5">
       <div class="footer-brand"><div class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></div><p>Free, private file conversion for everyone.</p></div>
       <div class="footer-col"><h5>Finance Tools</h5><ul><li><a href="../convert/gst-calculator.html">GST Calculator</a></li><li><a href="../convert/invoice-generator.html">Invoice Generator</a></li><li><a href="../convert/emi-calculator.html">EMI Calculator</a></li><li><a href="../convert/currency-converter.html">Currency Converter</a></li></ul></div>
-      <div class="footer-col"><h5>AI Studio</h5><ul><li><a href="../ai/image.html">AI Images</a></li><li><a href="../ai/video.html">AI Video</a></li><li><a href="../ai/music.html">AI Music</a></li><li><a href="../ai/writer.html">AI Writer</a></li></ul></div>
+      <div class="footer-col"><h5>AI Studio</h5><ul><li><a href="../ai/image.html">AI Images</a></li><li><a href="../ai/writer.html">AI Writer</a></li></ul></div>
       <div class="footer-col"><h5>Company</h5><ul><li><a href="../about.html">About</a></li><li><a href="./">Blog</a></li><li><a href="../privacy.html">Privacy</a></li><li><a href="../terms.html">Terms</a></li></ul></div>
       <div class="footer-col"><h5>Help</h5><ul><li><a href="../contact.html">Contact</a></li></ul></div>
     </div>

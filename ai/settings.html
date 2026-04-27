@@ -6,36 +6,98 @@
 <link rel="icon" type="image/png" sizes="16x16" href="../assets/img/favicon-16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="../assets/img/apple-touch-icon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Settings — API Keys &amp; Usage · Desi Jugad</title>
-<meta name="description" content="Manage your Replicate and Suno API keys for Desi Jugad AI Studio. Keys are stored in your browser only — never on our servers.">
+<title>AI Settings — API Keys · Desi Jugad</title>
+<meta name="description" content="Manage your Gemini API key (required) and Hugging Face key (optional) for Desi Jugad AI Studio. Keys are stored only in your browser, never on our servers.">
 <meta name="robots" content="noindex">
 <link rel="canonical" href="https://desijugad.co.in/ai/settings.html">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https://replicate.delivery https://*.replicate.com https://*.sunoapi.org https://*.kie.ai; media-src 'self' blob:; connect-src 'self' https://api.replicate.com https://*.sunoapi.org https://*.kie.ai https://*.piapi.ai https://*.tmpfiles.org https://*.file.io;">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https://image.pollinations.ai https://generativelanguage.googleapis.com; connect-src 'self' https://generativelanguage.googleapis.com https://image.pollinations.ai https://api-inference.huggingface.co;">
 
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://desijugad.co.in/ai/settings.html">
-<meta property="og:title" content="AI Settings — API Keys &amp; Usage · Desi Jugad">
-<meta property="og:description" content="Manage your Replicate, Suno, and optional Gemini keys locally in your browser.">
+<meta property="og:title" content="AI Settings — API Keys · Desi Jugad">
+<meta property="og:description" content="Manage your Gemini and Hugging Face keys locally in your browser.">
 <meta property="og:image" content="https://desijugad.co.in/assets/img/og.png">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="AI Settings · Desi Jugad">
-<meta name="twitter:description" content="Store your AI keys in-browser only, choose your Suno provider, and review local usage.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,30..100;1,9..144,300..700,30..100&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400..600&display=swap" rel="stylesheet">
-<link rel="preconnect" href="https://api.replicate.com">
-<link rel="preconnect" href="https://api.sunoapi.org">
+<link rel="preconnect" href="https://generativelanguage.googleapis.com">
 <link rel="stylesheet" href="../assets/css/style.css">
 
 <script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","name":"Desi Jugad AI Settings","url":"https://desijugad.co.in/ai/settings.html","description":"Configure Gemini and Hugging Face keys for Desi Jugad AI Studio."}
+</script>
+
+<style>
+.settings-section { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.5rem 1.75rem; margin-bottom: 1.25rem; }
+.settings-section h2 { font-size: 1.1rem; margin-bottom: 0.5rem; }
+.settings-section p.note { color: var(--ink-muted); font-size: 0.88rem; line-height: 1.5; margin-bottom: 1rem; }
+.key-row { display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: stretch; }
+.key-row input[type="password"], .key-row input[type="text"] { flex: 1; min-width: 240px; padding: 0.6rem 0.85rem; border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--bg); font-family: var(--font-mono); font-size: 0.92rem; color: var(--ink); }
+.key-row button { padding: 0.6rem 1.1rem; border-radius: var(--radius-sm); font-size: 0.9rem; cursor: pointer; border: 1px solid var(--line); background: var(--surface); color: var(--ink); font-family: var(--font-sans); }
+.key-row button.primary { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.key-row button.primary:hover { opacity: 0.9; }
+.key-row button.danger { color: var(--danger); border-color: color-mix(in srgb, var(--danger) 35%, var(--line)); }
+.status-pill { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 999px; font-size: 0.75rem; font-family: var(--font-mono); margin-top: 0.6rem; }
+.status-pill.ok { background: color-mix(in srgb, var(--success) 12%, transparent); color: var(--success); }
+.status-pill.missing { background: color-mix(in srgb, var(--danger) 12%, transparent); color: var(--danger); }
+.need-banner { background: #FFF8E6; border: 1px solid color-mix(in srgb, var(--saffron) 35%, var(--line)); border-radius: var(--radius); padding: 1rem 1.25rem; margin-bottom: 1.5rem; font-size: 0.92rem; }
+</style>
+<script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "WebPage",
-  "name": "Desi Jugad AI Settings",
-  "url": "https://desijugad.co.in/ai/settings.html",
-  "description": "Configure your API keys and AI Studio settings locally in your browser."
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "how to add gemini api key to desi jugad",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Open AI Settings, paste your Gemini API key in the field, and click Save. The key is stored only in your browser's local storage — it never leaves your device. All Gemini API calls go directly from your browser to Google."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "where to get a free gemini api key",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Go to aistudio.google.com/apikey, sign in with any Google account, and click Create API Key. The free tier includes generous daily limits for text generation and image editing. No payment method required."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "is gemini api free to use",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Google Gemini API has a free tier via Google AI Studio. As of 2026, Gemini 2.5 Flash offers 15 RPM (requests per minute) and 1 million TPM (tokens per minute) on the free tier — more than enough for personal use."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "how to remove or change gemini api key",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Open AI Settings and delete the existing key from the input field, then save. You can paste a new key at any time. Clearing browser data (localStorage) also removes all stored keys."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "is my api key safe on desi jugad",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Your key is stored in your browser's localStorage only. It is never sent to Desi Jugad's servers — we have no backend. When you generate an image or text, your browser sends the API request directly to Google using your key. Open browser DevTools > Network to verify."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "what happens if i exceed gemini free tier limits",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Google returns a 429 (Too Many Requests) error. The tool displays an error message. Free tier limits reset daily. For heavy usage, consider Google's pay-as-you-go plan through Google Cloud Console."
+      }
+    }
+  ]
 }
 </script>
 </head>
@@ -58,7 +120,7 @@
 </header>
 
 <main class="converter-page">
-  <div class="container">
+  <div class="container" style="max-width:760px">
     <nav class="breadcrumb">
       <a href="/">Home</a><span class="sep">/</span>
       <a href="/ai/">AI Studio</a><span class="sep">/</span>
@@ -67,157 +129,61 @@
 
     <div class="ai-page-header">
       <h1>AI <em class="italic">Settings</em></h1>
-      <p class="lead">Manage your API keys, choose your Suno provider, and review usage. Keys live only in this browser.</p>
+      <p class="lead">Your keys live only in this browser's <code>localStorage</code>. Calls go straight from your browser to the provider — Desi Jugad never sees them.</p>
     </div>
 
-    <!-- NEED KEY BANNER -->
-    <div id="need-banner" style="display:none;background:#FFF8E6;border:1px solid color-mix(in srgb,var(--saffron) 35%,var(--line));border-radius:var(--radius);padding:1rem 1.25rem;margin-bottom:1.5rem;font-size:0.92rem;color:var(--ink-soft)">
-      <strong style="color:var(--saffron)">Action needed:</strong> Add your <span id="need-service">Replicate</span> API key below to continue.
+    <div id="need-banner" class="need-banner" style="display:none">
+      <strong>Action needed:</strong> Add your <span id="need-service">Gemini</span> API key below to continue.
     </div>
 
-    <!-- SECTION 1: API KEYS -->
     <div class="settings-section">
-      <div class="settings-section-title">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
-        API Keys
+      <h2>Google Gemini key <span style="font-size:0.75rem;color:var(--saffron);font-family:var(--font-mono);text-transform:uppercase;letter-spacing:0.1em">Required</span></h2>
+      <p class="note">Used by every AI tool here (image, writer, photo-studio, social-post). Get one free at <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">aistudio.google.com/apikey</a> — no credit card needed for the free tier.</p>
+      <div class="key-row">
+        <input type="password" id="gemini-key" placeholder="AIzaSy...">
+        <button class="primary" id="save-gemini">Save</button>
+        <button class="danger" id="clear-gemini">Remove</button>
       </div>
-
-      <!-- Replicate -->
-      <div style="margin-bottom:1.75rem">
-        <div style="display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:0.75rem">
-          <div>
-            <div style="font-weight:600;font-size:0.95rem;color:var(--ink);margin-bottom:0.2rem">Replicate</div>
-            <div style="font-size:0.8rem;color:var(--ink-muted)">Used for image, video, LLM, and photo tools. <a href="https://replicate.com/account/api-tokens" target="_blank" rel="noopener" style="color:var(--indigo)">Get your key →</a></div>
-          </div>
-          <span id="replicate-status" class="key-pill key-pill--missing">Not set</span>
-        </div>
-        <div style="display:flex;gap:0.5rem;align-items:center">
-          <input id="replicate-input" type="password" autocomplete="off" spellcheck="false"
-            class="key-input-field" style="max-width:420px" placeholder="r8_xxxxxxxxxxxxxxxxxxxx">
-          <button class="key-btn" onclick="saveKey('replicate')">Save</button>
-          <button class="key-btn" onclick="showKey('replicate')" id="show-replicate">Show</button>
-          <button class="key-btn danger" onclick="clearKey('replicate')">Clear</button>
-        </div>
-        <div id="replicate-test-result" style="margin-top:0.5rem;font-size:0.8rem;font-family:var(--font-mono);display:none"></div>
-      </div>
-
-      <!-- Suno -->
-      <div style="margin-bottom:1.75rem">
-        <div style="display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:0.75rem">
-          <div>
-            <div style="font-weight:600;font-size:0.95rem;color:var(--ink);margin-bottom:0.2rem">Suno (music generation)</div>
-            <div style="font-size:0.8rem;color:var(--ink-muted)">For AI music studio. Via third-party wrapper. <a href="https://sunoapi.org/dashboard" target="_blank" rel="noopener" style="color:var(--indigo)">Get key from sunoapi.org →</a></div>
-          </div>
-          <span id="suno-status" class="key-pill key-pill--missing">Not set</span>
-        </div>
-        <div style="display:flex;gap:0.5rem;align-items:center">
-          <input id="suno-input" type="password" autocomplete="off" spellcheck="false"
-            class="key-input-field" style="max-width:420px" placeholder="sk-REPLACE_ME">
-          <button class="key-btn" onclick="saveKey('suno')">Save</button>
-          <button class="key-btn" onclick="showKey('suno')" id="show-suno">Show</button>
-          <button class="key-btn danger" onclick="clearKey('suno')">Clear</button>
-        </div>
-      </div>
-
-      <!-- Gemini -->
-      <div>
-        <div style="display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:0.75rem">
-          <div>
-            <div style="font-weight:600;font-size:0.95rem;color:var(--ink);margin-bottom:0.2rem">Gemini (optional — photo studio)</div>
-            <div style="font-size:0.8rem;color:var(--ink-muted)">For Imagen 3 in photo studio. <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener" style="color:var(--indigo)">Get free key at Google AI Studio →</a></div>
-          </div>
-          <span id="gemini-status" class="key-pill key-pill--missing">Not set</span>
-        </div>
-        <div style="display:flex;gap:0.5rem;align-items:center">
-          <input id="gemini-input" type="password" autocomplete="off" spellcheck="false"
-            class="key-input-field" style="max-width:420px" placeholder="AIza...">
-          <button class="key-btn" onclick="saveKey('gemini')">Save</button>
-          <button class="key-btn" onclick="showKey('gemini')" id="show-gemini">Show</button>
-          <button class="key-btn danger" onclick="clearKey('gemini')">Clear</button>
-        </div>
-      </div>
+      <div id="gemini-status" class="status-pill missing">Not set</div>
     </div>
 
-    <!-- SECTION 2: SUNO PROVIDER -->
     <div class="settings-section">
-      <div class="settings-section-title">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M20.188 10.934c.326.179.326.614 0 .793l-1.263.692a9.99 9.99 0 0 1 0 1.162l1.263.692c.326.179.326.614 0 .793l-2.188 1.265a.5.5 0 0 1-.625-.09l-.965-1.14a8.1 8.1 0 0 1-1.006.58l-.235 1.48a.5.5 0 0 1-.494.419h-2.35a.5.5 0 0 1-.494-.42l-.235-1.48a8.1 8.1 0 0 1-1.006-.58l-.965 1.14a.5.5 0 0 1-.625.09L3.812 15.067c-.326-.179-.326-.614 0-.793l1.263-.692a9.99 9.99 0 0 1 0-1.162L3.812 11.728c-.326-.179-.326-.614 0-.793l2.188-1.265a.5.5 0 0 1 .625.09l.965 1.14a8.1 8.1 0 0 1 1.006-.58l.235-1.48A.5.5 0 0 1 9.325 8.42h2.35a.5.5 0 0 1 .494.42l.235 1.48a8.1 8.1 0 0 1 1.006.58l.965-1.14a.5.5 0 0 1 .625-.09l2.188 1.265z"/></svg>
-        Suno API Provider
+      <h2>Hugging Face token <span style="font-size:0.75rem;color:var(--ink-muted);font-family:var(--font-mono);text-transform:uppercase;letter-spacing:0.1em">Optional</span></h2>
+      <p class="note">Lets you call Hugging Face Inference models from any tool that supports HF as a fallback. Free tier from <a href="https://huggingface.co/settings/tokens" target="_blank" rel="noopener">huggingface.co/settings/tokens</a>.</p>
+      <div class="key-row">
+        <input type="password" id="hf-key" placeholder="hf_...">
+        <button class="primary" id="save-hf">Save</button>
+        <button class="danger" id="clear-hf">Remove</button>
       </div>
-      <p style="font-size:0.88rem;color:var(--ink-muted);margin-bottom:1.25rem">Suno doesn't publish an official API. Choose a wrapper you have a key for, or enter a custom base URL.</p>
-
-      <div style="display:flex;flex-direction:column;gap:0.75rem;margin-bottom:1rem">
-        <label style="display:flex;align-items:center;gap:0.75rem;cursor:pointer;font-size:0.92rem">
-          <input type="radio" name="suno-provider" value="https://api.sunoapi.org" checked> sunoapi.org (default)
-        </label>
-        <label style="display:flex;align-items:center;gap:0.75rem;cursor:pointer;font-size:0.92rem">
-          <input type="radio" name="suno-provider" value="https://api.kie.ai"> kie.ai
-        </label>
-        <label style="display:flex;align-items:center;gap:0.75rem;cursor:pointer;font-size:0.92rem">
-          <input type="radio" name="suno-provider" value="https://api.piapi.ai"> piapi.ai
-        </label>
-        <label style="display:flex;align-items:center;gap:0.75rem;cursor:pointer;font-size:0.92rem">
-          <input type="radio" name="suno-provider" value="custom"> Custom URL
-        </label>
-        <input id="suno-custom-url" type="url" placeholder="https://your-suno-api.example.com"
-          class="key-input-field" style="max-width:360px;display:none">
-      </div>
-      <button class="btn btn-secondary" style="font-size:0.88rem;padding:0.5rem 1rem" onclick="saveSunoProvider()">Save provider</button>
+      <div id="hf-status" class="status-pill missing">Not set</div>
     </div>
 
-    <!-- SECTION 3: USAGE LOG -->
     <div class="settings-section">
-      <div class="settings-section-title" style="justify-content:space-between">
-        <span style="display:flex;align-items:center;gap:0.6rem">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-          Session Usage Log
-        </span>
-        <div style="display:flex;gap:0.5rem">
-          <button class="key-btn" onclick="exportUsageCSV()">Export CSV</button>
-          <button class="key-btn danger" onclick="clearUsage()">Clear log</button>
-        </div>
-      </div>
-      <div id="usage-empty" style="text-align:center;padding:2rem;color:var(--ink-muted);font-size:0.9rem">No generations logged yet in this browser session.</div>
-      <div id="usage-table-wrap" style="overflow-x:auto;display:none">
-        <table class="usage-table" id="usage-table">
-          <thead><tr><th>Time</th><th>Service</th><th>Model</th><th>Prompt</th><th>Est. Cost</th></tr></thead>
-          <tbody id="usage-tbody"></tbody>
-        </table>
-      </div>
+      <h2>Free, no-key option</h2>
+      <p class="note">Pollinations.ai gives you free unlimited image generation with no API key required. It's already wired into the Image Studio — just leave the Gemini field empty and pick "Pollinations (free)" as the provider.</p>
     </div>
 
-    <!-- SECTION 4: PRIVACY -->
     <div class="settings-section">
-      <div class="settings-section-title">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        Privacy Confirmation
-      </div>
-      <div class="privacy-box">
-        <strong>Your keys are stored in this browser only.</strong><br><br>
-        Keys live in <code style="font-family:var(--font-mono);background:rgba(0,0,0,0.06);padding:0.1rem 0.3rem;border-radius:3px">localStorage</code> under <code style="font-family:var(--font-mono);background:rgba(0,0,0,0.06);padding:0.1rem 0.3rem;border-radius:3px">dj_ai_keys_v1</code>. They are never sent to any Desi Jugad server. Our CORS proxy only passes them along to Replicate or Suno verbatim — it does not log them, store them, or read them.<br><br>
-        Close this tab and keys stay local. Clear browser data and they're gone permanently. You can also click "Clear" above at any time.<br><br>
-        <strong>Important:</strong> Storing API keys in localStorage is convenient but not airtight. A malicious browser extension or XSS flaw could read them. For high-value enterprise tokens, consider running Desi Jugad AI Studio locally by cloning the <a href="https://github.com/" target="_blank" rel="noopener" style="color:var(--success)">GitHub repo</a>.
-      </div>
+      <h2>Privacy</h2>
+      <p class="note">All keys are stored under <code>dj_ai_keys_v1</code> in your browser's <code>localStorage</code>. They are sent only to the relevant provider (Google or Hugging Face) — never to desijugad.co.in. Clear your browser data and they're gone.</p>
+      <button class="key-row danger" id="clear-all" style="background:var(--surface);border:1px solid color-mix(in srgb, var(--danger) 35%, var(--line));color:var(--danger);padding:0.6rem 1.1rem;border-radius:var(--radius-sm);font-size:0.9rem;cursor:pointer">Clear all stored keys</button>
     </div>
 
-    <!-- SECTION 5: TROUBLESHOOTING -->
-    <div class="settings-section">
-      <div class="settings-section-title">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-        Troubleshooting
-      </div>
-      <p style="font-size:0.88rem;color:var(--ink-muted);margin-bottom:1.25rem">Test that each API key is working correctly.</p>
-      <div style="display:flex;flex-wrap:wrap;gap:0.75rem">
-        <button class="btn btn-secondary" style="font-size:0.88rem;padding:0.6rem 1.25rem" onclick="testReplicate()">
-          Test Replicate key
-        </button>
-        <button class="btn btn-secondary" style="font-size:0.88rem;padding:0.6rem 1.25rem" onclick="testSuno()">
-          Test Suno key
-        </button>
-      </div>
-      <div id="test-results" style="margin-top:1rem;font-family:var(--font-mono);font-size:0.82rem;line-height:1.8"></div>
-    </div>
-
+    <section class="info-section" style="margin-top:2rem">
+      <h2>FAQ</h2>
+      <details class="faq-item">
+        <summary>Why does Gemini work in the browser but Replicate / OpenAI don't?</summary>
+        <p>Browser security (CORS) lets a website call only those APIs that explicitly allow cross-origin requests. Google Gemini sets that header — so we can call it directly from your browser with your key. Replicate, OpenAI, and Anthropic don't, so they require a server-side proxy. We chose to remove the proxy and stay 100% static, which means we keep only the providers that work browser-direct.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Where do I get a Gemini key?</summary>
+        <p>Visit <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">aistudio.google.com/apikey</a>, sign in with any Google account, and click "Create API key". Free tier gives you a generous monthly quota.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Is the free Pollinations option safe?</summary>
+        <p>Pollinations is an open project that returns generated images directly as image URLs. There's no key, no sign-up, and no data sent except the prompt itself. If their servers are slow, the tool tells you and offers a retry.</p>
+      </details>
+    </section>
   </div>
 </main>
 
@@ -226,35 +192,12 @@
     <div class="footer-grid footer-grid-5">
       <div class="footer-brand">
         <div class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></div>
-        <p>Free, private file conversion for everyone. Your files never leave your device — because they shouldn't have to.</p>
+        <p>Free, private file conversion for everyone. Your files never leave your device.</p>
       </div>
-      <div class="footer-col"><h5>Popular tools</h5><ul>
-        <li><a href="/convert/heic-to-jpg.html">HEIC to JPG</a></li>
-        <li><a href="/convert/image-converter.html">Image Converter</a></li>
-        <li><a href="/convert/qr-code.html">QR Code</a></li>
-        <li><a href="/convert/json-to-csv.html">JSON to CSV</a></li>
-      </ul></div>
-      <div class="footer-col"><h5>AI Studio</h5><ul>
-        <li><a href="/ai/image.html">AI Images</a></li>
-        <li><a href="/ai/video.html">AI Video</a></li>
-        <li><a href="/ai/music.html">AI Music</a></li>
-        <li><a href="/ai/music-video.html">Music Videos</a></li>
-        <li><a href="/ai/writer.html">AI Writer</a></li>
-        <li><a href="/ai/photo-studio.html">Photo Studio</a></li>
-      </ul></div>
-      <div class="footer-col"><h5>Company</h5><ul>
-        <li><a href="/about.html">About</a></li>
-        <li><a href="/blog/">Blog</a></li>
-        <li><a href="/contact.html">Contact</a></li>
-        <li><a href="/privacy.html">Privacy Policy</a></li>
-        <li><a href="/terms.html">Terms</a></li>
-      </ul></div>
-      <div class="footer-col"><h5>Connect</h5><ul>
-        <li><a href="https://twitter.com/" rel="noopener">Twitter / X</a></li>
-        <li><a href="https://github.com/" rel="noopener">GitHub</a></li>
-        <li><a href="/contact.html">Feature request</a></li>
-        <li><a href="/contact.html">Report a bug</a></li>
-      </ul></div>
+      <div class="footer-col"><h5>Tools</h5><ul><li><a href="/convert/heic-to-jpg.html">HEIC to JPG</a></li><li><a href="/convert/qr-code.html">QR Code</a></li><li><a href="/convert/image-converter.html">Image Converter</a></li></ul></div>
+      <div class="footer-col"><h5>AI Studio</h5><ul><li><a href="/ai/image.html">AI Images</a></li><li><a href="/ai/writer.html">AI Writer</a></li><li><a href="/ai/bg-remove.html">BG Remove</a></li><li><a href="/ai/photo-studio.html">Photo Studio</a></li></ul></div>
+      <div class="footer-col"><h5>Company</h5><ul><li><a href="/about.html">About</a></li><li><a href="/blog/">Blog</a></li><li><a href="/contact.html">Contact</a></li><li><a href="/privacy.html">Privacy</a></li><li><a href="/terms.html">Terms</a></li></ul></div>
+      <div class="footer-col"><h5>Connect</h5><ul><li><a href="mailto:hello@desijugad.co.in">hello@desijugad.co.in</a></li></ul></div>
     </div>
     <div class="footer-bottom">
       <div>© <span data-year>2026</span> Desi Jugad. All rights reserved.</div>
@@ -266,159 +209,50 @@
 <script src="../assets/js/main.js"></script>
 <script src="../assets/js/ai.js"></script>
 <script>
-(function() {
-  const SERVICES = ['replicate', 'suno', 'gemini'];
+(function(){
+  const $ = (id) => document.getElementById(id);
 
-  function renderAll() {
-    SERVICES.forEach(service => {
-      const key = window.AIKeys.get(service);
-      const statusEl = document.getElementById(service + '-status');
-      const inputEl = document.getElementById(service + '-input');
-      if (statusEl) {
-        statusEl.className = key ? 'key-pill key-pill--ok' : 'key-pill key-pill--missing';
-        statusEl.textContent = key ? window.AIKeys.mask(key) : 'Not set';
-      }
-      if (inputEl) inputEl.value = '';
-    });
+  function refresh() {
+    const g = window.AIKeys.get('gemini');
+    const h = window.AIKeys.get('hf');
+    $('gemini-key').value = g || '';
+    $('hf-key').value = h || '';
+    $('gemini-status').className = 'status-pill ' + (g ? 'ok' : 'missing');
+    $('gemini-status').textContent = g ? 'Saved · ' + window.AIKeys.mask(g) : 'Not set';
+    $('hf-status').className = 'status-pill ' + (h ? 'ok' : 'missing');
+    $('hf-status').textContent = h ? 'Saved · ' + window.AIKeys.mask(h) : 'Not set';
   }
 
-  window.saveKey = function(service) {
-    const input = document.getElementById(service + '-input');
-    if (!input || !input.value.trim()) { window.showToast('Enter a key first', 'error'); return; }
-    window.AIKeys.set(service, input.value);
-    window.showToast(service.charAt(0).toUpperCase() + service.slice(1) + ' key saved', 'success');
-    renderAll();
+  $('save-gemini').onclick = () => {
+    const v = $('gemini-key').value.trim();
+    if (!v) { window.showToast('Paste a key first', 'error'); return; }
+    window.AIKeys.set('gemini', v);
+    window.showToast('Gemini key saved · stays in your browser', 'success');
+    refresh();
+  };
+  $('clear-gemini').onclick = () => { window.AIKeys.clear('gemini'); window.showToast('Gemini key removed'); refresh(); };
+  $('save-hf').onclick = () => {
+    const v = $('hf-key').value.trim();
+    if (!v) { window.showToast('Paste a key first', 'error'); return; }
+    window.AIKeys.set('hf', v);
+    window.showToast('Hugging Face key saved', 'success');
+    refresh();
+  };
+  $('clear-hf').onclick = () => { window.AIKeys.clear('hf'); window.showToast('HF key removed'); refresh(); };
+  $('clear-all').onclick = () => {
+    if (!confirm('Remove all saved keys from this browser?')) return;
+    window.AIKeys.clearAll();
+    window.showToast('All keys cleared');
+    refresh();
   };
 
-  window.showKey = function(service) {
-    const input = document.getElementById(service + '-input');
-    const btn = document.getElementById('show-' + service);
-    if (!input) return;
-    const key = window.AIKeys.get(service);
-    if (!key) { window.showToast('No key stored yet', 'error'); return; }
-    if (input.type === 'password') {
-      input.type = 'text';
-      input.value = key;
-      if (btn) btn.textContent = 'Hide';
-      setTimeout(() => { input.type = 'password'; input.value = ''; if (btn) btn.textContent = 'Show'; }, 8000);
-    } else {
-      input.type = 'password';
-      input.value = '';
-      if (btn) btn.textContent = 'Show';
-    }
-  };
-
-  window.clearKey = function(service) {
-    if (!confirm('Clear ' + service + ' key from this browser?')) return;
-    window.AIKeys.clear(service);
-    window.showToast(service + ' key cleared', 'success');
-    renderAll();
-  };
-
-  window.saveSunoProvider = function() {
-    const selected = document.querySelector('input[name="suno-provider"]:checked');
-    if (!selected) return;
-    let url = selected.value;
-    if (url === 'custom') {
-      url = document.getElementById('suno-custom-url').value.trim();
-      if (!url) { window.showToast('Enter a custom URL', 'error'); return; }
-    }
-    window.setSunoProvider(url);
-    window.showToast('Suno provider saved', 'success');
-  };
-
-  // Suno provider radio logic
-  document.querySelectorAll('input[name="suno-provider"]').forEach(r => {
-    r.addEventListener('change', () => {
-      const customInput = document.getElementById('suno-custom-url');
-      if (r.checked && r.value === 'custom') customInput.style.display = '';
-      else if (r.checked) customInput.style.display = 'none';
-    });
-  });
-
-  // Set current provider selection
-  const currentProvider = window.getSunoBase();
-  document.querySelectorAll('input[name="suno-provider"]').forEach(r => {
-    if (r.value === currentProvider) r.checked = true;
-    else if (!['https://api.sunoapi.org','https://api.kie.ai','https://api.piapi.ai'].includes(currentProvider) && r.value === 'custom') {
-      r.checked = true;
-      const customInput = document.getElementById('suno-custom-url');
-      if (customInput) { customInput.style.display = ''; customInput.value = currentProvider; }
-    }
-  });
-
-  // Usage log
-  function renderUsage() {
-    const log = window.getUsageLog();
-    const empty = document.getElementById('usage-empty');
-    const wrap = document.getElementById('usage-table-wrap');
-    const tbody = document.getElementById('usage-tbody');
-    if (!log.length) { empty.style.display = ''; wrap.style.display = 'none'; return; }
-    empty.style.display = 'none';
-    wrap.style.display = '';
-    tbody.innerHTML = log.map(e => `
-      <tr>
-        <td style="white-space:nowrap;font-family:var(--font-mono);font-size:0.78rem">${new Date(e.ts).toLocaleString()}</td>
-        <td>${e.service}</td>
-        <td style="font-family:var(--font-mono);font-size:0.78rem">${e.model || '—'}</td>
-        <td style="max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${e.prompt}">${e.prompt || '—'}</td>
-        <td class="cost-cell">$${(e.cost||0).toFixed(4)}</td>
-      </tr>`).join('');
-  }
-
-  window.clearUsage = function() {
-    if (!confirm('Clear all usage log entries?')) return;
-    window.clearUsageLog();
-    renderUsage();
-    window.showToast('Usage log cleared');
-  };
-
-  window.exportUsageCSV = function() {
-    const log = window.getUsageLog();
-    if (!log.length) { window.showToast('No usage data to export', 'error'); return; }
-    const csv = ['Time,Service,Model,Prompt,EstimatedCost'].concat(
-      log.map(e => [e.ts, e.service, e.model||'', '"'+(e.prompt||'').replace(/"/g,'""')+'"', e.cost||0].join(','))
-    ).join('\n');
-    const blob = new Blob([csv], { type: 'text/csv' });
-    window.downloadBlob(blob, 'desi-jugad-ai-usage.csv');
-  };
-
-  // Test functions
-  window.testReplicate = async function() {
-    const results = document.getElementById('test-results');
-    results.innerHTML = '<span style="color:var(--ink-muted)">Testing Replicate…</span>';
-    try {
-      const data = await window.Replicate.getAccount();
-      results.innerHTML = `<span style="color:var(--success)">✓ Replicate OK — logged in as ${data.username || 'user'}</span>`;
-    } catch(e) {
-      results.innerHTML = `<span style="color:var(--danger)">✗ Replicate failed: ${e.message}</span>`;
-    }
-  };
-
-  window.testSuno = async function() {
-    const results = document.getElementById('test-results');
-    const prev = results.innerHTML;
-    results.innerHTML = prev + (prev ? '\n' : '') + '<span style="color:var(--ink-muted)">Testing Suno…</span>';
-    const credits = await window.Suno.getCredits();
-    if (credits !== null) {
-      results.innerHTML = prev + (prev ? '\n' : '') + `<span style="color:var(--success)">✓ Suno OK — ${credits} credits remaining</span>`;
-    } else {
-      results.innerHTML = prev + (prev ? '\n' : '') + `<span style="color:var(--danger)">✗ Suno: No key set or request failed</span>`;
-    }
-  };
-
-  // Check ?need= param
   const need = new URLSearchParams(location.search).get('need');
   if (need) {
-    const banner = document.getElementById('need-banner');
-    const svc = document.getElementById('need-service');
-    if (banner && svc) { svc.textContent = need.charAt(0).toUpperCase() + need.slice(1); banner.style.display = ''; }
-    const input = document.getElementById(need + '-input');
-    if (input) { setTimeout(() => input.scrollIntoView({ behavior: 'smooth', block: 'center' }), 300); }
+    $('need-banner').style.display = '';
+    $('need-service').textContent = need === 'gemini' ? 'Gemini' : need === 'hf' ? 'Hugging Face' : need;
   }
 
-  document.addEventListener('DOMContentLoaded', () => { renderAll(); renderUsage(); });
-  if (document.readyState !== 'loading') { renderAll(); renderUsage(); }
+  refresh();
 })();
 </script>
 </body>

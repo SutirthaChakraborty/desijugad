@@ -16,6 +16,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,30..100;1,9..144,300..700,30..100&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400..600&display=swap" rel="stylesheet">
+<meta property="og:image" content="https://desijugad.co.in/assets/img/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://desijugad.co.in/assets/img/og.png">
+<meta property="og:site_name" content="Desi Jugad">
 <link rel="stylesheet" href="../assets/css/style.css">
 <script type="application/ld+json">
 {
@@ -34,6 +38,62 @@
     {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://desijugad.co.in/blog/"},
     {"@type": "ListItem", "position": 3, "name": "Why Your HEIC Photos Won't Open", "item": "https://desijugad.co.in/blog/how-to-open-heic-files.html"}
   ]}
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "how to open heic files on windows 10 11",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Install the HEIF Image Extensions from the Microsoft Store (free). After installation, Windows Photos can open .heic files directly. Or use this browser converter to convert HEIC to JPG without any installation."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "how to open heic files on android",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Android does not natively support HEIC. Use a file manager app like Files by Google and open the HEIC in Google Photos. Or convert to JPG first using this online converter."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "how to view heic photos on mac",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Mac can open HEIC files natively in Preview and Photos app on macOS High Sierra (10.13) and later. Double-click the file to open it."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "what app opens heic files for free",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "On Windows: HEIF Image Extensions (Microsoft Store, free). On Android: Google Photos or Files by Google. On Mac: Preview (built-in). Or convert to universally compatible JPG using this free online tool."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "convert iphone heic photos to jpg without icloud",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Connect iPhone to computer via USB, copy files, then use this browser converter. Or enable automatic conversion: Settings > Camera > Formats > Most Compatible (records as JPG instead of HEIC)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "how to set iphone to save photos as jpg not heic",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Go to Settings > Camera > Formats and select Most Compatible. Your iPhone will now save photos as JPG. Note: this uses more storage space than HEIC."
+      }
+    }
+  ]
 }
 </script>
 </head>
@@ -145,7 +205,43 @@
         <a href="../convert/heic-to-jpg.html" class="btn btn-primary">Open HEIC to JPG →</a>
       </div>
     </div>
-  </article>
+  
+<!-- Related posts — auto-injected for SEO internal linking -->
+<aside style="margin-top:3rem;padding-top:2rem;border-top:1px solid var(--line,#E8E1D3)">
+  <h3 style="font-size:1.1rem;font-weight:600;margin-bottom:1rem">Related resources</h3>
+  <div id="related-posts" style="display:flex;flex-wrap:wrap;gap:0.75rem"></div>
+</aside>
+<script>
+(function(){
+  var posts=[
+    {t:"HEIC to JPG Converter",u:"../convert/heic-to-jpg.html"},
+    {t:"Image Compressor",u:"../convert/image-compress.html"},
+    {t:"PDF Merge & Split",u:"../convert/pdf-merge.html"},
+    {t:"SIP Calculator",u:"../convert/sip-calculator.html"},
+    {t:"GST Calculator",u:"../convert/gst-calculator.html"},
+    {t:"QR Code Generator",u:"../convert/qr-code.html"},
+    {t:"Income Tax Calculator",u:"../convert/income-tax-calculator.html"},
+    {t:"Background Remover",u:"../ai/bg-remove.html"},
+    {t:"Invoice Generator",u:"../convert/invoice-generator.html"},
+    {t:"Image Converter",u:"../convert/image-converter.html"}
+  ];
+  // pick 4 that don't match current page
+  var cur=window.location.pathname;
+  var filtered=posts.filter(function(p){return cur.indexOf(p.u.replace('../',''))===-1;}).slice(0,4);
+  var div=document.getElementById('related-posts');
+  if(!div)return;
+  filtered.forEach(function(p){
+    var a=document.createElement('a');
+    a.href=p.u;
+    a.textContent='→ '+p.t;
+    a.style.cssText='display:inline-block;padding:0.45rem 1rem;border:1px solid var(--line,#E8E1D3);border-radius:999px;font-size:0.85rem;text-decoration:none;color:var(--ink,#141413);background:var(--surface,#fff);transition:border-color 0.15s';
+    a.onmouseover=function(){this.style.borderColor='var(--indigo,#7051BC)'};
+    a.onmouseout=function(){this.style.borderColor='var(--line,#E8E1D3)'};
+    div.appendChild(a);
+  });
+})();
+</script>
+</article>
 </main>
 
 <footer class="footer">
@@ -153,7 +249,7 @@
     <div class="footer-grid footer-grid-5">
       <div class="footer-brand"><div class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></div><p>Free, private file conversion for everyone.</p></div>
       <div class="footer-col"><h5>Tools</h5><ul><li><a href="../convert/heic-to-jpg.html">HEIC to JPG</a></li><li><a href="../convert/image-converter.html">Image Converter</a></li><li><a href="../convert/image-to-pdf.html">Image to PDF</a></li></ul></div>
-      <div class="footer-col"><h5>AI Studio</h5><ul><li><a href="../ai/image.html">AI Images</a></li><li><a href="../ai/video.html">AI Video</a></li><li><a href="../ai/music.html">AI Music</a></li><li><a href="../ai/music-video.html">Music Videos</a></li><li><a href="../ai/writer.html">AI Writer</a></li><li><a href="../ai/photo-studio.html">Photo Studio</a></li></ul></div><div class="footer-col"><h5>Company</h5><ul><li><a href="../about.html">About</a></li><li><a href="./">Blog</a></li><li><a href="../privacy.html">Privacy</a></li><li><a href="../terms.html">Terms</a></li></ul></div>
+      <div class="footer-col"><h5>AI Studio</h5><ul><li><a href="../ai/image.html">AI Images</a></li><li><a href="../ai/writer.html">AI Writer</a></li><li><a href="../ai/photo-studio.html">Photo Studio</a></li></ul></div><div class="footer-col"><h5>Company</h5><ul><li><a href="../about.html">About</a></li><li><a href="./">Blog</a></li><li><a href="../privacy.html">Privacy</a></li><li><a href="../terms.html">Terms</a></li></ul></div>
       <div class="footer-col"><h5>Help</h5><ul><li><a href="../contact.html">Contact</a></li></ul></div>
     </div>
     <div class="footer-bottom"><div>© <span data-year>2026</span> Desi Jugad.</div><div class="made-in"><span class="flag-in"></span>Made in India, built for the world.</div></div>

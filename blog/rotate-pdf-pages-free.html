@@ -25,7 +25,90 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,30..100;1,9..144,300..700,30..100&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400..600&display=swap" rel="stylesheet">
+<meta property="og:site_name" content="Desi Jugad">
 <link rel="stylesheet" href="../assets/css/style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://desijugad.co.in/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Blog",
+      "item": "https://desijugad.co.in/blog/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "How to rotate PDF pages online free \u2014 fix scanned documents (2026)",
+      "item": "https://desijugad.co.in/blog/rotate-pdf-pages-free.html"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "how to rotate pdf pages free online",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Upload your PDF, click the rotation arrows on individual pages or select all and rotate together. Click Save/Download to get the rotated PDF."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "rotate all pages in pdf 90 degrees free",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Select all pages and click the 90-degree clockwise or counterclockwise rotation button. Download the corrected PDF."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "rotate one page in pdf free",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Click the rotation icon on the specific page you want to rotate (not all pages). This rotates only that page while leaving others unchanged."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "how to rotate pdf on iphone free",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Open this tool in Safari on iPhone. Upload your PDF from Files app. Rotate pages and download the corrected file."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "pdf rotation not saving",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "If rotation seems to not save, ensure you click the Download/Save button after rotating — do not close the tab. The rotation is only applied when you generate the final PDF."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "rotate scanned pdf pages free",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Scanned PDFs (images of documents) rotate exactly like regular PDFs. Upload, rotate to correct orientation, download."
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body>
 <header class="nav">
@@ -105,14 +188,50 @@
         <li><a href="pdf-to-jpg-free-online.html">PDF to JPG — convert pages to images</a></li>
       </ul>
     </div>
-  </article>
+  
+<!-- Related posts — auto-injected for SEO internal linking -->
+<aside style="margin-top:3rem;padding-top:2rem;border-top:1px solid var(--line,#E8E1D3)">
+  <h3 style="font-size:1.1rem;font-weight:600;margin-bottom:1rem">Related resources</h3>
+  <div id="related-posts" style="display:flex;flex-wrap:wrap;gap:0.75rem"></div>
+</aside>
+<script>
+(function(){
+  var posts=[
+    {t:"HEIC to JPG Converter",u:"../convert/heic-to-jpg.html"},
+    {t:"Image Compressor",u:"../convert/image-compress.html"},
+    {t:"PDF Merge & Split",u:"../convert/pdf-merge.html"},
+    {t:"SIP Calculator",u:"../convert/sip-calculator.html"},
+    {t:"GST Calculator",u:"../convert/gst-calculator.html"},
+    {t:"QR Code Generator",u:"../convert/qr-code.html"},
+    {t:"Income Tax Calculator",u:"../convert/income-tax-calculator.html"},
+    {t:"Background Remover",u:"../ai/bg-remove.html"},
+    {t:"Invoice Generator",u:"../convert/invoice-generator.html"},
+    {t:"Image Converter",u:"../convert/image-converter.html"}
+  ];
+  // pick 4 that don't match current page
+  var cur=window.location.pathname;
+  var filtered=posts.filter(function(p){return cur.indexOf(p.u.replace('../',''))===-1;}).slice(0,4);
+  var div=document.getElementById('related-posts');
+  if(!div)return;
+  filtered.forEach(function(p){
+    var a=document.createElement('a');
+    a.href=p.u;
+    a.textContent='→ '+p.t;
+    a.style.cssText='display:inline-block;padding:0.45rem 1rem;border:1px solid var(--line,#E8E1D3);border-radius:999px;font-size:0.85rem;text-decoration:none;color:var(--ink,#141413);background:var(--surface,#fff);transition:border-color 0.15s';
+    a.onmouseover=function(){this.style.borderColor='var(--indigo,#7051BC)'};
+    a.onmouseout=function(){this.style.borderColor='var(--line,#E8E1D3)'};
+    div.appendChild(a);
+  });
+})();
+</script>
+</article>
 </main>
 <footer class="footer">
   <div class="container">
     <div class="footer-grid footer-grid-5">
       <div class="footer-brand"><div class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></div><p>Free, private file conversion for everyone.</p></div>
       <div class="footer-col"><h5>PDF Tools</h5><ul><li><a href="../convert/pdf-rotate.html">PDF Rotate</a></li><li><a href="../convert/pdf-merge.html">PDF Merge</a></li><li><a href="../convert/pdf-compressor.html">PDF Compressor</a></li><li><a href="../convert/pdf-watermark.html">PDF Watermark</a></li></ul></div>
-      <div class="footer-col"><h5>AI Studio</h5><ul><li><a href="../ai/image.html">AI Images</a></li><li><a href="../ai/video.html">AI Video</a></li><li><a href="../ai/music.html">AI Music</a></li><li><a href="../ai/writer.html">AI Writer</a></li></ul></div>
+      <div class="footer-col"><h5>AI Studio</h5><ul><li><a href="../ai/image.html">AI Images</a></li><li><a href="../ai/writer.html">AI Writer</a></li></ul></div>
       <div class="footer-col"><h5>Company</h5><ul><li><a href="../about.html">About</a></li><li><a href="./">Blog</a></li><li><a href="../privacy.html">Privacy</a></li><li><a href="../terms.html">Terms</a></li></ul></div>
       <div class="footer-col"><h5>Help</h5><ul><li><a href="../contact.html">Contact</a></li></ul></div>
     </div>

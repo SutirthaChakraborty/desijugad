@@ -6,36 +6,109 @@
 <link rel="icon" type="image/png" sizes="16x16" href="../assets/img/favicon-16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="../assets/img/apple-touch-icon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Image Generator — FLUX, Ideogram, Recraft · Desi Jugad</title>
-<meta name="description" content="Generate AI images with FLUX 1.1 Pro, FLUX Schnell, Ideogram v3, Recraft v3, Seedream 4.5 and more. Bring your own Replicate key. From ₹0.25 per image.">
-<meta name="keywords" content="AI image generator, FLUX image generator, Ideogram AI, Recraft AI, free AI art, bring your own key AI image">
+<title>Free AI Image Generator — No Login, No Watermark · Desi Jugad</title>
+<meta name="description" content="Free AI image generator — Pollinations FLUX (no key) plus Gemini Imagen 3 (BYOK). Generate photoreal, illustration, and concept art from a prompt. Browser-only, no upload.">
+<meta name="keywords" content="free AI image generator, Pollinations AI, Gemini Imagen, AI art free, no login AI image, browser AI image">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://desijugad.co.in/ai/image.html">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https://replicate.delivery https://*.replicate.com https://*.sunoapi.org https://*.kie.ai; media-src 'self' blob:; connect-src 'self' https://api.replicate.com https://*.sunoapi.org https://*.kie.ai https://*.piapi.ai https://*.tmpfiles.org https://*.file.io;">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https://image.pollinations.ai https://generativelanguage.googleapis.com; connect-src 'self' https://generativelanguage.googleapis.com https://image.pollinations.ai;">
+
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://desijugad.co.in/ai/image.html">
-<meta property="og:title" content="AI Image Generator — FLUX, Ideogram, Recraft · Desi Jugad">
-<meta property="og:description" content="10+ best-in-class models. Bring your Replicate key, pay direct. From ₹0.25/image.">
+<meta property="og:title" content="Free AI Image Generator · Desi Jugad">
+<meta property="og:description" content="Pollinations free + Gemini BYOK. No login. No watermark. Browser-direct.">
 <meta property="og:image" content="https://desijugad.co.in/assets/img/og.png">
-<meta name="twitter:card" content="summary_large_image">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,30..100;1,9..144,300..700,30..100&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400..600&display=swap" rel="stylesheet">
-<link rel="preconnect" href="https://api.replicate.com">
+<link rel="preconnect" href="https://image.pollinations.ai">
+<link rel="preconnect" href="https://generativelanguage.googleapis.com">
 <link rel="stylesheet" href="../assets/css/style.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" integrity="sha384-+mbV2IY1Zk/X1p/nWllGySJSUN8uMs+gUAN10Or95UBH0fpj6GfKgPmgC5EXieXG" crossorigin="anonymous" defer></script>
 
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"Desi Jugad AI Image Generator","url":"https://desijugad.co.in/ai/image.html","description":"Free browser-direct AI image generator using Pollinations and Gemini Imagen.","applicationCategory":"ImageGenerator","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
+</script>
+
+<style>
+.img-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1.5rem; }
+@media (max-width: 800px) { .img-grid { grid-template-columns: 1fr; } }
+.img-panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.5rem; }
+.img-panel h3 { font-size: 1rem; margin-bottom: 1rem; }
+.img-row { display: flex; flex-direction: column; gap: 0.85rem; }
+.img-row label { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-muted); font-weight: 500; }
+.img-row input, .img-row textarea, .img-row select { padding: 0.6rem 0.85rem; border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--bg); font-size: 0.95rem; color: var(--ink); font-family: var(--font-sans); }
+.img-row textarea { resize: vertical; min-height: 90px; }
+.img-row input:focus, .img-row textarea:focus, .img-row select:focus { outline: none; border-color: var(--indigo); }
+.size-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+.preset-row { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.preset-pill { padding: 0.3rem 0.7rem; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); font-size: 0.8rem; cursor: pointer; color: var(--ink-soft); }
+.preset-pill.active { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.preview-box { aspect-ratio: 1/1; background: color-mix(in srgb, var(--ink) 4%, var(--surface)); border-radius: var(--radius-sm); border: 1px dashed var(--line); display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.preview-box img { max-width: 100%; max-height: 100%; display: block; }
+.preview-empty { color: var(--ink-muted); font-size: 0.92rem; text-align: center; padding: 1rem; }
+.actions-row { display: flex; gap: 0.6rem; margin-top: 1rem; flex-wrap: wrap; }
+.actions-row .btn { padding: 0.6rem 1.1rem; }
+.cost-line { font-size: 0.82rem; color: var(--ink-muted); font-family: var(--font-mono); }
+.provider-toggle { display: flex; gap: 0.4rem; padding: 0.3rem; background: color-mix(in srgb, var(--ink) 4%, var(--surface)); border-radius: 999px; margin-bottom: 1rem; }
+.provider-toggle button { flex: 1; padding: 0.45rem 0.8rem; border: none; border-radius: 999px; background: transparent; color: var(--ink-soft); font-size: 0.85rem; cursor: pointer; }
+.provider-toggle button.active { background: var(--surface); color: var(--ink); box-shadow: 0 1px 2px rgba(0,0,0,0.06); }
+</style>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "Desi Jugad AI Image Studio",
-  "url": "https://desijugad.co.in/ai/image.html",
-  "description": "Generate AI images with FLUX, Ideogram, Recraft, Seedream, and more using your own Replicate key.",
-  "applicationCategory": "ImageGenerator",
-  "operatingSystem": "Any"
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "free ai image generator no sign up",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Use the Pollinations option — no API key, no account needed. Type your prompt and generate unlimited images for free. For higher quality, add a free Gemini API key in Settings."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "how to generate ai images free online",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Select Image Studio, choose Pollinations (free) or Gemini (needs free API key), enter your text description, choose size and style, and click Generate. Download the image directly."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "ai image generator from text free",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Type a detailed description: 'a sunset over the Himalayas, photorealistic, golden hour lighting'. Click Generate. Better prompts = better images. Be specific about style, lighting, subject, and mood."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "best free ai image generator 2026",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Pollinations (no key, free, good quality), Gemini Imagen (free tier with your own key, excellent quality), DALL-E 3 via ChatGPT (free tier), Stable Diffusion (open source, local installation). Desi Jugad provides Pollinations + Gemini in one interface."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "how to write a good ai image prompt",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Be specific: include subject, setting, style, lighting, color palette, camera angle. Example: 'professional headshot of a woman in her 30s, soft studio lighting, neutral grey background, sharp focus, DSLR quality' — far better than just 'woman portrait'."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "can i use ai generated images commercially",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Pollinations images: check Pollinations.ai terms. Gemini-generated images: subject to Google's terms of service. Generally, images generated for personal use are fine; for commercial use, review the specific model provider's terms."
+      }
+    }
+  ]
 }
 </script>
 </head>
@@ -49,7 +122,7 @@
       <li><a href="/ai/" class="active">AI Studio <span class="badge-new">NEW</span></a></li>
       <li><a href="/blog/">Blog</a></li>
       <li><a href="/about.html">About</a></li>
-      <li><a href="/ai/settings.html" class="nav-cta">Add API keys</a></li>
+      <li><a href="/ai/settings.html" class="nav-cta">Add API key</a></li>
     </ul>
     <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
@@ -66,186 +139,113 @@
     </nav>
 
     <div class="ai-page-header">
-      <h1>AI Image <em class="italic">Studio</em></h1>
-      <p class="lead">Generate photorealistic images, illustrations, SVG vectors, and text-heavy graphics. 10+ state-of-the-art models — you pick, you pay direct.</p>
-      <div class="ai-page-header-row">
-        <a href="settings.html?need=replicate" id="key-pill" class="key-pill key-pill--missing">Add Replicate key</a>
-        <span id="credits-display" style="font-size:0.82rem;color:var(--ink-muted);font-family:var(--font-mono);display:none"></span>
-      </div>
+      <h1>AI Image <em class="italic">Generator</em></h1>
+      <p class="lead">Free with Pollinations. Upgrade with your own Gemini key for higher quality.</p>
     </div>
 
-    <!-- MODEL PICKER -->
-    <div class="ai-panel">
-      <div class="ai-panel-title">Choose a model</div>
-      <div class="model-picker" id="model-picker">
-        <!-- populated by JS -->
-      </div>
-    </div>
-
-    <!-- PROMPT + OPTIONS -->
-    <div class="ai-panel">
-      <div class="ai-panel-title">Your prompt</div>
-      <div class="ai-prompt-wrap">
-        <textarea id="prompt" class="ai-prompt" placeholder="A golden retriever playing chess at a sunlit café in Bengaluru, warm afternoon light, photorealistic…" maxlength="2000"></textarea>
-        <span class="ai-prompt-counter" id="prompt-counter">0 / 2000</span>
-      </div>
-
-      <div style="margin-bottom:1rem">
-        <span class="chip-label">Aspect ratio</span>
-        <div class="chips-row" id="aspect-chips">
-          <button class="chip" data-val="1:1">1:1</button>
-          <button class="chip selected" data-val="16:9">16:9</button>
-          <button class="chip" data-val="9:16">9:16</button>
-          <button class="chip" data-val="4:3">4:3</button>
-          <button class="chip" data-val="3:4">3:4</button>
-          <button class="chip" data-val="21:9">21:9</button>
-          <button class="chip" data-val="3:2">3:2</button>
+    <div class="img-grid">
+      <div class="img-panel">
+        <div class="provider-toggle" role="tablist">
+          <button id="prov-poll" class="active" role="tab">🆓 Pollinations (free, no key)</button>
+          <button id="prov-gemini" role="tab">✨ Gemini (your key)</button>
         </div>
-      </div>
 
-      <div style="display:flex;flex-wrap:wrap;gap:1.5rem;margin-bottom:1.25rem">
-        <div>
-          <span class="chip-label">Outputs</span>
-          <div class="chips-row" id="output-chips">
-            <button class="chip selected" data-val="1">1</button>
-            <button class="chip" data-val="2">2</button>
-            <button class="chip" data-val="4">4</button>
+        <div class="img-row">
+          <label for="prompt">Prompt</label>
+          <textarea id="prompt" placeholder="A bustling Mumbai chai stall at sunset, photorealistic, 35mm film grain"></textarea>
+
+          <label>Size preset</label>
+          <div class="preset-row" id="preset-row">
+            <button class="preset-pill active" data-w="1024" data-h="1024">Square 1:1</button>
+            <button class="preset-pill" data-w="1024" data-h="1536">Portrait 2:3</button>
+            <button class="preset-pill" data-w="1536" data-h="1024">Landscape 3:2</button>
+            <button class="preset-pill" data-w="1080" data-h="1920">Story 9:16</button>
+            <button class="preset-pill" data-w="1280" data-h="720">YouTube 16:9</button>
+          </div>
+
+          <div class="size-row">
+            <div><label for="width">Width</label><input type="number" id="width" value="1024" min="256" max="2048" step="64"></div>
+            <div><label for="height">Height</label><input type="number" id="height" value="1024" min="256" max="2048" step="64"></div>
+          </div>
+
+          <div id="poll-extras">
+            <label for="poll-model">Model (Pollinations)</label>
+            <select id="poll-model">
+              <option value="flux">FLUX (default)</option>
+              <option value="flux-realism">FLUX Realism</option>
+              <option value="flux-anime">FLUX Anime</option>
+              <option value="flux-3d">FLUX 3D</option>
+              <option value="any-dark">Any-Dark</option>
+              <option value="turbo">Turbo (fastest)</option>
+            </select>
+          </div>
+
+          <div id="gemini-extras" style="display:none">
+            <label for="gemini-model">Model (Gemini)</label>
+            <select id="gemini-model">
+              <option value="gemini-2.5-flash-image">Gemini 2.5 Flash Image (fast)</option>
+              <option value="imagen-3.0-generate-002">Imagen 3 (highest quality)</option>
+            </select>
+            <p class="cost-line" style="margin-top:0.4rem">Calls go from your browser straight to Google. Your key stays local.</p>
           </div>
         </div>
-        <div>
-          <span class="chip-label">Quality</span>
-          <div class="chips-row" id="quality-chips">
-            <button class="chip selected" data-val="90">Standard</button>
-            <button class="chip" data-val="100">High</button>
-          </div>
+
+        <div class="actions-row">
+          <button class="btn btn-primary" id="generate-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            Generate
+          </button>
+          <button class="btn btn-secondary" id="seed-btn">🎲 New seed</button>
         </div>
-        <div style="display:flex;align-items:flex-end;gap:0.5rem;padding-bottom:0.1rem">
-          <div>
-            <span class="chip-label">Seed</span>
-            <div class="seed-row">
-              <input type="number" id="seed-input" class="seed-input" placeholder="Random" min="0" max="2147483647">
-              <button class="seed-random" onclick="document.getElementById('seed-input').value=Math.floor(Math.random()*2147483647)">🎲 Random</button>
-            </div>
-          </div>
-        </div>
+        <div class="cost-line" id="status-line" style="margin-top:0.6rem">&nbsp;</div>
       </div>
 
-      <details class="ai-accordion">
-        <summary>Advanced options</summary>
-        <div class="ai-accordion-body">
-          <div style="display:flex;flex-wrap:wrap;gap:1.25rem">
-            <div class="option">
-              <label for="neg-prompt">Negative prompt</label>
-              <input type="text" id="neg-prompt" placeholder="blurry, watermark, text…" style="min-width:260px">
-            </div>
-            <div class="option">
-              <label for="guidance">Guidance scale</label>
-              <input type="number" id="guidance" min="1" max="20" step="0.5" value="7.5" style="min-width:100px">
-            </div>
-            <div class="option">
-              <label for="steps">Steps</label>
-              <input type="number" id="steps" min="4" max="50" value="28" style="min-width:100px">
-            </div>
-          </div>
+      <div class="img-panel">
+        <h3>Preview</h3>
+        <div class="preview-box" id="preview-box">
+          <div class="preview-empty">Type a prompt and hit Generate.<br>Pollinations runs free, no key needed.</div>
         </div>
-      </details>
-    </div>
-
-    <!-- COST + GENERATE -->
-    <div class="cost-panel" id="cost-panel">
-      <div>
-        <div class="cost-panel-estimate" id="cost-estimate">Select a model above</div>
-        <div class="cost-panel-note">Billed directly by Replicate at their published rate</div>
-      </div>
-    </div>
-    <div style="margin-bottom:2rem">
-      <button class="btn-generate" id="gen-btn" onclick="generate()">
-        <span class="btn-label">✨ Generate</span>
-        <span class="spinner"></span>
-      </button>
-      <button id="cancel-btn" style="display:none;margin-left:1rem" class="btn btn-secondary" onclick="cancelGeneration()">Cancel</button>
-    </div>
-
-    <!-- OUTPUT -->
-    <div class="ai-output" id="output-zone" style="display:none">
-      <div class="ai-output-header">
-        <span class="ai-output-title">Generated images</span>
-        <div style="display:flex;gap:0.5rem">
-          <button class="key-btn" onclick="downloadAll()">⬇ Download all (ZIP)</button>
-          <button class="key-btn" onclick="clearGallery()">Clear</button>
+        <div class="actions-row">
+          <button class="btn btn-secondary" id="download-btn" disabled>⬇ Download PNG</button>
+          <button class="btn btn-secondary" id="copy-prompt-btn">📋 Copy prompt</button>
         </div>
       </div>
-      <div class="ai-output-body">
-        <div class="ai-gallery" id="gallery"></div>
-      </div>
     </div>
 
-    <!-- LOG -->
-    <div id="log-zone" style="display:none;margin-top:1rem">
-      <div class="stream-output" id="stream-log"></div>
-    </div>
+    <section class="info-section" style="margin-top:3rem">
+      <h2>Free AI image generation that actually runs on a static site</h2>
+      <p>This generator uses <strong>Pollinations.ai</strong> as the default provider — it's a free, open project that returns generated images directly as URLs. No key. No sign-up. No watermark. The request goes from your browser to Pollinations and back. We never see your prompt.</p>
+      <p>For higher quality, switch to <strong>Gemini</strong> and paste your free Google AI Studio key in <a href="settings.html">Settings</a>. Gemini's API allows browser-direct calls, so your key stays in your browser and goes only to Google. Imagen 3 produces stronger photorealism, more accurate text rendering, and better prompt adherence than free models.</p>
 
-  </div>
-
-  <!-- SEO CONTENT -->
-  <div class="container" style="margin-top:4rem">
-    <div class="info-section">
-      <h2>Generate AI images at cost price — no subscription, no margin</h2>
-      <p>Most AI image tools charge a monthly subscription and limit how many images you can generate. Desi Jugad Image Studio does the opposite: you connect your own Replicate API key and every generation is billed directly to your account at Replicate's published rate. We don't add a single paisa of markup.</p>
-      <p>FLUX Schnell — the fastest model — costs $0.003 per image (about ₹0.25). FLUX 1.1 Pro costs $0.04 per image. At those prices, you can generate 1,000 images for $3–40 depending on the model. No subscription needed, no usage cap, no watermarks.</p>
-
-      <h3>Which model should I choose?</h3>
-      <p><strong>FLUX Schnell</strong> is the right choice for quick experiments — it generates in about 5 seconds and is the cheapest option. <strong>FLUX 1.1 Pro</strong> is the workhorse for quality: photorealistic, detailed, and consistent. <strong>Ideogram v3</strong> is unbeatable when your image needs readable text (signs, logos, posters). <strong>Recraft v3 SVG</strong> is the only model that outputs actual vector SVG files — perfect for logos, icons, and illustrations. <strong>Seedream 4.5</strong> supports both generation and editing (describe what to change in an existing image).</p>
+      <h3>Why we removed Replicate, Suno and OpenAI</h3>
+      <p>None of those providers allow direct browser API calls — they require a server-side proxy, which contradicts our static-only promise. Read more on the <a href="/ai/">AI Studio overview</a>.</p>
 
       <h3>Tips for better prompts</h3>
-      <p>Be specific about lighting, mood, and camera angle. "A portrait" generates something generic; "a three-quarter portrait of a 30-year-old Punjabi farmer, golden hour backlight, shallow depth of field, shot on 85mm, film grain" generates something specific. Include the desired art style (photorealistic, watercolor, oil painting, vector illustration). Mention colors and composition. For FLUX, you don't need to add "high quality" — it's implied. For Ideogram, always include the exact text you want rendered.</p>
-
-      <h3>Aspect ratios explained</h3>
-      <p><strong>1:1</strong> is best for social profile pictures and Instagram posts. <strong>16:9</strong> is ideal for desktop wallpapers, thumbnails, and presentations. <strong>9:16</strong> is the vertical mobile/Stories format. <strong>21:9</strong> creates ultra-wide cinematic images suitable for YouTube banners or website headers.</p>
-    </div>
-
-    <div class="info-section" style="margin-top:2.5rem">
-      <h2>Frequently asked questions</h2>
-      <details class="faq-item">
-        <summary>Do I need to install anything?</summary>
-        <p>Nothing. This runs entirely in your browser. Click Generate, and the request goes from your browser → our CORS proxy → Replicate → back. No installs, no desktop app.</p>
-      </details>
-      <details class="faq-item">
-        <summary>How long does it take to generate an image?</summary>
-        <p>FLUX Schnell is typically 3–8 seconds. FLUX 1.1 Pro and Ideogram v3 are 15–30 seconds. Recraft SVG can take up to 45 seconds. Replicate uses "warm" and "cold" starts — your first request of the day might take a bit longer.</p>
-      </details>
-      <details class="faq-item">
-        <summary>Can I generate multiple images at once?</summary>
-        <p>Yes — use the "Outputs" selector to generate 1, 2, or 4 images per request. Cost scales proportionally (4 images = 4× cost).</p>
-      </details>
-      <details class="faq-item">
-        <summary>What is a negative prompt?</summary>
-        <p>Words describing what you don't want in the image. Common negative prompts: "blurry, watermark, text overlay, low quality, distorted faces, extra limbs". Not all models support negative prompts equally.</p>
-      </details>
-      <details class="faq-item">
-        <summary>Can I use the Remix button?</summary>
-        <p>The Remix button on each generated image pre-fills the prompt with that image's seed number, so generating again produces a variation of that specific image instead of starting fresh.</p>
-      </details>
-      <details class="faq-item">
-        <summary>Who owns the generated images?</summary>
-        <p>Replicate's terms apply. Generally, images generated with open models like FLUX or Stable Diffusion are yours to use commercially. Always check the specific model's license on Replicate before commercial use.</p>
-      </details>
-    </div>
+      <ul>
+        <li>Be specific: subject, environment, lighting, lens. "A woman in a blue saree" is weaker than "a young woman in an indigo Banarasi silk saree, golden hour, shallow depth of field, 50mm lens".</li>
+        <li>Add style anchors: "photorealistic", "watercolor", "isometric 3D", "low-poly", "studio Ghibli".</li>
+        <li>Use the size preset that matches your end use — Story 9:16 for Instagram, YouTube 16:9 for thumbnails.</li>
+        <li>If a prompt looks wrong, try a new seed before changing the prompt.</li>
+      </ul>
+    </section>
   </div>
 </main>
 
 <footer class="footer">
   <div class="container">
     <div class="footer-grid footer-grid-5">
-      <div class="footer-brand"><div class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></div><p>Free, private file conversion for everyone.</p></div>
-      <div class="footer-col"><h5>Popular tools</h5><ul><li><a href="/convert/heic-to-jpg.html">HEIC to JPG</a></li><li><a href="/convert/image-converter.html">Image Converter</a></li><li><a href="/convert/qr-code.html">QR Code</a></li><li><a href="/convert/json-to-csv.html">JSON to CSV</a></li></ul></div>
-      <div class="footer-col"><h5>AI Studio</h5><ul><li><a href="/ai/image.html">AI Images</a></li><li><a href="/ai/video.html">AI Video</a></li><li><a href="/ai/music.html">AI Music</a></li><li><a href="/ai/music-video.html">Music Videos</a></li><li><a href="/ai/writer.html">AI Writer</a></li><li><a href="/ai/photo-studio.html">Photo Studio</a></li></ul></div>
-      <div class="footer-col"><h5>Company</h5><ul><li><a href="/about.html">About</a></li><li><a href="/blog/">Blog</a></li><li><a href="/contact.html">Contact</a></li><li><a href="/privacy.html">Privacy Policy</a></li><li><a href="/terms.html">Terms</a></li></ul></div>
-      <div class="footer-col"><h5>Connect</h5><ul><li><a href="https://twitter.com/" rel="noopener">Twitter / X</a></li><li><a href="https://github.com/" rel="noopener">GitHub</a></li><li><a href="/contact.html">Feature request</a></li></ul></div>
+      <div class="footer-brand">
+        <div class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></div>
+        <p>Free, private tools that run in your browser.</p>
+      </div>
+      <div class="footer-col"><h5>AI Studio</h5><ul><li><a href="/ai/">Overview</a></li><li><a href="/ai/writer.html">AI Writer</a></li><li><a href="/ai/photo-studio.html">Photo Studio</a></li><li><a href="/ai/bg-remove.html">BG Remove</a></li><li><a href="/ai/social-post.html">Social Posts</a></li></ul></div>
+      <div class="footer-col"><h5>Tools</h5><ul><li><a href="/convert/qr-code.html">QR Code</a></li><li><a href="/convert/image-converter.html">Image Converter</a></li><li><a href="/convert/heic-to-jpg.html">HEIC to JPG</a></li></ul></div>
+      <div class="footer-col"><h5>Company</h5><ul><li><a href="/about.html">About</a></li><li><a href="/blog/">Blog</a></li><li><a href="/privacy.html">Privacy</a></li><li><a href="/terms.html">Terms</a></li></ul></div>
+      <div class="footer-col"><h5>Connect</h5><ul><li><a href="mailto:hello@desijugad.co.in">hello@desijugad.co.in</a></li></ul></div>
     </div>
     <div class="footer-bottom">
-      <div>© <span data-year>2026</span> Desi Jugad. All rights reserved.</div>
-      <div class="made-in"><span class="flag-in" aria-hidden="true"></span>Proudly made in India, built for the world.</div>
+      <div>© <span data-year>2026</span> Desi Jugad.</div>
+      <div class="made-in"><span class="flag-in" aria-hidden="true"></span>Made in India, built for the world.</div>
     </div>
   </div>
 </footer>
@@ -253,219 +253,86 @@
 <script src="../assets/js/main.js"></script>
 <script src="../assets/js/ai.js"></script>
 <script>
-(function() {
-  const MODELS = [
-    { slug: 'black-forest-labs/flux-schnell',  name: 'FLUX Schnell', desc: 'Fastest, great quality', price: '$0.003/img', priceVal: 0.003 },
-    { slug: 'black-forest-labs/flux-1.1-pro',  name: 'FLUX 1.1 Pro', desc: 'Best all-around quality', price: '$0.04/img', priceVal: 0.04 },
-    { slug: 'black-forest-labs/flux-2-pro',    name: 'FLUX 2 Pro', desc: 'Newest, highest fidelity', price: '$0.06/img', priceVal: 0.06 },
-    { slug: 'ideogram-ai/ideogram-v3-turbo',   name: 'Ideogram v3 Turbo', desc: 'Best text rendering, fast', price: '$0.03/img', priceVal: 0.03 },
-    { slug: 'ideogram-ai/ideogram-v3',         name: 'Ideogram v3', desc: 'Highest quality text+art', price: '$0.08/img', priceVal: 0.08 },
-    { slug: 'recraft-ai/recraft-v3',           name: 'Recraft v3', desc: 'SOTA text rendering', price: '$0.04/img', priceVal: 0.04 },
-    { slug: 'recraft-ai/recraft-v3-svg',       name: 'Recraft SVG', desc: 'Vector SVG output', price: '$0.04/img', priceVal: 0.04 },
-    { slug: 'bytedance/seedream-4.5',          name: 'Seedream 4.5', desc: 'Generate + edit images', price: '$0.03/img', priceVal: 0.03 },
-    { slug: 'qwen/qwen-image-2512',            name: 'Qwen Image', desc: 'Strong multilingual text', price: '$0.04/img', priceVal: 0.04 },
-    { slug: 'google/nano-banana-pro',          name: 'Nano Banana Pro', desc: 'Google SOTA model', price: '$0.05/img', priceVal: 0.05 },
-  ];
+(function(){
+  const $ = (id) => document.getElementById(id);
+  const previewBox = $('preview-box');
+  const status = $('status-line');
+  let provider = 'poll';
+  let lastBlob = null;
+  let lastPrompt = '';
+  let seed = Math.floor(Math.random() * 1e9);
 
-  let selectedModel = MODELS[0];
-  let selectedAspect = '16:9';
-  let selectedOutputs = 1;
-  let selectedQuality = 90;
-  let generating = false;
-  let currentPredictionId = null;
-  let sessionImages = [];
+  function setProvider(p) {
+    provider = p;
+    $('prov-poll').classList.toggle('active', p === 'poll');
+    $('prov-gemini').classList.toggle('active', p === 'gemini');
+    $('poll-extras').style.display = p === 'poll' ? '' : 'none';
+    $('gemini-extras').style.display = p === 'gemini' ? '' : 'none';
+  }
+  $('prov-poll').onclick = () => setProvider('poll');
+  $('prov-gemini').onclick = () => setProvider('gemini');
 
-  // Render model picker
-  const picker = document.getElementById('model-picker');
-  MODELS.forEach((m, i) => {
-    const card = document.createElement('div');
-    card.className = 'model-card' + (i === 0 ? ' selected' : '');
-    card.innerHTML = `<div class="model-name">${m.name}</div><div class="model-desc">${m.desc}</div><span class="model-price-badge">${m.price}</span>`;
-    card.addEventListener('click', () => {
-      document.querySelectorAll('#model-picker .model-card').forEach(c => c.classList.remove('selected'));
-      card.classList.add('selected');
-      selectedModel = m;
-      updateCost();
-    });
-    picker.appendChild(card);
+  document.querySelectorAll('#preset-row .preset-pill').forEach(p => {
+    p.onclick = () => {
+      document.querySelectorAll('#preset-row .preset-pill').forEach(b => b.classList.remove('active'));
+      p.classList.add('active');
+      $('width').value = p.dataset.w;
+      $('height').value = p.dataset.h;
+    };
   });
 
-  // Chips
-  function bindChips(containerId, onSelect) {
-    document.querySelectorAll('#' + containerId + ' .chip').forEach(chip => {
-      chip.addEventListener('click', () => {
-        document.querySelectorAll('#' + containerId + ' .chip').forEach(c => c.classList.remove('selected'));
-        chip.classList.add('selected');
-        onSelect(chip.dataset.val);
-      });
-    });
-  }
-  bindChips('aspect-chips', v => { selectedAspect = v; });
-  bindChips('output-chips', v => { selectedOutputs = parseInt(v); updateCost(); });
-  bindChips('quality-chips', v => { selectedQuality = parseInt(v); });
+  $('seed-btn').onclick = () => { seed = Math.floor(Math.random() * 1e9); window.showToast('New seed: ' + seed); };
 
-  // Prompt counter
-  const promptEl = document.getElementById('prompt');
-  const counter = document.getElementById('prompt-counter');
-  promptEl.addEventListener('input', () => { counter.textContent = promptEl.value.length + ' / 2000'; });
+  async function generate() {
+    const prompt = $('prompt').value.trim();
+    if (!prompt) { window.showToast('Type a prompt first', 'error'); return; }
+    const w = parseInt($('width').value, 10);
+    const h = parseInt($('height').value, 10);
+    lastPrompt = prompt;
 
-  // Cost update
-  function updateCost() {
-    const total = selectedModel.priceVal * selectedOutputs;
-    const costEl = document.getElementById('cost-estimate');
-    const panel = document.getElementById('cost-panel');
-    costEl.textContent = `${selectedModel.name} · ${selectedOutputs} image${selectedOutputs > 1 ? 's' : ''} · ~$${total.toFixed(3)} (≈₹${(total * 84).toFixed(1)})`;
-    panel.className = 'cost-panel' + (total > 0.5 ? ' cost-panel--warn' : '');
-  }
-  updateCost();
-
-  // Key pill update
-  function updateKeyPill() {
-    const key = window.AIKeys.get('replicate');
-    const pill = document.getElementById('key-pill');
-    if (key) { pill.className = 'key-pill key-pill--ok'; pill.textContent = 'Replicate: ' + window.AIKeys.mask(key); }
-    else { pill.className = 'key-pill key-pill--missing'; pill.textContent = 'Add Replicate key'; }
-  }
-
-  function logToStream(msg, type = '') {
-    const log = document.getElementById('stream-log');
-    const zone = document.getElementById('log-zone');
-    zone.style.display = '';
-    const line = document.createElement('div');
-    line.className = type ? 'log-' + type : '';
-    line.textContent = '[' + new Date().toLocaleTimeString() + '] ' + msg;
-    log.appendChild(line);
-    log.scrollTop = log.scrollHeight;
-  }
-
-  function addToGallery(url, prompt) {
-    const gallery = document.getElementById('gallery');
-    const outputZone = document.getElementById('output-zone');
-    outputZone.style.display = '';
-    const item = document.createElement('div');
-    item.className = 'ai-gallery-item';
-    const img = document.createElement('img');
-    img.src = url;
-    img.alt = prompt.slice(0, 60);
-    img.loading = 'lazy';
-    const actions = document.createElement('div');
-    actions.className = 'ai-gallery-item-actions';
-    actions.innerHTML = `
-      <button class="ai-gallery-btn" onclick="window.open('${url}','_blank')">View</button>
-      <button class="ai-gallery-btn" onclick="downloadImg('${url}')">Save</button>
-      <button class="ai-gallery-btn" onclick="remix('${url}')">Remix</button>`;
-    item.appendChild(img);
-    item.appendChild(actions);
-    gallery.prepend(item);
-    sessionImages.unshift({ url, prompt });
-  }
-
-  window.downloadImg = function(url) {
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'desi-jugad-ai-' + Date.now() + '.webp';
-    a.target = '_blank';
-    a.click();
-  };
-
-  window.remix = function(url) {
-    const seed = Math.floor(Math.random() * 2147483647);
-    document.getElementById('seed-input').value = seed;
-    window.showToast('Seed set to ' + seed + ' — click Generate to remix');
-    promptEl.focus();
-  };
-
-  window.downloadAll = async function() {
-    if (!sessionImages.length) return;
-    window.showToast('Preparing ZIP…');
-    const zip = new JSZip();
-    for (let i = 0; i < sessionImages.length; i++) {
-      try {
-        const resp = await fetch(sessionImages[i].url);
-        const blob = await resp.blob();
-        zip.file(`image-${i+1}.webp`, blob);
-      } catch {}
-    }
-    const content = await zip.generateAsync({ type: 'blob' });
-    window.downloadBlob(content, 'desi-jugad-images.zip');
-  };
-
-  window.clearGallery = function() {
-    document.getElementById('gallery').innerHTML = '';
-    sessionImages = [];
-    document.getElementById('output-zone').style.display = 'none';
-    document.getElementById('log-zone').style.display = 'none';
-    document.getElementById('stream-log').innerHTML = '';
-  };
-
-  window.generate = async function() {
-    if (generating) return;
-    const prompt = promptEl.value.trim();
-    if (!prompt) { window.showToast('Write a prompt first', 'error'); promptEl.focus(); return; }
-    generating = true;
-    const btn = document.getElementById('gen-btn');
-    const cancelBtn = document.getElementById('cancel-btn');
-    btn.classList.add('loading');
-    btn.disabled = true;
-    cancelBtn.style.display = '';
-    document.getElementById('stream-log').innerHTML = '';
-
-    logToStream('Starting generation…');
-    logToStream('Model: ' + selectedModel.name);
-    logToStream('Prompt: ' + prompt.slice(0, 100) + (prompt.length > 100 ? '…' : ''));
-
-    const seed = parseInt(document.getElementById('seed-input').value) || Math.floor(Math.random() * 2147483647);
-    const input = {
-      prompt,
-      aspect_ratio: selectedAspect,
-      num_outputs: selectedOutputs,
-      output_format: 'webp',
-      output_quality: selectedQuality,
-      seed,
-    };
-    const negPrompt = document.getElementById('neg-prompt').value.trim();
-    if (negPrompt) input.negative_prompt = negPrompt;
-    const guidance = parseFloat(document.getElementById('guidance').value);
-    if (guidance && !isNaN(guidance)) input.guidance = guidance;
-    const stepsVal = parseInt(document.getElementById('steps').value);
-    if (stepsVal && !isNaN(stepsVal)) input.num_inference_steps = stepsVal;
+    previewBox.innerHTML = '<div class="preview-empty">Chai pi lo, ho raha hai…</div>';
+    $('download-btn').disabled = true;
+    status.textContent = 'Generating…';
 
     try {
-      const output = await window.Replicate.run(selectedModel.slug, input, {
-        onProgress: ({ status, logs }) => {
-          logToStream(status + (logs ? ' — ' + logs.split('\n').pop().slice(0, 80) : ''));
-        },
-        timeoutMs: 300000,
-      });
-
-      const urls = Array.isArray(output) ? output : [output];
-      urls.forEach(url => { if (url) addToGallery(url, prompt); });
-      logToStream('Done! ' + urls.length + ' image(s) generated.', 'ok');
-      window.showToast('Images ready', 'success');
-      window.logUsage('replicate', selectedModel.slug, prompt, selectedModel.priceVal * selectedOutputs);
+      let blob;
+      if (provider === 'poll') {
+        const model = $('poll-model').value;
+        blob = await window.Pollinations.fetchImage(prompt, { width: w, height: h, seed, model });
+      } else {
+        const model = $('gemini-model').value;
+        const images = await window.Gemini.generateImage(model, prompt);
+        const first = images[0];
+        const bytes = Uint8Array.from(atob(first.data), c => c.charCodeAt(0));
+        blob = new Blob([bytes], { type: first.mimeType || 'image/png' });
+      }
+      lastBlob = blob;
+      const url = URL.createObjectURL(blob);
+      previewBox.innerHTML = '';
+      const img = document.createElement('img');
+      img.src = url;
+      img.alt = prompt;
+      previewBox.appendChild(img);
+      $('download-btn').disabled = false;
+      status.textContent = 'Done · ' + (blob.size / 1024 | 0) + ' KB';
+      window.logUsage(provider, provider === 'poll' ? $('poll-model').value : $('gemini-model').value, prompt, 0);
     } catch (e) {
-      logToStream('Error: ' + e.message, 'err');
-      window.handleAIError(e);
-    } finally {
-      generating = false;
-      btn.classList.remove('loading');
-      btn.disabled = false;
-      cancelBtn.style.display = 'none';
-      currentPredictionId = null;
+      previewBox.innerHTML = '<div class="preview-empty" style="color:var(--danger)">Aila! ' + (e.message || 'Generation failed') + '</div>';
+      status.textContent = '';
+      window.handleAIError(e, generate);
     }
-  };
+  }
 
-  window.cancelGeneration = function() {
-    window.showToast('Cancel requested — may take a moment');
-    generating = false;
-    document.getElementById('gen-btn').classList.remove('loading');
-    document.getElementById('gen-btn').disabled = false;
-    document.getElementById('cancel-btn').style.display = 'none';
-    logToStream('Canceled by user', 'info');
+  $('generate-btn').onclick = generate;
+  $('download-btn').onclick = () => {
+    if (!lastBlob) return;
+    const safe = (lastPrompt || 'desijugad').replace(/[^a-z0-9]+/gi, '-').slice(0, 40).toLowerCase();
+    window.downloadBlob(lastBlob, `${safe}-${Date.now()}.png`);
   };
-
-  document.addEventListener('DOMContentLoaded', updateKeyPill);
-  if (document.readyState !== 'loading') updateKeyPill();
+  $('copy-prompt-btn').onclick = async () => {
+    const ok = await window.copyToClipboard($('prompt').value);
+    window.showToast(ok ? 'Prompt copied' : 'Copy failed', ok ? 'success' : 'error');
+  };
 })();
 </script>
 </body>

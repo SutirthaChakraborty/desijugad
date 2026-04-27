@@ -35,6 +35,80 @@
 .no-exif { color: var(--ink-muted); font-style: italic; padding: 1rem 0; }
 .strip-panel { background: var(--bg-alt); border-radius: var(--radius-sm); padding: 1.25rem; display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; justify-content: space-between; }
 </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Image Metadata Viewer & Remover",
+  "url": "https://desijugad.co.in/convert/image-metadata.html",
+  "description": "View and remove EXIF metadata from images. See GPS location, camera model, date taken. Free, private.",
+  "applicationCategory": "MultimediaApplication",
+  "operatingSystem": "Any",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://desijugad.co.in/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Free Tools",
+      "item": "https://desijugad.co.in/#converters"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Image Metadata Viewer & Remover",
+      "item": "https://desijugad.co.in/convert/image-metadata.html"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What metadata can images contain?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "JPEGs can contain GPS coordinates, camera make/model, shutter speed, ISO, date/time, copyright, and more."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does removing EXIF data change image quality?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Removing metadata strips non-visual data. Pixel quality is unchanged."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can social media expose my location through image metadata?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Most major platforms strip EXIF before display, but some don't. Removing metadata before uploading is always safer."
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body>
 <header class="nav">
@@ -128,7 +202,7 @@
     <div class="footer-grid footer-grid-5">
       <div class="footer-brand"><div class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></div><p>Free, private file conversion for everyone.</p></div>
       <div class="footer-col"><h5>Tools</h5><ul><li><a href="image-converter.html">Image Converter</a></li><li><a href="image-compress.html">Image Compressor</a></li><li><a href="heic-to-jpg.html">HEIC to JPG</a></li><li><a href="jpg-to-webp.html">JPG to WebP</a></li></ul></div>
-      <div class="footer-col"><h5>AI Studio</h5><ul><li><a href="../ai/image.html">AI Images</a></li><li><a href="../ai/video.html">AI Video</a></li><li><a href="../ai/music.html">AI Music</a></li><li><a href="../ai/writer.html">AI Writer</a></li></ul></div>
+      <div class="footer-col"><h5>AI Studio</h5><ul><li><a href="../ai/image.html">AI Images</a></li><li><a href="../ai/writer.html">AI Writer</a></li></ul></div>
       <div class="footer-col"><h5>Company</h5><ul><li><a href="../about.html">About</a></li><li><a href="../blog/">Blog</a></li><li><a href="../privacy.html">Privacy</a></li><li><a href="../terms.html">Terms</a></li></ul></div>
       <div class="footer-col"><h5>Help</h5><ul><li><a href="../contact.html">Contact</a></li></ul></div>
     </div>

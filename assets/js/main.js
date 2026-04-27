@@ -2,11 +2,38 @@
    Desi Jugad — Main JS (shared utilities)
    ========================================================================== */
 
+/* ── Auto-load shared modules (theme, command palette, recent tools) ────────
+   Resolves paths so the same script works from /, /convert/*, /ai/*, /blog/*. */
+(function () {
+  function rootPrefix() {
+    var p = window.location.pathname;
+    if (p.indexOf('/convert/') !== -1 || p.indexOf('/ai/') !== -1 || p.indexOf('/blog/') !== -1) return '../';
+    return '';
+  }
+  function load(src) {
+    var s = document.createElement('script');
+    s.src = rootPrefix() + 'assets/js/' + src;
+    s.defer = true;
+    document.head.appendChild(s);
+  }
+  // Theme first (applies data-theme early to avoid FOUC)
+  load('theme.js');
+  // Tools data → recent → palette (dependency order)
+  load('tools-data.js');
+  load('recent-tools.js');
+  load('command-palette.js');
+})();
+
 /* ── Mouse-based parallax (hero section)
-   Moves hero blobs and card with mouse position ──────────────────────────── */
+   Moves hero blobs and card with mouse position. Disabled on touch / reduced-motion. ─ */
 (function() {
   const hero = document.querySelector('.hero');
   if (!hero) return;
+  // Skip parallax on touch devices, narrow viewports, and when the user prefers reduced motion
+  var isTouch = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+  var prefersReduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var isNarrow = window.innerWidth < 720;
+  if (isTouch || prefersReduce || isNarrow) return;
 
   const layers = [
     { selector: '.hero::before',  speed: 0.025 },
@@ -524,6 +551,55 @@ function loadDevanagariFont() {
   window.setLanguage = applyLang;
 })();
 
+/* ── Converter-page dropzone: drag-over pulse + desi copy ───────────────────
+   Enhances .dropzone elements on all tool pages with visual drag feedback.
+   The hero dropzone on index.html gets its own CSS-driven animation. */
+(function() {
+  var dz = document.querySelector('.dropzone');
+  if (!dz) return;
+
+  dz.addEventListener('dragover', function(e) {
+    e.preventDefault();
+    dz.classList.add('drag-over');
+  });
+  dz.addEventListener('dragleave', function() {
+    dz.classList.remove('drag-over');
+  });
+  dz.addEventListener('drop', function() {
+    dz.classList.remove('drag-over');
+  });
+
+  // Add a bouncing arrow hint below the dropzone icon if no animation exists yet
+  var icon = dz.querySelector('.dropzone-icon');
+  if (icon && !dz.querySelector('.dz-drop-label')) {
+    var label = document.createElement('p');
+    label.className = 'dz-drop-label sub';
+    label.style.cssText = 'font-size:0.8rem;margin-top:0.5rem;color:var(--ink-muted);';
+    label.textContent = 'Yahan drop karo ya click karke select karo 📂';
+    var existingSub = dz.querySelector('p.sub');
+    if (!existingSub) icon.parentNode.insertBefore(label, icon.nextSibling);
+  }
+})();
+
+/* ── Hero dropzone drag-over class (index.html) ─────────────────────────── */
+(function() {
+  var hdz = document.getElementById('hero-dropzone');
+  if (!hdz) return;
+  document.addEventListener('dragover', function(e) {
+    if (e.dataTransfer && e.dataTransfer.types && Array.from(e.dataTransfer.types).indexOf('Files') !== -1) {
+      hdz.classList.add('drag-over');
+    }
+  });
+  document.addEventListener('dragleave', function(e) {
+    if (e.relatedTarget === null || !document.body.contains(e.relatedTarget)) {
+      hdz.classList.remove('drag-over');
+    }
+  });
+  document.addEventListener('drop', function() {
+    hdz.classList.remove('drag-over');
+  });
+})();
+
 /* Hash-scroll fix
    When arriving from another page with a #hash, some browsers land at the
    top or cut off the target under the sticky nav. Re-scroll after load. */
@@ -546,5 +622,165 @@ function loadDevanagariFont() {
     document.addEventListener('DOMContentLoaded', scrollToHash);
   } else {
     scrollToHash();
+  }
+})();
+
+/* ── Smart cross-tool internal linking ──────────────────────────────────────
+   Injects a "You might also like" pill-strip at the bottom of converter/AI
+   tool pages. Groups tools by category so related tools appear together.
+   Signals topical authority to Google and reduces bounce rate. */
+(function() {
+  var isToolPage = window.location.pathname.includes('/convert/') ||
+                   window.location.pathname.includes('/ai/');
+  if (!isToolPage) return;
+
+  /* Category clusters → related tools to surface */
+  var clusters = {
+    image: [
+      {t:'HEIC → JPG',u:'heic-to-jpg.html'},
+      {t:'Image Compressor',u:'image-compress.html'},
+      {t:'Image Converter',u:'image-converter.html'},
+      {t:'Image Resize',u:'image-resize.html'},
+      {t:'Image Cropper',u:'image-cropper.html'},
+      {t:'JPG → WebP',u:'jpg-to-webp.html'},
+      {t:'WebP → JPG',u:'webp-to-jpg.html'},
+      {t:'SVG → PNG',u:'svg-to-png.html'},
+      {t:'Background Remover',u:'../ai/bg-remove.html'},
+      {t:'Remove EXIF Metadata',u:'image-metadata.html'},
+      {t:'OCR (Image to Text)',u:'ocr.html'},
+      {t:'Meme Generator',u:'meme-generator.html'},
+      {t:'Favicon Generator',u:'favicon-generator.html'},
+      {t:'Color Palette',u:'color-palette.html'},
+    ],
+    pdf: [
+      {t:'PDF Merge & Split',u:'pdf-merge.html'},
+      {t:'PDF Compressor',u:'pdf-compressor.html'},
+      {t:'PDF Rotate',u:'pdf-rotate.html'},
+      {t:'PDF Watermark',u:'pdf-watermark.html'},
+      {t:'Images to PDF',u:'image-to-pdf.html'},
+      {t:'PDF to Images',u:'pdf-to-image.html'},
+    ],
+    media: [
+      {t:'Video Compressor',u:'video-compressor.html'},
+      {t:'Video Converter',u:'video-converter.html'},
+      {t:'Video Trimmer',u:'video-trimmer.html'},
+      {t:'Video → Audio',u:'video-to-audio.html'},
+      {t:'Video → GIF',u:'video-to-gif.html'},
+      {t:'GIF → Video',u:'gif-to-video.html'},
+      {t:'Audio Converter',u:'audio-converter.html'},
+      {t:'Text to Speech',u:'text-to-speech.html'},
+      {t:'Speech to Text',u:'speech-to-text.html'},
+      {t:'SRT → VTT',u:'srt-to-vtt.html'},
+    ],
+    data: [
+      {t:'JSON Formatter',u:'json-formatter.html'},
+      {t:'JSON → CSV',u:'json-to-csv.html'},
+      {t:'CSV → Excel',u:'csv-to-excel.html'},
+      {t:'JSON → YAML',u:'json-to-yaml.html'},
+      {t:'XML → JSON',u:'xml-to-json.html'},
+      {t:'Markdown → HTML',u:'markdown-to-html.html'},
+      {t:'Regex Tester',u:'regex-tester.html'},
+      {t:'Diff Checker',u:'diff-checker.html'},
+      {t:'Code Beautifier',u:'code-beautifier.html'},
+      {t:'Base64',u:'base64.html'},
+      {t:'URL Tools',u:'url-tools.html'},
+      {t:'Word Counter',u:'word-counter.html'},
+      {t:'Readability Analyzer',u:'readability-analyzer.html'},
+      {t:'Timestamp Converter',u:'timestamp-converter.html'},
+    ],
+    calc: [
+      {t:'SIP Calculator',u:'sip-calculator.html'},
+      {t:'EMI Calculator',u:'emi-calculator.html'},
+      {t:'Income Tax Calc',u:'income-tax-calculator.html'},
+      {t:'GST Calculator',u:'gst-calculator.html'},
+      {t:'BMI Calculator',u:'bmi-calculator.html'},
+      {t:'Age Calculator',u:'age-calculator.html'},
+      {t:'Loan Calculator',u:'loan-calculator.html'},
+      {t:'Compound Interest',u:'compound-interest-calculator.html'},
+      {t:'CAGR Calculator',u:'cagr-calculator.html'},
+      {t:'Percentage Calc',u:'percentage-calculator.html'},
+      {t:'Retirement Calc',u:'retirement-calculator.html'},
+      {t:'Debt Payoff',u:'debt-payoff-calculator.html'},
+    ],
+    util: [
+      {t:'QR Code Generator',u:'qr-code.html'},
+      {t:'QR Code Scanner',u:'qr-scanner.html'},
+      {t:'Password Generator',u:'password-gen.html'},
+      {t:'Barcode Generator',u:'barcode-generator.html'},
+      {t:'Barcode Scanner',u:'barcode-scanner.html'},
+      {t:'Unit Converter',u:'unit-converter.html'},
+      {t:'Currency Converter',u:'currency-converter.html'},
+      {t:'Color Converter',u:'color-converter.html'},
+      {t:'Hash Generator',u:'hash-generator.html'},
+      {t:'Resume Builder',u:'resume-builder.html'},
+      {t:'Invoice Generator',u:'invoice-generator.html'},
+      {t:'Receipt Generator',u:'receipt-generator.html'},
+      {t:'Pomodoro Timer',u:'pomodoro-timer.html'},
+      {t:'Translate',u:'translate.html'},
+    ]
+  };
+
+  /* Map filename fragments → category */
+  var catMap = {
+    'heic':'image','image':'image','jpg':'image','webp':'image','png':'image','svg':'image','color-p':'image','meme':'image','favicon':'image','ocr':'image','metadata':'image',
+    'pdf':'pdf',
+    'video':'media','audio':'media','speech':'media','srt':'media','gif-to':'media',
+    'json':'data','csv':'data','yaml':'data','xml':'data','markdown':'data','regex':'data','diff':'data','code-b':'data','base64':'data','url-tool':'data','word-c':'data','readab':'data','timestamp':'data',
+    'sip':'calc','emi':'calc','tax':'calc','gst':'calc','bmi':'calc','age-':'calc','loan':'calc','compound':'calc','cagr':'calc','percent':'calc','retire':'calc','debt':'calc','lead-v':'calc','churn':'calc','adsense':'calc',
+    'qr':'util','password':'util','barcode':'util','unit-':'util','currency':'util','color-c':'util','hash':'util','resume':'util','invoice':'util','receipt':'util','pomodoro':'util','translate':'util','text-':'util','serp':'util','secret':'util'
+  };
+
+  var cur = window.location.pathname.toLowerCase();
+  var cat = null;
+  for (var k in catMap) {
+    if (cur.indexOf(k) !== -1) { cat = catMap[k]; break; }
+  }
+  if (!cat) cat = 'util';
+
+  var candidates = clusters[cat] || [];
+  var related = candidates.filter(function(c) {
+    return cur.indexOf(c.u.replace('../','').replace('.html','')) === -1;
+  }).slice(0, 6);
+
+  if (!related.length) return;
+
+  /* Build the widget */
+  var section = document.createElement('section');
+  section.className = 'related-tools';
+  section.setAttribute('aria-label', 'Related free tools');
+  var heading = document.createElement('h3');
+  heading.textContent = 'Related free tools';
+  section.appendChild(heading);
+
+  var grid = document.createElement('div');
+  grid.className = 'related-tools-grid';
+  grid.style.cssText = 'display:flex;flex-wrap:wrap;gap:0.6rem;margin-top:0.75rem';
+
+  related.forEach(function(r) {
+    var base = cur.includes('/ai/') ? '' : '../convert/';
+    if (r.u.startsWith('../')) base = '';
+    var a = document.createElement('a');
+    a.href = base + r.u.replace('../convert/','../convert/').replace('../ai/','../ai/');
+    a.textContent = r.t;
+    a.className = 'related-tool-link';
+    a.style.cssText = 'display:inline-flex;align-items:center;padding:0.4rem 0.9rem;border:1px solid var(--line,#E8E1D3);border-radius:999px;font-size:0.82rem;color:var(--ink,#141413);text-decoration:none;background:var(--surface,#fff);transition:border-color 0.15s,transform 0.15s';
+    a.onmouseover = function(){this.style.borderColor='var(--indigo,#7051BC)';this.style.transform='translateY(-1px)';};
+    a.onmouseout = function(){this.style.borderColor='var(--line,#E8E1D3)';this.style.transform='';};
+    grid.appendChild(a);
+  });
+  section.appendChild(grid);
+
+  /* Find best insertion point — after .related-tools if exists, else before footer */
+  var existing = document.querySelector('.related-tools');
+  if (existing) {
+    /* page already has a related section — don't duplicate */
+    return;
+  }
+  var footer = document.querySelector('footer.footer, footer');
+  var main   = document.querySelector('main');
+  if (footer && footer.parentNode) {
+    footer.parentNode.insertBefore(section, footer);
+  } else if (main) {
+    main.appendChild(section);
   }
 })();

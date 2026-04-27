@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Page not found · Desi Jugad</title>
+<meta name="description" content="Bhai, ye URL kahaan se le aaye? This page doesn't exist. Try the homepage or one of these popular tools.">
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://desijugad.co.in/404.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,30..100;1,9..144,300..700,30..100&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/style.css">
+
+<style>
+.notfound-wrap { min-height: 70vh; display: flex; align-items: center; padding-block: clamp(2rem, 6vw, 4rem); }
+.notfound-card { max-width: 720px; margin: 0 auto; text-align: center; }
+.notfound-card .num { font-family: var(--font-serif, 'Fraunces', serif); font-size: clamp(5rem, 18vw, 10rem); font-weight: 400; line-height: 1; letter-spacing: -0.02em; background: linear-gradient(135deg, var(--indigo), var(--saffron)); -webkit-background-clip: text; background-clip: text; color: transparent; margin-bottom: 1rem; }
+.notfound-card h1 { font-size: clamp(1.6rem, 4vw, 2.4rem); margin-bottom: 0.6rem; }
+.notfound-card .lead { color: var(--ink-soft); font-size: 1.05rem; margin-bottom: 1.6rem; }
+.suggested { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.6rem; margin: 1.5rem 0 2rem; }
+.suggested a { padding: 0.85rem 1rem; border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--surface); color: var(--ink); text-decoration: none; font-size: 0.92rem; transition: border-color 0.2s, transform 0.2s; }
+.suggested a:hover { border-color: var(--indigo); transform: translateY(-2px); }
+.search-row { display: flex; gap: 0.5rem; max-width: 480px; margin: 0 auto; }
+.search-row input { flex: 1; padding: 0.7rem 1rem; border: 1px solid var(--line); border-radius: var(--radius-sm); font-size: 1rem; background: var(--surface); color: var(--ink); }
+.search-row input:focus { outline: none; border-color: var(--indigo); }
+.btn-row { display: flex; gap: 0.6rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1.5rem; }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="/" class="brand"><img src="/assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="/#converters">Converters</a></li>
+      <li><a href="/ai/">AI Studio <span class="badge-new">NEW</span></a></li>
+      <li><a href="/blog/">Blog</a></li>
+      <li><a href="/about.html">About</a></li>
+    </ul>
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</header>
+
+<main class="notfound-wrap">
+  <div class="container">
+    <div class="notfound-card">
+      <div class="num">404</div>
+      <h1>Bhai, ye URL kahaan se le aaye?</h1>
+      <p class="lead">This page doesn't exist (anymore). Either the link is wrong, or it was something we deleted when migrating to GitHub Pages. Try one of these:</p>
+
+      <div class="btn-row">
+        <a href="/" class="btn btn-primary">Take me home</a>
+        <a href="/#converters" class="btn btn-secondary">Browse all tools</a>
+      </div>
+
+      <div class="suggested">
+        <a href="/convert/heic-to-jpg.html">📸 HEIC to JPG</a>
+        <a href="/convert/qr-code.html">📱 QR Code</a>
+        <a href="/convert/image-converter.html">🖼 Image Converter</a>
+        <a href="/convert/pdf-merge.html">📄 PDF Merge</a>
+        <a href="/convert/json-to-csv.html">💾 JSON to CSV</a>
+        <a href="/ai/image.html">🎨 AI Image (free)</a>
+        <a href="/convert/sip-calculator.html">💸 SIP Calculator</a>
+        <a href="/convert/word-counter.html">📝 Word Counter</a>
+      </div>
+
+      <form class="search-row" onsubmit="event.preventDefault(); window.location='/?q='+encodeURIComponent(document.getElementById('q').value);">
+        <input type="search" id="q" placeholder="Search 80+ tools…" autofocus>
+        <button type="submit" class="btn btn-primary">Go</button>
+      </form>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-bottom">
+      <div>© <span data-year>2026</span> Desi Jugad.</div>
+      <div class="made-in"><span class="flag-in" aria-hidden="true"></span>Made in India, built for the world.</div>
+    </div>
+  </div>
+</footer>
+
+<script src="/assets/js/main.js"></script>
+</body>
+</html>

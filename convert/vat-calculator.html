@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/img/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/img/apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VAT Calculator — UK, EU, UAE, Global | Add & Remove VAT Free | Desi Jugad</title>
+<meta name="description" content="Free VAT calculator for UK (20%), Germany (19%), France (20%), Italy (22%), UAE (5%), and 30+ countries. Add VAT or remove VAT from any price. Instant, no sign-up.">
+<meta name="keywords" content="VAT calculator, VAT calculator UK, add VAT, remove VAT, UK VAT 20%, Germany VAT 19%, France VAT 20%, UAE VAT 5%, EU VAT calculator, value added tax calculator, reverse VAT calculator">
+<meta name="author" content="Desi Jugad">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://desijugad.co.in/convert/vat-calculator.html">
+<meta property="og:title" content="VAT Calculator — UK 20%, EU, UAE & Global | Add or Remove VAT Free">
+<meta property="og:description" content="Calculate VAT for UK, Germany, France, UAE and 30+ countries. Add or remove VAT instantly.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://desijugad.co.in/convert/vat-calculator.html">
+<meta property="og:image" content="https://desijugad.co.in/assets/img/og.png">
+<meta property="og:site_name" content="Desi Jugad">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="VAT Calculator UK, EU, UAE — Free Online">
+<meta name="twitter:description" content="Add or remove VAT for UK (20%), Germany (19%), France (20%), UAE (5%) and 30+ countries. Free, instant.">
+<meta name="twitter:image" content="https://desijugad.co.in/assets/img/og.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,30..100;1,9..144,300..700,30..100&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+<style>
+.vat-form { background: var(--surface); border: 1.5px solid var(--line); border-radius: var(--radius); padding: 1.5rem; max-width: 560px; margin-bottom: 1.5rem; }
+.vat-form .form-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem; align-items: flex-end; }
+.form-group { display: flex; flex-direction: column; gap: 0.35rem; flex: 1 1 160px; }
+.form-group label { font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--ink-muted); }
+.form-group input, .form-group select { padding: 0.55rem 0.75rem; border: 1.5px solid var(--line); border-radius: var(--radius-sm); font-size: 0.95rem; background: var(--surface); color: var(--ink); }
+.form-group input:focus, .form-group select:focus { outline: none; border-color: var(--indigo); }
+.toggle-row { display: flex; gap: 0.5rem; margin-bottom: 1rem; background: var(--bg-alt); border-radius: 999px; padding: 0.25rem; width: fit-content; }
+.toggle-btn { padding: 0.35rem 1rem; border-radius: 999px; font-size: 0.85rem; font-weight: 600; cursor: pointer; border: none; background: transparent; color: var(--ink); transition: all 0.15s; }
+.toggle-btn.active { background: var(--surface); box-shadow: 0 1px 4px rgba(0,0,0,0.1); color: var(--indigo); }
+.vat-results { display: grid; grid-template-columns: repeat(auto-fill,minmax(160px,1fr)); gap: 0.75rem; margin-bottom: 1.5rem; }
+.vat-card { background: var(--surface); border: 1.5px solid var(--line); border-radius: var(--radius); padding: 1rem 1.25rem; }
+.vat-card .label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--ink-muted); font-weight: 600; margin-bottom: 0.25rem; }
+.vat-card .amount { font-size: 1.35rem; font-weight: 800; font-family: var(--font-mono); color: var(--indigo); }
+.vat-card.highlight { background: var(--indigo); border-color: var(--indigo); }
+.vat-card.highlight .label { color: rgba(255,255,255,0.75); }
+.vat-card.highlight .amount { color: #fff; }
+.country-chips { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.25rem; }
+.country-chip { padding: 0.3rem 0.8rem; border: 1.5px solid var(--line); border-radius: 999px; cursor: pointer; font-size: 0.82rem; font-weight: 600; transition: all 0.15s; background: var(--surface); color: var(--ink); }
+.country-chip:hover { border-color: var(--indigo); color: var(--indigo); }
+.country-chip.active { background: var(--indigo); border-color: var(--indigo); color: #fff; }
+.vat-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin-top: 1rem; }
+.vat-table th { text-align: left; padding: 0.5rem 0.75rem; background: var(--bg-alt); border-bottom: 2px solid var(--line); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--ink-muted); }
+.vat-table td { padding: 0.5rem 0.75rem; border-bottom: 1px solid var(--line); }
+.vat-table tr:last-child td { border-bottom: none; }
+.vat-table tr:hover td { background: var(--bg-alt); }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "VAT Calculator",
+  "url": "https://desijugad.co.in/convert/vat-calculator.html",
+  "description": "Free VAT calculator for UK (20%), Germany (19%), France (20%), UAE (5%), and 30+ countries. Add or remove VAT from any price.",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://desijugad.co.in/" },
+    { "@type": "ListItem", "position": 2, "name": "Free Tools", "item": "https://desijugad.co.in/#converters" },
+    { "@type": "ListItem", "position": 3, "name": "VAT Calculator", "item": "https://desijugad.co.in/convert/vat-calculator.html" }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "vat calculator uk 20 percent",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Enter the net price (excluding VAT), select 20% rate, click Add VAT. Or enter the gross price including VAT and click Remove VAT to extract the net amount and VAT portion. Result shows instantly."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "how to add vat to a price uk",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Gross price = Net price x 1.20. Example: £500 net + 20% VAT = £600 gross. VAT amount = £100. This applies to the standard UK rate. For reduced rate (5%): multiply by 1.05."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "how to remove vat from a price",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Net price = Gross price / 1.20 (for 20% VAT). Example: £240 inclusive / 1.20 = £200 net. VAT = £40. Do NOT calculate 20% of the gross — that gives a wrong answer."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "vat calculator germany 19 percent",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Select Germany (19%) chip or enter 19 in the rate field. German VAT (Mehrwertsteuer, MwSt) is 19% standard. Reduced rate of 7% applies to food, books, museum tickets, and local public transport."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "vat calculator uae 5 percent",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "UAE introduced VAT at 5% in January 2018. Enter your amount and select UAE 5% chip. Healthcare, education, and certain financial services are zero-rated (0%) in the UAE."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "how much is vat in europe by country",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "UK: 20%, Germany: 19%, France: 20%, Italy: 22%, Spain: 21%, Netherlands: 21%, Sweden: 25%, Poland: 23%, Ireland: 23%, Hungary: 27% (highest in EU). Use the country chips to quickly switch rates."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "what is vat registration threshold uk",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You must register for VAT in the UK when your taxable turnover exceeds £90,000 in any 12-month period (2024-25 threshold). Once registered, you charge VAT to customers and can reclaim VAT on business purchases."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "vat vs gst difference",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "VAT (Value Added Tax) and GST (Goods and Services Tax) are functionally similar — both are multi-stage consumption taxes. India replaced its old VAT with GST in 2017. The UK uses VAT. Australia uses GST. The mechanism is the same; the name and rates differ."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "nigeria vat rate",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Nigeria's VAT rate is 7.5% since February 2020 (raised from 5%). It applies to most goods and services. Basic food items, medical/pharmaceutical products, and educational materials are VAT-exempt in Nigeria."
+      }
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="../" class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="../#converters">Converters</a></li>
+      <li><a href="../ai/">AI Studio <span class="badge-new">NEW</span></a></li>
+      <li><a href="../blog/">Blog</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../#converters" class="nav-cta">All tools</a></li>
+    </ul>
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</header>
+
+<main class="converter-page">
+  <div class="container">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="../">Home</a> <span>›</span> <a href="../#converters">Tools</a> <span>›</span> <span>VAT Calculator</span>
+    </nav>
+
+    <div class="converter-header">
+      <h1>VAT Calculator — <em class="italic">Add or Remove VAT.</em></h1>
+      <p class="lead">Calculate VAT for UK (20%), Germany (19%), France (20%), UAE (5%), and 30+ countries. Instant, free, no sign-up.</p>
+    </div>
+
+    <!-- Country quick-select chips -->
+    <div class="country-chips" id="country-chips">
+      <button class="country-chip active" data-rate="20" data-name="UK (20%)">🇬🇧 UK 20%</button>
+      <button class="country-chip" data-rate="19" data-name="Germany (19%)">🇩🇪 Germany 19%</button>
+      <button class="country-chip" data-rate="20" data-name="France (20%)">🇫🇷 France 20%</button>
+      <button class="country-chip" data-rate="22" data-name="Italy (22%)">🇮🇹 Italy 22%</button>
+      <button class="country-chip" data-rate="21" data-name="Spain (21%)">🇪🇸 Spain 21%</button>
+      <button class="country-chip" data-rate="25" data-name="Sweden (25%)">🇸🇪 Sweden 25%</button>
+      <button class="country-chip" data-rate="23" data-name="Poland (23%)">🇵🇱 Poland 23%</button>
+      <button class="country-chip" data-rate="5" data-name="UAE (5%)">🇦🇪 UAE 5%</button>
+      <button class="country-chip" data-rate="5" data-name="Saudi Arabia (15%)">🇸🇦 KSA 15%</button>
+      <button class="country-chip" data-rate="15" data-name="Nigeria (7.5%)">🇳🇬 Nigeria 7.5%</button>
+      <button class="country-chip" data-rate="10" data-name="Australia (10%)">🇦🇺 Australia 10%</button>
+      <button class="country-chip" data-rate="10" data-name="Indonesia (11%)">🇮🇩 Indonesia 11%</button>
+    </div>
+
+    <!-- Mode toggle -->
+    <div class="toggle-row" id="mode-toggle">
+      <button class="toggle-btn active" data-mode="add">Add VAT</button>
+      <button class="toggle-btn" data-mode="remove">Remove VAT</button>
+    </div>
+
+    <!-- Form -->
+    <div class="vat-form">
+      <div class="form-row">
+        <div class="form-group" style="flex:2">
+          <label for="vat-amount" id="amount-label">Net Amount (excl. VAT)</label>
+          <input type="number" id="vat-amount" placeholder="0.00" min="0" step="0.01" inputmode="decimal">
+        </div>
+        <div class="form-group">
+          <label for="vat-rate">VAT Rate (%)</label>
+          <input type="number" id="vat-rate" value="20" min="0" max="100" step="0.1" inputmode="decimal">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="vat-currency">Currency Symbol</label>
+          <select id="vat-currency">
+            <option value="£">£ GBP (UK)</option>
+            <option value="€">€ EUR (EU)</option>
+            <option value="$">$ USD</option>
+            <option value="AED">AED (UAE)</option>
+            <option value="SAR">SAR (Saudi)</option>
+            <option value="₦">₦ NGN (Nigeria)</option>
+            <option value="Rp">Rp IDR (Indonesia)</option>
+            <option value="A$">A$ AUD (Australia)</option>
+            <option value="R">R ZAR (S. Africa)</option>
+            <option value="KSh">KSh (Kenya)</option>
+            <option value="₨">₨ PKR (Pakistan)</option>
+            <option value="৳">৳ BDT (Bangladesh)</option>
+            <option value="₹">₹ INR (India)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Results -->
+    <div class="vat-results" id="vat-results" style="display:none">
+      <div class="vat-card">
+        <div class="label" id="net-label">Net Amount</div>
+        <div class="amount" id="result-net">—</div>
+      </div>
+      <div class="vat-card">
+        <div class="label">VAT Amount</div>
+        <div class="amount" id="result-vat">—</div>
+      </div>
+      <div class="vat-card highlight">
+        <div class="label" id="gross-label">Gross Amount (incl. VAT)</div>
+        <div class="amount" id="result-gross">—</div>
+      </div>
+    </div>
+
+    <!-- VAT rates reference table -->
+    <section class="info-section" style="margin-top: 2.5rem;">
+      <h2 class="section-title">VAT Rates by Country — 2026 Reference</h2>
+      <table class="vat-table">
+        <thead>
+          <tr><th>Country</th><th>Standard Rate</th><th>Reduced Rate</th><th>Zero / Exempt</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>🇬🇧 United Kingdom</td><td>20%</td><td>5% (fuel, children's car seats)</td><td>0% (food, books, medicine)</td></tr>
+          <tr><td>🇩🇪 Germany</td><td>19%</td><td>7% (food, books, transport)</td><td>Exempt: banking, insurance</td></tr>
+          <tr><td>🇫🇷 France</td><td>20%</td><td>10% / 5.5% / 2.1%</td><td>0% (certain exports)</td></tr>
+          <tr><td>🇮🇹 Italy</td><td>22%</td><td>10% / 5% / 4%</td><td>0% (exports)</td></tr>
+          <tr><td>🇪🇸 Spain</td><td>21%</td><td>10% / 4%</td><td>0% (exports)</td></tr>
+          <tr><td>🇳🇱 Netherlands</td><td>21%</td><td>9% (food, medicines)</td><td>0% (exports)</td></tr>
+          <tr><td>🇸🇪 Sweden</td><td>25%</td><td>12% / 6%</td><td>0% (exports)</td></tr>
+          <tr><td>🇵🇱 Poland</td><td>23%</td><td>8% / 5%</td><td>0% (exports)</td></tr>
+          <tr><td>🇦🇪 UAE</td><td>5%</td><td>—</td><td>0% (healthcare, education, exports)</td></tr>
+          <tr><td>🇸🇦 Saudi Arabia</td><td>15%</td><td>—</td><td>0% (select financial services)</td></tr>
+          <tr><td>🇳🇬 Nigeria</td><td>7.5%</td><td>—</td><td>0% (basic food, medical, education)</td></tr>
+          <tr><td>🇰🇪 Kenya</td><td>16%</td><td>—</td><td>0% (exports, agricultural inputs)</td></tr>
+          <tr><td>🇿🇦 South Africa</td><td>15%</td><td>—</td><td>0% (basic food, exports)</td></tr>
+          <tr><td>🇬🇭 Ghana</td><td>15%</td><td>—</td><td>Exempt: financial services, real estate</td></tr>
+          <tr><td>🇦🇺 Australia (GST)</td><td>10%</td><td>—</td><td>0% (fresh food, medical, education)</td></tr>
+          <tr><td>🇮🇩 Indonesia (PPN)</td><td>11%</td><td>—</td><td>0% (exports, basic food)</td></tr>
+          <tr><td>🇧🇩 Bangladesh (VAT)</td><td>15%</td><td>—</td><td>0% (agricultural products)</td></tr>
+          <tr><td>🇵🇰 Pakistan (GST)</td><td>17%</td><td>—</td><td>0% (select exempt items)</td></tr>
+          <tr><td>🇧🇷 Brazil (ICMS)</td><td>12–18% (varies by state)</td><td>—</td><td>Exempt: food staples</td></tr>
+          <tr><td>🇨🇦 Canada (GST/HST)</td><td>5% GST / 13-15% HST</td><td>—</td><td>0% (basic groceries, prescription drugs)</td></tr>
+          <tr><td>🇳🇿 New Zealand (GST)</td><td>15%</td><td>—</td><td>0% (financial services, certain land)</td></tr>
+          <tr><td>🇸🇬 Singapore (GST)</td><td>9%</td><td>—</td><td>0% (exports, international services)</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="info-section" style="margin-top: 2rem;">
+      <h2>Frequently Asked Questions</h2>
+
+      <details open>
+        <summary>How do I add VAT to a price?</summary>
+        <p>Multiply the net price by (1 + rate/100). For UK 20% VAT: £100 × 1.20 = £120 total. The VAT amount is £20.</p>
+      </details>
+
+      <details>
+        <summary>How do I remove VAT from a price (reverse VAT)?</summary>
+        <p>Divide the VAT-inclusive price by (1 + rate/100). For UK 20% VAT: £120 ÷ 1.20 = £100 net. VAT amount = £120 - £100 = £20.</p>
+      </details>
+
+      <details>
+        <summary>What is the difference between VAT and sales tax?</summary>
+        <p>VAT is collected at every stage of the supply chain (producer, wholesaler, retailer). Each stage pays VAT on value added. US sales tax is only collected once at the final point of sale. VAT is more prevalent globally; sales tax is mainly used in the USA.</p>
+      </details>
+
+      <details>
+        <summary>Which countries have the highest VAT rates in Europe?</summary>
+        <p>Hungary (27%) has the highest standard VAT in Europe, followed by Sweden, Denmark, Croatia, and Norway (all 25%). Luxembourg has the lowest at 17%.</p>
+      </details>
+
+      <details>
+        <summary>Does the USA have VAT?</summary>
+        <p>No. The USA does not have a federal VAT. Instead, most US states levy sales tax (ranging from 0% in Oregon/Montana to 10.25% in some California counties). The US is one of the few developed economies without a national VAT.</p>
+      </details>
+    </section>
+
+    <div class="related-tools">
+      <h3>Related tools</h3>
+      <a href="gst-calculator.html">GST Calculator India</a>
+      <a href="income-tax-calculator.html">Income Tax Calculator India</a>
+      <a href="currency-converter.html">Currency Converter</a>
+      <a href="invoice-generator.html">Invoice Generator</a>
+      <a href="percentage-calculator.html">Percentage Calculator</a>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid footer-grid-5">
+      <div class="footer-brand"><div class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></div><p>Free, private tools for everyone — seedha kaam, zero tension.</p></div>
+      <div class="footer-col"><h5>Finance</h5><ul><li><a href="gst-calculator.html">GST Calculator India</a></li><li><a href="income-tax-calculator.html">Income Tax India</a></li><li><a href="emi-calculator.html">EMI Calculator</a></li><li><a href="sip-calculator.html">SIP Calculator</a></li></ul></div>
+      <div class="footer-col"><h5>Blog</h5><ul><li><a href="../blog/gst-calculator-india-guide.html">GST Guide</a></li><li><a href="../blog/gst-rates-india-product-list-2026.html">GST Rates 2026</a></li><li><a href="../blog/income-tax-calculator-india.html">Income Tax Guide</a></li></ul></div>
+      <div class="footer-col"><h5>Company</h5><ul><li><a href="../about.html">About</a></li><li><a href="../privacy.html">Privacy</a></li><li><a href="../contact.html">Contact</a></li></ul></div>
+      <div class="footer-col"><h5>More Tools</h5><ul><li><a href="invoice-generator.html">Invoice Generator</a></li><li><a href="receipt-generator.html">Receipt Generator</a></li><li><a href="currency-converter.html">Currency Converter</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><div>© <span data-year>2026</span> Desi Jugad.</div><div class="made-in"><span class="flag-in"></span>Made in India, built for the world.</div></div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var modeEl = document.getElementById('mode-toggle');
+  var amountEl = document.getElementById('vat-amount');
+  var rateEl = document.getElementById('vat-rate');
+  var currEl = document.getElementById('vat-currency');
+  var resultsEl = document.getElementById('vat-results');
+  var netEl = document.getElementById('result-net');
+  var vatEl = document.getElementById('result-vat');
+  var grossEl = document.getElementById('result-gross');
+  var amountLabel = document.getElementById('amount-label');
+  var grossLabel = document.getElementById('gross-label');
+  var netLabel = document.getElementById('net-label');
+  var mode = 'add';
+
+  // Country chips
+  document.getElementById('country-chips').addEventListener('click', function(e){
+    var chip = e.target.closest('.country-chip');
+    if(!chip) return;
+    document.querySelectorAll('.country-chip').forEach(function(c){ c.classList.remove('active'); });
+    chip.classList.add('active');
+    rateEl.value = chip.dataset.rate;
+    // Fix Saudi
+    if(chip.textContent.includes('KSA')) rateEl.value = '15';
+    if(chip.textContent.includes('Nigeria')) rateEl.value = '7.5';
+    if(chip.textContent.includes('Indonesia')) rateEl.value = '11';
+    calculate();
+  });
+
+  // Mode toggle
+  modeEl.addEventListener('click', function(e){
+    var btn = e.target.closest('.toggle-btn');
+    if(!btn) return;
+    document.querySelectorAll('.toggle-btn').forEach(function(b){ b.classList.remove('active'); });
+    btn.classList.add('active');
+    mode = btn.dataset.mode;
+    if(mode === 'add'){
+      amountLabel.textContent = 'Net Amount (excl. VAT)';
+      grossLabel.textContent = 'Gross Amount (incl. VAT)';
+      netLabel.textContent = 'Net (excl. VAT)';
+    } else {
+      amountLabel.textContent = 'Gross Amount (incl. VAT)';
+      grossLabel.textContent = 'Gross Amount (incl. VAT)';
+      netLabel.textContent = 'Net (excl. VAT)';
+    }
+    calculate();
+  });
+
+  function fmt(n, sym){ return sym + n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
+
+  function calculate(){
+    var raw = parseFloat(amountEl.value);
+    var rate = parseFloat(rateEl.value) || 0;
+    var sym = currEl.value;
+    if(isNaN(raw) || raw < 0){ resultsEl.style.display = 'none'; return; }
+    resultsEl.style.display = 'grid';
+    var net, vat, gross;
+    if(mode === 'add'){
+      net = raw;
+      vat = net * rate / 100;
+      gross = net + vat;
+    } else {
+      gross = raw;
+      net = gross / (1 + rate/100);
+      vat = gross - net;
+    }
+    netEl.textContent = fmt(net, sym);
+    vatEl.textContent = fmt(vat, sym);
+    grossEl.textContent = fmt(gross, sym);
+  }
+
+  [amountEl, rateEl, currEl].forEach(function(el){ el.addEventListener('input', calculate); });
+})();
+</script>
+<script src="../assets/js/main.js" defer></script>
+</body>
+</html>

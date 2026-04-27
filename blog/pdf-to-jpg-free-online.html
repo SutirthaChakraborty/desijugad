@@ -24,6 +24,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,30..100;1,9..144,300..700,30..100&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<meta property="og:site_name" content="Desi Jugad">
 <link rel="stylesheet" href="../assets/css/style.css">
 <script type="application/ld+json">
 {
@@ -64,10 +65,54 @@
   "@context": "https://schema.org",
   "@type": "FAQPage",
   "mainEntity": [
-    {"@type": "Question", "name": "Is it safe to convert confidential PDFs online?", "acceptedAnswer": {"@type": "Answer", "text": "With browser-based tools like Desi Jugad, yes. The PDF is rendered using PDF.js, a Mozilla-maintained JavaScript library, entirely in your browser. No data is sent to any server. With upload-based tools, your file goes to a third-party server — avoid those for confidential documents."}},
-    {"@type": "Question", "name": "What DPI should I use for PDF to JPG conversion?", "acceptedAnswer": {"@type": "Answer", "text": "Use 150 DPI for web display and email. Use 300 DPI for printing or if you need to zoom into the image to read text. Higher DPI = larger file size. A typical A4 page at 150 DPI is about 600KB as JPG; at 300 DPI it's about 2MB."}},
-    {"@type": "Question", "name": "Why does my converted PDF image look blurry?", "acceptedAnswer": {"@type": "Answer", "text": "The conversion DPI was too low. Try 200 or 300 DPI. If the original PDF contains low-resolution embedded images, those will still look blurry at any DPI — the quality is limited by the source file."}},
-    {"@type": "Question", "name": "Can I convert a multi-page PDF to separate JPGs?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Our PDF to Image tool converts each page of the PDF to a separate image file. You can download them all at once as a ZIP archive or save individual pages."}}
+    {
+      "@type": "Question",
+      "name": "convert pdf to jpg free online",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Upload your PDF, select JPG as output, choose DPI (150 for screen, 300 for print), and download. Each page becomes a separate JPG image."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "how to convert pdf to image on iphone",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Open this page in Safari. Upload your PDF, convert each page to JPG or PNG, and save the images to your Photos or Files app."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "convert first page of pdf to jpg",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Select Page 1 only in the page range selector, then convert. Only the first page is extracted as a JPG image."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "pdf to jpg 300 dpi converter free",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Set DPI to 300 for high-resolution output suitable for printing. At 300 DPI a standard A4 page becomes 2480x3508 pixels."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "convert pdf to png transparent background",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Select PNG as output for transparent backgrounds. Useful for PDFs with transparent elements that you want to use as overlays or in design software."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "convert pdf to image without software",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "This tool converts PDF to images entirely in your browser using PDF.js. No software download, no sign-up, no upload."
+      }
+    }
   ]
 }
 </script>
@@ -178,7 +223,43 @@
         <a href="../convert/pdf-to-image.html" class="btn btn-primary">Open PDF to Image →</a>
       </div>
     </div>
-  </article>
+  
+<!-- Related posts — auto-injected for SEO internal linking -->
+<aside style="margin-top:3rem;padding-top:2rem;border-top:1px solid var(--line,#E8E1D3)">
+  <h3 style="font-size:1.1rem;font-weight:600;margin-bottom:1rem">Related resources</h3>
+  <div id="related-posts" style="display:flex;flex-wrap:wrap;gap:0.75rem"></div>
+</aside>
+<script>
+(function(){
+  var posts=[
+    {t:"HEIC to JPG Converter",u:"../convert/heic-to-jpg.html"},
+    {t:"Image Compressor",u:"../convert/image-compress.html"},
+    {t:"PDF Merge & Split",u:"../convert/pdf-merge.html"},
+    {t:"SIP Calculator",u:"../convert/sip-calculator.html"},
+    {t:"GST Calculator",u:"../convert/gst-calculator.html"},
+    {t:"QR Code Generator",u:"../convert/qr-code.html"},
+    {t:"Income Tax Calculator",u:"../convert/income-tax-calculator.html"},
+    {t:"Background Remover",u:"../ai/bg-remove.html"},
+    {t:"Invoice Generator",u:"../convert/invoice-generator.html"},
+    {t:"Image Converter",u:"../convert/image-converter.html"}
+  ];
+  // pick 4 that don't match current page
+  var cur=window.location.pathname;
+  var filtered=posts.filter(function(p){return cur.indexOf(p.u.replace('../',''))===-1;}).slice(0,4);
+  var div=document.getElementById('related-posts');
+  if(!div)return;
+  filtered.forEach(function(p){
+    var a=document.createElement('a');
+    a.href=p.u;
+    a.textContent='→ '+p.t;
+    a.style.cssText='display:inline-block;padding:0.45rem 1rem;border:1px solid var(--line,#E8E1D3);border-radius:999px;font-size:0.85rem;text-decoration:none;color:var(--ink,#141413);background:var(--surface,#fff);transition:border-color 0.15s';
+    a.onmouseover=function(){this.style.borderColor='var(--indigo,#7051BC)'};
+    a.onmouseout=function(){this.style.borderColor='var(--line,#E8E1D3)'};
+    div.appendChild(a);
+  });
+})();
+</script>
+</article>
 </main>
 
 <footer class="footer">

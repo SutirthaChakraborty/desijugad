@@ -24,6 +24,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,30..100;1,9..144,300..700,30..100&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<meta property="og:site_name" content="Desi Jugad">
 <link rel="stylesheet" href="../assets/css/style.css">
 <script type="application/ld+json">
 {
@@ -50,10 +51,54 @@
   "@context": "https://schema.org",
   "@type": "FAQPage",
   "mainEntity": [
-    {"@type": "Question", "name": "What is the best Instagram post size in 2026?", "acceptedAnswer": {"@type": "Answer", "text": "The best Instagram post size is 1080×1350px (4:5 portrait). It takes up more vertical feed space than a square post, leading to higher average engagement. Instagram supports this format without cropping."}},
-    {"@type": "Question", "name": "What size should Instagram Stories be?", "acceptedAnswer": {"@type": "Answer", "text": "Instagram Stories should be 1080×1920px (9:16). Keep important content within the central 1080×1420px safe zone, as the top 250px and bottom 250px may be covered by UI elements."}},
-    {"@type": "Question", "name": "Does Instagram compress images?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Instagram compresses uploaded images to reduce file size. To minimise quality loss, upload images at exactly 1080px wide, use sRGB colour profile, export as JPEG at 80–90% quality, and avoid text near edges."}},
-    {"@type": "Question", "name": "What size is an Instagram Reel thumbnail?", "acceptedAnswer": {"@type": "Answer", "text": "Instagram Reel thumbnails are 1080×1920px (9:16). On the profile grid, Reels are cropped to a 1:1 square at the centre, so keep the main subject centred in the frame."}}
+    {
+      "@type": "Question",
+      "name": "instagram post size pixels 2026",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Square: 1080x1080px. Portrait (recommended): 1080x1350px (4:5 ratio). Landscape: 1080x566px (1.91:1). Stories and Reels: 1080x1920px (9:16). Carousel: same as single post dimensions."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "instagram profile picture size",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Displayed at 110x110px on mobile. Upload at minimum 320x320px, recommended 400x400px or larger. Instagram crops to circle — use a square image with your subject centered."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "best instagram image size for reach",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Portrait images (1080x1350px, 4:5 ratio) take up more screen space in the feed, resulting in better engagement and more impressions. Use portrait format for maximum visibility."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "instagram story size template free download",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "1080x1920px, 9:16 ratio. Safe zone for text and interactive elements: keep important content within the center 1080x1420px (avoid top and bottom 250px where UI elements appear). Use Canva for free Story templates."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "instagram reels dimensions 2026",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Reels: 1080x1920px (9:16), same as Stories. Reels cover image (thumbnail): 1080x1920px. Minimum video length: 3 seconds, maximum: 90 seconds. Recommended: 7-30 seconds for highest reach."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "how to resize image for instagram free",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Use the Image Resize tool: select 1080x1080 (square), 1080x1350 (portrait), or 1080x1920 (Stories) preset. Or enter custom dimensions. Download and upload directly to Instagram."
+      }
+    }
   ]
 }
 </script>
@@ -174,7 +219,43 @@
         <a href="../convert/photo-editor.html" class="btn btn-primary">Open Photo Editor →</a>
       </div>
     </div>
-  </article>
+  
+<!-- Related posts — auto-injected for SEO internal linking -->
+<aside style="margin-top:3rem;padding-top:2rem;border-top:1px solid var(--line,#E8E1D3)">
+  <h3 style="font-size:1.1rem;font-weight:600;margin-bottom:1rem">Related resources</h3>
+  <div id="related-posts" style="display:flex;flex-wrap:wrap;gap:0.75rem"></div>
+</aside>
+<script>
+(function(){
+  var posts=[
+    {t:"HEIC to JPG Converter",u:"../convert/heic-to-jpg.html"},
+    {t:"Image Compressor",u:"../convert/image-compress.html"},
+    {t:"PDF Merge & Split",u:"../convert/pdf-merge.html"},
+    {t:"SIP Calculator",u:"../convert/sip-calculator.html"},
+    {t:"GST Calculator",u:"../convert/gst-calculator.html"},
+    {t:"QR Code Generator",u:"../convert/qr-code.html"},
+    {t:"Income Tax Calculator",u:"../convert/income-tax-calculator.html"},
+    {t:"Background Remover",u:"../ai/bg-remove.html"},
+    {t:"Invoice Generator",u:"../convert/invoice-generator.html"},
+    {t:"Image Converter",u:"../convert/image-converter.html"}
+  ];
+  // pick 4 that don't match current page
+  var cur=window.location.pathname;
+  var filtered=posts.filter(function(p){return cur.indexOf(p.u.replace('../',''))===-1;}).slice(0,4);
+  var div=document.getElementById('related-posts');
+  if(!div)return;
+  filtered.forEach(function(p){
+    var a=document.createElement('a');
+    a.href=p.u;
+    a.textContent='→ '+p.t;
+    a.style.cssText='display:inline-block;padding:0.45rem 1rem;border:1px solid var(--line,#E8E1D3);border-radius:999px;font-size:0.85rem;text-decoration:none;color:var(--ink,#141413);background:var(--surface,#fff);transition:border-color 0.15s';
+    a.onmouseover=function(){this.style.borderColor='var(--indigo,#7051BC)'};
+    a.onmouseout=function(){this.style.borderColor='var(--line,#E8E1D3)'};
+    div.appendChild(a);
+  });
+})();
+</script>
+</article>
 </main>
 
 <footer class="footer">

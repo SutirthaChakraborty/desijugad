@@ -1,9 +1,11 @@
 # Desi Jugad
 
 **Free, private file conversion for everyone.**
-A static website of 12+ file converters that run entirely in the user's browser — no uploads, no sign-up, no server, no cost to run.
+A 100% static website with **80+ browser-based tools** — converters, calculators, utilities, and a small AI Studio. No uploads, no sign-up, no backend, no cost to run.
 
-Built in India, designed for the world.
+Built in India, designed for the world. Hosted at [desijugad.co.in](https://desijugad.co.in).
+
+**Deploys to GitHub Pages out of the box** (also works on Cloudflare Pages, Netlify, Vercel, or any static host).
 
 ---
 
@@ -122,47 +124,42 @@ A production-ready static website you can deploy in about 5 minutes. Everything 
 
 ---
 
-## AI Studio
+## AI Studio (browser-direct, no proxy)
 
-Desi Jugad includes a full AI Studio built on a **Bring Your Own Key (BYOK)** model. You connect your own API keys; all generation costs go directly to the model provider at their published rate. Desi Jugad takes zero margin.
+Desi Jugad includes a small AI Studio that runs **entirely from the browser** — no backend, no proxy. We dropped Replicate, Suno, and OpenAI from the original lineup because none of those providers allow direct browser API calls (CORS blocks them, even with the user's own key). What remains works honestly on a static site.
 
 ### AI tools included
 
 | Tool | What it does | Provider |
 |------|--------------|---------|
-| AI Image Studio | Generate images from text prompts | Replicate (FLUX, Ideogram, Recraft) |
-| AI Video Studio | Text-to-video and image-to-video | Replicate (Veo 3.1, Seedance, Wan, Kling) |
-| AI Music Studio | Generate songs with vocals & lyrics | Suno (via wrapper API) |
-| Music Video Creator | Sync audio to AI video clips | Replicate + ffmpeg.wasm |
-| AI Writer | Long-form content with LLMs | Replicate (Claude, Llama, Mistral) |
-| AI Photo Studio | Passport photos, headshots, restoration | Replicate (FLUX, GFPGAN, rembg) |
-| AI Settings | Manage keys, view usage log | — |
+| AI Image Studio | Generate images from a text prompt | Pollinations (free, no key) + Gemini Imagen 3 (BYOK) |
+| AI Writer | Long-form articles, blog posts, scripts, social copy | Gemini 2.5 (BYOK) |
+| AI Photo Studio | Edit any photo with a sentence (passport bg, cinematic, restore, etc.) | Gemini multimodal (BYOK) |
+| AI Social Post Maker | Pre-sized graphics for IG, LinkedIn, X, Story, YouTube | Pollinations + Gemini |
+| AI Background Remover | Cut out backgrounds with WebGPU/WASM | `@imgly/background-removal` (client-side ONNX, no API) |
+| AI Settings | Manage keys, all stored in `localStorage` only | — |
 
-### How to get a Replicate API key
+### How to get a Gemini API key (free)
 
-1. Sign up at [replicate.com](https://replicate.com)
-2. Add a payment method at replicate.com/account/billing
-3. Create an API token at replicate.com/account/api-tokens (starts with `r8_`)
-4. Paste it at `/ai/settings.html`
+1. Visit [aistudio.google.com/apikey](https://aistudio.google.com/apikey) and sign in with any Google account
+2. Click "Create API key" — no credit card needed for the free tier
+3. Paste it at `/ai/settings.html`
 
-### How to get a Suno key
+The key never leaves your browser. Calls go straight from your browser to Google's API.
 
-1. Sign up at [sunoapi.org](https://sunoapi.org) (or kie.ai / piapi.ai)
-2. Purchase credits and copy your API key
-3. Paste it at `/ai/settings.html`, then choose your provider
+### Free, no-key option
 
-### CORS proxy architecture
+Pollinations.ai is wired in as the default for the Image Studio and Social Post Maker. No key, no sign-up, no watermark.
 
-The CORS proxy at `functions/api/proxy.js` is a Cloudflare Pages Function (runs at the edge for free). It is a pure pass-through: it reads the `target` query param, resolves the correct upstream base URL, and forwards the request with original headers. It never logs keys, never stores requests, and never buffers response bodies.
+### Why not Replicate / Suno / OpenAI?
 
-Supported targets:
-- `replicate` → `https://api.replicate.com`
-- `suno` → configurable via `dj_suno_provider` in localStorage (defaults to sunoapi.org)
-- `openai` → `https://api.openai.com` (for Gemini-compatible endpoints)
+All three reject browser-direct API calls — they explicitly require a backend. The previous version of Desi Jugad solved this with a Cloudflare Pages Function proxy (`functions/api/proxy.js`), but that contradicts the static-site promise and locks you into Cloudflare. We removed the proxy and the providers that needed it.
 
-Keys are stored in browser `localStorage` under `dj_ai_keys_v1`. They never touch any Desi Jugad server — only the model provider's server (via the pass-through proxy).
+### Privacy
 
-The original converters keep working offline after first load. AI Studio tools need an internet connection because generations run against Replicate, Suno, or Gemini APIs.
+Keys are stored in browser `localStorage` under `dj_ai_keys_v1`. They are sent only to the relevant provider (Google, Hugging Face) — never to desijugad.co.in. Clear your browser data and they're gone.
+
+The original converters keep working offline after first load. AI Studio tools need an internet connection because generations run against the provider's API.
 
 ### What else is in the box
 
@@ -182,37 +179,39 @@ The original converters keep working offline after first load. AI Studio tools n
 
 You don't need a server. You don't need Node.js. You don't even need Git. The whole site is plain HTML, CSS, and JavaScript.
 
-### Option 1 — Cloudflare Pages (recommended, fully free, fastest CDN)
+### Option 1 — GitHub Pages (recommended)
 
-1. Go to [pages.cloudflare.com](https://pages.cloudflare.com) and create a free account.
-2. Click **Create a project** → **Upload assets**.
-3. Drag and drop the entire `desijugad` folder.
-4. Click **Deploy**.
-5. Within 30 seconds you'll get a URL like `desijugad-abc.pages.dev`. The site is live.
-6. To add your own domain, go to **Custom domains** in your project and follow the one-click flow.
+The repo ships with `.nojekyll` and a `CNAME` ready to go.
 
-### Option 2 — Netlify
+1. Push the repo to GitHub (public or private — Pages works on both for `Pages for free` accounts).
+2. Open **Settings → Pages**.
+3. Source: **Deploy from a branch**, branch: `main`, folder: `/ (root)`.
+4. Save. First deploy takes 1–2 minutes.
+5. Your site is live at `yourname.github.io/reponame`.
+6. **Custom domain:** edit `CNAME` to your domain, point your DNS at GitHub Pages (`A` records to `185.199.108.153`/etc., or `CNAME` to `yourname.github.io`), and check **Enforce HTTPS** in the Pages settings.
 
-1. Go to [app.netlify.com/drop](https://app.netlify.com/drop).
-2. Drag the `desijugad` folder onto the page.
-3. Done. You'll get a free `*.netlify.app` subdomain instantly.
+That's it. No build step. No CI required (Pages auto-deploys when `main` updates).
 
-### Option 3 — Vercel
+### Option 2 — Cloudflare Pages
 
-1. Install the Vercel CLI: `npm i -g vercel`
-2. From inside the folder, run: `vercel`
-3. Follow the prompts. Site goes live in about 20 seconds.
+Also works fine. The Cloudflare-specific `functions/api/proxy.js` was removed, so there are no Cloudflare-only dependencies anymore. The site behaves identically on Cloudflare and GitHub Pages.
 
-### Option 4 — GitHub Pages
+1. Go to [pages.cloudflare.com](https://pages.cloudflare.com).
+2. Connect your GitHub repo, or drag the folder.
+3. Build command: *(empty)*. Output dir: *(root)*.
+4. Deploy.
 
-1. Create a new public repository on GitHub.
-2. Upload all the files.
-3. Go to **Settings → Pages**, choose the `main` branch, and save.
-4. Your site appears at `yourusername.github.io/reponame` in a few minutes.
+### Option 3 — Netlify
+
+1. Drag the folder onto [app.netlify.com/drop](https://app.netlify.com/drop). You'll get a free `*.netlify.app` subdomain instantly.
+
+### Option 4 — Vercel
+
+1. `npm i -g vercel` then `vercel` from inside the folder. Live in about 20 seconds.
 
 ### Option 5 — Any traditional web host
 
-If you have cPanel or any shared hosting, just FTP-upload the whole `desijugad` folder into your `public_html` directory. That's it. No build step, no config.
+cPanel, FTP, S3 + CloudFront — anything that serves static files works. Upload the whole folder, point your domain at it, done.
 
 ---
 

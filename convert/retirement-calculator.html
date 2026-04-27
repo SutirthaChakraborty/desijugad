@@ -17,13 +17,136 @@
     .result-value { font-size: 1.8rem; font-weight: bold; color: #0066cc; }
     @media (max-width: 768px) { .calc-grid { grid-template-columns: 1fr; } }
   </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Retirement Calculator",
+  "url": "https://desijugad.co.in/convert/retirement-calculator.html",
+  "description": "Plan your retirement corpus. Calculate how much to save monthly to retire comfortably. Free, no sign-up.",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Any",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://desijugad.co.in/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Free Tools",
+      "item": "https://desijugad.co.in/#converters"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Retirement Calculator",
+      "item": "https://desijugad.co.in/convert/retirement-calculator.html"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "retirement corpus calculator india",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Enter your current age, retirement age, monthly expenses today, expected inflation, and expected returns. The calculator shows how much corpus you need and how much to save monthly to reach it."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "how much money do i need to retire in india",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A common rule: 25-30 times your annual expenses. If you spend Rs 8 lakh/year, target Rs 2-2.4 crore. For retirement at 45 with 40 years ahead, target 40x annual expenses accounting for inflation."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "retirement calculator for 40 year old",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "If you are 40 and want to retire at 60 with Rs 10 lakh/year expenses (today's money): assuming 6% inflation and 12% investment returns, you need approximately Rs 7.5 crore corpus and must save Rs 40,000-50,000 per month."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "how much to save monthly for retirement india",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Use the 15x15x15 rule: SIP Rs 15,000/month at 15% returns for 15 years = Rs 1 crore. For Rs 2 crore at 60: start a Rs 10,000/month SIP at 30 years of age in equity mutual funds."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "4 percent rule retirement",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The 4% rule states you can withdraw 4% of your retirement corpus annually without depleting it over 30 years. If you need Rs 8 lakh/year: corpus needed = Rs 8L / 0.04 = Rs 2 crore."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "retirement calculator with inflation",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "This calculator lets you set expected inflation (default 6% for India). Inflation significantly increases the corpus needed — Rs 50,000 monthly today will need Rs 1.6 lakh at 60 to maintain the same lifestyle (6% inflation for 20 years)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "nps calculator retirement pension india",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "NPS (National Pension System) contributions get 80CCD tax deduction. At retirement, 60% can be withdrawn tax-free (Rs 6L+ annuity-free). Enter your NPS corpus target in this retirement calculator."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "retirement age in india 2025",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Government employees: 60 years (central govt). Private sector: no mandatory age, but most plan for 58-62. EPFO pension starts at 58. NPS maturity at 60. Voluntary retirement schemes allow early retirement at 50-55."
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body>
 
 <header class="nav">
   <div class="container nav-inner">
-    <a href="/" class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></a>
-    <ul class="nav-links"><li><a href="/">Back to Tools</a></li></ul>
+    <a href="../" class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="../#converters">Converters</a></li>
+      <li><a href="../ai/">AI Studio <span class="badge-new">NEW</span></a></li>
+      <li><a href="../blog/">Blog</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../#converters" class="nav-cta">All tools</a></li>
+    </ul>
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
   </div>
 </header>
 
@@ -172,9 +295,23 @@
   calculate();
 </script>
 
-<footer style="text-align: center; padding: 2rem 0; color: #999; font-size: 14px;">
-  <p><a href="/blog/retirement-calculator-free.html">Learn more about retirement planning →</a></p>
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid footer-grid-5">
+      <div class="footer-brand"><div class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></div><p>Free, private tools that run in your browser.</p></div>
+      <div class="footer-col"><h5>Popular tools</h5><ul><li><a href="../convert/heic-to-jpg.html">HEIC to JPG</a></li><li><a href="../convert/qr-code.html">QR Code</a></li><li><a href="../convert/image-converter.html">Image Converter</a></li></ul></div>
+      <div class="footer-col"><h5>AI Studio</h5><ul><li><a href="../ai/image.html">AI Images</a></li><li><a href="../ai/writer.html">AI Writer</a></li><li><a href="../ai/photo-studio.html">Photo Studio</a></li><li><a href="../ai/bg-remove.html">BG Remove</a></li></ul></div>
+      <div class="footer-col"><h5>Company</h5><ul><li><a href="../about.html">About</a></li><li><a href="../blog/">Blog</a></li><li><a href="../privacy.html">Privacy</a></li><li><a href="../terms.html">Terms</a></li></ul></div>
+      <div class="footer-col"><h5>Connect</h5><ul><li><a href="../contact.html">Contact</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <div>© <span data-year>2026</span> Desi Jugad.</div>
+      <div class="made-in"><span class="flag-in" aria-hidden="true"></span>Made in India, built for the world.</div>
+    </div>
+  </div>
 </footer>
+
+<script src="../assets/js/main.js"></script>
 
 </body>
 </html>

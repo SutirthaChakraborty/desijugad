@@ -19,13 +19,136 @@
     .result-label { color: #666; font-size: 14px; margin-top: 0.5rem; }
     @media (max-width: 768px) { .calculator-grid { grid-template-columns: 1fr; } }
   </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Loan EMI Calculator",
+  "url": "https://desijugad.co.in/convert/loan-calculator.html",
+  "description": "Calculate loan EMI, total interest, and payoff schedule. Supports home, car, and personal loans. Free.",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Any",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://desijugad.co.in/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Free Tools",
+      "item": "https://desijugad.co.in/#converters"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Loan EMI Calculator",
+      "item": "https://desijugad.co.in/convert/loan-calculator.html"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "loan calculator with interest",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Enter principal loan amount, annual interest rate, and tenure. The calculator shows monthly payment, total payment, and total interest. Works for home loan, car loan, personal loan, and business loan."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "simple loan repayment calculator free",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Input loan amount, interest rate percentage, and loan term in months or years. Instantly see your monthly repayment amount and full amortisation schedule."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "loan interest calculation formula",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "For equal monthly instalments: EMI = [P x r x (1+r)^n] / [(1+r)^n-1]. For simple interest: I = P x r x t. Most bank loans use the EMI (reducing balance) method."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "how much loan can i get on salary",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Most banks approve loans where EMI does not exceed 40-50% of monthly net salary. For a Rs 50,000 net salary, maximum EMI = Rs 20,000-25,000. This translates to roughly Rs 15-20 lakh home loan at current rates."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "loan calculator uk pounds",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Enter amount in GBP and the annual percentage rate (APR). UK personal loan rates are typically 3-15% APR depending on credit score and loan amount. Mortgage rates are 4-6% APR."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "loan calculator usd for usa",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Enter amount in USD. US personal loan APR typically 6-36%. Auto loans 5-10%. Mortgages 6.5-7.5% (2026). Student loans 4-7% (federal). Use this calculator for any USD loan."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "business loan emi calculator india",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Enter the business loan amount (MSME loans typically Rs 5L-5Cr), rate (12-18% for unsecured, 10-14% for secured), and tenure (1-5 years). Banks like SBI, HDFC, ICICI offer MUDRA and MSME loans."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "how to pay off loan faster",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "1) Make one extra payment per year. 2) Round up your EMI. 3) Apply any bonuses or windfalls as lump-sum prepayments. 4) Switch to bi-weekly payments instead of monthly. Extra Rs 5,000/month on a Rs 30L, 9%, 20-year home loan saves 5+ years."
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body>
 
 <header class="nav">
   <div class="container nav-inner">
-    <a href="/" class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></a>
-    <ul class="nav-links"><li><a href="/">Back to Tools</a></li></ul>
+    <a href="../" class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="../#converters">Converters</a></li>
+      <li><a href="../ai/">AI Studio <span class="badge-new">NEW</span></a></li>
+      <li><a href="../blog/">Blog</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../#converters" class="nav-cta">All tools</a></li>
+    </ul>
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
   </div>
 </header>
 
@@ -160,9 +283,23 @@
   calculate();
 </script>
 
-<footer style="text-align: center; padding: 2rem 0; color: #999; font-size: 14px;">
-  <p><a href="/blog/loan-calculator-emi-free.html">Learn more about loan calculations →</a></p>
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid footer-grid-5">
+      <div class="footer-brand"><div class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></div><p>Free, private tools that run in your browser.</p></div>
+      <div class="footer-col"><h5>Popular tools</h5><ul><li><a href="../convert/heic-to-jpg.html">HEIC to JPG</a></li><li><a href="../convert/qr-code.html">QR Code</a></li><li><a href="../convert/image-converter.html">Image Converter</a></li></ul></div>
+      <div class="footer-col"><h5>AI Studio</h5><ul><li><a href="../ai/image.html">AI Images</a></li><li><a href="../ai/writer.html">AI Writer</a></li><li><a href="../ai/photo-studio.html">Photo Studio</a></li><li><a href="../ai/bg-remove.html">BG Remove</a></li></ul></div>
+      <div class="footer-col"><h5>Company</h5><ul><li><a href="../about.html">About</a></li><li><a href="../blog/">Blog</a></li><li><a href="../privacy.html">Privacy</a></li><li><a href="../terms.html">Terms</a></li></ul></div>
+      <div class="footer-col"><h5>Connect</h5><ul><li><a href="../contact.html">Contact</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <div>© <span data-year>2026</span> Desi Jugad.</div>
+      <div class="made-in"><span class="flag-in" aria-hidden="true"></span>Made in India, built for the world.</div>
+    </div>
+  </div>
 </footer>
+
+<script src="../assets/js/main.js"></script>
 
 </body>
 </html>

@@ -30,6 +30,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,30..100;1,9..144,300..700,30..100&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400..600&display=swap" rel="stylesheet">
+<meta property="og:image" content="https://desijugad.co.in/assets/img/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://desijugad.co.in/assets/img/og.png">
+<meta property="og:site_name" content="Desi Jugad">
 <link rel="stylesheet" href="../assets/css/style.css">
 <script type="application/ld+json">
 {
@@ -48,6 +52,62 @@
     {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://desijugad.co.in/blog/"},
     {"@type": "ListItem", "position": 3, "name": "Best Free Online Image Compressors in 2026", "item": "https://desijugad.co.in/blog/compress-images-online-free.html"}
   ]}
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "how to compress image online free",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Upload your image, adjust quality (80-85% for best balance), and download. File size reduces by 60-80% with no visible quality change. Works for JPG, PNG, and WebP."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "compress image to 200kb online free",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Upload your image, set quality to 70-75%, and check the output size shown. If still over 200KB, also reduce dimensions (e.g., resize to 1200px width). Repeat until under 200KB."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "best free image compressor without quality loss",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "80-85% quality in JPG gives near-lossless results. PNG compression is always lossless. Use this tool for free, no upload, no sign-up — everything runs in your browser."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "how to compress images for website free",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Target under 200KB per image for fast page loads. Use WebP format (25-35% smaller than JPG). Compress to 80% quality. Resize to the actual display dimensions (no need for 4000px images on a 1200px website)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "compress image size without reducing resolution",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Set quality slider down without changing the pixel dimensions. A 4000x3000px image compresses from 8MB to under 1MB at 85% quality with identical visible resolution."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "how to compress multiple images at once free",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Drag and drop multiple images onto the tool. All are compressed in parallel using your browser's processing power. Download individually or all at once."
+      }
+    }
+  ]
 }
 </script>
 </head>
@@ -185,7 +245,43 @@
         <li><a href="../blog/png-jpg-webp-avif.html">PNG vs JPG vs WebP vs AVIF: which format to pick in 2026 — Desi Jugad</a></li>
       </ul>
     </div>
-  </article>
+  
+<!-- Related posts — auto-injected for SEO internal linking -->
+<aside style="margin-top:3rem;padding-top:2rem;border-top:1px solid var(--line,#E8E1D3)">
+  <h3 style="font-size:1.1rem;font-weight:600;margin-bottom:1rem">Related resources</h3>
+  <div id="related-posts" style="display:flex;flex-wrap:wrap;gap:0.75rem"></div>
+</aside>
+<script>
+(function(){
+  var posts=[
+    {t:"HEIC to JPG Converter",u:"../convert/heic-to-jpg.html"},
+    {t:"Image Compressor",u:"../convert/image-compress.html"},
+    {t:"PDF Merge & Split",u:"../convert/pdf-merge.html"},
+    {t:"SIP Calculator",u:"../convert/sip-calculator.html"},
+    {t:"GST Calculator",u:"../convert/gst-calculator.html"},
+    {t:"QR Code Generator",u:"../convert/qr-code.html"},
+    {t:"Income Tax Calculator",u:"../convert/income-tax-calculator.html"},
+    {t:"Background Remover",u:"../ai/bg-remove.html"},
+    {t:"Invoice Generator",u:"../convert/invoice-generator.html"},
+    {t:"Image Converter",u:"../convert/image-converter.html"}
+  ];
+  // pick 4 that don't match current page
+  var cur=window.location.pathname;
+  var filtered=posts.filter(function(p){return cur.indexOf(p.u.replace('../',''))===-1;}).slice(0,4);
+  var div=document.getElementById('related-posts');
+  if(!div)return;
+  filtered.forEach(function(p){
+    var a=document.createElement('a');
+    a.href=p.u;
+    a.textContent='→ '+p.t;
+    a.style.cssText='display:inline-block;padding:0.45rem 1rem;border:1px solid var(--line,#E8E1D3);border-radius:999px;font-size:0.85rem;text-decoration:none;color:var(--ink,#141413);background:var(--surface,#fff);transition:border-color 0.15s';
+    a.onmouseover=function(){this.style.borderColor='var(--indigo,#7051BC)'};
+    a.onmouseout=function(){this.style.borderColor='var(--line,#E8E1D3)'};
+    div.appendChild(a);
+  });
+})();
+</script>
+</article>
 </main>
 
 <footer class="footer">
@@ -193,7 +289,7 @@
     <div class="footer-grid footer-grid-5">
       <div class="footer-brand"><div class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></div><p>Free, private file conversion for everyone.</p></div>
       <div class="footer-col"><h5>Tools</h5><ul><li><a href="../convert/heic-to-jpg.html">HEIC to JPG</a></li><li><a href="../convert/image-converter.html">Image Converter</a></li><li><a href="../convert/image-to-pdf.html">Image to PDF</a></li><li><a href="../convert/image-resize.html">Resize Image</a></li></ul></div>
-      <div class="footer-col"><h5>AI Studio</h5><ul><li><a href="../ai/image.html">AI Images</a></li><li><a href="../ai/video.html">AI Video</a></li><li><a href="../ai/music.html">AI Music</a></li><li><a href="../ai/music-video.html">Music Videos</a></li><li><a href="../ai/writer.html">AI Writer</a></li><li><a href="../ai/photo-studio.html">Photo Studio</a></li></ul></div>
+      <div class="footer-col"><h5>AI Studio</h5><ul><li><a href="../ai/image.html">AI Images</a></li><li><a href="../ai/writer.html">AI Writer</a></li><li><a href="../ai/photo-studio.html">Photo Studio</a></li></ul></div>
       <div class="footer-col"><h5>Company</h5><ul><li><a href="../about.html">About</a></li><li><a href="./">Blog</a></li><li><a href="../privacy.html">Privacy</a></li><li><a href="../terms.html">Terms</a></li></ul></div>
       <div class="footer-col"><h5>Help</h5><ul><li><a href="../contact.html">Contact</a></li></ul></div>
     </div>

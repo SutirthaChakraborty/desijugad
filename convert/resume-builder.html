@@ -28,13 +28,136 @@
     .remove-btn { background: #dc2626; padding: 0.3rem 0.75rem; margin: 0; }
     @media (max-width: 768px) { .builder-grid { grid-template-columns: 1fr; } }
   </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Resume Builder",
+  "url": "https://desijugad.co.in/convert/resume-builder.html",
+  "description": "Create a professional resume for free. Fill in your details, choose a template, download as PDF.",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Any",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://desijugad.co.in/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Free Tools",
+      "item": "https://desijugad.co.in/#converters"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Resume Builder",
+      "item": "https://desijugad.co.in/convert/resume-builder.html"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "free resume builder online no sign up",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Fill in your name, contact details, work experience, education, and skills. Choose a template. Download your professional resume as PDF — no account, no watermark, no payment."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "how to make a resume for fresher free",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Select the clean template, fill in your education details, any internships or projects, skills (technical + soft), and add a brief objective statement. Download as PDF ready to email."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "ats friendly resume builder free",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "All templates are single-column, standard-font formatted to pass ATS (Applicant Tracking Systems). Use simple formatting — no tables, no graphics, no headers/footers with key info."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "resume builder for india jobs naukri",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Create a standard Indian format resume with career objective, education (with percentage/CGPA), work experience, projects, certifications, and personal details. Matches Naukri and LinkedIn India expectations."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "how to write a resume for uk jobs",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "UK CVs typically include a personal profile (2-3 sentences), work history in reverse chronological order (with achievements not just duties), education, and skills. Omit photo, DOB, nationality in most UK applications."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "resume builder for usa jobs linkedin",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "US resumes: 1 page for under 10 years experience, 2 pages max. Lead with a Summary section. Quantify achievements (increased sales by 25%). No photo, no DOB. Use action verbs (Led, Built, Improved)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "is the resume data stored anywhere",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Your resume data is stored only in your browser's local storage for your convenience while editing. Nothing is sent to any server. Clear browser data to permanently remove it."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "download resume as pdf free without watermark",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Download is free and watermark-free. The PDF is generated in your browser using jsPDF. No account, no premium plan, no email required."
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body>
 
 <header class="nav">
   <div class="container nav-inner">
-    <a href="/" class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></a>
-    <ul class="nav-links"><li><a href="/">Back to Tools</a></li></ul>
+    <a href="../" class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="../#converters">Converters</a></li>
+      <li><a href="../ai/">AI Studio <span class="badge-new">NEW</span></a></li>
+      <li><a href="../blog/">Blog</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../#converters" class="nav-cta">All tools</a></li>
+    </ul>
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
   </div>
 </header>
 
@@ -198,9 +321,23 @@
   updatePreview();
 </script>
 
-<footer style="text-align: center; padding: 2rem 0; color: #999; font-size: 14px;">
-  <p><a href="/blog/resume-builder-free.html">Learn more about resume writing →</a></p>
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid footer-grid-5">
+      <div class="footer-brand"><div class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></div><p>Free, private tools that run in your browser.</p></div>
+      <div class="footer-col"><h5>Popular tools</h5><ul><li><a href="../convert/heic-to-jpg.html">HEIC to JPG</a></li><li><a href="../convert/qr-code.html">QR Code</a></li><li><a href="../convert/image-converter.html">Image Converter</a></li></ul></div>
+      <div class="footer-col"><h5>AI Studio</h5><ul><li><a href="../ai/image.html">AI Images</a></li><li><a href="../ai/writer.html">AI Writer</a></li><li><a href="../ai/photo-studio.html">Photo Studio</a></li><li><a href="../ai/bg-remove.html">BG Remove</a></li></ul></div>
+      <div class="footer-col"><h5>Company</h5><ul><li><a href="../about.html">About</a></li><li><a href="../blog/">Blog</a></li><li><a href="../privacy.html">Privacy</a></li><li><a href="../terms.html">Terms</a></li></ul></div>
+      <div class="footer-col"><h5>Connect</h5><ul><li><a href="../contact.html">Contact</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <div>© <span data-year>2026</span> Desi Jugad.</div>
+      <div class="made-in"><span class="flag-in" aria-hidden="true"></span>Made in India, built for the world.</div>
+    </div>
+  </div>
 </footer>
+
+<script src="../assets/js/main.js"></script>
 
 </body>
 </html>

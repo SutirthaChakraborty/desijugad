@@ -1,0 +1,26 @@
+{
+  "name": "Desi Jugad — Free Browser-Based Tools",
+  "short_name": "Desi Jugad",
+  "description": "Free, private file converters, calculators, and AI tools that run entirely in your browser. No uploads, no sign-up, no tracking.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#FAF8F4",
+  "theme_color": "#7051BC",
+  "lang": "en",
+  "dir": "ltr",
+  "categories": ["utilities", "productivity", "photo", "tools"],
+  "icons": [
+    { "src": "/assets/img/favicon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/assets/img/favicon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/assets/img/favicon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "/assets/img/apple-touch-icon.png", "sizes": "180x180", "type": "image/png", "purpose": "any" }
+  ],
+  "shortcuts": [
+    { "name": "HEIC to JPG", "short_name": "HEIC→JPG", "url": "/convert/heic-to-jpg.html", "icons": [{ "src": "/assets/img/favicon-192.png", "sizes": "192x192" }] },
+    { "name": "QR Code", "short_name": "QR", "url": "/convert/qr-code.html", "icons": [{ "src": "/assets/img/favicon-192.png", "sizes": "192x192" }] },
+    { "name": "Image Converter", "short_name": "Convert", "url": "/convert/image-converter.html", "icons": [{ "src": "/assets/img/favicon-192.png", "sizes": "192x192" }] },
+    { "name": "AI Image", "short_name": "AI", "url": "/ai/image.html", "icons": [{ "src": "/assets/img/favicon-192.png", "sizes": "192x192" }] }
+  ]
+}

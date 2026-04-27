@@ -1,0 +1,14 @@
+{
+  "name": "desijugad",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "css": "tailwindcss -i src/input.css -o assets/css/tailwind.css --minify",
+    "css:watch": "tailwindcss -i src/input.css -o assets/css/tailwind.css --watch"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.2.4",
+    "daisyui": "^5.5.19",
+    "tailwindcss": "^4.2.4"
+  }
+}

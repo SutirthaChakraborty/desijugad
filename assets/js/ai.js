@@ -1,14 +1,17 @@
 /* ==========================================================================
-   Desi Jugad — AI Studio shared helper
-   Keys are stored in localStorage only. Never sent to any Desi Jugad server.
+   Desi Jugad — AI Studio shared helper (post-proxy rewrite)
+   100% browser-direct: Gemini + Pollinations (free, no key) + optional HF.
+   No Cloudflare Functions, no /api/proxy. Keys live in localStorage only.
    ========================================================================== */
 
-const STORAGE_KEYS = 'dj_ai_keys_v1';
+const STORAGE_KEYS  = 'dj_ai_keys_v1';
 const STORAGE_USAGE = 'dj_ai_usage_v1';
-const PROXY_BASE = '/api/proxy';
-const DEFAULT_SUNO_PROVIDER = 'https://api.sunoapi.org';
 
-/* ── Custom error types ───────────────────────────────────────────────────── */
+const GEMINI_BASE = 'https://generativelanguage.googleapis.com';
+const POLLINATIONS_BASE = 'https://image.pollinations.ai';
+const HF_BASE = 'https://api-inference.huggingface.co';
+
+/* ── Custom error types ─────────────────────────────────────────────────── */
 class NoKeyError extends Error {
   constructor(service) {
     super(`No API key set for ${service}`);
@@ -18,21 +21,18 @@ class NoKeyError extends Error {
 }
 window.NoKeyError = NoKeyError;
 
-/* ── Key management ──────────────────────────────────────────────────────── */
+/* ── Key management ─────────────────────────────────────────────────────── */
 function loadKeys() {
-  try {
-    return JSON.parse(localStorage.getItem(STORAGE_KEYS) || '{}');
-  } catch { return {}; }
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEYS) || '{}'); }
+  catch { return {}; }
 }
 function saveKeys(keys) {
   try { localStorage.setItem(STORAGE_KEYS, JSON.stringify(keys)); } catch {}
 }
 
 window.AIKeys = {
-  get(service) {
-    return loadKeys()[service] || null;
-  },
-  set(service, value) {
+  get(service)         { return loadKeys()[service] || null; },
+  set(service, value)  {
     const trimmed = (value || '').trim();
     if (!trimmed) return;
     const keys = loadKeys();
@@ -44,53 +44,26 @@ window.AIKeys = {
     delete keys[service];
     saveKeys(keys);
   },
-  clearAll() {
-    try { localStorage.removeItem(STORAGE_KEYS); } catch {}
-  },
-  mask(key) {
+  clearAll() { try { localStorage.removeItem(STORAGE_KEYS); } catch {} },
+  mask(key)  {
     if (!key || key.length < 8) return '••••••••';
     return key.slice(0, 4) + '••••' + key.slice(-4);
   },
 };
 
-window.getKey = function(service) {
-  return window.AIKeys.get(service);
-};
+window.getKey       = (s)    => window.AIKeys.get(s);
+window.setKey       = (s, v) => window.AIKeys.set(s, v);
+window.clearKey     = (s)    => window.AIKeys.clear(s);
+window.clearAllKeys = ()     => window.AIKeys.clearAll();
+window.maskKey      = (k)    => window.AIKeys.mask(k);
 
-window.setKey = function(service, value) {
-  window.AIKeys.set(service, value);
-};
-
-window.clearKey = function(service) {
-  window.AIKeys.clear(service);
-};
-
-window.clearAllKeys = function() {
-  window.AIKeys.clearAll();
-};
-
-window.maskKey = function(key) {
-  return window.AIKeys.mask(key);
-};
-
-/* ── Suno provider URL (user can override) ───────────────────────────────── */
-window.getSunoBase = function() {
-  try {
-    return localStorage.getItem('dj_suno_provider') || DEFAULT_SUNO_PROVIDER;
-  } catch { return DEFAULT_SUNO_PROVIDER; }
-};
-window.setSunoProvider = function(url) {
-  try { localStorage.setItem('dj_suno_provider', url); } catch {}
-};
-
-/* ── Usage logging ───────────────────────────────────────────────────────── */
+/* ── Usage logging (local only) ─────────────────────────────────────────── */
 window.logUsage = function(service, model, prompt, costEstimate) {
   try {
     const log = JSON.parse(localStorage.getItem(STORAGE_USAGE) || '[]');
     log.unshift({
       ts: new Date().toISOString(),
-      service,
-      model,
+      service, model,
       prompt: (prompt || '').slice(0, 80),
       cost: costEstimate || 0,
     });
@@ -98,16 +71,10 @@ window.logUsage = function(service, model, prompt, costEstimate) {
     localStorage.setItem(STORAGE_USAGE, JSON.stringify(log));
   } catch {}
 };
+window.getUsageLog   = () => { try { return JSON.parse(localStorage.getItem(STORAGE_USAGE) || '[]'); } catch { return []; } };
+window.clearUsageLog = () => { try { localStorage.removeItem(STORAGE_USAGE); } catch {} };
 
-window.getUsageLog = function() {
-  try { return JSON.parse(localStorage.getItem(STORAGE_USAGE) || '[]'); } catch { return []; }
-};
-
-window.clearUsageLog = function() {
-  try { localStorage.removeItem(STORAGE_USAGE); } catch {}
-};
-
-/* ── Error toast UI ──────────────────────────────────────────────────────── */
+/* ── Error toast UI ─────────────────────────────────────────────────────── */
 window.showErrorToast = function(title, detail, action) {
   let wrap = document.getElementById('ai-error-toast');
   if (!wrap) {
@@ -118,9 +85,8 @@ window.showErrorToast = function(title, detail, action) {
   }
   let actionFn = action?.fn;
   if (typeof actionFn === 'string' && typeof window.DJ_RESOLVE_PATH === 'function') {
-    actionFn = actionFn.replace(/window\.location\s*=\s*['\"]([^'\"]+)['\"]/g, (_, path) => {
-      return `window.location='${window.DJ_RESOLVE_PATH(path)}'`;
-    });
+    actionFn = actionFn.replace(/window\.location\s*=\s*['"]([^'"]+)['"]/g, (_, path) =>
+      `window.location='${window.DJ_RESOLVE_PATH(path)}'`);
   }
   const actionHtml = action
     ? `<button onclick="${actionFn}" style="background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.4);color:#fff;padding:0.3rem 0.75rem;border-radius:6px;font-size:0.82rem;cursor:pointer;margin-top:0.4rem;">${action.label}</button>`
@@ -131,10 +97,12 @@ window.showErrorToast = function(title, detail, action) {
     wrap.style.opacity = '1';
   });
   clearTimeout(wrap._timer);
-  wrap._timer = setTimeout(() => { wrap.style.opacity = '0'; wrap.style.transform = 'translateX(-50%) translateY(100px)'; }, 7000);
+  wrap._timer = setTimeout(() => {
+    wrap.style.opacity = '0';
+    wrap.style.transform = 'translateX(-50%) translateY(100px)';
+  }, 7000);
 };
 
-/* ── Redirect to settings if no key ─────────────────────────────────────── */
 function requireKey(service) {
   const key = window.AIKeys.get(service);
   if (!key) {
@@ -148,186 +116,198 @@ function requireKey(service) {
   return key;
 }
 
-/* ── Replicate API helpers ───────────────────────────────────────────────── */
-window.Replicate = {
-  async _proxy(method, path, body, key) {
-    const url = `https://api.replicate.com${path}`;
-    const opts = {
-      method,
-      headers: {
-        'Authorization': `Bearer ${key}`,
-        'Content-Type': 'application/json',
-        'Prefer': 'wait',
-      },
+/* ── Helpers ────────────────────────────────────────────────────────────── */
+function fileToBase64(file) {
+  return new Promise((resolve, reject) => {
+    const r = new FileReader();
+    r.onload = () => {
+      const result = r.result || '';
+      const idx = result.indexOf(',');
+      resolve(idx >= 0 ? result.slice(idx + 1) : result);
     };
-    if (body) opts.body = JSON.stringify(body);
-    const resp = await fetch(url, opts);
-    if (resp.status === 401) throw Object.assign(new Error('Key rejected'), { code: 401 });
-    if (resp.status === 402) throw Object.assign(new Error('Insufficient credits'), { code: 402 });
+    r.onerror = reject;
+    r.readAsDataURL(file);
+  });
+}
+window.fileToBase64 = fileToBase64;
+
+/* ── Gemini API (BYOK, browser-direct, CORS-friendly) ───────────────────── */
+window.Gemini = {
+  /**
+   * Generate text via Gemini.
+   * model: 'gemini-2.5-flash' | 'gemini-2.5-pro' (etc.)
+   * parts: [{text}, {inlineData:{mimeType, data}}, ...] OR a plain string
+   */
+  async generateText(model, parts, { temperature, maxOutputTokens, system, signal } = {}) {
+    const key = requireKey('gemini');
+    const contents = [{
+      role: 'user',
+      parts: typeof parts === 'string' ? [{ text: parts }] : parts,
+    }];
+    const body = { contents, generationConfig: {} };
+    if (typeof temperature === 'number')      body.generationConfig.temperature = temperature;
+    if (typeof maxOutputTokens === 'number')  body.generationConfig.maxOutputTokens = maxOutputTokens;
+    if (system) body.systemInstruction = { parts: [{ text: system }] };
+
+    const url = `${GEMINI_BASE}/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(key)}`;
+    const resp = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+      signal,
+    });
+    if (resp.status === 401 || resp.status === 403) throw Object.assign(new Error('Key rejected'), { code: 401 });
     if (resp.status === 429) throw Object.assign(new Error('Rate limited'), { code: 429 });
-    if (!resp.ok) throw Object.assign(new Error('Replicate error ' + resp.status), { code: resp.status });
-    return resp.json();
-  },
-
-  async poll(id, key, { onProgress, timeoutMs = 600000 } = {}) {
-    const start = Date.now();
-    while (true) {
-      if (Date.now() - start > timeoutMs) throw Object.assign(new Error('Timed out'), { code: 'timeout' });
-      await new Promise(r => setTimeout(r, 2500));
-      const data = await this._proxy('GET', `/v1/predictions/${id}`, null, key);
-      if (onProgress) onProgress({ status: data.status, logs: data.logs, output: data.output });
-      if (data.status === 'succeeded') return data.output;
-      if (data.status === 'failed')   throw Object.assign(new Error(data.error || 'Prediction failed'), { code: 'failed' });
-      if (data.status === 'canceled') throw Object.assign(new Error('Prediction canceled'), { code: 'canceled' });
+    if (!resp.ok) {
+      const txt = await resp.text().catch(() => '');
+      throw Object.assign(new Error('Gemini error ' + resp.status + ' — ' + txt), { code: resp.status });
     }
-  },
-
-  async run(modelSlug, input, { onProgress, timeoutMs } = {}) {
-    const key = requireKey('replicate');
-    const [owner, name] = modelSlug.split('/');
-    let data = await this._proxy('POST', `/v1/models/${owner}/${name}/predictions`, { input }, key);
-    if (data.status === 'succeeded') return data.output;
-    return this.poll(data.id, key, { onProgress, timeoutMs });
-  },
-
-  async runCustom(version, input, { onProgress, timeoutMs } = {}) {
-    const key = requireKey('replicate');
-    let data = await this._proxy('POST', '/v1/predictions', { version, input }, key);
-    if (data.status === 'succeeded') return data.output;
-    return this.poll(data.id, key, { onProgress, timeoutMs });
-  },
-
-  async cancel(id) {
-    const key = window.AIKeys.get('replicate');
-    if (!key) return;
-    await this._proxy('POST', `/v1/predictions/${id}/cancel`, {}, key);
-  },
-
-  async getAccount() {
-    const key = requireKey('replicate');
-    return this._proxy('GET', '/v1/account', null, key);
-  },
-};
-
-window.replicate = window.Replicate;
-
-/* ── Suno API helpers ────────────────────────────────────────────────────── */
-window.Suno = {
-  _sunoProxy(method, path, body, key) {
-    const base = window.getSunoBase();
-    const url = `${base}${path}`;
-    const opts = {
-      method,
-      headers: { 'Authorization': `Bearer ${key}`, 'X-API-Key': key, 'Content-Type': 'application/json' },
-    };
-    if (body) opts.body = JSON.stringify(body);
-    return fetch(url, opts).then(r => r.json());
-  },
-
-  async generate(input, { onProgress, timeoutMs = 900000 } = {}) {
-    const key = requireKey('suno');
-    const resp = await this._sunoProxy('POST', '/api/v1/generate', input, key);
-    if (!resp.data?.taskId) throw new Error(resp.msg || 'Suno error');
-    const taskId = resp.data.taskId;
-    const start = Date.now();
-    while (true) {
-      if (Date.now() - start > timeoutMs) throw Object.assign(new Error('Suno timed out'), { code: 'timeout' });
-      await new Promise(r => setTimeout(r, 3000));
-      const poll = await this._sunoProxy('GET', `/api/v1/generate/${taskId}`, null, key);
-      const status = poll.data?.status;
-      if (onProgress) onProgress({ status, data: poll.data });
-      if (status === 'SUCCESS') return poll.data.response?.sunoData || [];
-      if (status === 'FAILED')  throw new Error('Suno generation failed');
-    }
-  },
-
-  async generateLyrics(prompt) {
-    const key = requireKey('suno');
-    const resp = await this._sunoProxy('POST', '/api/v1/lyrics', { prompt }, key);
-    return resp.data;
-  },
-
-  async extend(audioId, prompt, durationSeconds = 60) {
-    const key = requireKey('suno');
-    return this._sunoProxy('POST', '/api/v1/extend', { audioId, prompt, durationSeconds }, key);
-  },
-
-  async generateMusicVideo(taskId, audioId, { onProgress, timeoutMs = 900000 } = {}) {
-    const key = requireKey('suno');
-    const resp = await this._sunoProxy('POST', '/api/v1/mp4/generate', {
-      taskId, audioId, author: 'Desi Jugad User', domainName: 'desijugad.co.in',
-    }, key);
-    const videoTaskId = resp.data?.taskId;
-    if (!videoTaskId) throw new Error('No video task ID from Suno');
-    const start = Date.now();
-    while (true) {
-      if (Date.now() - start > timeoutMs) throw Object.assign(new Error('Video timed out'), { code: 'timeout' });
-      await new Promise(r => setTimeout(r, 5000));
-      const poll = await this._sunoProxy('GET', `/api/v1/mp4/record-info?taskId=${videoTaskId}`, null, key);
-      if (onProgress) onProgress({ data: poll.data });
-      if (poll.data?.videoUrl) return poll.data.videoUrl;
-    }
-  },
-
-  async getCredits() {
-    const key = window.AIKeys.get('suno');
-    if (!key) return null;
-    const resp = await this._sunoProxy('GET', '/api/v1/credit', null, key);
-    return resp.data?.credits ?? null;
-  },
-};
-
-window.suno = window.Suno;
-
-/* ── Upload temp file (for Replicate audio input) ────────────────────────── */
-window.uploadTempFile = async function(file, { onStatus } = {}) {
-  if (onStatus) onStatus('Uploading audio to tmpfiles.org…');
-  try {
-    const form = new FormData();
-    form.append('file', file);
-    const resp = await fetch('https://tmpfiles.org/api/v1/upload', { method: 'POST', body: form });
     const data = await resp.json();
-    if (data.data?.url) {
-      const rawUrl = data.data.url.replace('tmpfiles.org/', 'tmpfiles.org/dl/');
-      if (onStatus) onStatus('Audio hosted at tmpfiles.org (1-hour link)');
-      return rawUrl;
+    const text = data?.candidates?.[0]?.content?.parts?.map(p => p.text).filter(Boolean).join('') || '';
+    return { text, raw: data };
+  },
+
+  /**
+   * Generate an image with Gemini's image-output models (Imagen 3 / Imagen 4 / gemini-2.5-flash-image).
+   * Returns array of { mimeType, data: base64 }.
+   */
+  async generateImage(model, prompt, { aspectRatio, negativePrompt, signal } = {}) {
+    const key = requireKey('gemini');
+    // Gemini's image-output endpoint shape: same generateContent, response includes inlineData parts.
+    const contents = [{ role: 'user', parts: [{ text: prompt }] }];
+    const body = { contents };
+    if (aspectRatio) body.generationConfig = { ...(body.generationConfig || {}), responseMimeType: 'image/png' };
+
+    const url = `${GEMINI_BASE}/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(key)}`;
+    const resp = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+      signal,
+    });
+    if (resp.status === 401 || resp.status === 403) throw Object.assign(new Error('Key rejected'), { code: 401 });
+    if (resp.status === 429) throw Object.assign(new Error('Rate limited'), { code: 429 });
+    if (!resp.ok) {
+      const txt = await resp.text().catch(() => '');
+      throw Object.assign(new Error('Gemini error ' + resp.status + ' — ' + txt), { code: resp.status });
     }
-  } catch {}
-  if (onStatus) onStatus('tmpfiles.org failed, trying file.io…');
-  try {
-    const form = new FormData();
-    form.append('file', file);
-    const resp = await fetch('https://file.io/?expires=1d', { method: 'POST', body: form });
     const data = await resp.json();
-    if (data.link) {
-      if (onStatus) onStatus('Audio hosted at file.io (24-hour link)');
-      return data.link;
+    const parts = data?.candidates?.[0]?.content?.parts || [];
+    const images = parts
+      .filter(p => p.inlineData)
+      .map(p => ({ mimeType: p.inlineData.mimeType, data: p.inlineData.data }));
+    if (!images.length) {
+      const txt = parts.map(p => p.text).filter(Boolean).join(' ');
+      throw new Error(txt || 'No image returned by Gemini');
     }
-  } catch {}
-  throw new Error('Could not host audio file — please paste a direct URL instead');
+    return images;
+  },
+
+  /**
+   * Edit an image (multimodal: image-in, image-out) via Gemini.
+   * inputFile: File/Blob, prompt: text instruction.
+   */
+  async editImage(model, inputFile, prompt, opts = {}) {
+    const b64 = await fileToBase64(inputFile);
+    const parts = [
+      { text: prompt },
+      { inlineData: { mimeType: inputFile.type || 'image/png', data: b64 } },
+    ];
+    const key = requireKey('gemini');
+    const url = `${GEMINI_BASE}/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(key)}`;
+    const resp = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ contents: [{ role: 'user', parts }] }),
+      signal: opts.signal,
+    });
+    if (resp.status === 401 || resp.status === 403) throw Object.assign(new Error('Key rejected'), { code: 401 });
+    if (!resp.ok) {
+      const txt = await resp.text().catch(() => '');
+      throw Object.assign(new Error('Gemini error ' + resp.status + ' — ' + txt), { code: resp.status });
+    }
+    const data = await resp.json();
+    const ps = data?.candidates?.[0]?.content?.parts || [];
+    const out = ps.filter(p => p.inlineData).map(p => ({ mimeType: p.inlineData.mimeType, data: p.inlineData.data }));
+    if (!out.length) {
+      const txt = ps.map(p => p.text).filter(Boolean).join(' ');
+      throw new Error(txt || 'Gemini did not return an image');
+    }
+    return out;
+  },
+
+  /** List available models (handy for the Settings page). */
+  async listModels() {
+    const key = requireKey('gemini');
+    const resp = await fetch(`${GEMINI_BASE}/v1beta/models?key=${encodeURIComponent(key)}`);
+    if (!resp.ok) throw Object.assign(new Error('Gemini error ' + resp.status), { code: resp.status });
+    const data = await resp.json();
+    return data.models || [];
+  },
 };
 
-/* ── Error code → friendly message ──────────────────────────────────────── */
+/* ── Pollinations (free, no key, CORS-friendly) ─────────────────────────── */
+window.Pollinations = {
+  /**
+   * Build a Pollinations image URL. The image is generated server-side and
+   * delivered as a normal <img> response, so no auth headers are needed.
+   */
+  imageUrl(prompt, { width = 1024, height = 1024, seed, model = 'flux', nologo = true } = {}) {
+    const params = new URLSearchParams();
+    if (width)  params.set('width', String(width));
+    if (height) params.set('height', String(height));
+    if (seed != null) params.set('seed', String(seed));
+    if (model)  params.set('model', model);
+    if (nologo) params.set('nologo', 'true');
+    return `${POLLINATIONS_BASE}/prompt/${encodeURIComponent(prompt)}?${params.toString()}`;
+  },
+
+  /** Fetch as a Blob (so the user can download it). */
+  async fetchImage(prompt, opts = {}) {
+    const url = this.imageUrl(prompt, opts);
+    const resp = await fetch(url);
+    if (!resp.ok) throw new Error('Pollinations error ' + resp.status);
+    return resp.blob();
+  },
+};
+
+/* ── Hugging Face Inference API (optional, BYOK) ────────────────────────── */
+window.HF = {
+  async run(model, body) {
+    const key = requireKey('hf');
+    const resp = await fetch(`${HF_BASE}/models/${model}`, {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${key}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+    if (resp.status === 401 || resp.status === 403) throw Object.assign(new Error('Key rejected'), { code: 401 });
+    if (resp.status === 429) throw Object.assign(new Error('Rate limited'), { code: 429 });
+    if (!resp.ok) {
+      const txt = await resp.text().catch(() => '');
+      throw Object.assign(new Error('HF error ' + resp.status + ' — ' + txt), { code: resp.status });
+    }
+    const ct = resp.headers.get('content-type') || '';
+    return ct.includes('application/json') ? resp.json() : resp.blob();
+  },
+};
+
+/* ── Friendly error → toast ─────────────────────────────────────────────── */
 window.handleAIError = function(err, retryFn) {
   if (err instanceof NoKeyError) return;
   const code = err.code || 0;
   if (code === 401) {
     window.showErrorToast('Key rejected', 'Your API key was rejected. Check it in settings.', { label: 'Fix in Settings →', fn: "window.location='/ai/settings.html'" });
-  } else if (code === 402) {
-    window.showErrorToast('Out of credits', 'Top up your Replicate account to continue.', { label: 'Add credits →', fn: "window.open('https://replicate.com/account/billing')" });
   } else if (code === 429) {
-    window.showErrorToast('Too many requests', 'Waiting 20 seconds then retrying…', null);
+    window.showErrorToast('Too many requests', 'Slow down a moment, then try again.', null);
     if (retryFn) setTimeout(retryFn, 20000);
-  } else if (code === 'timeout') {
-    window.showErrorToast('Taking too long', 'This is taking longer than expected. Check your Replicate dashboard for the prediction status.', { label: 'Replicate Dashboard →', fn: "window.open('https://replicate.com/predictions')" });
   } else if (!navigator.onLine) {
-    window.showErrorToast('You\'re offline', 'Generations need internet. Your offline converters still work.', null);
+    window.showErrorToast('You\'re offline', 'AI generations need internet. Your offline converters still work.', null);
   } else {
-    window.showErrorToast('Something went wrong', err.message || 'Replicate returned an error. Try again in a moment.', retryFn ? { label: 'Retry', fn: retryFn.toString() + '()' } : null);
+    window.showErrorToast('Aila! Kuch toot gaya', err.message || 'Try again in a moment.', retryFn ? { label: 'Retry', fn: retryFn.toString() + '()' } : null);
   }
 };
 
-/* ── Offline banner ──────────────────────────────────────────────────────── */
+/* ── Offline banner ─────────────────────────────────────────────────────── */
 (function() {
   function checkOnline() {
     let banner = document.getElementById('offline-banner');
@@ -336,7 +316,7 @@ window.handleAIError = function(err, retryFn) {
         banner = document.createElement('div');
         banner.id = 'offline-banner';
         banner.style.cssText = 'position:fixed;top:0;left:0;right:0;background:var(--danger);color:#fff;text-align:center;padding:0.6rem;font-size:0.9rem;z-index:9998;';
-        banner.textContent = 'You\'re offline. Generations need internet. Your file converters still work.';
+        banner.textContent = 'You\'re offline. AI generations need internet. Your file converters still work.';
         document.body.prepend(banner);
       }
     } else if (banner) {
