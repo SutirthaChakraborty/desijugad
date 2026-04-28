@@ -6,11 +6,9 @@ Allow: /
 Disallow: /*.json$
 Disallow: /api/
 Disallow: /index.legacy.html
-Disallow: /google4b42c7ae465ac95d.html
 Disallow: /src/
 
 # AI crawlers — we're okay with being cited, not okay with being scraped for training.
-# Comment these lines out if you're happy to be included in AI training datasets.
 User-agent: GPTBot
 Disallow: /
 
@@ -26,16 +24,4 @@ Disallow: /
 # Be polite.
 Crawl-delay: 1
 
-# Sitemap index — Google reads all child sitemaps from here
 Sitemap: https://desijugad.co.in/sitemap.xml
-
-# Individual child sitemaps (for Bing, Yahoo, and other crawlers)
-Sitemap: https://desijugad.co.in/sitemap-core.xml
-Sitemap: https://desijugad.co.in/sitemap-tools-image.xml
-Sitemap: https://desijugad.co.in/sitemap-tools-pdf.xml
-Sitemap: https://desijugad.co.in/sitemap-tools-media.xml
-Sitemap: https://desijugad.co.in/sitemap-tools-data.xml
-Sitemap: https://desijugad.co.in/sitemap-tools-calc.xml
-Sitemap: https://desijugad.co.in/sitemap-ai.xml
-Sitemap: https://desijugad.co.in/sitemap-blog.xml
-Sitemap: https://desijugad.co.in/sitemap-images.xml
