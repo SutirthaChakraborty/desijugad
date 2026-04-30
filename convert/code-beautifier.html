@@ -297,5 +297,6 @@ document.getElementById('copyBtn').addEventListener('click', () => { navigator.c
 document.getElementById('swapBtn').addEventListener('click', () => { inputCode.value = outputCode.value; outputCode.value = ''; inputCount.textContent = inputCode.value.length.toLocaleString() + ' chars'; outputCount.textContent = '0 chars'; });
 document.getElementById('pasteBtn').addEventListener('click', () => { navigator.clipboard.readText().then(t => { inputCode.value = t; inputCount.textContent = t.length.toLocaleString() + ' chars'; }).catch(() => showToast('Clipboard access denied')); });
 </script>
+<script src="../assets/js/seo-howto.js" defer></script>
 </body>
 </html>

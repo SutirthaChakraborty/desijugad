@@ -25,3 +25,4 @@ Disallow: /
 Crawl-delay: 1
 
 Sitemap: https://desijugad.co.in/sitemap.xml
+Sitemap: https://desijugad.co.in/sitemap-blog.xml

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
+  <ShortName>Desi Jugad</ShortName>
+  <Description>Search 130+ free file converter tools on Desi Jugad — no upload, no sign-up</Description>
+  <InputEncoding>UTF-8</InputEncoding>
+  <Image width="16" height="16" type="image/png">https://desijugad.co.in/assets/img/favicon-16.png</Image>
+  <Image width="32" height="32" type="image/png">https://desijugad.co.in/assets/img/favicon-32.png</Image>
+  <Url type="text/html" template="https://desijugad.co.in/?q={searchTerms}"/>
+  <Url type="application/opensearchdescription+xml" rel="self" template="https://desijugad.co.in/opensearch.xml"/>
+  <Contact>https://desijugad.co.in/contact.html</Contact>
+  <Tags>file converter pdf image video audio free browser private india</Tags>
+  <LongName>Desi Jugad — Free File Converter Tools</LongName>
+  <Query role="example" searchTerms="HEIC to JPG"/>
+  <Developer>Desi Jugad Team</Developer>
+  <Attribution>Search powered by Desi Jugad. No upload. No sign-up.</Attribution>
+  <SyndicationRight>open</SyndicationRight>
+  <AdultContent>false</AdultContent>
+  <Language>en-IN</Language>
+  <Language>en</Language>
+  <OutputEncoding>UTF-8</OutputEncoding>
+</OpenSearchDescription>
