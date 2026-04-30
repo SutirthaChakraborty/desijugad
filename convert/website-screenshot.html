@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/img/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/img/apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Website Screenshot Tool — HTML to PNG/JPG Free | Desi Jugad</title>
+<meta name="description" content="Capture HTML code as a PNG or JPG screenshot in your browser. Paste HTML, preview, and download the screenshot. Also screenshot the current page. Free, no upload.">
+<meta name="keywords" content="website screenshot, html to png, html to jpg, webpage screenshot online, capture html as image, screenshot tool browser free">
+<meta name="author" content="Desi Jugad">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://desijugad.co.in/convert/website-screenshot.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Website Screenshot Tool — HTML to PNG/JPG Free | Desi Jugad">
+<meta property="og:description" content="Capture HTML code as a PNG or JPG screenshot in your browser. Paste HTML, preview, and download the screenshot. Free, no upload.">
+<meta property="og:url" content="https://desijugad.co.in/convert/website-screenshot.html">
+<meta property="og:image" content="https://desijugad.co.in/assets/img/og-default.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Website Screenshot Tool — HTML to PNG/JPG Free | Desi Jugad">
+<meta name="twitter:description" content="Capture HTML code as a PNG or JPG screenshot in your browser. Paste HTML, preview, and download. Free, no upload.">
+<meta name="twitter:image" content="https://desijugad.co.in/assets/img/og-default.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,30..100;1,9..144,300..700,30..100&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Website Screenshot Tool","url":"https://desijugad.co.in/convert/website-screenshot.html","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://desijugad.co.in/"},{"@type":"ListItem","position":2,"name":"Converters","item":"https://desijugad.co.in/#converters"},{"@type":"ListItem","position":3,"name":"Website Screenshot","item":"https://desijugad.co.in/convert/website-screenshot.html"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How do I take a screenshot of a website online?","acceptedAnswer":{"@type":"Answer","text":"Paste your HTML code into the editor, click Preview, and then click Screenshot to PNG or Screenshot to JPG. The tool renders the HTML in a sandboxed iframe and captures it as an image using html2canvas."}},{"@type":"Question","name":"How do I screenshot the full page in Chrome?","acceptedAnswer":{"@type":"Answer","text":"In Chrome DevTools (F12), press Ctrl+Shift+P (or Cmd+Shift+P on Mac) to open the Command Menu, type 'screenshot', and choose 'Capture full size screenshot'. This captures the entire page including content below the fold."}},{"@type":"Question","name":"How do I take a screenshot on Windows?","acceptedAnswer":{"@type":"Answer","text":"Press Win+Shift+S to open the Snipping Tool for a region screenshot, Win+PrtScn to save the full screen to your Screenshots folder, or Alt+PrtScn for the active window only."}},{"@type":"Question","name":"How do I take a screenshot on Mac?","acceptedAnswer":{"@type":"Answer","text":"Press Cmd+Shift+3 for full screen, Cmd+Shift+4 for a selected region, or Cmd+Shift+4 then Space to capture a specific window. Screenshots are saved to your Desktop as PNG files. Use Cmd+Ctrl+Shift+3 or 4 to copy to clipboard instead."}}]}</script>
+</head>
+<body>
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="../" class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="../#converters">Converters</a></li>
+      <li><a href="../ai/">AI Studio <span class="badge-new">NEW</span></a></li>
+      <li><a href="../blog/">Blog</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../#converters" class="nav-cta">All tools</a></li>
+    </ul>
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</header>
+<main class="converter-page">
+  <div class="container">
+    <nav class="breadcrumb"><a href="../">Home</a><span class="sep">/</span><a href="../#converters">Converters</a><span class="sep">/</span><span>Website Screenshot</span></nav>
+    <div class="converter-header">
+      <h1>Screenshot any HTML, <em class="italic">instantly.</em></h1>
+      <p class="lead">Paste HTML code, get a PNG or JPG screenshot. Or capture this page right now. No uploads, no extensions.</p>
+    </div>
+
+    <div class="options-row" style="flex-wrap:wrap;margin-bottom:1rem;">
+      <div class="option">
+        <label>Output format</label>
+        <select id="formatSelect">
+          <option value="png">PNG (lossless)</option>
+          <option value="jpg">JPG (smaller file)</option>
+        </select>
+      </div>
+      <div class="option">
+        <label>Scale / DPI</label>
+        <select id="scaleSelect">
+          <option value="1">1× (72 dpi)</option>
+          <option value="2" selected>2× (144 dpi, sharper)</option>
+          <option value="3">3× (216 dpi, print quality)</option>
+        </select>
+      </div>
+      <div class="option" id="jpgQualityWrap" style="display:none;">
+        <label>JPG quality</label>
+        <select id="jpgQuality">
+          <option value="0.95">95% (best)</option>
+          <option value="0.85" selected>85% (recommended)</option>
+          <option value="0.70">70% (smallest)</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="textarea-grid">
+      <div class="textarea-panel">
+        <div class="textarea-header">
+          <span class="label">HTML Code</span>
+          <div class="actions">
+            <button class="textarea-btn" id="sampleBtn">Sample</button>
+            <button class="textarea-btn" id="clearBtn">Clear</button>
+          </div>
+        </div>
+        <div class="textarea-body">
+          <textarea id="htmlInput" placeholder="Paste your HTML code here…" spellcheck="false" style="min-height:240px;font-family:var(--font-mono,monospace);font-size:0.82rem;"></textarea>
+        </div>
+      </div>
+      <div class="textarea-panel">
+        <div class="textarea-header">
+          <span class="label">Preview</span>
+          <div class="actions">
+            <button class="textarea-btn" id="refreshBtn">Refresh</button>
+          </div>
+        </div>
+        <div class="textarea-body" style="padding:0;overflow:hidden;border-radius:0 0 8px 8px;">
+          <iframe id="previewFrame" sandbox="allow-same-origin allow-scripts" style="width:100%;height:260px;border:none;display:block;background:#fff;"></iframe>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:0.75rem;margin-top:1rem;flex-wrap:wrap;align-items:center;">
+      <button class="btn btn-primary" id="screenshotHtmlBtn">Screenshot HTML</button>
+      <button class="btn btn-secondary" id="screenshotPageBtn">Screenshot this page</button>
+    </div>
+
+    <div id="statusMsg" style="margin-top:1rem;font-size:0.9rem;color:var(--muted);min-height:1.4rem;"></div>
+
+    <div id="resultWrap" style="display:none;margin-top:1.5rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.75rem;flex-wrap:wrap;gap:0.5rem;">
+        <h3 id="resultTitle" style="margin:0;font-size:1rem;"></h3>
+        <button class="btn btn-secondary" id="downloadImgBtn" style="font-size:0.85rem;padding:0.35rem 0.9rem;">Download</button>
+      </div>
+      <img id="resultImg" style="max-width:100%;border:1px solid var(--border);border-radius:8px;" alt="Screenshot result">
+    </div>
+
+    <section class="info-section">
+      <h2>Screenshot shortcuts — every OS</h2>
+
+      <h3>Windows</h3>
+      <table style="width:100%;border-collapse:collapse;font-size:0.9rem;margin-bottom:1rem;">
+        <thead><tr style="background:var(--surface,#f5f5f5);"><th style="padding:0.5rem;text-align:left;border:1px solid var(--border);">Shortcut</th><th style="padding:0.5rem;text-align:left;border:1px solid var(--border);">Action</th></tr></thead>
+        <tbody>
+          <tr><td style="padding:0.45rem 0.5rem;border:1px solid var(--border);"><kbd>Win + Shift + S</kbd></td><td style="padding:0.45rem 0.5rem;border:1px solid var(--border);">Snipping Tool — region select</td></tr>
+          <tr><td style="padding:0.45rem 0.5rem;border:1px solid var(--border);"><kbd>Win + PrtScn</kbd></td><td style="padding:0.45rem 0.5rem;border:1px solid var(--border);">Full screen → saved to Pictures/Screenshots</td></tr>
+          <tr><td style="padding:0.45rem 0.5rem;border:1px solid var(--border);"><kbd>Alt + PrtScn</kbd></td><td style="padding:0.45rem 0.5rem;border:1px solid var(--border);">Active window → clipboard</td></tr>
+        </tbody>
+      </table>
+
+      <h3>macOS</h3>
+      <table style="width:100%;border-collapse:collapse;font-size:0.9rem;margin-bottom:1rem;">
+        <thead><tr style="background:var(--surface,#f5f5f5);"><th style="padding:0.5rem;text-align:left;border:1px solid var(--border);">Shortcut</th><th style="padding:0.5rem;text-align:left;border:1px solid var(--border);">Action</th></tr></thead>
+        <tbody>
+          <tr><td style="padding:0.45rem 0.5rem;border:1px solid var(--border);"><kbd>Cmd + Shift + 3</kbd></td><td style="padding:0.45rem 0.5rem;border:1px solid var(--border);">Full screen → Desktop</td></tr>
+          <tr><td style="padding:0.45rem 0.5rem;border:1px solid var(--border);"><kbd>Cmd + Shift + 4</kbd></td><td style="padding:0.45rem 0.5rem;border:1px solid var(--border);">Region select → Desktop</td></tr>
+          <tr><td style="padding:0.45rem 0.5rem;border:1px solid var(--border);"><kbd>Cmd + Shift + 4 + Space</kbd></td><td style="padding:0.45rem 0.5rem;border:1px solid var(--border);">Window capture</td></tr>
+          <tr><td style="padding:0.45rem 0.5rem;border:1px solid var(--border);"><kbd>Cmd + Shift + 5</kbd></td><td style="padding:0.45rem 0.5rem;border:1px solid var(--border);">Screenshot toolbar (all options)</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Chrome / Edge DevTools full-page screenshot</h3>
+      <p>Press <kbd>F12</kbd> to open DevTools, then <kbd>Ctrl+Shift+P</kbd> (or <kbd>Cmd+Shift+P</kbd> on Mac), type <code>screenshot</code>, and choose <strong>Capture full size screenshot</strong>. This captures the entire scrollable page, not just the viewport.</p>
+
+      <h2>FAQ</h2>
+      <details class="faq-item" open><summary>Can I screenshot a live website URL?</summary><p>Browser security prevents capturing content from other domains directly. For live URL screenshots, use browser extensions like GoFullPage or FireShot, or online services like screenshotmachine.com. This tool works best with HTML you paste directly.</p></details>
+      <details class="faq-item"><summary>What is the difference between PNG and JPG screenshots?</summary><p>PNG is lossless — perfect for text, UI mockups, and anything with sharp edges or flat colors. JPG is lossy but produces smaller files — better for photographs and design previews where pixel-perfect accuracy isn't required.</p></details>
+      <details class="faq-item"><summary>Why does the screenshot look different from the live page?</summary><p>html2canvas re-renders the DOM using a Canvas API approximation. Some CSS features (certain gradients, blend modes, SVG filters, web fonts from external CDNs) may render differently than a real browser screenshot.</p></details>
+      <details class="faq-item"><summary>How do I take a high-resolution screenshot for print?</summary><p>Use 3× scale for print-quality output at 216 dpi. For very high resolution (300+ dpi), use a dedicated tool or set your browser zoom level to 200% before using the browser's Capture full size screenshot DevTools option.</p></details>
+    </section>
+
+    <div class="related-tools">
+      <h3>Related tools</h3>
+      <div class="related-grid">
+        <a href="save-website-as-pdf.html" class="related-card">📄 Save as PDF</a>
+        <a href="image-compress.html" class="related-card">🗜️ Image Compress</a>
+        <a href="image-converter.html" class="related-card">🖼️ Image Converter</a>
+        <a href="image-resize.html" class="related-card">📐 Image Resize</a>
+      </div>
+    </div>
+  </div>
+</main>
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid footer-grid-5">
+      <div class="footer-brand"><div class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></div><p>Free, private file conversion for everyone.</p></div>
+      <div class="footer-col"><h5>Tools</h5><ul><li><a href="image-converter.html">Image Converter</a></li><li><a href="pdf-merge.html">PDF Tools</a></li><li><a href="audio-converter.html">Audio Converter</a></li><li><a href="json-to-csv.html">JSON to CSV</a></li></ul></div>
+      <div class="footer-col"><h5>AI Studio</h5><ul><li><a href="../ai/image.html">AI Images</a></li><li><a href="../ai/bg-remove.html">Background Remover</a></li></ul></div>
+      <div class="footer-col"><h5>Company</h5><ul><li><a href="../about.html">About</a></li><li><a href="../blog/">Blog</a></li><li><a href="../privacy.html">Privacy</a></li><li><a href="../terms.html">Terms</a></li></ul></div>
+      <div class="footer-col"><h5>Help</h5><ul><li><a href="../contact.html">Contact</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><div>© <span data-year>2026</span> Desi Jugad.</div><div class="made-in"><span class="flag-in"></span>Made in India, built for the world.</div></div>
+  </div>
+</footer>
+<script src="../assets/js/main.js"></script>
+<script>
+(function(){
+  const htmlInput = document.getElementById('htmlInput');
+  const previewFrame = document.getElementById('previewFrame');
+  const formatSelect = document.getElementById('formatSelect');
+  const scaleSelect = document.getElementById('scaleSelect');
+  const jpgQuality = document.getElementById('jpgQuality');
+  const jpgQualityWrap = document.getElementById('jpgQualityWrap');
+  const screenshotHtmlBtn = document.getElementById('screenshotHtmlBtn');
+  const screenshotPageBtn = document.getElementById('screenshotPageBtn');
+  const refreshBtn = document.getElementById('refreshBtn');
+  const sampleBtn = document.getElementById('sampleBtn');
+  const clearBtn = document.getElementById('clearBtn');
+  const statusMsg = document.getElementById('statusMsg');
+  const resultWrap = document.getElementById('resultWrap');
+  const resultImg = document.getElementById('resultImg');
+  const resultTitle = document.getElementById('resultTitle');
+  const downloadImgBtn = document.getElementById('downloadImgBtn');
+
+  let lastDataUrl = '';
+  let lastFilename = '';
+
+  const SAMPLE_HTML = `<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', sans-serif; background: #0f0f23; color: #fff; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+  .card { background: linear-gradient(135deg, #1a1a3e 0%, #16213e 100%); border: 1px solid rgba(255,255,255,.1); border-radius: 20px; padding: 3rem; max-width: 480px; text-align: center; }
+  .badge { background: #e63946; color: #fff; font-size: 0.75rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; padding: 0.3rem 0.8rem; border-radius: 999px; display: inline-block; margin-bottom: 1.2rem; }
+  h1 { font-size: 2.5rem; font-weight: 800; line-height: 1.2; margin-bottom: 1rem; }
+  h1 span { color: #4cc9f0; }
+  p { color: rgba(255,255,255,.65); line-height: 1.6; margin-bottom: 1.5rem; }
+  .btn { background: linear-gradient(90deg, #4cc9f0, #4361ee); color: #fff; border: none; padding: 0.75rem 2rem; border-radius: 999px; font-size: 1rem; font-weight: 600; cursor: pointer; }
+</style>
+</head>
+<body>
+  <div class="card">
+    <span class="badge">New Feature</span>
+    <h1>Built for <span>India,</span> loved worldwide.</h1>
+    <p>The fastest way to convert, compress, and transform your files — no sign-up, no upload limits, totally free.</p>
+    <button class="btn">Get Started Free</button>
+  </div>
+</body>
+</html>`;
+
+  formatSelect.addEventListener('change', () => {
+    jpgQualityWrap.style.display = formatSelect.value === 'jpg' ? '' : 'none';
+  });
+
+  sampleBtn.addEventListener('click', () => { htmlInput.value = SAMPLE_HTML; updatePreview(); });
+  clearBtn.addEventListener('click', () => { htmlInput.value = ''; previewFrame.srcdoc = ''; resultWrap.style.display = 'none'; });
+  refreshBtn.addEventListener('click', updatePreview);
+  htmlInput.addEventListener('input', debounce(updatePreview, 600));
+
+  function updatePreview() {
+    const html = htmlInput.value.trim();
+    if (!html) { previewFrame.srcdoc = ''; return; }
+    previewFrame.srcdoc = html;
+  }
+
+  screenshotHtmlBtn.addEventListener('click', async () => {
+    const html = htmlInput.value.trim();
+    if (!html) { statusMsg.textContent = 'Paste some HTML first.'; return; }
+    screenshotHtmlBtn.disabled = true;
+    statusMsg.textContent = 'Rendering HTML…';
+    previewFrame.srcdoc = html;
+    await new Promise(r => { previewFrame.onload = r; setTimeout(r, 1500); });
+    const target = previewFrame.contentDocument.body || previewFrame.contentDocument.documentElement;
+    await doScreenshot(target, 'html-screenshot');
+    screenshotHtmlBtn.disabled = false;
+  });
+
+  screenshotPageBtn.addEventListener('click', async () => {
+    screenshotPageBtn.disabled = true;
+    statusMsg.textContent = 'Capturing page…';
+    await doScreenshot(document.body, 'page-screenshot');
+    screenshotPageBtn.disabled = false;
+  });
+
+  async function doScreenshot(element, baseName) {
+    try {
+      const sc = parseInt(scaleSelect.value);
+      const fmt = formatSelect.value;
+      const quality = parseFloat(jpgQuality.value);
+      const canvas = await html2canvas(element, {
+        scale: sc,
+        useCORS: true,
+        allowTaint: true,
+        logging: false,
+        backgroundColor: fmt === 'jpg' ? '#ffffff' : null
+      });
+      const mime = fmt === 'png' ? 'image/png' : 'image/jpeg';
+      const dataUrl = fmt === 'png' ? canvas.toDataURL('image/png') : canvas.toDataURL('image/jpeg', quality);
+      const filename = `${baseName}.${fmt}`;
+      lastDataUrl = dataUrl;
+      lastFilename = filename;
+
+      resultImg.src = dataUrl;
+      resultTitle.textContent = `${canvas.width}×${canvas.height}px · ${formatBytes(Math.round(dataUrl.length * 0.75))}`;
+      resultWrap.style.display = '';
+      statusMsg.textContent = `Screenshot ready — ${filename}`;
+
+      // Auto download
+      const a = document.createElement('a');
+      a.href = dataUrl;
+      a.download = filename;
+      a.click();
+    } catch(e) {
+      statusMsg.textContent = 'Error: ' + e.message;
+      console.error(e);
+    }
+  }
+
+  downloadImgBtn.addEventListener('click', () => {
+    if (!lastDataUrl) return;
+    const a = document.createElement('a');
+    a.href = lastDataUrl;
+    a.download = lastFilename;
+    a.click();
+  });
+
+  function formatBytes(b) {
+    if (b < 1024) return b + ' B';
+    if (b < 1048576) return (b/1024).toFixed(0) + ' KB';
+    return (b/1048576).toFixed(1) + ' MB';
+  }
+
+  function debounce(fn, ms) {
+    let t;
+    return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), ms); };
+  }
+})();
+</script>
+</body>
+</html>

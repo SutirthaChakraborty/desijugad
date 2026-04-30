@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/img/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/img/apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GIF Maker — Create Animated GIF from Images Free | Desi Jugad</title>
+<meta name="description" content="Create animated GIFs from multiple images online for free. Upload PNG or JPG frames, set frame delay, and download your animated GIF. Runs 100% in your browser.">
+<meta name="keywords" content="gif maker, create animated gif, images to gif, png to gif, jpg to gif, make gif online free, animated gif creator">
+<meta name="author" content="Desi Jugad">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://desijugad.co.in/convert/gif-maker.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="GIF Maker — Create Animated GIF from Images Free">
+<meta property="og:description" content="Turn a sequence of PNG or JPG images into an animated GIF online. Set frame delay, resize, and download. Free and private.">
+<meta property="og:url" content="https://desijugad.co.in/convert/gif-maker.html">
+<meta property="og:image" content="https://desijugad.co.in/assets/img/og-default.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="GIF Maker — Create Animated GIF from Images Free">
+<meta name="twitter:description" content="Turn a sequence of PNG or JPG images into an animated GIF online. Set frame delay, resize, and download. Free and private.">
+<meta name="twitter:image" content="https://desijugad.co.in/assets/img/og-default.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,30..100;1,9..144,300..700,30..100&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+<style>
+.frame-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 0.75rem; margin: 1.25rem 0; }
+.frame-thumb {
+  background: var(--bg-alt); border: 1px solid var(--line); border-radius: var(--radius-sm);
+  overflow: hidden; position: relative; cursor: grab; aspect-ratio: 1;
+  display: flex; align-items: center; justify-content: center;
+}
+.frame-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.frame-thumb .frame-num {
+  position: absolute; top: 4px; left: 4px; background: rgba(0,0,0,0.55);
+  color: #fff; font-size: 0.7rem; border-radius: 4px; padding: 1px 5px;
+  font-family: var(--font-mono);
+}
+.frame-thumb .frame-del {
+  position: absolute; top: 4px; right: 4px; background: rgba(0,0,0,0.55);
+  color: #fff; border: none; border-radius: 4px; cursor: pointer; font-size: 0.78rem;
+  padding: 1px 6px; line-height: 1.4;
+}
+.frame-thumb .frame-del:hover { background: var(--danger); }
+.frame-thumb.dragging { opacity: 0.4; border-color: var(--indigo); }
+.frame-thumb.drag-target { border-color: var(--indigo); border-style: dashed; }
+.gif-preview-wrap { text-align: center; margin: 1.5rem 0; }
+.gif-preview-wrap img { max-width: 100%; max-height: 360px; border-radius: var(--radius); border: 1px solid var(--line); display: inline-block; }
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"GIF Maker","url":"https://desijugad.co.in/convert/gif-maker.html","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://desijugad.co.in/"},{"@type":"ListItem","position":2,"name":"Converters","item":"https://desijugad.co.in/#converters"},{"@type":"ListItem","position":3,"name":"GIF Maker","item":"https://desijugad.co.in/convert/gif-maker.html"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How do I make an animated GIF from photos?","acceptedAnswer":{"@type":"Answer","text":"Upload multiple PNG or JPG images in the order you want them to appear, set the frame delay (e.g. 200ms for 5fps), optionally resize, then click 'Create GIF'. The animated GIF downloads automatically."}},{"@type":"Question","name":"How many frames can I add to a GIF?","acceptedAnswer":{"@type":"Answer","text":"You can add up to 50 frames. Note that large frames (above 600px) and many frames create large GIF files. For best results, resize frames to 400-600px before or during export."}},{"@type":"Question","name":"Why does my GIF look pixelated?","acceptedAnswer":{"@type":"Answer","text":"GIF is limited to 256 colors per frame due to its palette format. Photos with complex gradients look more pixelated than flat illustrations. For smooth photo animations, use WebP or MP4 format instead."}}]}</script>
+</head>
+<body>
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="../" class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="../#converters">Converters</a></li>
+      <li><a href="../ai/">AI Studio <span class="badge-new">NEW</span></a></li>
+      <li><a href="../blog/">Blog</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../#converters" class="nav-cta">All tools</a></li>
+    </ul>
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</header>
+
+<main class="converter-page">
+  <div class="container">
+    <nav class="breadcrumb"><a href="../">Home</a><span class="sep">/</span><a href="../#converters">Converters</a><span class="sep">/</span><span>GIF Maker</span></nav>
+    <div class="converter-header">
+      <h1>GIF Maker, <em class="italic">frames to animation.</em></h1>
+      <p class="lead">Upload a sequence of images, set the frame delay, and create an animated GIF. Drag frames to reorder them. Everything runs in your browser — nothing uploaded.</p>
+    </div>
+
+    <div class="dropzone" id="dropzone">
+      <div class="dropzone-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+      </div>
+      <h2>Drop image frames here</h2>
+      <p class="sub">PNG, JPG, WebP — up to 50 frames</p>
+      <input type="file" id="fileInput" class="dropzone-input" accept="image/png,image/jpeg,image/webp" multiple>
+      <button class="btn btn-primary" id="pickBtn">Choose frames</button>
+      <small>Images will be added in the order you select them.</small>
+
+      <div class="options-row" style="margin-top:2rem;">
+        <div class="option">
+          <label for="frameDelay">Frame delay (ms)</label>
+          <input type="number" id="frameDelay" min="10" max="5000" value="200" placeholder="200"
+                 style="padding:0.5rem 0.75rem;border:1px solid var(--line);border-radius:var(--radius-sm);font-size:0.95rem;width:120px;">
+          <span style="color:var(--ink-muted);font-size:0.82rem;margin-top:0.3rem;display:block;">200ms = 5fps, 100ms = 10fps, 40ms = 25fps</span>
+        </div>
+        <div class="option">
+          <label for="gifWidth">Resize to width (px)</label>
+          <input type="number" id="gifWidth" min="10" max="1200" placeholder="e.g. 480 (leave blank = auto)"
+                 style="padding:0.5rem 0.75rem;border:1px solid var(--line);border-radius:var(--radius-sm);font-size:0.95rem;width:140px;">
+        </div>
+        <div class="option">
+          <label for="loopCount">Loop</label>
+          <select id="loopCount" style="padding:0.5rem 0.75rem;border:1px solid var(--line);border-radius:var(--radius-sm);font-size:0.95rem;background:var(--surface);color:var(--ink);">
+            <option value="0">Forever</option>
+            <option value="1">Once</option>
+            <option value="3">3 times</option>
+            <option value="5">5 times</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div id="frameGrid" class="frame-grid" style="display:none;"></div>
+    <div id="frameCount" style="color:var(--ink-muted);font-size:0.85rem;margin-bottom:0.5rem;display:none;"></div>
+
+    <div class="convert-btn-row">
+      <button class="btn btn-secondary" id="clearBtn">Clear all</button>
+      <button class="btn btn-primary" id="makeGifBtn" disabled>Create GIF</button>
+    </div>
+
+    <div id="progressWrap" style="display:none;margin:1rem 0;">
+      <div style="height:6px;background:var(--bg-alt);border-radius:3px;overflow:hidden;">
+        <div id="progressBar" style="height:100%;width:0%;background:var(--indigo);transition:width 0.1s;border-radius:3px;"></div>
+      </div>
+      <p id="progressLabel" style="font-size:0.82rem;color:var(--ink-muted);margin-top:0.4rem;text-align:center;"></p>
+    </div>
+
+    <div class="gif-preview-wrap" id="gifPreviewWrap" style="display:none;">
+      <img id="gifPreview" src="" alt="Animated GIF preview">
+      <div style="margin-top:1rem;">
+        <button class="btn btn-primary" id="downloadGifBtn">Download GIF</button>
+      </div>
+    </div>
+
+    <section class="info-section">
+      <h2>About GIF format</h2>
+      <p>GIF (Graphics Interchange Format) was invented in 1987 and remains the most universally supported animated image format. It supports up to <strong>256 colors per frame</strong> and lossless per-frame compression. This makes it ideal for flat-color animations, logos, and simple illustrations, but it looks pixelated for photo sequences.</p>
+      <h3>GIF tips for best results</h3>
+      <ul>
+        <li><strong>Resize your frames</strong> — Keep GIF width at 400–600px. GIFs with high-resolution frames are very large.</li>
+        <li><strong>Limit the palette</strong> — Images with fewer distinct colors produce much smaller GIFs.</li>
+        <li><strong>Frame delay</strong> — For a smooth animation, 40–80ms (12–25fps) works well. For slides, use 1000–2000ms.</li>
+        <li><strong>Loop forever for memes</strong> — Most GIF memes are set to loop forever (0 = infinite).</li>
+      </ul>
+      <h2>FAQ</h2>
+      <details class="faq-item" open>
+        <summary>Why is my GIF so large in file size?</summary>
+        <p>GIF file size depends on image dimensions, number of frames, and color complexity. Resize frames to 480px wide and use images with simple flat colors to minimize file size. A 10-frame, 480px animation should be under 1MB.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Can I reorder frames after uploading?</summary>
+        <p>Yes — drag and drop the frame thumbnails to reorder them before clicking Create GIF.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Are there alternatives to GIF for animations?</summary>
+        <p>Yes. Animated WebP and APNG support millions of colors and are smaller than GIF. MP4/WebM video is even better for long animations. However, GIF remains the most universally compatible format for sharing on social media and messaging apps.</p>
+      </details>
+    </section>
+
+    <div class="related-tools">
+      <h3>Related tools</h3>
+      <div class="related-grid">
+        <a href="video-to-gif.html" class="related-card">🎬 Video to GIF</a>
+        <a href="gif-to-video.html" class="related-card">📹 GIF to Video</a>
+        <a href="image-converter.html" class="related-card">🖼️ Image Converter</a>
+        <a href="image-compress.html" class="related-card">🗜️ Image Compressor</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid footer-grid-5">
+      <div class="footer-brand"><div class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></div><p>Free, private file conversion for everyone.</p></div>
+      <div class="footer-col"><h5>Tools</h5><ul><li><a href="image-converter.html">Image Converter</a></li><li><a href="image-compress.html">Image Compressor</a></li><li><a href="image-resize.html">Image Resize</a></li><li><a href="heic-to-jpg.html">HEIC to JPG</a></li></ul></div>
+      <div class="footer-col"><h5>AI Studio</h5><ul><li><a href="../ai/image.html">AI Images</a></li><li><a href="../ai/bg-remove.html">Background Remover</a></li></ul></div>
+      <div class="footer-col"><h5>Company</h5><ul><li><a href="../about.html">About</a></li><li><a href="../blog/">Blog</a></li><li><a href="../privacy.html">Privacy</a></li><li><a href="../terms.html">Terms</a></li></ul></div>
+      <div class="footer-col"><h5>Help</h5><ul><li><a href="../contact.html">Contact</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><div>© <span data-year>2026</span> Desi Jugad.</div><div class="made-in"><span class="flag-in"></span>Made in India, built for the world.</div></div>
+  </div>
+</footer>
+
+<script src="../assets/js/main.js"></script>
+<script>
+// Minimal GIF encoder using omggif (loaded on demand)
+(function() {
+  const dropzone      = document.getElementById('dropzone');
+  const fileInput     = document.getElementById('fileInput');
+  const pickBtn       = document.getElementById('pickBtn');
+  const frameGrid     = document.getElementById('frameGrid');
+  const frameCount    = document.getElementById('frameCount');
+  const clearBtn      = document.getElementById('clearBtn');
+  const makeGifBtn    = document.getElementById('makeGifBtn');
+  const progressWrap  = document.getElementById('progressWrap');
+  const progressBar   = document.getElementById('progressBar');
+  const progressLabel = document.getElementById('progressLabel');
+  const gifPreviewWrap= document.getElementById('gifPreviewWrap');
+  const gifPreview    = document.getElementById('gifPreview');
+  const downloadGifBtn= document.getElementById('downloadGifBtn');
+  const frameDelayIn  = document.getElementById('frameDelay');
+  const gifWidthIn    = document.getElementById('gifWidth');
+  const loopCountIn   = document.getElementById('loopCount');
+
+  let frames = []; // { file, img, url }
+  let gifBlob = null;
+  let dragSrcIdx = null;
+
+  pickBtn.addEventListener('click', () => fileInput.click());
+  fileInput.addEventListener('change', e => addFiles(e.target.files));
+  ['dragenter','dragover'].forEach(evt => dropzone.addEventListener(evt, e => { e.preventDefault(); dropzone.classList.add('drag-over'); }));
+  ['dragleave','drop'].forEach(evt => dropzone.addEventListener(evt, e => { e.preventDefault(); dropzone.classList.remove('drag-over'); }));
+  dropzone.addEventListener('drop', e => addFiles(e.dataTransfer.files));
+
+  function addFiles(files) {
+    if (!files || !files.length) return;
+    const accepted = ['image/png','image/jpeg','image/webp'];
+    const toLoad = [];
+    for (const f of files) {
+      if (!accepted.includes(f.type)) { showToast(`Skipped ${f.name}`, 'error'); continue; }
+      if (frames.length + toLoad.length >= 50) { showToast('Max 50 frames', 'error'); break; }
+      toLoad.push(f);
+    }
+    let loaded = 0;
+    toLoad.forEach(file => {
+      const url = URL.createObjectURL(file);
+      const img = new Image();
+      img.onload = () => {
+        frames.push({ file, img, url });
+        loaded++;
+        if (loaded === toLoad.length) renderGrid();
+      };
+      img.src = url;
+    });
+  }
+
+  function renderGrid() {
+    frameGrid.innerHTML = '';
+    frameGrid.style.display = frames.length ? '' : 'none';
+    frameCount.style.display = frames.length ? '' : 'none';
+    frameCount.textContent = `${frames.length} frame${frames.length !== 1 ? 's' : ''}. Drag to reorder.`;
+    makeGifBtn.disabled = !frames.length;
+
+    frames.forEach((frame, idx) => {
+      const div = document.createElement('div');
+      div.className = 'frame-thumb';
+      div.draggable = true;
+      div.dataset.idx = idx;
+
+      const img = document.createElement('img');
+      img.src = frame.url;
+      div.appendChild(img);
+
+      const num = document.createElement('span');
+      num.className = 'frame-num';
+      num.textContent = idx + 1;
+      div.appendChild(num);
+
+      const del = document.createElement('button');
+      del.className = 'frame-del';
+      del.textContent = '✕';
+      del.addEventListener('click', e => { e.stopPropagation(); removeFrame(idx); });
+      div.appendChild(del);
+
+      // Drag-to-reorder
+      div.addEventListener('dragstart', () => { dragSrcIdx = idx; div.classList.add('dragging'); });
+      div.addEventListener('dragend', () => div.classList.remove('dragging'));
+      div.addEventListener('dragover', e => { e.preventDefault(); div.classList.add('drag-target'); });
+      div.addEventListener('dragleave', () => div.classList.remove('drag-target'));
+      div.addEventListener('drop', e => {
+        e.preventDefault();
+        div.classList.remove('drag-target');
+        if (dragSrcIdx === null || dragSrcIdx === idx) return;
+        const moved = frames.splice(dragSrcIdx, 1)[0];
+        frames.splice(idx, 0, moved);
+        dragSrcIdx = null;
+        renderGrid();
+      });
+
+      frameGrid.appendChild(div);
+    });
+  }
+
+  function removeFrame(idx) {
+    URL.revokeObjectURL(frames[idx].url);
+    frames.splice(idx, 1);
+    renderGrid();
+  }
+
+  clearBtn.addEventListener('click', () => {
+    frames.forEach(f => URL.revokeObjectURL(f.url));
+    frames = [];
+    gifBlob = null;
+    renderGrid();
+    gifPreviewWrap.style.display = 'none';
+    progressWrap.style.display = 'none';
+    makeGifBtn.disabled = true;
+    fileInput.value = '';
+  });
+
+  downloadGifBtn.addEventListener('click', () => {
+    if (gifBlob) downloadBlob(gifBlob, 'animated.gif');
+  });
+
+  makeGifBtn.addEventListener('click', async () => {
+    if (!frames.length) return;
+    makeGifBtn.disabled = true;
+    makeGifBtn.textContent = 'Loading encoder…';
+    progressWrap.style.display = '';
+    progressBar.style.width = '0%';
+    gifPreviewWrap.style.display = 'none';
+
+    try {
+      // Load omggif
+      if (!window.GifWriter) {
+        await loadScript('https://cdn.jsdelivr.net/npm/omggif@1.0.10/omggif.js');
+      }
+      await encodeGif();
+    } catch(err) {
+      console.error(err);
+      showToast('GIF encoding failed: ' + err.message, 'error');
+    } finally {
+      makeGifBtn.disabled = false;
+      makeGifBtn.textContent = 'Create GIF';
+    }
+  });
+
+  async function encodeGif() {
+    const delay  = Math.max(1, Math.round((parseInt(frameDelayIn.value) || 200) / 10)); // centiseconds
+    const loop   = parseInt(loopCountIn.value) || 0;
+    const maxW   = parseInt(gifWidthIn.value) || 0;
+
+    // Determine output size from first frame
+    const firstImg = frames[0].img;
+    const srcW = firstImg.naturalWidth || 480;
+    const srcH = firstImg.naturalHeight || 480;
+    let outW = maxW > 0 ? Math.min(maxW, srcW) : srcW;
+    outW = Math.min(outW, 800); // safety cap: GIFs above 800px get very large
+    let outH = Math.round(srcH * (outW / srcW));
+
+    progressLabel.textContent = 'Encoding frames…';
+
+    // Allocate output buffer — rough estimate: width*height*4 bytes per frame + overhead
+    const bufSize = outW * outH * frames.length * 8 + 65535;
+    const buf = new Uint8Array(bufSize);
+    const gw = new GifWriter(buf, outW, outH, { loop });
+
+    const canvas = document.createElement('canvas');
+    canvas.width = outW; canvas.height = outH;
+    const ctx = canvas.getContext('2d');
+
+    for (let i = 0; i < frames.length; i++) {
+      progressBar.style.width = Math.round((i / frames.length) * 90) + '%';
+      progressLabel.textContent = `Encoding frame ${i + 1} / ${frames.length}…`;
+
+      ctx.clearRect(0, 0, outW, outH);
+      ctx.drawImage(frames[i].img, 0, 0, outW, outH);
+      const imageData = ctx.getImageData(0, 0, outW, outH).data; // RGBA
+
+      // Quantize to 256 colors using median-cut approximation (simple octree via palette)
+      const { palette, indexed } = quantize(imageData, outW * outH);
+
+      gw.addFrame(0, 0, outW, outH, indexed, {
+        palette,
+        delay,
+        disposal: 2
+      });
+
+      // Yield to browser between frames
+      await new Promise(r => setTimeout(r, 0));
+    }
+
+    progressBar.style.width = '100%';
+    progressLabel.textContent = 'Finalizing…';
+
+    const gifBytes = buf.subarray(0, gw.end());
+    gifBlob = new Blob([gifBytes], { type: 'image/gif' });
+
+    const gifUrl = URL.createObjectURL(gifBlob);
+    gifPreview.src = gifUrl;
+    gifPreviewWrap.style.display = '';
+    progressLabel.textContent = `Done! ${formatBytes(gifBlob.size)} · ${frames.length} frames · ${outW}×${outH}px`;
+    showToast('GIF created!', 'success');
+  }
+
+  // ── Simple median-cut color quantization (256 colors) ────────────
+  function quantize(rgba, pixelCount) {
+    // Build color frequency map
+    const colorMap = new Map();
+    for (let i = 0; i < pixelCount; i++) {
+      const r = rgba[i * 4]     & 0xF8; // reduce to 5-bit
+      const g = rgba[i * 4 + 1] & 0xF8;
+      const b = rgba[i * 4 + 2] & 0xF8;
+      const key = (r << 16) | (g << 8) | b;
+      colorMap.set(key, (colorMap.get(key) || 0) + 1);
+    }
+
+    // Sort by frequency and take top 255 + 1 transparent
+    const sorted = Array.from(colorMap.entries()).sort((a, b) => b[1] - a[1]);
+    const palette = new Array(256).fill(0);
+    const paletteMap = new Map();
+
+    const take = Math.min(255, sorted.length);
+    for (let i = 0; i < take; i++) {
+      palette[i] = sorted[i][0];
+      paletteMap.set(sorted[i][0], i);
+    }
+    // Last entry: transparent/black
+    palette[255] = 0;
+
+    // Map each pixel to nearest palette index
+    const indexed = new Uint8Array(pixelCount);
+    for (let i = 0; i < pixelCount; i++) {
+      const r = rgba[i * 4]     & 0xF8;
+      const g = rgba[i * 4 + 1] & 0xF8;
+      const b = rgba[i * 4 + 2] & 0xF8;
+      const key = (r << 16) | (g << 8) | b;
+      if (paletteMap.has(key)) {
+        indexed[i] = paletteMap.get(key);
+      } else {
+        // Find nearest palette entry
+        let best = 0, bestDist = Infinity;
+        const maxCheck = Math.min(take, 64);
+        for (let j = 0; j < maxCheck; j++) {
+          const pc = palette[j];
+          const pr = (pc >> 16) & 0xFF;
+          const pg = (pc >> 8)  & 0xFF;
+          const pb =  pc        & 0xFF;
+          const dr = r - pr, dg = g - pg, db = b - pb;
+          const dist = dr * dr + dg * dg + db * db;
+          if (dist < bestDist) { bestDist = dist; best = j; }
+        }
+        indexed[i] = best;
+        paletteMap.set(key, best);
+      }
+    }
+
+    // Expand palette to RGB arrays for omggif
+    const palOut = palette.map(c => [(c >> 16) & 0xFF, (c >> 8) & 0xFF, c & 0xFF]);
+    return { palette: palOut.flat(), indexed };
+  }
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script'); s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+})();
+</script>
+</body>
+</html>

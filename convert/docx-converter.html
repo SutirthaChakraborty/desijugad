@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/img/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/img/apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DOCX Converter — Extract Text, DOCX to TXT | Free Online | Desi Jugad</title>
+<meta name="description" content="Extract text from DOCX files instantly. Convert DOCX to plain text (TXT) in your browser. Free, no upload — your Word documents never leave your device.">
+<meta name="keywords" content="docx converter, docx to txt, docx text extractor, word to text, extract text from docx, docx to plain text, online docx converter free">
+<meta name="author" content="Desi Jugad">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://desijugad.co.in/convert/docx-converter.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="DOCX Converter — Extract Text, DOCX to TXT | Free Online | Desi Jugad">
+<meta property="og:description" content="Extract text from DOCX Word files. Convert DOCX to plain text in your browser. No upload, completely private.">
+<meta property="og:url" content="https://desijugad.co.in/convert/docx-converter.html">
+<meta property="og:image" content="https://desijugad.co.in/assets/img/og-default.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="DOCX Converter — Extract Text, DOCX to TXT | Free Online | Desi Jugad">
+<meta name="twitter:description" content="Extract text from DOCX Word files. Convert DOCX to plain text in your browser. No upload, completely private.">
+<meta name="twitter:image" content="https://desijugad.co.in/assets/img/og-default.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,30..100;1,9..144,300..700,30..100&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js" crossorigin="anonymous"></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"DOCX Converter","url":"https://desijugad.co.in/convert/docx-converter.html","description":"Extract text from DOCX files. Convert DOCX to plain text. Free, no upload, browser-based."}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://desijugad.co.in/"},{"@type":"ListItem","position":2,"name":"Converters","item":"https://desijugad.co.in/#converters"},{"@type":"ListItem","position":3,"name":"DOCX Converter","item":"https://desijugad.co.in/convert/docx-converter.html"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is a DOCX file?","acceptedAnswer":{"@type":"Answer","text":"DOCX is the default file format for Microsoft Word documents since Word 2007. It is an OpenXML format — a ZIP archive containing XML files for document content, styles, images, and metadata. Because it is based on open standards, it can be read and written by many applications including Google Docs, LibreOffice, and Apple Pages."}},{"@type":"Question","name":"Why can I only extract text from DOCX in the browser?","acceptedAnswer":{"@type":"Answer","text":"Full DOCX rendering (preserving fonts, complex layouts, tables, embedded images) requires a full Office document engine, which is not available in a browser. However, extracting the text content is straightforward — DOCX is a ZIP archive containing word/document.xml, which stores all text as plain XML that can be parsed without any special library."}},{"@type":"Question","name":"Is my document content private?","acceptedAnswer":{"@type":"Answer","text":"Yes, completely. The DOCX extractor runs entirely in your browser using JSZip and native browser DOM APIs. Your document is opened locally — no data is sent to any server. We never see or store your document content."}}]}</script>
+<style>
+.drop-zone {
+  border: 2px dashed var(--line);
+  border-radius: var(--radius);
+  padding: 3rem 2rem;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  margin: 2rem 0;
+}
+.drop-zone:hover, .drop-zone.drag-over {
+  border-color: var(--indigo);
+  background: color-mix(in srgb, var(--indigo) 5%, var(--surface));
+}
+.drop-zone input[type="file"] { display: none; }
+.drop-icon { font-size: 3rem; margin-bottom: 0.75rem; }
+.drop-label { font-size: 1rem; color: var(--ink-muted); }
+.drop-label strong { color: var(--ink); }
+#output-area {
+  display: none;
+  margin-top: 2rem;
+}
+#output-area h3 { margin-bottom: 0.75rem; }
+#text-output {
+  width: 100%;
+  min-height: 320px;
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  font-family: var(--font-mono, monospace);
+  font-size: 0.85rem;
+  line-height: 1.6;
+  resize: vertical;
+  color: var(--ink);
+  box-sizing: border-box;
+}
+.output-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+</style>
+</head>
+<body>
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="../" class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="../#converters">Converters</a></li>
+      <li><a href="../ai/">AI Studio <span class="badge-new">NEW</span></a></li>
+      <li><a href="../blog/">Blog</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../#converters" class="nav-cta">All tools</a></li>
+    </ul>
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</header>
+<main class="converter-page">
+  <div class="container">
+    <nav class="breadcrumb"><a href="../">Home</a><span class="sep">/</span><a href="../#converters">Converters</a><span class="sep">/</span><span>DOCX Converter</span></nav>
+
+    <div class="converter-header">
+      <h1>DOCX Converter — <em class="italic">free, online, no upload.</em></h1>
+      <p class="lead">Extract all text from a Microsoft Word DOCX file — or convert it to plain TXT. Drop your file below. Nothing is uploaded: JSZip opens the file directly in your browser.</p>
+    </div>
+
+    <!-- DOCX Text Extractor Tool -->
+    <div class="tool-card" style="background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:2rem;">
+      <h2 style="margin-top:0;">DOCX Text Extractor</h2>
+      <p style="color:var(--ink-muted);margin-bottom:0;">Drop a .docx file to extract all text content. Your file never leaves your browser.</p>
+
+      <div class="drop-zone" id="drop-zone">
+        <input type="file" id="file-input" accept=".docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+        <div class="drop-icon">📝</div>
+        <div class="drop-label"><strong>Drop DOCX here</strong> or click to browse</div>
+        <div style="font-size:0.8rem;color:var(--ink-muted);margin-top:0.5rem;">.docx files only · processed locally</div>
+      </div>
+
+      <div id="output-area">
+        <h3 id="output-filename">Extracted text</h3>
+        <textarea id="text-output" readonly spellcheck="false"></textarea>
+        <div class="output-actions">
+          <button class="btn btn-primary" id="download-txt-btn">Download as .txt</button>
+          <button class="btn btn-secondary" id="copy-btn">Copy to clipboard</button>
+          <button class="btn btn-ghost" id="clear-btn">Clear</button>
+        </div>
+        <p id="word-count" style="color:var(--ink-muted);font-size:0.85rem;margin-top:0.5rem;"></p>
+      </div>
+    </div>
+
+    <!-- Other conversion options -->
+    <h2 style="margin-top:2.5rem;">Other DOCX tools</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem;margin:1rem 0 2rem;">
+      <a href="pdf-merge.html" style="display:flex;align-items:center;gap:0.75rem;padding:1rem;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);text-decoration:none;color:var(--ink);transition:border-color 0.15s,transform 0.15s;" onmouseover="this.style.borderColor='var(--indigo)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='var(--line)';this.style.transform=''">
+        <span style="font-size:1.5rem">📎</span>
+        <div><div style="font-weight:500;font-size:0.95rem">PDF Tools</div><div style="font-size:0.8rem;color:var(--ink-muted)">Merge, split, compress PDFs</div></div>
+      </a>
+      <a href="word-counter.html" style="display:flex;align-items:center;gap:0.75rem;padding:1rem;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);text-decoration:none;color:var(--ink);transition:border-color 0.15s,transform 0.15s;" onmouseover="this.style.borderColor='var(--indigo)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='var(--line)';this.style.transform=''">
+        <span style="font-size:1.5rem">🔢</span>
+        <div><div style="font-weight:500;font-size:0.95rem">Word Counter</div><div style="font-size:0.8rem;color:var(--ink-muted)">Count words and characters</div></div>
+      </a>
+      <a href="text-tools.html" style="display:flex;align-items:center;gap:0.75rem;padding:1rem;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);text-decoration:none;color:var(--ink);transition:border-color 0.15s,transform 0.15s;" onmouseover="this.style.borderColor='var(--indigo)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='var(--line)';this.style.transform=''">
+        <span style="font-size:1.5rem">✏️</span>
+        <div><div style="font-weight:500;font-size:0.95rem">Text Tools</div><div style="font-size:0.8rem;color:var(--ink-muted)">Clean, transform text</div></div>
+      </a>
+    </div>
+
+    <section class="info-section">
+      <h2>About the DOCX format</h2>
+      <p>DOCX is the default file format for Microsoft Word documents, introduced with Office 2007 as part of the Open XML (OOXML) standard, which is now an ISO and ECMA standard. A DOCX file is actually a <strong>ZIP archive</strong> containing multiple XML files and any embedded media (images, fonts, etc.).</p>
+      <p>The main document content lives in <code>word/document.xml</code>, which stores paragraphs, runs of text, formatting properties, tables, and lists as structured XML. Styles are in <code>word/styles.xml</code>, images in the <code>word/media/</code> directory. This open structure is what makes it possible to extract text client-side in a browser — no proprietary Office engine is needed for simple text extraction.</p>
+      <p>DOCX is widely supported: Microsoft Word, Google Docs, LibreOffice Writer, Apple Pages, and WPS Office all open and save DOCX files. It is the de-facto standard for sharing editable text documents.</p>
+
+      <h2>How to extract text from a DOCX file</h2>
+      <ol>
+        <li><strong>Drop your DOCX file</strong> onto the box above or click to browse.</li>
+        <li>The tool opens the ZIP, parses <code>word/document.xml</code>, and extracts all text nodes — paragraphs, headings, table cells, and list items — preserving line breaks.</li>
+        <li><strong>Review the extracted text</strong> in the editor.</li>
+        <li><strong>Download as TXT</strong> or copy to clipboard.</li>
+      </ol>
+
+      <h2>FAQ</h2>
+      <details class="faq-item" open><summary>What is a DOCX file?</summary><p>DOCX is the default file format for Microsoft Word documents since Word 2007. It is an OpenXML format — a ZIP archive containing XML files for document content, styles, images, and metadata. Because it is based on open standards, it can be read and written by many applications including Google Docs, LibreOffice, and Apple Pages.</p></details>
+      <details class="faq-item"><summary>Why can I only extract text from DOCX in the browser?</summary><p>Full DOCX rendering (preserving fonts, complex layouts, tables, embedded images) requires a full Office document engine, which is not available in a browser. However, extracting the text content is straightforward — DOCX is a ZIP archive containing word/document.xml, which stores all text as plain XML that can be parsed without any special library.</p></details>
+      <details class="faq-item"><summary>Is my document content private?</summary><p>Yes, completely. The DOCX extractor runs entirely in your browser using JSZip and native browser DOM APIs. Your document is opened locally — no data is sent to any server. We never see or store your document content.</p></details>
+    </section>
+
+    <div class="related-tools">
+      <h3>Related tools</h3>
+      <div class="related-grid">
+        <a href="pdf-converter.html" class="related-card">PDF Converter</a>
+        <a href="epub-converter.html" class="related-card">EPUB Converter</a>
+        <a href="xlsx-hub.html" class="related-card">Spreadsheet Converter</a>
+        <a href="markdown-to-html.html" class="related-card">Markdown to HTML</a>
+        <a href="readability-analyzer.html" class="related-card">Readability Analyser</a>
+      </div>
+    </div>
+  </div>
+</main>
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid footer-grid-5">
+      <div class="footer-brand"><div class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></div><p>Free, private file conversion for everyone.</p></div>
+      <div class="footer-col"><h5>Tools</h5><ul><li><a href="image-converter.html">Image Converter</a></li><li><a href="pdf-merge.html">PDF Tools</a></li><li><a href="audio-converter.html">Audio Converter</a></li><li><a href="video-converter.html">Video Converter</a></li></ul></div>
+      <div class="footer-col"><h5>AI Studio</h5><ul><li><a href="../ai/image.html">AI Images</a></li><li><a href="../ai/bg-remove.html">Background Remover</a></li></ul></div>
+      <div class="footer-col"><h5>Company</h5><ul><li><a href="../about.html">About</a></li><li><a href="../blog/">Blog</a></li><li><a href="../privacy.html">Privacy</a></li><li><a href="../terms.html">Terms</a></li></ul></div>
+      <div class="footer-col"><h5>Help</h5><ul><li><a href="../contact.html">Contact</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><div>© <span data-year>2026</span> Desi Jugad.</div><div class="made-in"><span class="flag-in"></span>Made in India, built for the world.</div></div>
+  </div>
+</footer>
+<script src="../assets/js/main.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  const dropZone = document.getElementById('drop-zone');
+  const fileInput = document.getElementById('file-input');
+  const outputArea = document.getElementById('output-area');
+  const textOutput = document.getElementById('text-output');
+  const outputFilename = document.getElementById('output-filename');
+  const wordCountEl = document.getElementById('word-count');
+  const downloadBtn = document.getElementById('download-txt-btn');
+  const copyBtn = document.getElementById('copy-btn');
+  const clearBtn = document.getElementById('clear-btn');
+
+  let currentFilename = 'document';
+
+  dropZone.addEventListener('click', () => fileInput.click());
+
+  dropZone.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    dropZone.classList.add('drag-over');
+  });
+  dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+  dropZone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    dropZone.classList.remove('drag-over');
+    const file = e.dataTransfer.files[0];
+    if (file) processFile(file);
+  });
+
+  fileInput.addEventListener('change', () => {
+    if (fileInput.files[0]) processFile(fileInput.files[0]);
+  });
+
+  async function processFile(file) {
+    if (!file.name.toLowerCase().endsWith('.docx')) {
+      alert('Please select a .docx file.');
+      return;
+    }
+    currentFilename = file.name.replace(/\.docx$/i, '');
+
+    try {
+      const arrayBuffer = await file.arrayBuffer();
+      const zip = await JSZip.loadAsync(arrayBuffer);
+
+      // Get word/document.xml
+      const docXmlFile = zip.file('word/document.xml');
+      if (!docXmlFile) {
+        alert('Could not find document.xml inside this DOCX. The file may be corrupted or in an unsupported format.');
+        return;
+      }
+
+      const xmlString = await docXmlFile.async('string');
+      const parser = new DOMParser();
+      const xmlDoc = parser.parseFromString(xmlString, 'text/xml');
+
+      const text = extractTextFromXml(xmlDoc);
+
+      textOutput.value = text;
+      outputFilename.textContent = 'Text from: ' + file.name;
+      outputArea.style.display = 'block';
+
+      const wordCount = text.trim().split(/\s+/).filter(Boolean).length;
+      const charCount = text.length;
+      wordCountEl.textContent = wordCount.toLocaleString() + ' words · ' + charCount.toLocaleString() + ' characters';
+
+      outputArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } catch (err) {
+      console.error(err);
+      alert('Failed to process the file. Make sure it is a valid .docx file.\n\n' + err.message);
+    }
+  }
+
+  function extractTextFromXml(xmlDoc) {
+    // Word XML namespace: paragraphs are w:p, runs are w:r, text is w:t
+    // We walk the document and reconstruct paragraphs
+    const paragraphs = xmlDoc.getElementsByTagNameNS('http://schemas.openxmlformats.org/wordprocessingml/2006/main', 'p');
+    const lines = [];
+
+    for (let i = 0; i < paragraphs.length; i++) {
+      const para = paragraphs[i];
+      const textNodes = para.getElementsByTagNameNS('http://schemas.openxmlformats.org/wordprocessingml/2006/main', 't');
+      let line = '';
+      for (let j = 0; j < textNodes.length; j++) {
+        line += textNodes[j].textContent;
+      }
+      lines.push(line);
+    }
+
+    return lines.join('\n');
+  }
+
+  downloadBtn.addEventListener('click', () => {
+    const text = textOutput.value;
+    if (!text) return;
+    const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = currentFilename + '.txt';
+    a.click();
+    URL.revokeObjectURL(url);
+  });
+
+  copyBtn.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(textOutput.value);
+      copyBtn.textContent = 'Copied!';
+      setTimeout(() => { copyBtn.textContent = 'Copy to clipboard'; }, 2000);
+    } catch {
+      textOutput.select();
+      document.execCommand('copy');
+    }
+  });
+
+  clearBtn.addEventListener('click', () => {
+    outputArea.style.display = 'none';
+    textOutput.value = '';
+    fileInput.value = '';
+  });
+})();
+</script>
+</body>
+</html>

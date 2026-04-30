@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/img/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/img/apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Font Converter — OTF to TTF, TTF to OTF | Free Online | Desi Jugad</title>
+<meta name="description" content="Convert OTF to TTF and TTF to OTF font files. View font information. Free online font converter — no upload, runs in your browser.">
+<meta name="keywords" content="font converter, otf to ttf, ttf to otf, convert font online free, font format converter, opentype truetype, woff converter">
+<meta name="author" content="Desi Jugad">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://desijugad.co.in/convert/font-converter.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Font Converter — OTF to TTF, TTF to OTF | Free Online | Desi Jugad">
+<meta property="og:description" content="Convert OTF to TTF, TTF to OTF. View font metadata and character maps. Free, no upload, browser-based.">
+<meta property="og:url" content="https://desijugad.co.in/convert/font-converter.html">
+<meta property="og:image" content="https://desijugad.co.in/assets/img/og-default.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Font Converter — OTF to TTF, TTF to OTF | Free Online | Desi Jugad">
+<meta name="twitter:description" content="Convert OTF to TTF, TTF to OTF. View font metadata. Free, no upload, browser-based.">
+<meta name="twitter:image" content="https://desijugad.co.in/assets/img/og-default.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,30..100;1,9..144,300..700,30..100&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Font Converter","url":"https://desijugad.co.in/convert/font-converter.html","description":"Convert OTF to TTF and TTF to OTF font files. View font information. Free online font converter."}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://desijugad.co.in/"},{"@type":"ListItem","position":2,"name":"Converters","item":"https://desijugad.co.in/#converters"},{"@type":"ListItem","position":3,"name":"Font Converter","item":"https://desijugad.co.in/convert/font-converter.html"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is the difference between OTF and TTF?","acceptedAnswer":{"@type":"Answer","text":"Both are font formats that store glyph outlines and metrics. TTF (TrueType Font) uses quadratic Bezier curves and was created by Apple and Microsoft in the 1980s. OTF (OpenType Font) was created jointly by Adobe and Microsoft in the 1990s as a superset of TTF — it can use either quadratic (TrueType outlines) or cubic Bezier curves (PostScript/CFF outlines), and adds advanced typographic features like ligatures, small caps, stylistic sets, and contextual alternates. For most screen uses, both look virtually identical. OTF is preferred for professional typography; TTF has slightly broader legacy compatibility."}},{"@type":"Question","name":"What is WOFF and when should I use it?","acceptedAnswer":{"@type":"Answer","text":"WOFF (Web Open Font Format) is a compressed wrapper around TTF or OTF data, designed specifically for web delivery. WOFF2 (the newer version) uses the Brotli compression algorithm and reduces font file sizes by 30% compared to WOFF. For web use, always serve fonts as WOFF2 with WOFF as a fallback. TTF and OTF are for desktop installation; WOFF/WOFF2 are for @font-face CSS rules."}},{"@type":"Question","name":"Can I use any font I download on my website?","acceptedAnswer":{"@type":"Answer","text":"Only if the font license permits web embedding. Many fonts are licensed for desktop installation only and prohibit embedding in websites or web font conversion. Always check the font's license file (usually SIL OFL, Apache 2.0, or a commercial license). Google Fonts, Font Squirrel, and fonts under SIL OFL are generally safe to use on the web."}}]}</script>
+<style>
+.drop-zone {
+  border: 2px dashed var(--line);
+  border-radius: var(--radius);
+  padding: 2.5rem 2rem;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  margin: 1.5rem 0;
+}
+.drop-zone:hover, .drop-zone.drag-over {
+  border-color: var(--indigo);
+  background: color-mix(in srgb, var(--indigo) 5%, var(--surface));
+}
+.drop-zone input[type="file"] { display: none; }
+.drop-icon { font-size: 2.5rem; margin-bottom: 0.5rem; }
+#font-info { display: none; margin-top: 1.5rem; }
+.font-meta-table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+.font-meta-table th, .font-meta-table td {
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.9rem;
+}
+.font-meta-table th { color: var(--ink-muted); font-weight: 600; width: 35%; }
+#preview-text {
+  margin-top: 1.5rem;
+  padding: 1.5rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  font-size: 1.5rem;
+  line-height: 1.6;
+  min-height: 80px;
+}
+</style>
+</head>
+<body>
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="../" class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="../#converters">Converters</a></li>
+      <li><a href="../ai/">AI Studio <span class="badge-new">NEW</span></a></li>
+      <li><a href="../blog/">Blog</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../#converters" class="nav-cta">All tools</a></li>
+    </ul>
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</header>
+<main class="converter-page">
+  <div class="container">
+    <nav class="breadcrumb"><a href="../">Home</a><span class="sep">/</span><a href="../#converters">Converters</a><span class="sep">/</span><span>Font Converter</span></nav>
+
+    <div class="converter-header">
+      <h1>Font Converter — <em class="italic">free, online, no upload.</em></h1>
+      <p class="lead">Convert OTF to TTF and TTF to OTF, or preview and inspect a font's metadata in your browser. Dedicated conversion tools below — plus a font info viewer to inspect any font file you drop in.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem;margin:2rem 0;">
+      <a href="otf-to-ttf.html" style="display:flex;align-items:center;gap:0.75rem;padding:1rem;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);text-decoration:none;color:var(--ink);transition:border-color 0.15s,transform 0.15s;" onmouseover="this.style.borderColor='var(--indigo)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='var(--line)';this.style.transform=''">
+        <span style="font-size:1.5rem">🔤</span>
+        <div><div style="font-weight:500;font-size:0.95rem">OTF to TTF</div><div style="font-size:0.8rem;color:var(--ink-muted)">OpenType to TrueType</div></div>
+      </a>
+      <a href="otf-to-ttf.html" style="display:flex;align-items:center;gap:0.75rem;padding:1rem;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);text-decoration:none;color:var(--ink);transition:border-color 0.15s,transform 0.15s;" onmouseover="this.style.borderColor='var(--indigo)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='var(--line)';this.style.transform=''">
+        <span style="font-size:1.5rem">🔡</span>
+        <div><div style="font-weight:500;font-size:0.95rem">TTF to OTF</div><div style="font-size:0.8rem;color:var(--ink-muted)">TrueType to OpenType</div></div>
+      </a>
+      <a href="favicon-generator.html" style="display:flex;align-items:center;gap:0.75rem;padding:1rem;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);text-decoration:none;color:var(--ink);transition:border-color 0.15s,transform 0.15s;" onmouseover="this.style.borderColor='var(--indigo)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='var(--line)';this.style.transform=''">
+        <span style="font-size:1.5rem">⭐</span>
+        <div><div style="font-weight:500;font-size:0.95rem">Favicon Generator</div><div style="font-size:0.8rem;color:var(--ink-muted)">Create .ico and PNG icons</div></div>
+      </a>
+    </div>
+
+    <!-- Font Info Viewer Tool -->
+    <div class="tool-card" style="background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:2rem;margin:2rem 0;">
+      <h2 style="margin-top:0;">Font Info Viewer</h2>
+      <p style="color:var(--ink-muted);margin-bottom:0;">Drop any OTF, TTF, or WOFF file to see its metadata and preview the typeface.</p>
+
+      <div class="drop-zone" id="drop-zone">
+        <input type="file" id="file-input" accept=".otf,.ttf,.woff,.woff2">
+        <div class="drop-icon">🔤</div>
+        <div style="font-size:1rem;color:var(--ink-muted);"><strong style="color:var(--ink);">Drop font file here</strong> or click to browse</div>
+        <div style="font-size:0.8rem;color:var(--ink-muted);margin-top:0.5rem;">.otf · .ttf · .woff · .woff2 · processed locally</div>
+      </div>
+
+      <div id="font-info">
+        <h3 id="font-display-name" style="margin-top:0;"></h3>
+        <table class="font-meta-table">
+          <tbody id="font-meta-body"></tbody>
+        </table>
+        <p style="color:var(--ink-muted);font-size:0.85rem;margin-top:1.25rem;">Font preview (type to change):</p>
+        <div id="preview-text" contenteditable="true" spellcheck="false">The quick brown fox jumps over the lazy dog. 0123456789</div>
+        <div style="margin-top:1rem;">
+          <label style="font-size:0.85rem;color:var(--ink-muted);">Preview size: </label>
+          <input type="range" id="preview-size" min="12" max="72" value="24" style="vertical-align:middle;margin:0 0.5rem;">
+          <span id="preview-size-label" style="font-size:0.85rem;color:var(--ink-muted);">24px</span>
+        </div>
+      </div>
+    </div>
+
+    <section class="info-section">
+      <h2>OTF vs TTF — what is the difference?</h2>
+      <p>Both OTF (OpenType Font) and TTF (TrueType Font) are widely supported font formats used for desktop and web applications. Here is how they differ:</p>
+      <p><strong>TTF (TrueType Font)</strong> was created jointly by Apple and Microsoft in the late 1980s as an alternative to Adobe's PostScript Type 1 fonts. TrueType uses <strong>quadratic Bezier curves</strong> to describe glyph outlines. TTF was bundled with Windows 3.1 and became the standard for desktop fonts through the 1990s and 2000s. TTF fonts are supported universally — every operating system from Windows 95 onwards handles them natively.</p>
+      <p><strong>OTF (OpenType Font)</strong> was developed jointly by Adobe and Microsoft in the mid-1990s as a successor to both TTF and PostScript Type 1. OpenType is a superset of TrueType — it can contain either TrueType outlines (quadratic) or PostScript/CFF outlines (cubic Bezier). The key advantage of OTF is its support for <strong>advanced typographic features</strong> through OpenType Layout Tables: ligatures, small caps, old-style figures, contextual alternates, stylistic sets, swashes, and more. Professional typefaces designed for editorial and print use are typically distributed as OTF.</p>
+      <p><strong>WOFF / WOFF2</strong> are compressed wrappers around OTF or TTF designed for efficient web delivery. WOFF2 uses Brotli compression and is 30% smaller than WOFF. For web use (CSS @font-face), always use WOFF2.</p>
+
+      <h2>How to convert OTF to TTF</h2>
+      <ol>
+        <li><strong>Click OTF to TTF</strong> from the cards above to open the dedicated converter.</li>
+        <li><strong>Drop your .otf font file</strong> onto the tool.</li>
+        <li><strong>Download</strong> the converted .ttf file.</li>
+      </ol>
+      <p>Note: Converting OTF to TTF converts the glyph outline format (cubic to quadratic Bezier). Advanced OpenType features (ligatures, stylistic sets) that are not supported in plain TTF may be stripped. If you need those features, keep the OTF.</p>
+
+      <h2>FAQ</h2>
+      <details class="faq-item" open><summary>What is the difference between OTF and TTF?</summary><p>Both are font formats storing glyph outlines and metrics. TTF (TrueType) uses quadratic Bezier curves and was created by Apple and Microsoft in the 1980s. OTF (OpenType) was created by Adobe and Microsoft in the 1990s as a superset of TTF — it adds advanced typographic features like ligatures, small caps, stylistic sets, and contextual alternates. For most screen uses, both look virtually identical. OTF is preferred for professional typography; TTF has slightly broader legacy compatibility.</p></details>
+      <details class="faq-item"><summary>What is WOFF and when should I use it?</summary><p>WOFF (Web Open Font Format) is a compressed wrapper around TTF or OTF data, designed specifically for web delivery. WOFF2 uses Brotli compression and reduces font file sizes by about 30% compared to WOFF. For web use, always serve fonts as WOFF2 with WOFF as a fallback. TTF and OTF are for desktop installation; WOFF/WOFF2 are for CSS @font-face rules.</p></details>
+      <details class="faq-item"><summary>Can I use any font I download on my website?</summary><p>Only if the font license permits web embedding. Many fonts are licensed for desktop installation only and prohibit embedding in websites or web font conversion. Always check the font's license file (usually SIL OFL, Apache 2.0, or a commercial license). Google Fonts and fonts under SIL OFL are generally safe to use on the web.</p></details>
+    </section>
+
+    <div class="related-tools">
+      <h3>Related tools</h3>
+      <div class="related-grid">
+        <a href="favicon-generator.html" class="related-card">Favicon Generator</a>
+        <a href="svg-converter.html" class="related-card">SVG Converter</a>
+        <a href="color-picker.html" class="related-card">Color Picker</a>
+        <a href="image-converter.html" class="related-card">Image Converter</a>
+      </div>
+    </div>
+  </div>
+</main>
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid footer-grid-5">
+      <div class="footer-brand"><div class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></div><p>Free, private file conversion for everyone.</p></div>
+      <div class="footer-col"><h5>Tools</h5><ul><li><a href="image-converter.html">Image Converter</a></li><li><a href="pdf-merge.html">PDF Tools</a></li><li><a href="audio-converter.html">Audio Converter</a></li><li><a href="video-converter.html">Video Converter</a></li></ul></div>
+      <div class="footer-col"><h5>AI Studio</h5><ul><li><a href="../ai/image.html">AI Images</a></li><li><a href="../ai/bg-remove.html">Background Remover</a></li></ul></div>
+      <div class="footer-col"><h5>Company</h5><ul><li><a href="../about.html">About</a></li><li><a href="../blog/">Blog</a></li><li><a href="../privacy.html">Privacy</a></li><li><a href="../terms.html">Terms</a></li></ul></div>
+      <div class="footer-col"><h5>Help</h5><ul><li><a href="../contact.html">Contact</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><div>© <span data-year>2026</span> Desi Jugad.</div><div class="made-in"><span class="flag-in"></span>Made in India, built for the world.</div></div>
+  </div>
+</footer>
+<script src="../assets/js/main.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  const dropZone = document.getElementById('drop-zone');
+  const fileInput = document.getElementById('file-input');
+  const fontInfo = document.getElementById('font-info');
+  const fontDisplayName = document.getElementById('font-display-name');
+  const fontMetaBody = document.getElementById('font-meta-body');
+  const previewText = document.getElementById('preview-text');
+  const previewSize = document.getElementById('preview-size');
+  const previewSizeLabel = document.getElementById('preview-size-label');
+
+  let currentFontUrl = null;
+  let fontFaceRef = null;
+
+  dropZone.addEventListener('click', () => fileInput.click());
+  dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('drag-over'); });
+  dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+  dropZone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    dropZone.classList.remove('drag-over');
+    if (e.dataTransfer.files[0]) loadFont(e.dataTransfer.files[0]);
+  });
+  fileInput.addEventListener('change', () => { if (fileInput.files[0]) loadFont(fileInput.files[0]); });
+
+  async function loadFont(file) {
+    const ext = file.name.split('.').pop().toLowerCase();
+    const supportedExts = ['otf', 'ttf', 'woff', 'woff2'];
+    if (!supportedExts.includes(ext)) {
+      alert('Please select a .otf, .ttf, .woff, or .woff2 file.');
+      return;
+    }
+
+    // Clean up previous font
+    if (currentFontUrl) URL.revokeObjectURL(currentFontUrl);
+    if (fontFaceRef && document.fonts) {
+      try { document.fonts.delete(fontFaceRef); } catch (_) {}
+    }
+
+    currentFontUrl = URL.createObjectURL(file);
+    const fontFamilyName = 'DesiJugadPreview_' + Date.now();
+
+    // Load font for preview
+    try {
+      fontFaceRef = new FontFace(fontFamilyName, 'url(' + currentFontUrl + ')');
+      const loadedFace = await fontFaceRef.load();
+      document.fonts.add(loadedFace);
+      previewText.style.fontFamily = '"' + fontFamilyName + '", serif';
+    } catch (err) {
+      console.warn('FontFace API error:', err);
+    }
+
+    // Parse basic metadata using DataView (OpenType/TrueType name table)
+    const meta = await parseFontMeta(file);
+
+    fontDisplayName.textContent = meta['Full Name'] || meta['Family'] || file.name;
+
+    const rows = [
+      ['File name', file.name],
+      ['Format', ext.toUpperCase()],
+      ['File size', (file.size / 1024).toFixed(1) + ' KB'],
+      ...(Object.entries(meta))
+    ];
+
+    fontMetaBody.innerHTML = rows.map(([k, v]) =>
+      `<tr><th>${escapeHtml(k)}</th><td>${escapeHtml(String(v))}</td></tr>`
+    ).join('');
+
+    fontInfo.style.display = 'block';
+    fontInfo.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  async function parseFontMeta(file) {
+    try {
+      const buffer = await file.arrayBuffer();
+      const view = new DataView(buffer);
+
+      // Read sfnt header
+      const numTables = view.getUint16(4);
+      const tables = {};
+      for (let i = 0; i < numTables; i++) {
+        const tag = String.fromCharCode(
+          view.getUint8(12 + i * 16),
+          view.getUint8(13 + i * 16),
+          view.getUint8(14 + i * 16),
+          view.getUint8(15 + i * 16)
+        );
+        const offset = view.getUint32(20 + i * 16);
+        const length = view.getUint32(24 + i * 16);
+        tables[tag] = { offset, length };
+      }
+
+      const meta = {};
+
+      // Parse 'name' table
+      if (tables['name']) {
+        const nameOffset = tables['name'].offset;
+        const count = view.getUint16(nameOffset + 2);
+        const storageOffset = view.getUint16(nameOffset + 4);
+
+        const nameIds = { 1: 'Family', 2: 'Subfamily', 4: 'Full Name', 5: 'Version', 6: 'PostScript Name', 8: 'Manufacturer', 9: 'Designer', 11: 'Vendor URL' };
+
+        for (let i = 0; i < count; i++) {
+          const base = nameOffset + 6 + i * 12;
+          const platformId = view.getUint16(base);
+          const encodingId = view.getUint16(base + 2);
+          const nameId = view.getUint16(base + 6);
+          const length = view.getUint16(base + 8);
+          const strOffset = view.getUint16(base + 10);
+
+          if (!nameIds[nameId]) continue;
+          if (meta[nameIds[nameId]]) continue; // already have it
+
+          const absOffset = nameOffset + storageOffset + strOffset;
+          let str = '';
+          if (platformId === 3 && encodingId === 1) {
+            // UTF-16 BE
+            for (let j = 0; j < length; j += 2) {
+              const cp = view.getUint16(absOffset + j);
+              if (cp !== 0) str += String.fromCodePoint(cp);
+            }
+          } else {
+            // Latin-1 / ASCII
+            for (let j = 0; j < length; j++) {
+              const byte = view.getUint8(absOffset + j);
+              if (byte !== 0) str += String.fromCharCode(byte);
+            }
+          }
+          if (str.trim()) meta[nameIds[nameId]] = str.trim();
+        }
+      }
+
+      // Parse 'OS/2' table for weight/width class
+      if (tables['OS/2']) {
+        const o2 = tables['OS/2'].offset;
+        const weightClass = view.getUint16(o2 + 4);
+        const widthClass = view.getUint16(o2 + 6);
+        const weightNames = { 100: 'Thin', 200: 'ExtraLight', 300: 'Light', 400: 'Regular', 500: 'Medium', 600: 'SemiBold', 700: 'Bold', 800: 'ExtraBold', 900: 'Black' };
+        const widthNames = { 1: 'Ultra Condensed', 2: 'Extra Condensed', 3: 'Condensed', 4: 'Semi Condensed', 5: 'Normal', 6: 'Semi Expanded', 7: 'Expanded', 8: 'Extra Expanded', 9: 'Ultra Expanded' };
+        meta['Weight'] = (weightNames[weightClass] || weightClass) + ' (' + weightClass + ')';
+        meta['Width'] = widthNames[widthClass] || widthClass;
+      }
+
+      // Parse 'head' table for units per em
+      if (tables['head']) {
+        const headOff = tables['head'].offset;
+        const unitsPerEm = view.getUint16(headOff + 18);
+        meta['Units Per Em'] = unitsPerEm;
+      }
+
+      return meta;
+    } catch (err) {
+      console.warn('Font parsing error:', err);
+      return {};
+    }
+  }
+
+  function escapeHtml(str) {
+    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  previewSize.addEventListener('input', () => {
+    const sz = previewSize.value;
+    previewSizeLabel.textContent = sz + 'px';
+    previewText.style.fontSize = sz + 'px';
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/img/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/img/apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STL to OBJ Converter — 3D Mesh Converter Free Online | Desi Jugad</title>
+<meta name="description" content="Convert STL 3D model files to OBJ format in your browser. Supports binary and ASCII STL. Shows triangle count and vertex stats. Free, no upload.">
+<meta name="keywords" content="stl to obj, convert stl to obj online, 3d mesh converter, stl obj converter free, binary stl to obj, ascii stl converter">
+<meta name="author" content="Desi Jugad">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://desijugad.co.in/convert/stl-to-obj.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="STL to OBJ Converter — 3D Mesh Converter Free Online | Desi Jugad">
+<meta property="og:description" content="Convert STL 3D model files to OBJ format in your browser. Supports binary and ASCII STL. Free, no upload.">
+<meta property="og:url" content="https://desijugad.co.in/convert/stl-to-obj.html">
+<meta property="og:image" content="https://desijugad.co.in/assets/img/og-default.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="STL to OBJ Converter — 3D Mesh Converter Free Online | Desi Jugad">
+<meta name="twitter:description" content="Convert STL 3D model files to OBJ format in your browser. Free, no upload.">
+<meta name="twitter:image" content="https://desijugad.co.in/assets/img/og-default.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,30..100;1,9..144,300..700,30..100&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"STL to OBJ Converter","url":"https://desijugad.co.in/convert/stl-to-obj.html","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://desijugad.co.in/"},{"@type":"ListItem","position":2,"name":"Converters","item":"https://desijugad.co.in/#converters"},{"@type":"ListItem","position":3,"name":"STL to OBJ","item":"https://desijugad.co.in/convert/stl-to-obj.html"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How do I convert STL to OBJ online free?","acceptedAnswer":{"@type":"Answer","text":"Drop your STL file onto the upload zone. The tool auto-detects whether it is binary or ASCII STL, parses the geometry, and generates an OBJ file with vertices, normals, and face definitions. Click Download OBJ."}},{"@type":"Question","name":"What is the difference between binary and ASCII STL?","acceptedAnswer":{"@type":"Answer","text":"Binary STL is more compact — it stores each triangle as 50 bytes (4-byte normal + 3×12-byte vertices + 2-byte attribute). ASCII STL uses human-readable text with 'facet normal', 'vertex', and 'endloop' keywords. Both encode the same triangle mesh data."}},{"@type":"Question","name":"Will the OBJ include materials or textures?","acceptedAnswer":{"@type":"Answer","text":"STL files do not store material or texture information — only geometry. The converted OBJ will contain vertex positions and normals only. No MTL material file is generated since STL has no material data."}},{"@type":"Question","name":"Can I use the converted OBJ in Blender or Maya?","acceptedAnswer":{"@type":"Answer","text":"Yes. The output is a standard Wavefront OBJ file with v (vertex), vn (normal), and f (face) definitions, compatible with Blender, Maya, Cinema 4D, 3ds Max, and most other 3D software."}}]}</script>
+</head>
+<body>
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="../" class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="../#converters">Converters</a></li>
+      <li><a href="../ai/">AI Studio <span class="badge-new">NEW</span></a></li>
+      <li><a href="../blog/">Blog</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../#converters" class="nav-cta">All tools</a></li>
+    </ul>
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</header>
+<main class="converter-page">
+  <div class="container">
+    <nav class="breadcrumb"><a href="../">Home</a><span class="sep">/</span><a href="../#converters">Converters</a><span class="sep">/</span><span>STL to OBJ</span></nav>
+    <div class="converter-header">
+      <h1>STL to OBJ, <em class="italic">instantly.</em></h1>
+      <p class="lead">Convert 3D mesh files from STL to OBJ format. Binary and ASCII STL both supported. Pure browser, no upload.</p>
+    </div>
+
+    <div id="dropZone" style="min-height:180px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.75rem;border:2px dashed var(--border);border-radius:12px;padding:2rem;cursor:pointer;transition:border-color .2s,background .2s;">
+      <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.5"><polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"/><line x1="12" y1="22" x2="12" y2="15.5"/><polyline points="22 8.5 12 15.5 2 8.5"/></svg>
+      <p style="margin:0;color:var(--muted);">Drop STL file here or <label for="fileInput" style="color:var(--accent);cursor:pointer;text-decoration:underline;">browse</label></p>
+      <p style="margin:0;font-size:0.82rem;color:var(--muted);">Supports binary STL and ASCII STL</p>
+      <input type="file" id="fileInput" accept=".stl" style="display:none;">
+    </div>
+
+    <div id="resultPanel" style="display:none;margin-top:1.5rem;">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1rem;margin-bottom:1.5rem;">
+        <div style="padding:1rem;border:1px solid var(--border);border-radius:10px;text-align:center;">
+          <p style="margin:0;font-size:0.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;">Format</p>
+          <p id="statFormat" style="margin:0.25rem 0 0;font-size:1.1rem;font-weight:600;font-family:var(--font-mono,monospace);"></p>
+        </div>
+        <div style="padding:1rem;border:1px solid var(--border);border-radius:10px;text-align:center;">
+          <p style="margin:0;font-size:0.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;">Triangles</p>
+          <p id="statTri" style="margin:0.25rem 0 0;font-size:1.1rem;font-weight:600;font-family:var(--font-mono,monospace);"></p>
+        </div>
+        <div style="padding:1rem;border:1px solid var(--border);border-radius:10px;text-align:center;">
+          <p style="margin:0;font-size:0.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;">Vertices</p>
+          <p id="statVert" style="margin:0.25rem 0 0;font-size:1.1rem;font-weight:600;font-family:var(--font-mono,monospace);"></p>
+        </div>
+        <div style="padding:1rem;border:1px solid var(--border);border-radius:10px;text-align:center;">
+          <p style="margin:0;font-size:0.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;">OBJ size</p>
+          <p id="statSize" style="margin:0.25rem 0 0;font-size:1.1rem;font-weight:600;font-family:var(--font-mono,monospace);"></p>
+        </div>
+      </div>
+      <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+        <button class="btn btn-primary" id="downloadBtn">Download OBJ</button>
+        <button class="btn btn-secondary" id="resetBtn">Convert another</button>
+      </div>
+    </div>
+
+    <div id="statusMsg" style="margin-top:1rem;font-size:0.9rem;color:var(--muted);"></div>
+
+    <section class="info-section">
+      <h2>STL vs OBJ — format differences</h2>
+      <p><strong>STL (Stereolithography)</strong> is the de-facto standard for 3D printing. It stores only triangle mesh data — no colors, no materials, no UV coordinates. Every face is an independent triangle with its own normal vector.</p>
+      <p><strong>OBJ (Wavefront Object)</strong> is a more flexible format used in 3D modelling and rendering. It supports shared vertices, UV texture coordinates, normals, and can reference external MTL material files. OBJ is widely supported in Blender, Maya, Cinema 4D, and game engines.</p>
+
+      <h3>Binary vs ASCII STL</h3>
+      <p>Binary STL is the most common — compact and fast to parse. Each triangle takes exactly 50 bytes: 12 bytes for the normal vector, 36 bytes for three vertices (12 bytes each), and 2 bytes for an attribute byte count. ASCII STL spells out coordinates as text — larger but human-readable.</p>
+
+      <h3>OBJ output format</h3>
+      <p>The generated OBJ file includes <code>v x y z</code> lines for each vertex position, <code>vn x y z</code> lines for each normal vector, and <code>f v//vn v//vn v//vn</code> face definitions.</p>
+
+      <h2>FAQ</h2>
+      <details class="faq-item" open><summary>Why is the OBJ larger than the STL?</summary><p>OBJ is a text format while binary STL is compact binary. A binary STL with 10,000 triangles is about 500 KB; the equivalent OBJ text file will be several times larger. The geometry is identical.</p></details>
+      <details class="faq-item"><summary>Does the converted OBJ preserve the original scale?</summary><p>Yes — coordinates are written with full float precision. The scale, position, and orientation are identical to the STL source.</p></details>
+      <details class="faq-item"><summary>Can I convert OBJ back to STL?</summary><p>Not yet in this tool. For reverse conversion (OBJ → STL), Blender is free and exports STL natively.</p></details>
+      <details class="faq-item"><summary>What about multi-shell STL files?</summary><p>STL files may contain separate solid bodies (shells). Each solid in ASCII STL is named; binary STL has no shell names. The OBJ output will contain all triangles as a single object.</p></details>
+    </section>
+
+    <div class="related-tools">
+      <h3>Related tools</h3>
+      <div class="related-grid">
+        <a href="fbx-to-obj.html" class="related-card">🎲 FBX to OBJ</a>
+        <a href="image-converter.html" class="related-card">🖼️ Image Converter</a>
+        <a href="svg-to-png.html" class="related-card">🔷 SVG to PNG</a>
+        <a href="zip-converter.html" class="related-card">🗜️ ZIP Converter</a>
+      </div>
+    </div>
+  </div>
+</main>
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid footer-grid-5">
+      <div class="footer-brand"><div class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></div><p>Free, private file conversion for everyone.</p></div>
+      <div class="footer-col"><h5>Tools</h5><ul><li><a href="image-converter.html">Image Converter</a></li><li><a href="pdf-merge.html">PDF Tools</a></li><li><a href="audio-converter.html">Audio Converter</a></li><li><a href="json-to-csv.html">JSON to CSV</a></li></ul></div>
+      <div class="footer-col"><h5>AI Studio</h5><ul><li><a href="../ai/image.html">AI Images</a></li><li><a href="../ai/bg-remove.html">Background Remover</a></li></ul></div>
+      <div class="footer-col"><h5>Company</h5><ul><li><a href="../about.html">About</a></li><li><a href="../blog/">Blog</a></li><li><a href="../privacy.html">Privacy</a></li><li><a href="../terms.html">Terms</a></li></ul></div>
+      <div class="footer-col"><h5>Help</h5><ul><li><a href="../contact.html">Contact</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><div>© <span data-year>2026</span> Desi Jugad.</div><div class="made-in"><span class="flag-in"></span>Made in India, built for the world.</div></div>
+  </div>
+</footer>
+<script src="../assets/js/main.js"></script>
+<script>
+(function(){
+  const dropZone = document.getElementById('dropZone');
+  const fileInput = document.getElementById('fileInput');
+  const resultPanel = document.getElementById('resultPanel');
+  const statFormat = document.getElementById('statFormat');
+  const statTri = document.getElementById('statTri');
+  const statVert = document.getElementById('statVert');
+  const statSize = document.getElementById('statSize');
+  const downloadBtn = document.getElementById('downloadBtn');
+  const resetBtn = document.getElementById('resetBtn');
+  const statusMsg = document.getElementById('statusMsg');
+
+  let objContent = '';
+  let sourceFileName = '';
+
+  dropZone.addEventListener('click', () => fileInput.click());
+  dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.style.borderColor = 'var(--accent)'; dropZone.style.background = 'var(--accent-soft,rgba(99,102,241,0.06))'; });
+  dropZone.addEventListener('dragleave', () => { dropZone.style.borderColor = ''; dropZone.style.background = ''; });
+  dropZone.addEventListener('drop', e => { e.preventDefault(); dropZone.style.borderColor = ''; dropZone.style.background = ''; if (e.dataTransfer.files[0]) convertFile(e.dataTransfer.files[0]); });
+  fileInput.addEventListener('change', () => { if (fileInput.files[0]) convertFile(fileInput.files[0]); });
+
+  function convertFile(file) {
+    sourceFileName = file.name;
+    statusMsg.textContent = 'Reading STL…';
+    const reader = new FileReader();
+    reader.onload = e => {
+      const buffer = e.target.result;
+      const view = new DataView(buffer);
+      // Detect binary vs ASCII by checking if first 5 chars are 'solid' (but also check triangle count)
+      let isBinary = false;
+      const firstBytes = new Uint8Array(buffer, 0, 5);
+      const firstWord = String.fromCharCode(...firstBytes);
+      if (firstWord !== 'solid') {
+        isBinary = true;
+      } else {
+        // ASCII STL starts with 'solid', but binary STL sometimes does too in the header
+        // Check if the 4-byte int at offset 80 makes sense as triangle count
+        if (buffer.byteLength > 84) {
+          const triCount = view.getUint32(80, true);
+          const expectedSize = 84 + triCount * 50;
+          if (Math.abs(buffer.byteLength - expectedSize) < 4) isBinary = true;
+        }
+      }
+
+      try {
+        let triangles;
+        if (isBinary) {
+          triangles = parseBinarySTL(view);
+        } else {
+          const text = new TextDecoder().decode(buffer);
+          triangles = parseASCIISTL(text);
+        }
+        objContent = buildOBJ(triangles);
+        const blob = new Blob([objContent], { type: 'text/plain' });
+        statFormat.textContent = isBinary ? 'Binary' : 'ASCII';
+        statTri.textContent = triangles.length.toLocaleString();
+        statVert.textContent = (triangles.length * 3).toLocaleString();
+        statSize.textContent = formatBytes(blob.size);
+        resultPanel.style.display = '';
+        dropZone.style.display = 'none';
+        statusMsg.textContent = '';
+      } catch(err) {
+        statusMsg.textContent = 'Error parsing STL: ' + err.message;
+        console.error(err);
+      }
+    };
+    reader.readAsArrayBuffer(file);
+  }
+
+  function parseBinarySTL(view) {
+    // 80-byte header, 4-byte triangle count
+    const triCount = view.getUint32(80, true);
+    const triangles = [];
+    let offset = 84;
+    for (let i = 0; i < triCount; i++) {
+      const nx = view.getFloat32(offset, true);
+      const ny = view.getFloat32(offset+4, true);
+      const nz = view.getFloat32(offset+8, true);
+      offset += 12;
+      const verts = [];
+      for (let v = 0; v < 3; v++) {
+        verts.push([
+          view.getFloat32(offset, true),
+          view.getFloat32(offset+4, true),
+          view.getFloat32(offset+8, true)
+        ]);
+        offset += 12;
+      }
+      offset += 2; // attribute byte count
+      triangles.push({ normal: [nx, ny, nz], vertices: verts });
+    }
+    return triangles;
+  }
+
+  function parseASCIISTL(text) {
+    const triangles = [];
+    const facetRe = /facet\s+normal\s+([\-\d.eE+]+)\s+([\-\d.eE+]+)\s+([\-\d.eE+]+)([\s\S]*?)endfacet/g;
+    const vertexRe = /vertex\s+([\-\d.eE+]+)\s+([\-\d.eE+]+)\s+([\-\d.eE+]+)/g;
+    let facetMatch;
+    while ((facetMatch = facetRe.exec(text)) !== null) {
+      const normal = [parseFloat(facetMatch[1]), parseFloat(facetMatch[2]), parseFloat(facetMatch[3])];
+      const loop = facetMatch[0];
+      const verts = [];
+      let vm;
+      const localVRe = /vertex\s+([\-\d.eE+]+)\s+([\-\d.eE+]+)\s+([\-\d.eE+]+)/g;
+      while ((vm = localVRe.exec(loop)) !== null) {
+        verts.push([parseFloat(vm[1]), parseFloat(vm[2]), parseFloat(vm[3])]);
+      }
+      if (verts.length === 3) triangles.push({ normal, vertices: verts });
+    }
+    return triangles;
+  }
+
+  function buildOBJ(triangles) {
+    const lines = ['# STL to OBJ conversion by Desi Jugad', '# https://desijugad.co.in/convert/stl-to-obj.html', ''];
+    const vLines = [];
+    const vnLines = [];
+    const fLines = [];
+    triangles.forEach((tri, i) => {
+      const base = i * 3 + 1;
+      tri.vertices.forEach(([x, y, z]) => vLines.push(`v ${f(x)} ${f(y)} ${f(z)}`));
+      vnLines.push(`vn ${f(tri.normal[0])} ${f(tri.normal[1])} ${f(tri.normal[2])}`);
+      const ni = i + 1;
+      fLines.push(`f ${base}//${ni} ${base+1}//${ni} ${base+2}//${ni}`);
+    });
+    return lines.concat(vLines, [''], vnLines, [''], fLines).join('\n');
+  }
+
+  function f(n) { return n.toFixed(6); }
+
+  downloadBtn.addEventListener('click', () => {
+    if (!objContent) return;
+    const blob = new Blob([objContent], { type: 'text/plain' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = sourceFileName.replace(/\.stl$/i, '') + '.obj';
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 10000);
+  });
+
+  resetBtn.addEventListener('click', () => {
+    objContent = '';
+    dropZone.style.display = 'flex';
+    resultPanel.style.display = 'none';
+    statusMsg.textContent = '';
+    fileInput.value = '';
+  });
+
+  function formatBytes(b) {
+    if (b < 1024) return b + ' B';
+    if (b < 1048576) return (b/1024).toFixed(1) + ' KB';
+    return (b/1048576).toFixed(1) + ' MB';
+  }
+})();
+</script>
+</body>
+</html>

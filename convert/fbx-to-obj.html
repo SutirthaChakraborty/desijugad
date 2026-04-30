@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/img/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/img/apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FBX to OBJ Converter — 3D Model Converter Free Online | Desi Jugad</title>
+<meta name="description" content="Convert ASCII FBX 3D model files to OBJ format in your browser. Extract geometry, vertices, and polygons from FBX and download as OBJ. Free, no upload.">
+<meta name="keywords" content="fbx to obj, convert fbx to obj online, ascii fbx converter, fbx obj free, 3d model converter fbx, fbx geometry extractor">
+<meta name="author" content="Desi Jugad">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://desijugad.co.in/convert/fbx-to-obj.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="FBX to OBJ Converter — 3D Model Converter Free Online | Desi Jugad">
+<meta property="og:description" content="Convert ASCII FBX 3D model files to OBJ format in your browser. Free, no upload.">
+<meta property="og:url" content="https://desijugad.co.in/convert/fbx-to-obj.html">
+<meta property="og:image" content="https://desijugad.co.in/assets/img/og-default.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="FBX to OBJ Converter — 3D Model Converter Free Online | Desi Jugad">
+<meta name="twitter:description" content="Convert ASCII FBX 3D model files to OBJ format in your browser. Free, no upload.">
+<meta name="twitter:image" content="https://desijugad.co.in/assets/img/og-default.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,30..100;1,9..144,300..700,30..100&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"FBX to OBJ Converter","url":"https://desijugad.co.in/convert/fbx-to-obj.html","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://desijugad.co.in/"},{"@type":"ListItem","position":2,"name":"Converters","item":"https://desijugad.co.in/#converters"},{"@type":"ListItem","position":3,"name":"FBX to OBJ","item":"https://desijugad.co.in/convert/fbx-to-obj.html"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How do I convert FBX to OBJ online?","acceptedAnswer":{"@type":"Answer","text":"Upload an ASCII FBX file. The tool extracts vertex positions and polygon indices and writes them as a standard OBJ file. Binary FBX is not supported — export from your 3D app as ASCII FBX first."}},{"@type":"Question","name":"Why does this only support ASCII FBX?","acceptedAnswer":{"@type":"Answer","text":"Binary FBX uses a proprietary Autodesk binary format with complex property encoding and compression that requires a full SDK to decode correctly in a browser. ASCII FBX is a text format readable without the SDK."}},{"@type":"Question","name":"How do I export ASCII FBX from Blender?","acceptedAnswer":{"@type":"Answer","text":"In Blender, go to File > Export > FBX (.fbx). In the export options panel, look for the FBX Version dropdown and uncheck 'Binary' or set the version to 7.4 ASCII. In older Blender versions, there is a dedicated ASCII export option."}},{"@type":"Question","name":"Will animation or rigging data be preserved?","acceptedAnswer":{"@type":"Answer","text":"No. This tool extracts only static mesh geometry (vertices and polygon indices). Animation curves, bones, skin weights, blend shapes, and materials are not transferred to the OBJ output."}}]}</script>
+</head>
+<body>
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="../" class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="../#converters">Converters</a></li>
+      <li><a href="../ai/">AI Studio <span class="badge-new">NEW</span></a></li>
+      <li><a href="../blog/">Blog</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../#converters" class="nav-cta">All tools</a></li>
+    </ul>
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</header>
+<main class="converter-page">
+  <div class="container">
+    <nav class="breadcrumb"><a href="../">Home</a><span class="sep">/</span><a href="../#converters">Converters</a><span class="sep">/</span><span>FBX to OBJ</span></nav>
+    <div class="converter-header">
+      <h1>FBX to OBJ, <em class="italic">no software needed.</em></h1>
+      <p class="lead">Extract geometry from ASCII FBX files and download as OBJ. Works in your browser — no Autodesk tools required.</p>
+    </div>
+
+    <div style="background:var(--surface,#f8f8f8);border:1px solid var(--border);border-radius:10px;padding:1rem 1.25rem;margin-bottom:1.5rem;font-size:0.875rem;color:var(--muted);">
+      <strong>ASCII FBX only.</strong> Binary FBX (the default from most apps) cannot be parsed in a browser without the Autodesk SDK.
+      To get an ASCII FBX: in Blender export as FBX and check "ASCII"; in Maya use File &gt; Export with FBX ASCII option; in 3ds Max export and select FBX ASCII in options.
+    </div>
+
+    <div id="dropZone" style="min-height:180px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.75rem;border:2px dashed var(--border);border-radius:12px;padding:2rem;cursor:pointer;transition:border-color .2s,background .2s;">
+      <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+      <p style="margin:0;color:var(--muted);">Drop ASCII FBX here or <label for="fileInput" style="color:var(--accent);cursor:pointer;text-decoration:underline;">browse</label></p>
+      <p style="margin:0;font-size:0.82rem;color:var(--muted);">Accepts .fbx files (ASCII format)</p>
+      <input type="file" id="fileInput" accept=".fbx,.txt" style="display:none;">
+    </div>
+
+    <div id="resultPanel" style="display:none;margin-top:1.5rem;">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1rem;margin-bottom:1.5rem;">
+        <div style="padding:1rem;border:1px solid var(--border);border-radius:10px;text-align:center;">
+          <p style="margin:0;font-size:0.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;">Meshes</p>
+          <p id="statMesh" style="margin:0.25rem 0 0;font-size:1.1rem;font-weight:600;font-family:var(--font-mono,monospace);"></p>
+        </div>
+        <div style="padding:1rem;border:1px solid var(--border);border-radius:10px;text-align:center;">
+          <p style="margin:0;font-size:0.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;">Vertices</p>
+          <p id="statVert" style="margin:0.25rem 0 0;font-size:1.1rem;font-weight:600;font-family:var(--font-mono,monospace);"></p>
+        </div>
+        <div style="padding:1rem;border:1px solid var(--border);border-radius:10px;text-align:center;">
+          <p style="margin:0;font-size:0.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;">Polygons</p>
+          <p id="statPoly" style="margin:0.25rem 0 0;font-size:1.1rem;font-weight:600;font-family:var(--font-mono,monospace);"></p>
+        </div>
+        <div style="padding:1rem;border:1px solid var(--border);border-radius:10px;text-align:center;">
+          <p style="margin:0;font-size:0.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;">OBJ size</p>
+          <p id="statSize" style="margin:0.25rem 0 0;font-size:1.1rem;font-weight:600;font-family:var(--font-mono,monospace);"></p>
+        </div>
+      </div>
+      <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+        <button class="btn btn-primary" id="downloadBtn">Download OBJ</button>
+        <button class="btn btn-secondary" id="resetBtn">Convert another</button>
+      </div>
+    </div>
+
+    <div id="statusMsg" style="margin-top:1rem;font-size:0.9rem;color:var(--muted);min-height:1.5rem;"></div>
+
+    <section class="info-section">
+      <h2>About FBX and OBJ</h2>
+      <p><strong>FBX (Filmbox)</strong> is an Autodesk proprietary format that supports full scene data: meshes, materials, lights, cameras, animation, bones, and blend shapes. It's the standard interchange format between professional 3D tools like Maya, 3ds Max, MotionBuilder, and game engines like Unity and Unreal Engine.</p>
+      <p><strong>OBJ (Wavefront Object)</strong> is a universal 3D interchange format focused on geometry. It's supported by virtually every 3D application and is ideal when you need to share a mesh without scene data or animation.</p>
+
+      <h3>What gets converted</h3>
+      <p>This tool extracts <strong>vertex positions</strong> and <strong>polygon face indices</strong> from ASCII FBX geometry nodes. Normals, UV coordinates, materials, animations, and skeleton data are not included in the OBJ output.</p>
+
+      <h3>For full FBX conversion</h3>
+      <p>If you need complete FBX conversion with materials, animations, and textures, use <strong>Blender</strong> (free) — import FBX, then export as OBJ. Blender handles both binary and ASCII FBX with full scene support.</p>
+
+      <h2>FAQ</h2>
+      <details class="faq-item" open><summary>How do I know if my FBX is ASCII or binary?</summary><p>Open the file in a text editor (Notepad, VSCode). If the first line reads <code>; FBX 7.4.0 project file</code> or similar readable text, it's ASCII FBX. If you see garbled binary characters, it's binary FBX — re-export from your 3D app in ASCII mode.</p></details>
+      <details class="faq-item"><summary>The OBJ is empty or has very few polygons</summary><p>Check that your FBX contains a Geometry node with Vertices and PolygonVertexIndex arrays. Some FBX files embed geometry inside nested nodes — try exporting with a simpler hierarchy or apply transformations before export.</p></details>
+      <details class="faq-item"><summary>Can I convert binary FBX?</summary><p>Not in this browser tool. Binary FBX requires the Autodesk FBX SDK or a library like three.js FBXLoader. For binary FBX, open in Blender or use the <a href="https://www.autodesk.com/developer-network/platform-technologies/fbx-sdk" target="_blank" rel="noopener">FBX SDK</a>.</p></details>
+      <details class="faq-item"><summary>Will UV coordinates be in the OBJ?</summary><p>If the FBX Geometry node contains LayerElementUV data in ASCII form, the tool will attempt to include UV coordinates as <code>vt</code> lines. Standard vertex UVs are supported; layered or blendshape UVs may not parse correctly.</p></details>
+    </section>
+
+    <div class="related-tools">
+      <h3>Related tools</h3>
+      <div class="related-grid">
+        <a href="stl-to-obj.html" class="related-card">🔷 STL to OBJ</a>
+        <a href="image-converter.html" class="related-card">🖼️ Image Converter</a>
+        <a href="svg-to-png.html" class="related-card">🔷 SVG to PNG</a>
+        <a href="zip-converter.html" class="related-card">🗜️ ZIP Converter</a>
+      </div>
+    </div>
+  </div>
+</main>
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid footer-grid-5">
+      <div class="footer-brand"><div class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></div><p>Free, private file conversion for everyone.</p></div>
+      <div class="footer-col"><h5>Tools</h5><ul><li><a href="image-converter.html">Image Converter</a></li><li><a href="pdf-merge.html">PDF Tools</a></li><li><a href="audio-converter.html">Audio Converter</a></li><li><a href="json-to-csv.html">JSON to CSV</a></li></ul></div>
+      <div class="footer-col"><h5>AI Studio</h5><ul><li><a href="../ai/image.html">AI Images</a></li><li><a href="../ai/bg-remove.html">Background Remover</a></li></ul></div>
+      <div class="footer-col"><h5>Company</h5><ul><li><a href="../about.html">About</a></li><li><a href="../blog/">Blog</a></li><li><a href="../privacy.html">Privacy</a></li><li><a href="../terms.html">Terms</a></li></ul></div>
+      <div class="footer-col"><h5>Help</h5><ul><li><a href="../contact.html">Contact</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><div>© <span data-year>2026</span> Desi Jugad.</div><div class="made-in"><span class="flag-in"></span>Made in India, built for the world.</div></div>
+  </div>
+</footer>
+<script src="../assets/js/main.js"></script>
+<script>
+(function(){
+  const dropZone = document.getElementById('dropZone');
+  const fileInput = document.getElementById('fileInput');
+  const resultPanel = document.getElementById('resultPanel');
+  const statMesh = document.getElementById('statMesh');
+  const statVert = document.getElementById('statVert');
+  const statPoly = document.getElementById('statPoly');
+  const statSize = document.getElementById('statSize');
+  const downloadBtn = document.getElementById('downloadBtn');
+  const resetBtn = document.getElementById('resetBtn');
+  const statusMsg = document.getElementById('statusMsg');
+
+  let objContent = '';
+  let sourceFileName = '';
+
+  dropZone.addEventListener('click', () => fileInput.click());
+  dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.style.borderColor = 'var(--accent)'; dropZone.style.background = 'var(--accent-soft,rgba(99,102,241,0.06))'; });
+  dropZone.addEventListener('dragleave', () => { dropZone.style.borderColor = ''; dropZone.style.background = ''; });
+  dropZone.addEventListener('drop', e => { e.preventDefault(); dropZone.style.borderColor = ''; dropZone.style.background = ''; if (e.dataTransfer.files[0]) convertFile(e.dataTransfer.files[0]); });
+  fileInput.addEventListener('change', () => { if (fileInput.files[0]) convertFile(fileInput.files[0]); });
+
+  function convertFile(file) {
+    sourceFileName = file.name;
+    statusMsg.textContent = 'Reading FBX…';
+    const reader = new FileReader();
+    reader.onload = e => {
+      const text = e.target.result;
+      // Detect binary FBX
+      if (!text.trim().startsWith(';') && !text.trim().startsWith('FBX')) {
+        // Check for binary magic
+        const first20 = text.substring(0, 20);
+        if (first20.includes('Kaydara FBX Binary') || (e.target.result && typeof e.target.result !== 'string')) {
+          statusMsg.textContent = 'This appears to be a binary FBX file. Please re-export from your 3D app as ASCII FBX and try again.';
+          return;
+        }
+      }
+      // Extra binary check via char codes
+      let binaryCount = 0;
+      for (let i = 0; i < Math.min(text.length, 512); i++) {
+        const c = text.charCodeAt(i);
+        if (c < 9 || (c > 13 && c < 32 && c !== 26)) binaryCount++;
+      }
+      if (binaryCount > 20) {
+        statusMsg.textContent = 'Binary FBX detected. Re-export as ASCII FBX from Blender/Maya/3ds Max and try again.';
+        return;
+      }
+
+      try {
+        const meshes = parseASCIIFBX(text);
+        if (!meshes.length || meshes.every(m => !m.vertices.length)) {
+          statusMsg.textContent = 'No geometry found. Ensure this is an ASCII FBX with mesh objects (Geometry nodes with Vertices data).';
+          return;
+        }
+        objContent = buildOBJ(meshes);
+        const blob = new Blob([objContent], { type: 'text/plain' });
+        const totalVerts = meshes.reduce((s, m) => s + m.vertices.length, 0);
+        const totalPolys = meshes.reduce((s, m) => s + m.faces.length, 0);
+        statMesh.textContent = meshes.length;
+        statVert.textContent = totalVerts.toLocaleString();
+        statPoly.textContent = totalPolys.toLocaleString();
+        statSize.textContent = formatBytes(blob.size);
+        resultPanel.style.display = '';
+        dropZone.style.display = 'none';
+        statusMsg.textContent = '';
+      } catch(err) {
+        statusMsg.textContent = 'Error parsing FBX: ' + err.message;
+        console.error(err);
+      }
+    };
+    reader.readAsText(file, 'utf-8');
+  }
+
+  function parseASCIIFBX(text) {
+    const meshes = [];
+    // Find all Geometry nodes
+    const geomRe = /Geometry:\s*\d+,\s*"[^"]*",\s*"Mesh"\s*\{([\s\S]*?)^}/gm;
+    let gm;
+    while ((gm = geomRe.exec(text)) !== null) {
+      const block = gm[1];
+      const mesh = extractMeshFromBlock(block);
+      if (mesh.vertices.length) meshes.push(mesh);
+    }
+    // Fallback: look for Vertices/PolygonVertexIndex anywhere if no Geometry node found
+    if (!meshes.length) {
+      const fallback = extractMeshFromBlock(text);
+      if (fallback.vertices.length) meshes.push(fallback);
+    }
+    return meshes;
+  }
+
+  function extractMeshFromBlock(block) {
+    const vertices = [];
+    const faces = [];
+    const uvCoords = [];
+    const uvIndices = [];
+
+    // Extract Vertices array
+    const vertMatch = block.match(/Vertices:\s*\*([\d]+)\s*\{[^}]*a:\s*([\s\S]*?)\}/);
+    if (vertMatch) {
+      const nums = vertMatch[2].replace(/\s+/g,'').split(',').map(Number).filter(v => !isNaN(v));
+      for (let i = 0; i + 2 < nums.length; i += 3) vertices.push([nums[i], nums[i+1], nums[i+2]]);
+    }
+
+    // Extract PolygonVertexIndex
+    const polyMatch = block.match(/PolygonVertexIndex:\s*\*([\d]+)\s*\{[^}]*a:\s*([\s\S]*?)\}/);
+    if (polyMatch) {
+      const indices = polyMatch[2].replace(/\s+/g,'').split(',').map(Number).filter(v => !isNaN(v));
+      let poly = [];
+      for (const idx of indices) {
+        if (idx < 0) {
+          poly.push(~idx); // end of polygon, ~idx = -idx-1
+          faces.push([...poly]);
+          poly = [];
+        } else {
+          poly.push(idx);
+        }
+      }
+      if (poly.length) faces.push(poly);
+    }
+
+    return { vertices, faces, uvCoords, uvIndices };
+  }
+
+  function buildOBJ(meshes) {
+    const lines = ['# FBX to OBJ conversion by Desi Jugad', '# https://desijugad.co.in/convert/fbx-to-obj.html', ''];
+    let vOffset = 1;
+    meshes.forEach((mesh, mi) => {
+      lines.push(`g mesh_${mi + 1}`);
+      mesh.vertices.forEach(([x, y, z]) => lines.push(`v ${x.toFixed(6)} ${y.toFixed(6)} ${z.toFixed(6)}`));
+      mesh.faces.forEach(face => {
+        const faceStr = face.map(i => i + vOffset).join(' ');
+        lines.push(`f ${faceStr}`);
+      });
+      vOffset += mesh.vertices.length;
+      lines.push('');
+    });
+    return lines.join('\n');
+  }
+
+  downloadBtn.addEventListener('click', () => {
+    if (!objContent) return;
+    const blob = new Blob([objContent], { type: 'text/plain' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = sourceFileName.replace(/\.fbx$/i, '') + '.obj';
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 10000);
+  });
+
+  resetBtn.addEventListener('click', () => {
+    objContent = '';
+    dropZone.style.display = 'flex';
+    resultPanel.style.display = 'none';
+    statusMsg.textContent = '';
+    fileInput.value = '';
+  });
+
+  function formatBytes(b) {
+    if (b < 1024) return b + ' B';
+    if (b < 1048576) return (b/1024).toFixed(1) + ' KB';
+    return (b/1048576).toFixed(1) + ' MB';
+  }
+})();
+</script>
+</body>
+</html>

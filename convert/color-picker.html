@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/img/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/img/apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Color Picker — Pick Color from Screen or Image | Desi Jugad</title>
+<meta name="description" content="Free online color picker tool. Pick any color from your screen using the EyeDropper API, or upload an image and click to sample colors. Get HEX, RGB, and HSL values instantly.">
+<meta name="keywords" content="color picker, eyedropper tool, pick color from image, color sampler, HEX color picker, RGB color picker, online color picker free">
+<meta name="author" content="Desi Jugad">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://desijugad.co.in/convert/color-picker.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Color Picker — Pick Color from Screen or Image">
+<meta property="og:description" content="Use the EyeDropper API to sample any color from your screen, or upload an image and click to get HEX, RGB, and HSL values instantly.">
+<meta property="og:url" content="https://desijugad.co.in/convert/color-picker.html">
+<meta property="og:image" content="https://desijugad.co.in/assets/img/og-default.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Color Picker — Pick Color from Screen or Image">
+<meta name="twitter:description" content="Use the EyeDropper API to sample any color from your screen, or upload an image and click to get HEX, RGB, and HSL values instantly.">
+<meta name="twitter:image" content="https://desijugad.co.in/assets/img/og-default.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,30..100;1,9..144,300..700,30..100&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+<style>
+.picker-layout { display: grid; grid-template-columns: 1fr 320px; gap: 2rem; margin-top: 2rem; }
+@media (max-width: 900px) { .picker-layout { grid-template-columns: 1fr; } }
+.picker-canvas-wrap {
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem;
+}
+.picker-canvas-wrap canvas {
+  width: 100%; height: auto; border-radius: calc(var(--radius) - 4px);
+  cursor: crosshair; display: block; border: 1px solid var(--line);
+}
+.canvas-placeholder {
+  min-height: 260px; display: flex; flex-direction: column; align-items: center;
+  justify-content: center; gap: 1rem; color: var(--ink-muted); font-size: 0.95rem;
+  background: var(--bg-alt); border-radius: calc(var(--radius) - 4px);
+  border: 2px dashed var(--line); cursor: default;
+}
+.canvas-placeholder svg { opacity: 0.35; }
+.picker-panel {
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 1.75rem; display: flex; flex-direction: column; gap: 1.25rem;
+}
+.color-swatch-large {
+  width: 100%; height: 120px; border-radius: var(--radius); border: 1px solid var(--line);
+  background: #4F3CC9; transition: background 0.1s; position: relative; overflow: hidden;
+}
+.color-swatch-large .swatch-hint {
+  position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%);
+  font-size: 0.72rem; color: rgba(255,255,255,0.7); white-space: nowrap;
+  font-family: var(--font-mono);
+}
+.fmt-row {
+  display: flex; align-items: center; gap: 0.5rem;
+}
+.fmt-label-sm {
+  font-size: 0.72rem; font-family: var(--font-mono); text-transform: uppercase;
+  letter-spacing: 0.08em; color: var(--ink-muted); width: 36px; flex-shrink: 0;
+}
+.fmt-input {
+  flex: 1; padding: 0.5rem 0.75rem; font-family: var(--font-mono); font-size: 0.9rem;
+  border: 1px solid var(--line); border-radius: var(--radius-sm);
+  background: var(--bg-alt); color: var(--ink);
+}
+.fmt-copy-btn {
+  padding: 0.5rem 0.75rem; font-size: 0.78rem; border: 1px solid var(--line);
+  border-radius: var(--radius-sm); background: var(--surface); color: var(--ink-muted);
+  cursor: pointer; transition: all 0.15s; white-space: nowrap;
+}
+.fmt-copy-btn:hover { color: var(--indigo); border-color: var(--indigo); }
+.history-row { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.hist-chip {
+  width: 32px; height: 32px; border-radius: 8px; cursor: pointer;
+  border: 2px solid transparent; transition: transform 0.15s, border-color 0.15s;
+  flex-shrink: 0;
+}
+.hist-chip:hover { transform: scale(1.2); border-color: var(--indigo); }
+.gradient-canvas-wrap {
+  position: relative;
+}
+.magnifier {
+  position: absolute; pointer-events: none; border: 2px solid white;
+  border-radius: 50%; box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+  width: 64px; height: 64px; overflow: hidden; display: none;
+  transform: translate(-50%, -140%);
+}
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Color Picker","url":"https://desijugad.co.in/convert/color-picker.html","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://desijugad.co.in/"},{"@type":"ListItem","position":2,"name":"Converters","item":"https://desijugad.co.in/#converters"},{"@type":"ListItem","position":3,"name":"Color Picker","item":"https://desijugad.co.in/convert/color-picker.html"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How do I pick a color from my screen?","acceptedAnswer":{"@type":"Answer","text":"Click the 'Pick from Screen' button (requires Chrome/Edge). Your cursor turns into an eyedropper — click any pixel on screen to sample its color. The HEX, RGB, and HSL values appear instantly."}},{"@type":"Question","name":"Can I pick a color from an image?","acceptedAnswer":{"@type":"Answer","text":"Yes. Upload any PNG, JPG, or WebP image using the 'Upload Image' button, then click anywhere on the displayed image to sample a color from that exact pixel."}}]}</script>
+</head>
+<body>
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="../" class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="../#converters">Converters</a></li>
+      <li><a href="../ai/">AI Studio <span class="badge-new">NEW</span></a></li>
+      <li><a href="../blog/">Blog</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../#converters" class="nav-cta">All tools</a></li>
+    </ul>
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</header>
+
+<main class="converter-page">
+  <div class="container">
+    <nav class="breadcrumb"><a href="../">Home</a><span class="sep">/</span><a href="../#converters">Converters</a><span class="sep">/</span><span>Color Picker</span></nav>
+    <div class="converter-header">
+      <h1>Color picker, <em class="italic">any pixel.</em></h1>
+      <p class="lead">Sample any color from your screen with the EyeDropper API, or upload an image and click to get HEX, RGB, and HSL values in one shot.</p>
+    </div>
+
+    <div class="picker-layout">
+      <!-- Left: canvas / gradient -->
+      <div class="picker-canvas-wrap">
+        <div style="display:flex;gap:0.75rem;flex-wrap:wrap;align-items:center;">
+          <button class="btn btn-primary" id="eyedropperBtn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-3px;margin-right:6px;"><path d="M12 2L2 12l10 10 10-10zM2 12h20"/></svg>
+            Pick from Screen
+          </button>
+          <button class="btn btn-secondary" id="uploadImgBtn">Upload Image</button>
+          <input type="file" id="imgFileInput" accept="image/*" style="display:none">
+          <button class="btn btn-secondary" id="showGradientBtn">Color Gradient</button>
+        </div>
+
+        <div id="canvasArea">
+          <div class="canvas-placeholder" id="canvasPlaceholder">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+            <span>Upload an image or show the gradient to pick a color</span>
+          </div>
+          <div class="gradient-canvas-wrap" id="gradientWrap" style="display:none;position:relative;">
+            <canvas id="gradientCanvas"></canvas>
+            <div class="magnifier" id="magnifier">
+              <canvas id="magCanvas" width="64" height="64"></canvas>
+            </div>
+          </div>
+          <div id="imgWrap" style="display:none;position:relative;">
+            <canvas id="imgCanvas"></canvas>
+            <div class="magnifier" id="imgMagnifier">
+              <canvas id="imgMagCanvas" width="64" height="64"></canvas>
+            </div>
+          </div>
+        </div>
+        <p style="font-size:0.82rem;color:var(--ink-muted);">Click anywhere on the canvas to sample a color. Move cursor slowly for the magnifier.</p>
+      </div>
+
+      <!-- Right: values + history -->
+      <div class="picker-panel">
+        <div class="color-swatch-large" id="bigSwatch">
+          <span class="swatch-hint" id="swatchHint">#4F3CC9</span>
+        </div>
+
+        <div>
+          <div class="fmt-row" style="margin-bottom:0.5rem;">
+            <span class="fmt-label-sm">HEX</span>
+            <input type="text" class="fmt-input" id="hexOut" value="#4F3CC9" readonly>
+            <button class="fmt-copy-btn" data-copy="hexOut">Copy</button>
+          </div>
+          <div class="fmt-row" style="margin-bottom:0.5rem;">
+            <span class="fmt-label-sm">RGB</span>
+            <input type="text" class="fmt-input" id="rgbOut" value="rgb(79, 60, 201)" readonly>
+            <button class="fmt-copy-btn" data-copy="rgbOut">Copy</button>
+          </div>
+          <div class="fmt-row">
+            <span class="fmt-label-sm">HSL</span>
+            <input type="text" class="fmt-input" id="hslOut" value="hsl(247, 53%, 51%)" readonly>
+            <button class="fmt-copy-btn" data-copy="hslOut">Copy</button>
+          </div>
+        </div>
+
+        <div>
+          <p style="font-size:0.8rem;color:var(--ink-muted);margin-bottom:0.5rem;">Pick a known color:</p>
+          <input type="color" id="nativePicker" value="#4F3CC9" style="width:100%;height:44px;border:1px solid var(--line);border-radius:var(--radius-sm);cursor:pointer;padding:3px;background:var(--surface);">
+        </div>
+
+        <div>
+          <p style="font-size:0.8rem;color:var(--ink-muted);margin-bottom:0.5rem;">History (last 12 picks):</p>
+          <div class="history-row" id="historyRow">
+            <span style="color:var(--ink-muted);font-size:0.8rem;">No picks yet.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section class="info-section">
+      <h2>How to use the color picker</h2>
+      <ul>
+        <li><strong>EyeDropper (Pick from Screen)</strong> — Works in Chrome 95+ and Edge. Click the button, then click any pixel anywhere on your screen — even outside the browser.</li>
+        <li><strong>Image upload</strong> — Upload a PNG, JPG, or WebP and click any spot on the image to sample that pixel's color exactly.</li>
+        <li><strong>Gradient canvas</strong> — A full-spectrum gradient lets you visually explore and click any hue/saturation/lightness.</li>
+        <li><strong>Native picker</strong> — The browser's built-in color picker for quick selection.</li>
+      </ul>
+      <h2>FAQ</h2>
+      <details class="faq-item" open>
+        <summary>Why doesn't the EyeDropper button work in Firefox or Safari?</summary>
+        <p>The EyeDropper API is currently supported in Chrome 95+ and Edge 95+. Firefox and Safari do not yet support it. As a fallback, upload your image and use the canvas picker instead.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Is my image uploaded to a server?</summary>
+        <p>No. Your image is loaded entirely in the browser using JavaScript's FileReader and Canvas API. Nothing leaves your device.</p>
+      </details>
+      <details class="faq-item">
+        <summary>What is the difference between HEX, RGB, and HSL?</summary>
+        <p>HEX is the 6-digit web format (#RRGGBB). RGB gives you the red, green, and blue channel values from 0–255. HSL (Hue, Saturation, Lightness) is more intuitive for designers — hue is the color angle (0–360°), saturation is the color intensity, and lightness controls brightness.</p>
+      </details>
+    </section>
+
+    <div class="related-tools">
+      <h3>Related tools</h3>
+      <div class="related-grid">
+        <a href="color-converter.html" class="related-card">🎨 Color Converter</a>
+        <a href="color-palette.html" class="related-card">🖌️ Color Palette</a>
+        <a href="image-converter.html" class="related-card">🖼️ Image Converter</a>
+        <a href="photo-editor.html" class="related-card">✏️ Photo Editor</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid footer-grid-5">
+      <div class="footer-brand"><div class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></div><p>Free, private file conversion for everyone.</p></div>
+      <div class="footer-col"><h5>Tools</h5><ul><li><a href="image-converter.html">Image Converter</a></li><li><a href="image-compress.html">Image Compressor</a></li><li><a href="image-resize.html">Image Resize</a></li><li><a href="heic-to-jpg.html">HEIC to JPG</a></li></ul></div>
+      <div class="footer-col"><h5>AI Studio</h5><ul><li><a href="../ai/image.html">AI Images</a></li><li><a href="../ai/bg-remove.html">Background Remover</a></li></ul></div>
+      <div class="footer-col"><h5>Company</h5><ul><li><a href="../about.html">About</a></li><li><a href="../blog/">Blog</a></li><li><a href="../privacy.html">Privacy</a></li><li><a href="../terms.html">Terms</a></li></ul></div>
+      <div class="footer-col"><h5>Help</h5><ul><li><a href="../contact.html">Contact</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><div>© <span data-year>2026</span> Desi Jugad.</div><div class="made-in"><span class="flag-in"></span>Made in India, built for the world.</div></div>
+  </div>
+</footer>
+
+<script src="../assets/js/main.js"></script>
+<script>
+(function() {
+  const eyedropperBtn  = document.getElementById('eyedropperBtn');
+  const uploadImgBtn   = document.getElementById('uploadImgBtn');
+  const imgFileInput   = document.getElementById('imgFileInput');
+  const showGradBtn    = document.getElementById('showGradientBtn');
+  const gradientWrap   = document.getElementById('gradientWrap');
+  const gradientCanvas = document.getElementById('gradientCanvas');
+  const imgWrap        = document.getElementById('imgWrap');
+  const imgCanvas      = document.getElementById('imgCanvas');
+  const placeholder    = document.getElementById('canvasPlaceholder');
+  const bigSwatch      = document.getElementById('bigSwatch');
+  const swatchHint     = document.getElementById('swatchHint');
+  const hexOut         = document.getElementById('hexOut');
+  const rgbOut         = document.getElementById('rgbOut');
+  const hslOut         = document.getElementById('hslOut');
+  const nativePicker   = document.getElementById('nativePicker');
+  const historyRow     = document.getElementById('historyRow');
+  const magnifier      = document.getElementById('magnifier');
+  const magCanvas      = document.getElementById('magCanvas');
+  const imgMagnifier   = document.getElementById('imgMagnifier');
+  const imgMagCanvas   = document.getElementById('imgMagCanvas');
+
+  let history = [];
+  let loadedImage = null;
+
+  // ── Helpers ──────────────────────────────────────────────────────
+  function hexToRgb(hex) {
+    hex = hex.replace(/^#/, '');
+    if (hex.length === 3) hex = hex.split('').map(c => c + c).join('');
+    const n = parseInt(hex, 16);
+    return { r: (n >> 16) & 255, g: (n >> 8) & 255, b: n & 255 };
+  }
+
+  function rgbToHex(r, g, b) {
+    return '#' + [r, g, b].map(v => v.toString(16).padStart(2, '0')).join('');
+  }
+
+  function rgbToHsl(r, g, b) {
+    r /= 255; g /= 255; b /= 255;
+    const max = Math.max(r, g, b), min = Math.min(r, g, b);
+    let h, s, l = (max + min) / 2;
+    if (max === min) { h = s = 0; } else {
+      const d = max - min;
+      s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+      switch (max) {
+        case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+        case g: h = (b - r) / d + 2; break;
+        case b: h = (r - g) / d + 4; break;
+      }
+      h /= 6;
+    }
+    return { h: Math.round(h * 360), s: Math.round(s * 100), l: Math.round(l * 100) };
+  }
+
+  function applyColor(r, g, b) {
+    const hex = rgbToHex(r, g, b).toUpperCase();
+    const { h, s, l } = rgbToHsl(r, g, b);
+    bigSwatch.style.background = hex;
+    swatchHint.textContent = hex;
+    hexOut.value = hex;
+    rgbOut.value = `rgb(${r}, ${g}, ${b})`;
+    hslOut.value = `hsl(${h}, ${s}%, ${l}%)`;
+    try { nativePicker.value = hex; } catch(_) {}
+    addHistory(hex);
+  }
+
+  function addHistory(hex) {
+    if (history[0] === hex) return;
+    history.unshift(hex);
+    if (history.length > 12) history.pop();
+    renderHistory();
+  }
+
+  function renderHistory() {
+    if (!history.length) return;
+    historyRow.innerHTML = '';
+    history.forEach(h => {
+      const chip = document.createElement('div');
+      chip.className = 'hist-chip';
+      chip.style.background = h;
+      chip.title = h;
+      chip.addEventListener('click', () => {
+        const { r, g, b } = hexToRgb(h);
+        applyColor(r, g, b);
+      });
+      historyRow.appendChild(chip);
+    });
+  }
+
+  // ── Copy buttons ─────────────────────────────────────────────────
+  document.querySelectorAll('.fmt-copy-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const val = document.getElementById(btn.dataset.copy).value;
+      copyToClipboard(val).then(() => showToast('Copied!', 'success', 1500));
+    });
+  });
+
+  nativePicker.addEventListener('input', () => {
+    const { r, g, b } = hexToRgb(nativePicker.value);
+    applyColor(r, g, b);
+  });
+
+  // ── EyeDropper ───────────────────────────────────────────────────
+  if (!window.EyeDropper) {
+    eyedropperBtn.title = 'EyeDropper requires Chrome 95+ or Edge 95+';
+    eyedropperBtn.style.opacity = '0.5';
+  }
+  eyedropperBtn.addEventListener('click', async () => {
+    if (!window.EyeDropper) {
+      showToast('EyeDropper not supported in this browser. Try Chrome or Edge.', 'error');
+      return;
+    }
+    try {
+      const ed = new EyeDropper();
+      const result = await ed.open();
+      const { r, g, b } = hexToRgb(result.sRGBHex);
+      applyColor(r, g, b);
+    } catch (_) { /* user cancelled */ }
+  });
+
+  // ── Gradient canvas ───────────────────────────────────────────────
+  function drawGradient() {
+    const W = gradientCanvas.parentElement.offsetWidth || 600;
+    gradientCanvas.width = W;
+    gradientCanvas.height = Math.round(W * 0.55);
+    const ctx = gradientCanvas.getContext('2d');
+
+    // Hue gradient (horizontal)
+    const hueGrad = ctx.createLinearGradient(0, 0, W, 0);
+    for (let i = 0; i <= 360; i += 30) {
+      hueGrad.addColorStop(i / 360, `hsl(${i},100%,50%)`);
+    }
+    ctx.fillStyle = hueGrad;
+    ctx.fillRect(0, 0, W, gradientCanvas.height);
+
+    // Saturation overlay (white left, transparent right)
+    const satGrad = ctx.createLinearGradient(0, 0, W, 0);
+    satGrad.addColorStop(0, 'rgba(255,255,255,1)');
+    satGrad.addColorStop(1, 'rgba(255,255,255,0)');
+    ctx.fillStyle = satGrad;
+    ctx.fillRect(0, 0, W, gradientCanvas.height);
+
+    // Lightness overlay (transparent top, black bottom)
+    const ligGrad = ctx.createLinearGradient(0, 0, 0, gradientCanvas.height);
+    ligGrad.addColorStop(0, 'rgba(0,0,0,0)');
+    ligGrad.addColorStop(1, 'rgba(0,0,0,1)');
+    ctx.fillStyle = ligGrad;
+    ctx.fillRect(0, 0, W, gradientCanvas.height);
+  }
+
+  showGradBtn.addEventListener('click', () => {
+    imgWrap.style.display = 'none';
+    placeholder.style.display = 'none';
+    gradientWrap.style.display = '';
+    drawGradient();
+    showGradBtn.textContent = 'Redraw Gradient';
+  });
+
+  function pickFromCanvas(canvas, clientX, clientY, magEl, magCtx) {
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+    const x = Math.round((clientX - rect.left) * scaleX);
+    const y = Math.round((clientY - rect.top) * scaleY);
+    const ctx = canvas.getContext('2d');
+    const pixel = ctx.getImageData(x, y, 1, 1).data;
+    applyColor(pixel[0], pixel[1], pixel[2]);
+
+    // Draw magnifier
+    if (magEl && magCtx) {
+      const zoom = 4;
+      magCtx.drawImage(canvas,
+        Math.max(0, x - 8), Math.max(0, y - 8), 16, 16,
+        0, 0, 64, 64
+      );
+      // crosshair
+      magCtx.strokeStyle = 'white';
+      magCtx.lineWidth = 1;
+      magCtx.beginPath();
+      magCtx.moveTo(32, 0); magCtx.lineTo(32, 64);
+      magCtx.moveTo(0, 32); magCtx.lineTo(64, 32);
+      magCtx.stroke();
+    }
+  }
+
+  function setupCanvasEvents(canvas, magEl, magCanvasEl) {
+    const magCtx = magCanvasEl ? magCanvasEl.getContext('2d') : null;
+    canvas.addEventListener('mousemove', e => {
+      if (magEl) {
+        magEl.style.display = '';
+        magEl.style.left = (e.offsetX) + 'px';
+        magEl.style.top = (e.offsetY) + 'px';
+        if (magCtx) {
+          const rect = canvas.getBoundingClientRect();
+          const scaleX = canvas.width / rect.width;
+          const scaleY = canvas.height / rect.height;
+          const x = Math.round(e.offsetX * scaleX);
+          const y = Math.round(e.offsetY * scaleY);
+          magCtx.clearRect(0, 0, 64, 64);
+          magCtx.drawImage(canvas, Math.max(0, x - 8), Math.max(0, y - 8), 16, 16, 0, 0, 64, 64);
+          magCtx.strokeStyle = 'rgba(255,255,255,0.8)';
+          magCtx.lineWidth = 1;
+          magCtx.beginPath();
+          magCtx.moveTo(32, 0); magCtx.lineTo(32, 64);
+          magCtx.moveTo(0, 32); magCtx.lineTo(64, 32);
+          magCtx.stroke();
+        }
+      }
+    });
+    canvas.addEventListener('mouseleave', () => { if (magEl) magEl.style.display = 'none'; });
+    canvas.addEventListener('click', e => pickFromCanvas(canvas, e.clientX, e.clientY, magEl, magCtx));
+  }
+
+  setupCanvasEvents(gradientCanvas, magnifier, magCanvas);
+  setupCanvasEvents(imgCanvas, imgMagnifier, imgMagCanvas);
+
+  // ── Image upload ──────────────────────────────────────────────────
+  uploadImgBtn.addEventListener('click', () => imgFileInput.click());
+  imgFileInput.addEventListener('change', e => {
+    const file = e.target.files[0];
+    if (!file || !file.type.startsWith('image/')) return;
+    gradientWrap.style.display = 'none';
+    placeholder.style.display = 'none';
+    imgWrap.style.display = '';
+
+    const url = URL.createObjectURL(file);
+    const img = new Image();
+    img.onload = () => {
+      loadedImage = img;
+      const maxW = imgCanvas.parentElement.offsetWidth || 600;
+      const scale = Math.min(1, maxW / img.naturalWidth);
+      imgCanvas.width = Math.round(img.naturalWidth * scale);
+      imgCanvas.height = Math.round(img.naturalHeight * scale);
+      const ctx = imgCanvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, imgCanvas.width, imgCanvas.height);
+      URL.revokeObjectURL(url);
+    };
+    img.src = url;
+  });
+
+  // ── Init ──────────────────────────────────────────────────────────
+  applyColor(79, 60, 201);
+})();
+</script>
+</body>
+</html>

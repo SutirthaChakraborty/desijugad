@@ -97,6 +97,77 @@
     { name:'AI Photo Studio',       desc:'Edit photos with a sentence',                   url:P+'ai/photo-studio.html',             icon:'📸' },
     { name:'AI Background Remover', desc:'100% browser-side, no key',                     url:P+'ai/bg-remove.html',                icon:'✂️' },
     { name:'AI Social Post Maker',  desc:'Pre-sized graphics for IG, LinkedIn, X',        url:P+'ai/social-post.html',              icon:'📣' },
+
+    // Image Tools
+    { name:'Color Picker',          desc:'Pick colors from images or screen',              url:P+'convert/color-picker.html',        icon:'🎨' },
+    { name:'Rotate Image',          desc:'Rotate photos 90°, 180°, 270° or custom',       url:P+'convert/rotate-image.html',        icon:'🔄' },
+    { name:'Flip Image',            desc:'Mirror images horizontally or vertically',       url:P+'convert/flip-image.html',          icon:'↔️' },
+    { name:'Image Enlarger',        desc:'Upscale images 2x, 3x, 4x',                     url:P+'convert/image-enlarger.html',      icon:'🔍' },
+    { name:'GIF Maker',             desc:'Create animated GIF from multiple images',       url:P+'convert/gif-maker.html',           icon:'🎞️' },
+    { name:'JPEG to JPG',           desc:'Convert JPEG/JFIF files to .jpg extension',     url:P+'convert/jpeg-to-jpg.html',         icon:'🖼️' },
+    { name:'JFIF to JPG',           desc:'Convert JFIF format to JPG',                    url:P+'convert/jfif-to-jpg.html',         icon:'🖼️' },
+    { name:'Compress JPG',          desc:'Reduce JPG file size with quality control',      url:P+'convert/compress-jpg.html',        icon:'🗜️' },
+
+    // Audio/Video Conversions
+    { name:'MP4 to MP3',            desc:'Extract audio from MP4 video files',             url:P+'convert/mp4-to-mp3.html',          icon:'🎵' },
+    { name:'M4A to MP3',            desc:'Convert M4A audio to MP3 format',               url:P+'convert/m4a-to-mp3.html',          icon:'🎵' },
+    { name:'MOV to MP4',            desc:'Convert MOV video to MP4',                       url:P+'convert/mov-to-mp4.html',          icon:'🎬' },
+    { name:'AIFF to MP3',           desc:'Convert AIFF audio to MP3',                     url:P+'convert/aiff-to-mp3.html',         icon:'🎵' },
+    { name:'3GP to MP3',            desc:'Extract audio from 3GP video',                  url:P+'convert/3gp-to-mp3.html',          icon:'🎵' },
+    { name:'AMR to MP3',            desc:'Convert AMR voice recordings to MP3',           url:P+'convert/amr-to-mp3.html',          icon:'🎵' },
+    { name:'MP3 to WAV',            desc:'Convert MP3 to lossless WAV format',            url:P+'convert/mp3-to-wav.html',          icon:'🎵' },
+    { name:'AVI to GIF',            desc:'Convert AVI video to animated GIF',             url:P+'convert/avi-to-gif.html',          icon:'🖼️' },
+    { name:'Crop Video',            desc:'Spatially crop video frame — remove borders',   url:P+'convert/crop-video.html',          icon:'✂️' },
+
+    // PDF Tools
+    { name:'PDF Split',             desc:'Split PDF by page range or into single pages',  url:P+'convert/pdf-split.html',           icon:'📄' },
+    { name:'Protect PDF',           desc:'Add password protection to PDF',                url:P+'convert/pdf-protect.html',         icon:'🔒' },
+    { name:'Organize PDF',          desc:'Reorder and delete PDF pages',                  url:P+'convert/pdf-organize.html',        icon:'📋' },
+    { name:'Extract PDF Pages',     desc:'Extract specific pages from a PDF',             url:P+'convert/pdf-extract-pages.html',   icon:'📑' },
+    { name:'PDF Page Remover',      desc:'Remove specific pages from a PDF',              url:P+'convert/pdf-page-remover.html',    icon:'🗑️' },
+    { name:'Flatten PDF',           desc:'Flatten form fields and annotations',           url:P+'convert/pdf-flatten.html',         icon:'📄' },
+    { name:'Resize PDF',            desc:'Change PDF page size (A4, Letter, etc.)',        url:P+'convert/pdf-resize.html',          icon:'📐' },
+    { name:'Unlock PDF',            desc:'Remove password from PDF',                      url:P+'convert/pdf-unlock.html',          icon:'🔓' },
+    { name:'Crop PDF',              desc:'Crop PDF page margins',                         url:P+'convert/pdf-crop.html',            icon:'✂️' },
+
+    // Archive & File Tools
+    { name:'ZIP Converter',         desc:'Create or extract ZIP archives',                url:P+'convert/zip-converter.html',       icon:'📦' },
+    { name:'Create Archive',        desc:'Pack multiple files into a ZIP',                url:P+'convert/create-archive.html',      icon:'📦' },
+    { name:'CBR/CBZ to PDF',        desc:'Convert comic book archives to PDF',            url:P+'convert/cbr-to-pdf.html',          icon:'📚' },
+
+    // Font Tools
+    { name:'OTF to TTF Converter',  desc:'Convert between OTF, TTF font formats',        url:P+'convert/otf-to-ttf.html',          icon:'🔤' },
+
+    // Spreadsheet Tools
+    { name:'XLSX Converter',        desc:'Convert XLSX, XLS, CSV, ODS files',            url:P+'convert/xlsx-converter.html',      icon:'📊' },
+    { name:'CSV Converter',         desc:'Change CSV delimiter or convert to JSON/HTML',  url:P+'convert/csv-converter.html',       icon:'📊' },
+
+    // eBook Tools
+    { name:'EPUB to PDF',           desc:'Convert EPUB ebooks to PDF',                   url:P+'convert/epub-to-pdf.html',         icon:'📖' },
+    { name:'EPUB Converter',        desc:'EPUB reader and converter',                    url:P+'convert/epub-converter.html',      icon:'📖' },
+
+    // 3D Tools
+    { name:'STL to OBJ',            desc:'Convert STL 3D mesh files to OBJ format',      url:P+'convert/stl-to-obj.html',          icon:'🧊' },
+    { name:'FBX to OBJ',            desc:'Convert FBX 3D files to OBJ format',           url:P+'convert/fbx-to-obj.html',          icon:'🧊' },
+
+    // Web Capture
+    { name:'Save Page as PDF',      desc:'Convert HTML or webpage to PDF',               url:P+'convert/save-website-as-pdf.html', icon:'🌐' },
+    { name:'Website Screenshot',    desc:'Capture webpage as PNG or JPG',                url:P+'convert/website-screenshot.html',  icon:'📷' },
+
+    // DOCX Tools
+    { name:'DOCX Converter',        desc:'Extract text from DOCX files',                 url:P+'convert/docx-converter.html',      icon:'📝' },
+
+    // Format Hubs (SEO landing pages)
+    { name:'JPG Converter',         desc:'All JPG/JPEG conversions in one place',        url:P+'convert/jpg-converter.html',       icon:'🖼️' },
+    { name:'PNG Converter',         desc:'All PNG conversions in one place',             url:P+'convert/png-converter.html',       icon:'🖼️' },
+    { name:'GIF Converter',         desc:'All GIF conversions in one place',             url:P+'convert/gif-converter.html',       icon:'🎞️' },
+    { name:'MP3 Converter',         desc:'All MP3 audio conversions in one place',       url:P+'convert/mp3-converter.html',       icon:'🎵' },
+    { name:'MP4 Converter',         desc:'All MP4 video conversions in one place',       url:P+'convert/mp4-converter.html',       icon:'🎬' },
+    { name:'PDF Converter',         desc:'All PDF tools in one place',                   url:P+'convert/pdf-converter.html',       icon:'📄' },
+    { name:'SVG Converter',         desc:'Convert SVG to PNG, JPG, PDF',                url:P+'convert/svg-converter.html',       icon:'🎨' },
+    { name:'Font Converter',        desc:'OTF, TTF, WOFF font conversions',             url:P+'convert/font-converter.html',      icon:'🔤' },
+    { name:'ZIP Archiver',          desc:'Create and extract ZIP archives',              url:P+'convert/zip-archiver.html',        icon:'📦' },
+    { name:'Spreadsheet Converter', desc:'XLSX, CSV, ODS conversions',                  url:P+'convert/xlsx-hub.html',            icon:'📊' },
   ];
 
   /* File-type → tool detection (for hero drop-zone and global file-drop banner) */

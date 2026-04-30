@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/img/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/img/apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EPUB to PDF Converter — Free Online eBook to PDF | Desi Jugad</title>
+<meta name="description" content="Convert EPUB ebooks to PDF in your browser. Extracts text and chapter content from EPUB files and generates a readable PDF. Free, no upload, no sign-up.">
+<meta name="keywords" content="epub to pdf, convert epub to pdf online free, ebook to pdf, epub converter, epub pdf browser, epub reader pdf">
+<meta name="author" content="Desi Jugad">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://desijugad.co.in/convert/epub-to-pdf.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="EPUB to PDF Converter — Free Online eBook to PDF | Desi Jugad">
+<meta property="og:description" content="Convert EPUB ebooks to PDF in your browser. Free, no upload, no sign-up.">
+<meta property="og:url" content="https://desijugad.co.in/convert/epub-to-pdf.html">
+<meta property="og:image" content="https://desijugad.co.in/assets/img/og-default.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="EPUB to PDF Converter — Free Online eBook to PDF | Desi Jugad">
+<meta name="twitter:description" content="Convert EPUB ebooks to PDF in your browser. Free, no upload, no sign-up.">
+<meta name="twitter:image" content="https://desijugad.co.in/assets/img/og-default.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,30..100;1,9..144,300..700,30..100&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"EPUB to PDF Converter","url":"https://desijugad.co.in/convert/epub-to-pdf.html","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://desijugad.co.in/"},{"@type":"ListItem","position":2,"name":"Converters","item":"https://desijugad.co.in/#converters"},{"@type":"ListItem","position":3,"name":"EPUB to PDF","item":"https://desijugad.co.in/convert/epub-to-pdf.html"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How do I convert EPUB to PDF online free?","acceptedAnswer":{"@type":"Answer","text":"Drop your EPUB file onto the upload zone. The tool extracts the text content from each chapter and generates a PDF with the text reflowed to A4 pages. Click Convert to PDF and download."}},{"@type":"Question","name":"Will images in my EPUB appear in the PDF?","acceptedAnswer":{"@type":"Answer","text":"This browser-based tool focuses on text content extraction. Images embedded in EPUB files may not transfer to the PDF due to browser sandboxing limitations. For full fidelity with images, consider Calibre (free desktop app)."}},{"@type":"Question","name":"What is an EPUB file?","acceptedAnswer":{"@type":"Answer","text":"EPUB is a standard ebook format based on HTML and CSS packaged inside a ZIP archive. Most ebook readers (Kindle, Kobo, Apple Books) support it natively."}},{"@type":"Question","name":"Why does the PDF layout differ from the ebook?","acceptedAnswer":{"@type":"Answer","text":"EPUB is a reflowable format designed to adapt to screen size. Converting to PDF requires choosing a fixed page size (A4 by default). The text will reflow and chapter breaks will be approximated, but the reading experience will be equivalent."}}]}</script>
+</head>
+<body>
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="../" class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="../#converters">Converters</a></li>
+      <li><a href="../ai/">AI Studio <span class="badge-new">NEW</span></a></li>
+      <li><a href="../blog/">Blog</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../#converters" class="nav-cta">All tools</a></li>
+    </ul>
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</header>
+<main class="converter-page">
+  <div class="container">
+    <nav class="breadcrumb"><a href="../">Home</a><span class="sep">/</span><a href="../#converters">Converters</a><span class="sep">/</span><span>EPUB to PDF</span></nav>
+    <div class="converter-header">
+      <h1>eBooks, <em class="italic">as PDF.</em></h1>
+      <p class="lead">Convert any EPUB to a readable PDF — all chapters extracted, text reflowed to A4 pages. Private and free.</p>
+    </div>
+
+    <div style="background:var(--surface,#f8f8f8);border:1px solid var(--border);border-radius:10px;padding:1rem 1.25rem;margin-bottom:1.5rem;font-size:0.875rem;color:var(--muted);">
+      <strong>Browser limitation notice:</strong> EPUB-to-PDF in a browser extracts <strong>text content</strong> and basic structure. Complex layouts, custom fonts, and embedded images may not transfer perfectly. For pixel-perfect conversion with full layout, use <a href="https://calibre-ebook.com/" target="_blank" rel="noopener">Calibre</a> (free desktop app).
+    </div>
+
+    <div id="dropZone" style="min-height:180px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.75rem;border:2px dashed var(--border);border-radius:12px;padding:2rem;cursor:pointer;transition:border-color .2s,background .2s;">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+      <p style="margin:0;color:var(--muted);">Drop EPUB file here or <label for="fileInput" style="color:var(--accent);cursor:pointer;text-decoration:underline;">browse</label></p>
+      <input type="file" id="fileInput" accept=".epub" style="display:none;">
+    </div>
+
+    <div id="bookInfo" style="display:none;margin-top:1.5rem;padding:1rem 1.25rem;border:1px solid var(--border);border-radius:10px;">
+      <h3 id="bookTitle" style="margin:0 0 0.25rem;"></h3>
+      <p id="bookMeta" style="margin:0;font-size:0.85rem;color:var(--muted);"></p>
+      <div style="margin-top:1rem;display:flex;gap:0.5rem;align-items:center;flex-wrap:wrap;">
+        <div class="option" style="min-width:160px;">
+          <label>Page size</label>
+          <select id="pageSize" style="font-size:0.9rem;padding:0.35rem 0.6rem;border:1px solid var(--border);border-radius:6px;background:var(--bg);color:var(--text);">
+            <option value="a4">A4 (210×297 mm)</option>
+            <option value="letter">Letter (8.5×11 in)</option>
+          </select>
+        </div>
+        <div class="option" style="min-width:120px;">
+          <label>Font size</label>
+          <select id="fontSize" style="font-size:0.9rem;padding:0.35rem 0.6rem;border:1px solid var(--border);border-radius:6px;background:var(--bg);color:var(--text);">
+            <option value="11">11 pt</option>
+            <option value="12" selected>12 pt</option>
+            <option value="14">14 pt</option>
+          </select>
+        </div>
+        <button class="btn btn-primary" id="convertBtn" style="align-self:flex-end;">Convert to PDF</button>
+      </div>
+    </div>
+
+    <div id="chapterList" style="display:none;margin-top:1rem;max-height:200px;overflow-y:auto;border:1px solid var(--border);border-radius:8px;padding:0.75rem;font-size:0.85rem;"></div>
+
+    <div id="progressWrap" style="display:none;margin-top:1rem;">
+      <div style="height:6px;background:var(--border);border-radius:3px;overflow:hidden;">
+        <div id="progressBar" style="height:100%;width:0;background:var(--accent);transition:width .2s;border-radius:3px;"></div>
+      </div>
+      <p id="progressLabel" style="margin:0.4rem 0 0;font-size:0.85rem;color:var(--muted);"></p>
+    </div>
+
+    <section class="info-section">
+      <h2>How EPUB works</h2>
+      <p>An EPUB file is actually a ZIP archive containing HTML/XHTML files (one per chapter), a CSS stylesheet, images, and an OPF metadata file that lists the reading order. This tool unzips the EPUB, reads the OPF to find the correct chapter order, extracts clean text from each HTML chapter, and uses jsPDF to write it to PDF pages.</p>
+
+      <h3>Why not use Calibre?</h3>
+      <p>Calibre handles EPUB→PDF with full layout fidelity, custom fonts, and images. This browser tool is for quick conversions when you don't want to install software. It's instant, private, and requires no account.</p>
+
+      <h2>FAQ</h2>
+      <details class="faq-item" open><summary>Does this handle DRM-protected EPUBs?</summary><p>No. DRM (Digital Rights Management) encrypted EPUB files cannot be opened by this tool. You would need to remove DRM first (which may be restricted by your jurisdiction's copyright laws).</p></details>
+      <details class="faq-item"><summary>What about EPUB 3 files?</summary><p>Both EPUB 2 and EPUB 3 are supported for text extraction. EPUB 3 media overlays (audio sync), scripted content, and fixed-layout features won't transfer to PDF.</p></details>
+      <details class="faq-item"><summary>Can I convert multiple EPUBs at once?</summary><p>Currently one file at a time. For batch conversion, Calibre's command-line interface is ideal.</p></details>
+      <details class="faq-item"><summary>The PDF is missing some content from my EPUB</summary><p>Some EPUB files use JavaScript for interactive content or have unusual packaging. This tool extracts static HTML content. If chapters are missing, the EPUB may use non-standard spine ordering or encrypted content.</p></details>
+    </section>
+
+    <div class="related-tools">
+      <h3>Related tools</h3>
+      <div class="related-grid">
+        <a href="pdf-merge.html" class="related-card">📄 PDF Merge</a>
+        <a href="image-to-pdf.html" class="related-card">🖼️ Image to PDF</a>
+        <a href="cbr-to-pdf.html" class="related-card">📚 CBR/CBZ to PDF</a>
+        <a href="pdf-compressor.html" class="related-card">🗜️ PDF Compressor</a>
+      </div>
+    </div>
+  </div>
+</main>
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid footer-grid-5">
+      <div class="footer-brand"><div class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></div><p>Free, private file conversion for everyone.</p></div>
+      <div class="footer-col"><h5>Tools</h5><ul><li><a href="image-converter.html">Image Converter</a></li><li><a href="pdf-merge.html">PDF Tools</a></li><li><a href="audio-converter.html">Audio Converter</a></li><li><a href="json-to-csv.html">JSON to CSV</a></li></ul></div>
+      <div class="footer-col"><h5>AI Studio</h5><ul><li><a href="../ai/image.html">AI Images</a></li><li><a href="../ai/bg-remove.html">Background Remover</a></li></ul></div>
+      <div class="footer-col"><h5>Company</h5><ul><li><a href="../about.html">About</a></li><li><a href="../blog/">Blog</a></li><li><a href="../privacy.html">Privacy</a></li><li><a href="../terms.html">Terms</a></li></ul></div>
+      <div class="footer-col"><h5>Help</h5><ul><li><a href="../contact.html">Contact</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><div>© <span data-year>2026</span> Desi Jugad.</div><div class="made-in"><span class="flag-in"></span>Made in India, built for the world.</div></div>
+  </div>
+</footer>
+<script src="../assets/js/main.js"></script>
+<script>
+(function(){
+  const dropZone = document.getElementById('dropZone');
+  const fileInput = document.getElementById('fileInput');
+  const bookInfo = document.getElementById('bookInfo');
+  const bookTitle = document.getElementById('bookTitle');
+  const bookMeta = document.getElementById('bookMeta');
+  const chapterList = document.getElementById('chapterList');
+  const convertBtn = document.getElementById('convertBtn');
+  const pageSize = document.getElementById('pageSize');
+  const fontSize = document.getElementById('fontSize');
+  const progressWrap = document.getElementById('progressWrap');
+  const progressBar = document.getElementById('progressBar');
+  const progressLabel = document.getElementById('progressLabel');
+
+  let epubData = null;
+  let sourceFileName = '';
+
+  dropZone.addEventListener('click', () => fileInput.click());
+  dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.style.borderColor = 'var(--accent)'; dropZone.style.background = 'var(--accent-soft,rgba(99,102,241,0.06))'; });
+  dropZone.addEventListener('dragleave', () => { dropZone.style.borderColor = ''; dropZone.style.background = ''; });
+  dropZone.addEventListener('drop', e => { e.preventDefault(); dropZone.style.borderColor = ''; dropZone.style.background = ''; if (e.dataTransfer.files[0]) loadEpub(e.dataTransfer.files[0]); });
+  fileInput.addEventListener('change', () => { if (fileInput.files[0]) loadEpub(fileInput.files[0]); });
+
+  async function loadEpub(file) {
+    sourceFileName = file.name;
+    progressWrap.style.display = '';
+    progressBar.style.width = '10%';
+    progressLabel.textContent = 'Reading EPUB…';
+    try {
+      const zip = await JSZip.loadAsync(file);
+      // Find container.xml
+      const containerXml = await zip.file('META-INF/container.xml').async('string');
+      const parser = new DOMParser();
+      const containerDoc = parser.parseFromString(containerXml, 'text/xml');
+      const opfPath = containerDoc.querySelector('rootfile').getAttribute('full-path');
+      const opfDir = opfPath.substring(0, opfPath.lastIndexOf('/') + 1);
+
+      const opfXml = await zip.file(opfPath).async('string');
+      const opfDoc = parser.parseFromString(opfXml, 'text/xml');
+
+      // Metadata
+      const titleEl = opfDoc.querySelector('metadata > *|title, metadata > title');
+      const authorEl = opfDoc.querySelector('metadata > *|creator, metadata > creator');
+      const titleText = titleEl ? titleEl.textContent : file.name.replace('.epub','');
+      const authorText = authorEl ? authorEl.textContent : '';
+
+      // Spine order
+      const spineItems = Array.from(opfDoc.querySelectorAll('spine itemref'));
+      const manifestMap = {};
+      opfDoc.querySelectorAll('manifest item').forEach(item => {
+        manifestMap[item.getAttribute('id')] = item.getAttribute('href');
+      });
+
+      const chapters = [];
+      for (const item of spineItems) {
+        const idref = item.getAttribute('idref');
+        const href = manifestMap[idref];
+        if (!href) continue;
+        const fullPath = opfDir + href;
+        const chapterFile = zip.file(fullPath) || zip.file(href);
+        if (!chapterFile) continue;
+        const html = await chapterFile.async('string');
+        const doc = parser.parseFromString(html, 'text/html');
+        // Extract text preserving paragraph breaks
+        const paras = [];
+        doc.querySelectorAll('h1,h2,h3,h4,h5,h6,p,div,li,blockquote').forEach(el => {
+          const t = el.textContent.trim();
+          if (t) paras.push({ text: t, tag: el.tagName.toLowerCase() });
+        });
+        if (paras.length) chapters.push({ href, paras });
+      }
+
+      epubData = { title: titleText, author: authorText, chapters };
+      bookTitle.textContent = titleText;
+      bookMeta.textContent = `${authorText ? 'by ' + authorText + ' · ' : ''}${chapters.length} chapters · ${formatBytes(file.size)}`;
+
+      chapterList.innerHTML = chapters.map((c, i) => `<div style="padding:0.2rem 0;border-bottom:1px solid var(--border);">Chapter ${i+1}: ${c.href.split('/').pop()}</div>`).join('');
+      chapterList.style.display = '';
+      bookInfo.style.display = '';
+      progressLabel.textContent = `Ready — ${chapters.length} chapters loaded.`;
+      progressBar.style.width = '100%';
+    } catch(e) {
+      progressLabel.textContent = 'Error reading EPUB: ' + e.message;
+      console.error(e);
+    }
+  }
+
+  convertBtn.addEventListener('click', async () => {
+    if (!epubData) return;
+    convertBtn.disabled = true;
+    progressWrap.style.display = '';
+    progressBar.style.width = '0';
+    progressLabel.textContent = 'Building PDF…';
+
+    try {
+      const { jsPDF } = window.jspdf;
+      const ps = pageSize.value;
+      const fs = parseInt(fontSize.value);
+      const pdf = new jsPDF({ orientation: 'p', unit: 'mm', format: ps });
+      const pw = pdf.internal.pageSize.getWidth();
+      const ph = pdf.internal.pageSize.getHeight();
+      const margin = 20;
+      const lineH = fs * 0.45;
+      const maxW = pw - margin * 2;
+
+      pdf.setFontSize(fs + 8);
+      pdf.setFont('helvetica', 'bold');
+      const titleLines = pdf.splitTextToSize(epubData.title, maxW);
+      let y = margin + 10;
+      pdf.text(titleLines, margin, y);
+      y += titleLines.length * (fs + 8) * 0.45 + 6;
+      if (epubData.author) {
+        pdf.setFontSize(fs + 2);
+        pdf.setFont('helvetica', 'italic');
+        pdf.text('by ' + epubData.author, margin, y);
+        y += (fs + 2) * 0.45 + 10;
+      }
+
+      const total = epubData.chapters.length;
+      for (let ci = 0; ci < total; ci++) {
+        const chapter = epubData.chapters[ci];
+        pdf.addPage();
+        y = margin;
+        for (const { text, tag } of chapter.paras) {
+          const isHeading = ['h1','h2','h3','h4','h5','h6'].includes(tag);
+          pdf.setFont('helvetica', isHeading ? 'bold' : 'normal');
+          pdf.setFontSize(isHeading ? fs + 3 : fs);
+          const lines = pdf.splitTextToSize(text, maxW);
+          const blockH = lines.length * (isHeading ? (fs+3) : fs) * 0.45 + (isHeading ? 4 : 2);
+          if (y + blockH > ph - margin) { pdf.addPage(); y = margin; }
+          pdf.text(lines, margin, y);
+          y += blockH;
+        }
+        progressBar.style.width = ((ci+1)/total * 100).toFixed(0) + '%';
+        progressLabel.textContent = `Processing chapter ${ci+1} of ${total}…`;
+        await new Promise(r => setTimeout(r, 0));
+      }
+
+      const baseName = sourceFileName.replace('.epub', '');
+      pdf.save(baseName + '.pdf');
+      progressLabel.textContent = `Done! ${total} chapters converted to PDF.`;
+    } catch(e) {
+      progressLabel.textContent = 'Error: ' + e.message;
+      console.error(e);
+    }
+    convertBtn.disabled = false;
+  });
+
+  function formatBytes(b) {
+    if (b < 1024) return b + ' B';
+    if (b < 1048576) return (b/1024).toFixed(1) + ' KB';
+    return (b/1048576).toFixed(1) + ' MB';
+  }
+})();
+</script>
+</body>
+</html>

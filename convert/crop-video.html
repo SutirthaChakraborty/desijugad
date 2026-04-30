@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/img/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/img/apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crop Video — Free In-Browser Video Cropper | Desi Jugad</title>
+<meta name="description" content="Crop video frames online free. Draw a crop rectangle on your video, choose aspect ratio (16:9, 4:3, 1:1, 9:16), and export the cropped clip. No upload needed.">
+<meta name="keywords" content="crop video, video cropper, crop video online, trim video frame, video aspect ratio crop, free video cropper, in-browser video crop">
+<meta name="author" content="Desi Jugad">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://desijugad.co.in/convert/crop-video.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Crop Video — Free In-Browser Video Cropper">
+<meta property="og:description" content="Crop video frames spatially — draw a crop box, choose aspect ratio, export cropped video. Free, no upload.">
+<meta property="og:url" content="https://desijugad.co.in/convert/crop-video.html">
+<meta property="og:image" content="https://desijugad.co.in/assets/img/og-default.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Crop Video — Free In-Browser Video Cropper">
+<meta name="twitter:description" content="Crop video frames spatially — draw a crop box, choose aspect ratio, export cropped video. Free, no upload.">
+<meta name="twitter:image" content="https://desijugad.co.in/assets/img/og-default.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,30..100;1,9..144,300..700,30..100&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+<style>
+.crop-tool-wrap{margin-top:1.5rem;display:none;}
+.crop-canvas-wrap{position:relative;display:inline-block;max-width:100%;cursor:crosshair;user-select:none;}
+.crop-canvas-wrap canvas{display:block;max-width:100%;border-radius:var(--radius);}
+.crop-coords{font-family:var(--font-mono);font-size:0.82rem;color:var(--ink-muted);margin-top:0.5rem;min-height:1.2em;}
+.preset-row{display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:1rem;}
+.preset-btn{padding:0.35rem 0.85rem;border:1.5px solid var(--line);border-radius:6px;background:var(--surface);color:var(--ink);font-size:0.85rem;cursor:pointer;transition:border-color 0.15s;}
+.preset-btn:hover,.preset-btn.active{border-color:var(--indigo);color:var(--indigo);}
+.result-area{margin-top:1rem;display:none;}
+.result-card{display:flex;align-items:center;gap:1rem;padding:1rem 1.25rem;background:var(--bg-alt);border:1px solid var(--line);border-radius:var(--radius);flex-wrap:wrap;}
+.result-info{flex:1;min-width:180px;}
+.result-name{font-weight:600;word-break:break-all;}
+.result-meta{font-size:0.85rem;color:var(--ink-muted);margin-top:0.2rem;}
+.options-row{display:flex;flex-wrap:wrap;gap:1rem;margin-bottom:1rem;}
+.option{display:flex;flex-direction:column;gap:0.35rem;}
+.option label{font-size:0.82rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink-muted);}
+.option select{padding:0.5rem 0.75rem;border:1.5px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);font-size:0.93rem;font-family:var(--font-sans);cursor:pointer;}
+.option select:focus{outline:none;border-color:var(--indigo);}
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Crop Video","url":"https://desijugad.co.in/convert/crop-video.html","applicationCategory":"MultimediaApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://desijugad.co.in/"},{"@type":"ListItem","position":2,"name":"Converters","item":"https://desijugad.co.in/#converters"},{"@type":"ListItem","position":3,"name":"Crop Video","item":"https://desijugad.co.in/convert/crop-video.html"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is the difference between cropping and trimming a video?","acceptedAnswer":{"@type":"Answer","text":"Trimming cuts the video in time (shorter duration). Cropping cuts the video spatially (removes edges of the frame). Use the Video Trimmer to shorten a clip, and this Crop Video tool to change the frame dimensions or aspect ratio."}},{"@type":"Question","name":"What format does the cropped video export as?","acceptedAnswer":{"@type":"Answer","text":"The output is WebM video (VP8/VP9 codec) on Chrome/Firefox, and MP4 on Safari. WebM is widely supported on modern devices and streaming platforms. The video encodes in real-time using the MediaRecorder API."}}]}</script>
+</head>
+<body>
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="../" class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="../#converters">Converters</a></li>
+      <li><a href="../ai/">AI Studio <span class="badge-new">NEW</span></a></li>
+      <li><a href="../blog/">Blog</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../#converters" class="nav-cta">All tools</a></li>
+    </ul>
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</header>
+<main class="converter-page">
+  <div class="container">
+    <nav class="breadcrumb"><a href="../">Home</a><span class="sep">/</span><a href="../#converters">Converters</a><span class="sep">/</span><span>Crop Video</span></nav>
+    <div class="converter-header">
+      <h1>Crop video frames, <em class="italic">right in your browser.</em></h1>
+      <p class="lead">Draw a crop rectangle on your video, choose an aspect ratio preset, and export the spatially cropped clip. Uses canvas + MediaRecorder — no upload.</p>
+    </div>
+
+    <div class="dropzone" id="dropzone">
+      <div class="dropzone-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+      </div>
+      <h2>Drop video file here</h2>
+      <p class="sub">MP4, WebM, MOV — load and draw your crop box</p>
+      <input type="file" id="fileInput" class="dropzone-input" accept="video/*">
+      <button class="btn btn-primary" id="pickBtn">Choose video file</button>
+      <small>No upload. No sign-up. Runs locally.</small>
+    </div>
+
+    <!-- Crop tool — shown after file is loaded -->
+    <div class="crop-tool-wrap" id="cropToolWrap">
+      <h2 style="font-size:1.1rem;margin-bottom:0.75rem;">Step 1 — Select crop area</h2>
+
+      <div class="preset-row" id="presetRow">
+        <button class="preset-btn" data-ratio="free">Free</button>
+        <button class="preset-btn active" data-ratio="16:9">16:9</button>
+        <button class="preset-btn" data-ratio="4:3">4:3</button>
+        <button class="preset-btn" data-ratio="1:1">1:1 Square</button>
+        <button class="preset-btn" data-ratio="9:16">9:16 Portrait</button>
+        <button class="preset-btn" data-ratio="3:4">3:4</button>
+      </div>
+
+      <div class="crop-canvas-wrap" id="cropCanvasWrap">
+        <canvas id="cropCanvas"></canvas>
+      </div>
+      <div class="crop-coords" id="cropCoords">Draw a rectangle on the preview above to set your crop area.</div>
+
+      <div style="margin-top:1.25rem;">
+        <h2 style="font-size:1.1rem;margin-bottom:0.75rem;">Step 2 — Export options</h2>
+        <div class="options-row">
+          <div class="option">
+            <label for="videoBitrate">Video bitrate</label>
+            <select id="videoBitrate">
+              <option value="1000000">1 Mbps (low)</option>
+              <option value="2500000" selected>2.5 Mbps (medium)</option>
+              <option value="5000000">5 Mbps (high)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="convert-btn-row" style="margin-top:1rem;">
+        <button class="btn btn-secondary" id="clearBtn">Clear</button>
+        <button class="btn btn-primary" id="cropBtn" disabled>Export cropped video</button>
+      </div>
+    </div>
+
+    <div id="progressBox" style="display:none;margin:1.5rem 0;padding:1.25rem;background:var(--bg-alt);border:1px solid var(--line);border-radius:var(--radius);">
+      <div style="font-weight:500;margin-bottom:0.75rem;" id="progressLabel">Recording…</div>
+      <div style="height:6px;background:var(--line);border-radius:999px;overflow:hidden;">
+        <div id="progressBar" style="height:100%;width:0%;background:var(--indigo);transition:width 0.3s;border-radius:999px;"></div>
+      </div>
+    </div>
+
+    <div class="result-area" id="resultArea">
+      <div class="result-card">
+        <div style="font-size:2rem;">🎬</div>
+        <div class="result-info">
+          <div class="result-name" id="resultName"></div>
+          <div class="result-meta" id="resultMeta"></div>
+        </div>
+        <a class="btn btn-primary" id="downloadBtn">Download</a>
+      </div>
+      <div style="margin-top:0.75rem;" id="resultVideoWrap"></div>
+    </div>
+
+    <section class="info-section">
+      <h2>Spatial cropping vs time trimming</h2>
+      <p>This tool crops the <strong>frame</strong> — it removes the top/bottom/sides of the video image. Use it to:</p>
+      <ul>
+        <li><strong>Change aspect ratio</strong> — Convert landscape 16:9 video to 9:16 portrait for Instagram Reels or TikTok.</li>
+        <li><strong>Remove letterboxing/pillarboxing</strong> — Crop out black bars from videos.</li>
+        <li><strong>Focus on a subject</strong> — Zoom into the center of a wide shot.</li>
+        <li><strong>Square crop for Instagram</strong> — Use the 1:1 preset for feed posts.</li>
+      </ul>
+      <p>Need to cut the video shorter? Use the <a href="video-trimmer.html" style="color:var(--indigo);">Video Trimmer</a> instead.</p>
+      <p><strong>Export note:</strong> The output is WebM on Chrome/Firefox, MP4 on Safari. Encoding is real-time — a 2-minute video takes ~2 minutes to process.</p>
+      <h2>FAQ</h2>
+      <details class="faq-item" open>
+        <summary>How do I use the crop tool?</summary>
+        <p>1. Drop or choose a video file. 2. A frame preview appears — click and drag on it to draw your crop rectangle. 3. Optionally click a preset (16:9, 1:1, etc.) to lock the aspect ratio. 4. Click "Export cropped video" — the video will play in the background and record the cropped view. 5. Download the result.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Why does it take as long as the video duration?</summary>
+        <p>The tool uses MediaRecorder, which captures the canvas in real time as the video plays. There's no "fast" path for this in a browser without FFmpeg. For batch or fast cropping, use a desktop app.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Does the audio stay in the cropped video?</summary>
+        <p>Yes! The audio track is captured from the video element and added to the MediaRecorder stream. The output file contains both the cropped video and the original audio.</p>
+      </details>
+    </section>
+
+    <div class="related-tools">
+      <h3>Related tools</h3>
+      <div class="related-grid">
+        <a href="video-trimmer.html" class="related-card">✂️ Video Trimmer</a>
+        <a href="video-compressor.html" class="related-card">📦 Video Compressor</a>
+        <a href="video-converter.html" class="related-card">🎬 Video Converter</a>
+        <a href="mov-to-mp4.html" class="related-card">📹 MOV to MP4</a>
+        <a href="image-cropper.html" class="related-card">🖼 Image Cropper</a>
+      </div>
+    </div>
+  </div>
+</main>
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid footer-grid-5">
+      <div class="footer-brand"><div class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></div><p>Free, private file conversion for everyone.</p></div>
+      <div class="footer-col"><h5>Tools</h5><ul><li><a href="audio-converter.html">Audio Converter</a></li><li><a href="video-converter.html">Video Converter</a></li><li><a href="video-to-audio.html">Video to Audio</a></li><li><a href="video-trimmer.html">Video Trimmer</a></li></ul></div>
+      <div class="footer-col"><h5>AI Studio</h5><ul><li><a href="../ai/image.html">AI Images</a></li><li><a href="../ai/bg-remove.html">Background Remover</a></li></ul></div>
+      <div class="footer-col"><h5>Company</h5><ul><li><a href="../about.html">About</a></li><li><a href="../blog/">Blog</a></li><li><a href="../privacy.html">Privacy</a></li><li><a href="../terms.html">Terms</a></li></ul></div>
+      <div class="footer-col"><h5>Help</h5><ul><li><a href="../contact.html">Contact</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><div>© <span data-year>2026</span> Desi Jugad.</div><div class="made-in"><span class="flag-in"></span>Made in India, built for the world.</div></div>
+  </div>
+</footer>
+<script src="../assets/js/main.js"></script>
+<script>
+(function() {
+  const dropzone     = document.getElementById('dropzone');
+  const fileInput    = document.getElementById('fileInput');
+  const pickBtn      = document.getElementById('pickBtn');
+  const clearBtn     = document.getElementById('clearBtn');
+  const cropBtn      = document.getElementById('cropBtn');
+  const cropToolWrap = document.getElementById('cropToolWrap');
+  const cropCanvasWrap = document.getElementById('cropCanvasWrap');
+  const cropCanvas   = document.getElementById('cropCanvas');
+  const cropCoords   = document.getElementById('cropCoords');
+  const progressBox  = document.getElementById('progressBox');
+  const progressLabel = document.getElementById('progressLabel');
+  const progressBar  = document.getElementById('progressBar');
+  const resultArea   = document.getElementById('resultArea');
+  const resultName   = document.getElementById('resultName');
+  const resultMeta   = document.getElementById('resultMeta');
+  const downloadBtn  = document.getElementById('downloadBtn');
+  const resultVideoWrap = document.getElementById('resultVideoWrap');
+
+  let currentFile = null;
+  let vidNativeW = 0, vidNativeH = 0;
+  let canvasDisplayW = 0, canvasDisplayH = 0;
+  let cropX = 0, cropY = 0, cropW = 0, cropH = 0;
+  let isDragging = false, startX = 0, startY = 0;
+  let lockedRatio = 16 / 9; // default 16:9
+  let videoEl = null;
+  const ctx = cropCanvas.getContext('2d');
+
+  // Aspect ratio presets
+  const ratioMap = { 'free': null, '16:9': 16/9, '4:3': 4/3, '1:1': 1, '9:16': 9/16, '3:4': 3/4 };
+  document.querySelectorAll('.preset-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const ratio = ratioMap[btn.dataset.ratio];
+      lockedRatio = ratio;
+      if (cropW > 0) {
+        if (lockedRatio !== null) {
+          // Recompute crop height from current crop
+          cropH = Math.round(cropW / lockedRatio);
+          if (cropY + cropH > canvasDisplayH) cropH = canvasDisplayH - cropY;
+        }
+        drawPreview();
+        updateCoords();
+      }
+    });
+  });
+
+  // File drop/pick
+  pickBtn.addEventListener('click', () => fileInput.click());
+  fileInput.addEventListener('change', e => stageFile(e.target.files[0]));
+  ['dragenter','dragover'].forEach(evt => dropzone.addEventListener(evt, e => { e.preventDefault(); dropzone.classList.add('drag-over'); }));
+  ['dragleave','drop'].forEach(evt => dropzone.addEventListener(evt, e => { e.preventDefault(); dropzone.classList.remove('drag-over'); }));
+  dropzone.addEventListener('drop', e => stageFile(e.dataTransfer.files[0]));
+
+  function stageFile(file) {
+    if (!file || !file.type.startsWith('video/')) { showToast('Please select a video file.', 'error'); return; }
+    currentFile = file;
+    // Create video element for preview
+    videoEl = document.createElement('video');
+    videoEl.src = URL.createObjectURL(file);
+    videoEl.muted = false;
+    videoEl.playsinline = true;
+    videoEl.preload = 'metadata';
+    videoEl.onloadedmetadata = () => {
+      vidNativeW = videoEl.videoWidth;
+      vidNativeH = videoEl.videoHeight;
+      videoEl.currentTime = 0.1;
+    };
+    videoEl.onseeked = () => {
+      // Set canvas to a display size (max 700px wide)
+      const maxW = Math.min(700, cropCanvasWrap.parentElement.clientWidth - 32);
+      const scale = Math.min(1, maxW / vidNativeW);
+      canvasDisplayW = Math.round(vidNativeW * scale);
+      canvasDisplayH = Math.round(vidNativeH * scale);
+      cropCanvas.width = canvasDisplayW;
+      cropCanvas.height = canvasDisplayH;
+      ctx.drawImage(videoEl, 0, 0, canvasDisplayW, canvasDisplayH);
+      // Default crop: full frame with locked ratio
+      setDefaultCrop();
+      drawPreview();
+      updateCoords();
+      cropToolWrap.style.display = '';
+      resultArea.style.display = 'none';
+      cropBtn.disabled = false;
+    };
+  }
+
+  function setDefaultCrop() {
+    if (lockedRatio !== null) {
+      // Centered crop with locked ratio
+      const rW = canvasDisplayH * lockedRatio;
+      if (rW <= canvasDisplayW) {
+        cropW = Math.round(rW);
+        cropH = canvasDisplayH;
+        cropX = Math.round((canvasDisplayW - cropW) / 2);
+        cropY = 0;
+      } else {
+        cropW = canvasDisplayW;
+        cropH = Math.round(canvasDisplayW / lockedRatio);
+        cropX = 0;
+        cropY = Math.round((canvasDisplayH - cropH) / 2);
+      }
+    } else {
+      cropX = 0; cropY = 0; cropW = canvasDisplayW; cropH = canvasDisplayH;
+    }
+  }
+
+  // Draw preview with crop overlay
+  function drawPreview() {
+    if (!videoEl) return;
+    ctx.clearRect(0, 0, canvasDisplayW, canvasDisplayH);
+    ctx.drawImage(videoEl, 0, 0, canvasDisplayW, canvasDisplayH);
+    if (cropW > 0 && cropH > 0) {
+      // Darken outside crop
+      ctx.fillStyle = 'rgba(0,0,0,0.55)';
+      ctx.fillRect(0, 0, canvasDisplayW, cropY);
+      ctx.fillRect(0, cropY + cropH, canvasDisplayW, canvasDisplayH - cropY - cropH);
+      ctx.fillRect(0, cropY, cropX, cropH);
+      ctx.fillRect(cropX + cropW, cropY, canvasDisplayW - cropX - cropW, cropH);
+      // Crop border
+      ctx.strokeStyle = '#6366f1';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(cropX, cropY, cropW, cropH);
+      // Corner handles
+      const hs = 10;
+      ctx.fillStyle = '#6366f1';
+      [[cropX,cropY],[cropX+cropW-hs,cropY],[cropX,cropY+cropH-hs],[cropX+cropW-hs,cropY+cropH-hs]].forEach(([x,y]) => ctx.fillRect(x, y, hs, hs));
+      // Rule of thirds grid
+      ctx.strokeStyle = 'rgba(255,255,255,0.25)';
+      ctx.lineWidth = 1;
+      for (let i = 1; i < 3; i++) {
+        ctx.beginPath(); ctx.moveTo(cropX + cropW*i/3, cropY); ctx.lineTo(cropX + cropW*i/3, cropY + cropH); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(cropX, cropY + cropH*i/3); ctx.lineTo(cropX + cropW, cropY + cropH*i/3); ctx.stroke();
+      }
+    }
+  }
+
+  function updateCoords() {
+    if (cropW <= 0 || vidNativeW <= 0) { cropCoords.textContent = 'Draw a rectangle on the preview above.'; return; }
+    const scaleX = vidNativeW / canvasDisplayW;
+    const scaleY = vidNativeH / canvasDisplayH;
+    const nx = Math.round(cropX * scaleX);
+    const ny = Math.round(cropY * scaleY);
+    const nw = Math.round(cropW * scaleX);
+    const nh = Math.round(cropH * scaleY);
+    cropCoords.textContent = `Crop: x=${nx}, y=${ny}, w=${nw}, h=${nh} (native px) → output: ${nw}×${nh}`;
+  }
+
+  // Mouse events for drawing crop
+  cropCanvas.addEventListener('mousedown', e => {
+    isDragging = true;
+    const rect = cropCanvas.getBoundingClientRect();
+    const scaleX = canvasDisplayW / rect.width;
+    const scaleY = canvasDisplayH / rect.height;
+    startX = Math.round((e.clientX - rect.left) * scaleX);
+    startY = Math.round((e.clientY - rect.top) * scaleY);
+    cropX = startX; cropY = startY; cropW = 0; cropH = 0;
+  });
+
+  cropCanvas.addEventListener('mousemove', e => {
+    if (!isDragging) return;
+    const rect = cropCanvas.getBoundingClientRect();
+    const scaleX = canvasDisplayW / rect.width;
+    const scaleY = canvasDisplayH / rect.height;
+    let mx = Math.round((e.clientX - rect.left) * scaleX);
+    let my = Math.round((e.clientY - rect.top) * scaleY);
+    mx = Math.max(0, Math.min(canvasDisplayW, mx));
+    my = Math.max(0, Math.min(canvasDisplayH, my));
+
+    let x = Math.min(startX, mx);
+    let y = Math.min(startY, my);
+    let w = Math.abs(mx - startX);
+    let h = Math.abs(my - startY);
+
+    if (lockedRatio !== null && w > 0) {
+      h = Math.round(w / lockedRatio);
+      if (y + h > canvasDisplayH) { h = canvasDisplayH - y; w = Math.round(h * lockedRatio); }
+    }
+
+    cropX = x; cropY = y; cropW = w; cropH = h;
+    drawPreview();
+    updateCoords();
+  });
+
+  ['mouseup', 'mouseleave'].forEach(evt => {
+    cropCanvas.addEventListener(evt, () => { isDragging = false; });
+  });
+
+  // Touch support
+  cropCanvas.addEventListener('touchstart', e => {
+    e.preventDefault();
+    const touch = e.touches[0];
+    const rect = cropCanvas.getBoundingClientRect();
+    const scaleX = canvasDisplayW / rect.width;
+    const scaleY = canvasDisplayH / rect.height;
+    isDragging = true;
+    startX = Math.round((touch.clientX - rect.left) * scaleX);
+    startY = Math.round((touch.clientY - rect.top) * scaleY);
+    cropX = startX; cropY = startY; cropW = 0; cropH = 0;
+  }, { passive: false });
+
+  cropCanvas.addEventListener('touchmove', e => {
+    e.preventDefault();
+    if (!isDragging) return;
+    const touch = e.touches[0];
+    const rect = cropCanvas.getBoundingClientRect();
+    const scaleX = canvasDisplayW / rect.width;
+    const scaleY = canvasDisplayH / rect.height;
+    let mx = Math.round((touch.clientX - rect.left) * scaleX);
+    let my = Math.round((touch.clientY - rect.top) * scaleY);
+    mx = Math.max(0, Math.min(canvasDisplayW, mx));
+    my = Math.max(0, Math.min(canvasDisplayH, my));
+    let w = Math.abs(mx - startX), h = Math.abs(my - startY);
+    let x = Math.min(startX, mx), y = Math.min(startY, my);
+    if (lockedRatio !== null && w > 0) { h = Math.round(w / lockedRatio); if (y + h > canvasDisplayH) { h = canvasDisplayH - y; w = Math.round(h * lockedRatio); } }
+    cropX = x; cropY = y; cropW = w; cropH = h;
+    drawPreview(); updateCoords();
+  }, { passive: false });
+
+  cropCanvas.addEventListener('touchend', () => { isDragging = false; });
+
+  // Export cropped video
+  cropBtn.addEventListener('click', async () => {
+    if (!currentFile || cropW < 10 || cropH < 10) { showToast('Please draw a crop area first.', 'error'); return; }
+    cropBtn.disabled = true;
+    clearBtn.disabled = true;
+    resultArea.style.display = 'none';
+    progressBox.style.display = '';
+    progressBar.style.width = '5%';
+    progressLabel.textContent = 'Preparing…';
+
+    try {
+      const scaleX = vidNativeW / canvasDisplayW;
+      const scaleY = vidNativeH / canvasDisplayH;
+      const nx = Math.round(cropX * scaleX);
+      const ny = Math.round(cropY * scaleY);
+      const nw = Math.round(cropW * scaleX);
+      const nh = Math.round(cropH * scaleY);
+
+      // Determine MIME
+      const mimeTypes = ['video/mp4;codecs=avc1', 'video/mp4', 'video/webm;codecs=vp9', 'video/webm;codecs=vp8', 'video/webm'];
+      let mimeType = '';
+      for (const mt of mimeTypes) { if (MediaRecorder.isTypeSupported(mt)) { mimeType = mt; break; } }
+      if (!mimeType) throw new Error('MediaRecorder not supported in this browser.');
+
+      const bitrate = parseInt(document.getElementById('videoBitrate').value) || 2500000;
+
+      // Build output canvas (crop dimensions)
+      const outCanvas = document.createElement('canvas');
+      outCanvas.width = nw; outCanvas.height = nh;
+      const octx = outCanvas.getContext('2d');
+
+      // Reset video for playback
+      const vidPlay = document.createElement('video');
+      vidPlay.src = URL.createObjectURL(currentFile);
+      vidPlay.muted = false;
+      vidPlay.playsinline = true;
+
+      await new Promise((res, rej) => {
+        vidPlay.onloadedmetadata = res;
+        vidPlay.onerror = () => rej(new Error('Failed to load video for export.'));
+        setTimeout(() => rej(new Error('Timeout loading video.')), 15000);
+      });
+
+      const duration = vidPlay.duration;
+      const stream = outCanvas.captureStream(30);
+
+      // Audio
+      try {
+        const audioCtx = new AudioContext();
+        const src = audioCtx.createMediaElementSource(vidPlay);
+        const dest = audioCtx.createMediaStreamDestination();
+        src.connect(dest);
+        src.connect(audioCtx.destination);
+        dest.stream.getAudioTracks().forEach(t => stream.addTrack(t));
+      } catch(ae) { console.warn('Audio capture failed:', ae); }
+
+      const chunks = [];
+      const recorder = new MediaRecorder(stream, { mimeType, videoBitsPerSecond: bitrate });
+      recorder.ondataavailable = e => { if (e.data.size > 0) chunks.push(e.data); };
+
+      const ext = mimeType.startsWith('video/mp4') ? 'mp4' : 'webm';
+      progressLabel.textContent = `Recording cropped video (~${Math.ceil(duration)}s)…`;
+
+      await new Promise((res, rej) => {
+        recorder.onstop = res;
+        recorder.onerror = rej;
+        recorder.start(100);
+        vidPlay.play();
+
+        const drawFrame = () => {
+          if (vidPlay.ended || vidPlay.paused) return;
+          octx.drawImage(vidPlay, nx, ny, nw, nh, 0, 0, nw, nh);
+          const pct = Math.min(95, Math.round((vidPlay.currentTime / duration) * 95));
+          progressBar.style.width = pct + '%';
+          progressLabel.textContent = `Recording… ${vidPlay.currentTime.toFixed(1)}s / ${duration.toFixed(1)}s`;
+          requestAnimationFrame(drawFrame);
+        };
+        vidPlay.onplay = drawFrame;
+        vidPlay.onended = () => { octx.drawImage(vidPlay, nx, ny, nw, nh, 0, 0, nw, nh); recorder.stop(); };
+        vidPlay.onerror = rej;
+      });
+
+      progressBar.style.width = '100%';
+      progressLabel.textContent = 'Finalizing…';
+
+      const blob = new Blob(chunks, { type: mimeType });
+      const url = URL.createObjectURL(blob);
+      const baseName = currentFile.name.replace(/\.[^.]+$/, '');
+      const outName = baseName + '_cropped.' + ext;
+      downloadBtn.href = url;
+      downloadBtn.download = outName;
+      resultName.textContent = outName;
+      resultMeta.textContent = `${nw}×${nh} · ${ext.toUpperCase()} · ${formatBytes(blob.size)}`;
+
+      // Show preview of cropped video
+      resultVideoWrap.innerHTML = '';
+      const prevVid = document.createElement('video');
+      prevVid.src = url;
+      prevVid.controls = true;
+      prevVid.style.cssText = 'width:100%;max-width:640px;border-radius:var(--radius);margin-top:0.5rem;display:block;';
+      resultVideoWrap.appendChild(prevVid);
+
+      resultArea.style.display = '';
+      setTimeout(() => { progressBox.style.display = 'none'; }, 800);
+    } catch(err) {
+      console.error(err);
+      progressBox.style.display = 'none';
+      showToast('Export failed: ' + err.message, 'error');
+    }
+    cropBtn.disabled = false;
+    clearBtn.disabled = false;
+  });
+
+  clearBtn.addEventListener('click', () => {
+    currentFile = null; videoEl = null;
+    cropToolWrap.style.display = 'none';
+    resultArea.style.display = 'none';
+    progressBox.style.display = 'none';
+    fileInput.value = '';
+    cropW = 0; cropH = 0;
+  });
+})();
+</script>
+</body>
+</html>

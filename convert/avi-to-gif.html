@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/img/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/img/apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AVI to GIF Converter — Free, In-Browser Animated GIF | Desi Jugad</title>
+<meta name="description" content="Convert AVI, MP4, or WebM video to animated GIF online free. Set frame rate and size, capture frames in-browser. No upload, no sign-up, 100% private.">
+<meta name="keywords" content="avi to gif, video to gif, convert avi to animated gif, mp4 to gif, make gif from video, free video to gif converter">
+<meta name="author" content="Desi Jugad">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://desijugad.co.in/convert/avi-to-gif.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="AVI to Animated GIF Converter — Free & Private">
+<meta property="og:description" content="Convert AVI or MP4 video to animated GIF. Set FPS and size. Free, in-browser.">
+<meta property="og:url" content="https://desijugad.co.in/convert/avi-to-gif.html">
+<meta property="og:image" content="https://desijugad.co.in/assets/img/og-default.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AVI to Animated GIF Converter — Free & Private">
+<meta name="twitter:description" content="Convert AVI or MP4 video to animated GIF. Set FPS and size. Free, in-browser.">
+<meta name="twitter:image" content="https://desijugad.co.in/assets/img/og-default.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,30..100;1,9..144,300..700,30..100&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+<style>
+.compat-note{padding:0.85rem 1.1rem;background:var(--bg-alt);border:1px solid var(--line);border-radius:var(--radius);font-size:0.9rem;margin-top:1rem;line-height:1.5;}
+.preview-wrap{margin-top:1.2rem;display:none;}
+.preview-wrap video{width:100%;max-height:280px;border-radius:var(--radius);background:#000;}
+.gif-preview-wrap{margin-top:1rem;display:none;text-align:center;}
+.gif-preview-wrap img{max-width:100%;border-radius:var(--radius);border:1px solid var(--line);}
+.result-area{margin-top:1rem;display:none;}
+.result-card{display:flex;align-items:center;gap:1rem;padding:1rem 1.25rem;background:var(--bg-alt);border:1px solid var(--line);border-radius:var(--radius);flex-wrap:wrap;}
+.result-info{flex:1;min-width:180px;}
+.result-name{font-weight:600;word-break:break-all;}
+.result-meta{font-size:0.85rem;color:var(--ink-muted);margin-top:0.2rem;}
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"AVI to Animated GIF Converter","url":"https://desijugad.co.in/convert/avi-to-gif.html","applicationCategory":"MultimediaApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://desijugad.co.in/"},{"@type":"ListItem","position":2,"name":"Converters","item":"https://desijugad.co.in/#converters"},{"@type":"ListItem","position":3,"name":"AVI to GIF Converter","item":"https://desijugad.co.in/convert/avi-to-gif.html"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Why does GIF have limited colors?","acceptedAnswer":{"@type":"Answer","text":"GIF is a 1989 format limited to 256 colors per frame. This makes GIFs look grainy or dithered compared to video. For sharp, colorful animations, consider WebP animation or video. GIF remains popular for social media and messaging due to near-universal support."}},{"@type":"Question","name":"AVI files don't work. What video format should I use?","acceptedAnswer":{"@type":"Answer","text":"AVI support in browsers is limited — most browsers don't have an AVI decoder. MP4 and WebM work best. If you have an AVI file, first convert it to MP4 using the Video Converter tool, then use this GIF maker."}}]}</script>
+</head>
+<body>
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="../" class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="../#converters">Converters</a></li>
+      <li><a href="../ai/">AI Studio <span class="badge-new">NEW</span></a></li>
+      <li><a href="../blog/">Blog</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../#converters" class="nav-cta">All tools</a></li>
+    </ul>
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</header>
+<main class="converter-page">
+  <div class="container">
+    <nav class="breadcrumb"><a href="../">Home</a><span class="sep">/</span><a href="../#converters">Converters</a><span class="sep">/</span><span>AVI to GIF</span></nav>
+    <div class="converter-header">
+      <h1>Video to Animated GIF, <em class="italic">right in your browser.</em></h1>
+      <p class="lead">Convert AVI, MP4, or WebM video clips to animated GIF. Captures frames via canvas, encodes with omggif. No upload, no server.</p>
+    </div>
+
+    <div class="compat-note">
+      <strong>AVI browser support:</strong> Most browsers cannot decode AVI files natively. For best results, use <strong>MP4 or WebM</strong>. To convert an AVI first, use the <a href="video-converter.html" style="color:var(--indigo);">Video Converter</a>. MP4/WebM GIF conversion works in all modern browsers.
+    </div>
+
+    <div class="dropzone" id="dropzone" style="margin-top:1.5rem;">
+      <div class="dropzone-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+      </div>
+      <h2>Drop video file here</h2>
+      <p class="sub">MP4, WebM — best supported. AVI may work depending on browser.</p>
+      <input type="file" id="fileInput" class="dropzone-input" accept="video/*,.avi,.mp4,.webm,.mov">
+      <button class="btn btn-primary" id="pickBtn">Choose video file</button>
+      <small>No upload. No sign-up. Runs locally.</small>
+      <div class="options-row" style="margin-top:2rem;">
+        <div class="option">
+          <label for="gifFps">Frame rate</label>
+          <select id="gifFps">
+            <option value="5">5 fps (smallest)</option>
+            <option value="10" selected>10 fps</option>
+            <option value="15">15 fps (smooth)</option>
+          </select>
+        </div>
+        <div class="option">
+          <label for="gifWidth">Output width</label>
+          <select id="gifWidth">
+            <option value="0">Original size</option>
+            <option value="320" selected>320 px</option>
+            <option value="480">480 px</option>
+            <option value="640">640 px</option>
+          </select>
+        </div>
+        <div class="option">
+          <label for="clipStart">Start (sec)</label>
+          <input type="number" id="clipStart" min="0" step="0.1" placeholder="0" style="width:90px;padding:0.5rem 0.75rem;border:1.5px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);font-size:0.93rem;">
+        </div>
+        <div class="option">
+          <label for="clipEnd">End (sec)</label>
+          <input type="number" id="clipEnd" min="0" step="0.1" placeholder="Auto" style="width:90px;padding:0.5rem 0.75rem;border:1.5px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);font-size:0.93rem;">
+        </div>
+      </div>
+    </div>
+
+    <div id="fileList" class="file-list"></div>
+    <div class="preview-wrap" id="previewWrap">
+      <video id="videoPreview" muted playsinline preload="metadata"></video>
+    </div>
+
+    <div class="convert-btn-row" id="actionRow" style="display:none;">
+      <button class="btn btn-secondary" id="clearBtn">Clear</button>
+      <button class="btn btn-primary" id="convertBtn">Make GIF</button>
+    </div>
+
+    <div id="progressBox" style="display:none;margin:1.5rem 0;padding:1.25rem;background:var(--bg-alt);border:1px solid var(--line);border-radius:var(--radius);">
+      <div style="font-weight:500;margin-bottom:0.75rem;" id="progressLabel">Capturing frames…</div>
+      <div style="height:6px;background:var(--line);border-radius:999px;overflow:hidden;">
+        <div id="progressBar" style="height:100%;width:0%;background:var(--indigo);transition:width 0.2s;border-radius:999px;"></div>
+      </div>
+    </div>
+
+    <div class="gif-preview-wrap" id="gifPreviewWrap">
+      <img id="gifPreview" alt="GIF preview">
+      <p style="font-size:0.85rem;color:var(--ink-muted);margin-top:0.5rem;">Preview — right-click to save, or use the Download button below.</p>
+    </div>
+
+    <div class="result-area" id="resultArea">
+      <div class="result-card">
+        <div style="font-size:2rem;">🎞</div>
+        <div class="result-info">
+          <div class="result-name" id="resultName"></div>
+          <div class="result-meta" id="resultMeta"></div>
+        </div>
+        <a class="btn btn-primary" id="downloadBtn">Download GIF</a>
+      </div>
+    </div>
+
+    <section class="info-section">
+      <h2>How video to GIF works</h2>
+      <p>This tool loads your video into a hidden <code>&lt;video&gt;</code> element, seeks through it frame by frame, paints each frame to a <code>&lt;canvas&gt;</code>, reads the pixel data, and feeds it to <strong>omggif</strong> — a pure JavaScript GIF encoder. The resulting animated GIF loops forever.</p>
+      <ul>
+        <li><strong>Frame capture</strong> — Frames are captured by seeking the video at precise timestamps (1/fps intervals).</li>
+        <li><strong>Color quantization</strong> — GIF supports 256 colors per frame. Colors are quantized using a simple median-cut algorithm in omggif.</li>
+        <li><strong>GIF size</strong> — GIFs can be large. A 5-second clip at 10 fps, 320px wide can be 2-5 MB. Reduce width or fps to shrink.</li>
+      </ul>
+      <h2>FAQ</h2>
+      <details class="faq-item" open>
+        <summary>Why is the GIF file so large?</summary>
+        <p>GIF compression is inefficient compared to modern video codecs. Every frame is stored independently (unless they're identical). Reduce the output width to 320px and use 5 fps for the smallest file. For sharing on the web, consider MP4 — same visual, 10x smaller file.</p>
+      </details>
+      <details class="faq-item">
+        <summary>My AVI file doesn't load. What should I do?</summary>
+        <p>AVI is not natively supported by most browsers. Convert your AVI to MP4 first using the <a href="video-converter.html" style="color:var(--indigo);">Video Converter</a>, then come back here to make a GIF from the MP4.</p>
+      </details>
+      <details class="faq-item">
+        <summary>The GIF looks blurry or has wrong colors. Why?</summary>
+        <p>GIF's 256-color palette limitation causes color banding and dithering. This is a fundamental GIF limitation, not a tool bug. For sharper output, use a smaller clip (fewer frames = better palette allocation per frame).</p>
+      </details>
+      <details class="faq-item">
+        <summary>Can I make a GIF from just part of the video?</summary>
+        <p>Yes. Set the Start and End seconds in the options to clip the video before GIF conversion. A 3-5 second clip at 10 fps is the sweet spot for a good-quality, reasonable-size GIF.</p>
+      </details>
+    </section>
+
+    <div class="related-tools">
+      <h3>Related tools</h3>
+      <div class="related-grid">
+        <a href="video-to-gif.html" class="related-card">🎞 Video to GIF</a>
+        <a href="gif-to-video.html" class="related-card">🎬 GIF to Video</a>
+        <a href="video-converter.html" class="related-card">📹 Video Converter</a>
+        <a href="video-trimmer.html" class="related-card">✂️ Video Trimmer</a>
+        <a href="image-converter.html" class="related-card">🖼 Image Converter</a>
+      </div>
+    </div>
+  </div>
+</main>
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid footer-grid-5">
+      <div class="footer-brand"><div class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></div><p>Free, private file conversion for everyone.</p></div>
+      <div class="footer-col"><h5>Tools</h5><ul><li><a href="audio-converter.html">Audio Converter</a></li><li><a href="video-converter.html">Video Converter</a></li><li><a href="video-to-audio.html">Video to Audio</a></li><li><a href="video-trimmer.html">Video Trimmer</a></li></ul></div>
+      <div class="footer-col"><h5>AI Studio</h5><ul><li><a href="../ai/image.html">AI Images</a></li><li><a href="../ai/bg-remove.html">Background Remover</a></li></ul></div>
+      <div class="footer-col"><h5>Company</h5><ul><li><a href="../about.html">About</a></li><li><a href="../blog/">Blog</a></li><li><a href="../privacy.html">Privacy</a></li><li><a href="../terms.html">Terms</a></li></ul></div>
+      <div class="footer-col"><h5>Help</h5><ul><li><a href="../contact.html">Contact</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><div>© <span data-year>2026</span> Desi Jugad.</div><div class="made-in"><span class="flag-in"></span>Made in India, built for the world.</div></div>
+  </div>
+</footer>
+<script src="../assets/js/main.js"></script>
+<script>
+(function() {
+  const OMGGIF_CDN = 'https://cdn.jsdelivr.net/npm/omggif@1.0.10/omggif.js';
+  const dropzone    = document.getElementById('dropzone');
+  const fileInput   = document.getElementById('fileInput');
+  const pickBtn     = document.getElementById('pickBtn');
+  const fileList    = document.getElementById('fileList');
+  const clearBtn    = document.getElementById('clearBtn');
+  const convertBtn  = document.getElementById('convertBtn');
+  const actionRow   = document.getElementById('actionRow');
+  const progressBox   = document.getElementById('progressBox');
+  const progressLabel = document.getElementById('progressLabel');
+  const progressBar   = document.getElementById('progressBar');
+  const resultArea    = document.getElementById('resultArea');
+  const resultName    = document.getElementById('resultName');
+  const resultMeta    = document.getElementById('resultMeta');
+  const downloadBtn   = document.getElementById('downloadBtn');
+  const previewWrap   = document.getElementById('previewWrap');
+  const videoPreview  = document.getElementById('videoPreview');
+  const gifPreviewWrap = document.getElementById('gifPreviewWrap');
+  const gifPreview    = document.getElementById('gifPreview');
+
+  let currentFile = null;
+  let omggifLoaded = false;
+
+  pickBtn.addEventListener('click', () => fileInput.click());
+  fileInput.addEventListener('change', e => stageFile(e.target.files[0]));
+  ['dragenter','dragover'].forEach(evt => dropzone.addEventListener(evt, e => { e.preventDefault(); dropzone.classList.add('drag-over'); }));
+  ['dragleave','drop'].forEach(evt => dropzone.addEventListener(evt, e => { e.preventDefault(); dropzone.classList.remove('drag-over'); }));
+  dropzone.addEventListener('drop', e => { stageFile(e.dataTransfer.files[0]); });
+
+  function stageFile(file) {
+    if (!file) return;
+    currentFile = file;
+    fileList.innerHTML = '';
+    const item = document.createElement('div');
+    item.className = 'file-item';
+    item.innerHTML = `
+      <div class="file-item-icon">🎬</div>
+      <div><div class="file-item-name">${file.name}</div><div class="file-item-meta"><span>${formatBytes(file.size)}</span></div></div>
+      <span class="file-item-status">Ready</span>`;
+    fileList.appendChild(item);
+    videoPreview.src = URL.createObjectURL(file);
+    previewWrap.style.display = '';
+    actionRow.style.display = '';
+    resultArea.style.display = 'none';
+    gifPreviewWrap.style.display = 'none';
+  }
+
+  convertBtn.addEventListener('click', async () => {
+    if (!currentFile) return;
+
+    if (!omggifLoaded) {
+      progressBox.style.display = '';
+      progressLabel.textContent = 'Loading GIF encoder (omggif)…';
+      progressBar.style.width = '5%';
+      try { await loadScript(OMGGIF_CDN); omggifLoaded = true; }
+      catch(e) { progressBox.style.display = 'none'; showToast('Failed to load GIF encoder. Check your connection.', 'error'); return; }
+    }
+
+    convertBtn.disabled = true;
+    clearBtn.disabled = true;
+    progressBox.style.display = '';
+    resultArea.style.display = 'none';
+    gifPreviewWrap.style.display = 'none';
+
+    const fps = parseInt(document.getElementById('gifFps').value) || 10;
+    const targetW = parseInt(document.getElementById('gifWidth').value) || 0;
+    const clipStart = parseFloat(document.getElementById('clipStart').value) || 0;
+    const clipEndVal = parseFloat(document.getElementById('clipEnd').value) || 0;
+
+    try {
+      // Wait for video metadata
+      await new Promise((res, rej) => {
+        if (videoPreview.readyState >= 1) { res(); return; }
+        videoPreview.onloadedmetadata = res;
+        videoPreview.onerror = () => rej(new Error('Video failed to load. This format may not be supported by your browser. Try MP4.'));
+        setTimeout(() => rej(new Error('Video metadata timeout.')), 10000);
+      });
+
+      const duration = videoPreview.duration;
+      const vidW = videoPreview.videoWidth || 640;
+      const vidH = videoPreview.videoHeight || 360;
+      const clipS = Math.max(0, Math.min(clipStart, duration));
+      const clipE = clipEndVal > 0 ? Math.min(clipEndVal, duration) : Math.min(clipS + 10, duration);
+      const clipDur = clipE - clipS;
+
+      const outW = targetW > 0 ? targetW : vidW;
+      const scale = outW / vidW;
+      const outH = Math.round(vidH * scale);
+      // ensure even dimensions for GIF
+      const gW = outW % 2 === 0 ? outW : outW - 1;
+      const gH = outH % 2 === 0 ? outH : outH - 1;
+
+      const canvas = document.createElement('canvas');
+      canvas.width = gW; canvas.height = gH;
+      const ctx = canvas.getContext('2d');
+
+      const frameInterval = 1 / fps;
+      const totalFrames = Math.ceil(clipDur * fps);
+      const delay = Math.round(100 / fps); // in centiseconds
+
+      progressLabel.textContent = `Capturing ${totalFrames} frames…`;
+      progressBar.style.width = '10%';
+
+      // Collect frames by seeking
+      const frameData = [];
+      for (let fi = 0; fi < totalFrames; fi++) {
+        const t = clipS + fi * frameInterval;
+        videoPreview.currentTime = t;
+        await new Promise(res => { videoPreview.onseeked = res; setTimeout(res, 500); });
+        ctx.drawImage(videoPreview, 0, 0, gW, gH);
+        const imgData = ctx.getImageData(0, 0, gW, gH);
+        frameData.push(imgData.data);
+        const pct = 10 + Math.round((fi / totalFrames) * 60);
+        progressBar.style.width = pct + '%';
+        progressLabel.textContent = `Capturing frame ${fi + 1} / ${totalFrames}…`;
+      }
+
+      progressLabel.textContent = 'Encoding GIF…';
+      progressBar.style.width = '75%';
+
+      // Encode with omggif
+      const bufSize = gW * gH * totalFrames * 5 + 1024;
+      const buf = new Uint8Array(bufSize);
+      const writer = new GifWriter(buf, gW, gH, { loop: 0 });
+
+      for (let fi = 0; fi < frameData.length; fi++) {
+        const rgba = frameData[fi];
+        const { palette, indexed } = quantize(rgba, gW * gH, 256);
+        writer.addFrame(0, 0, gW, gH, indexed, { palette, delay });
+        progressBar.style.width = (75 + Math.round((fi / frameData.length) * 20)) + '%';
+      }
+
+      const gifBytes = buf.slice(0, writer.end());
+      const blob = new Blob([gifBytes], { type: 'image/gif' });
+      const url = URL.createObjectURL(blob);
+
+      gifPreview.src = url;
+      gifPreviewWrap.style.display = '';
+
+      const baseName = currentFile.name.replace(/\.[^.]+$/, '');
+      const outName = baseName + '.gif';
+      downloadBtn.href = url;
+      downloadBtn.download = outName;
+      resultName.textContent = outName;
+      resultMeta.textContent = `${totalFrames} frames · ${fps} fps · ${gW}×${gH} · ${formatBytes(blob.size)}`;
+      resultArea.style.display = '';
+
+      progressBar.style.width = '100%';
+      progressLabel.textContent = 'GIF ready!';
+      setTimeout(() => { progressBox.style.display = 'none'; }, 1500);
+    } catch(err) {
+      console.error(err);
+      progressBox.style.display = 'none';
+      showToast('Failed: ' + err.message, 'error');
+    }
+
+    convertBtn.disabled = false;
+    clearBtn.disabled = false;
+  });
+
+  // Simple median-cut color quantization (fast approximation)
+  function quantize(rgba, numPixels, maxColors) {
+    // Build a color histogram, then pick dominant colors
+    // Fast approach: use a reduced color space (4 bits per channel = 4096 colors)
+    const colorMap = new Map();
+    for (let i = 0; i < numPixels; i++) {
+      const r = rgba[i*4]   >> 4;
+      const g = rgba[i*4+1] >> 4;
+      const b = rgba[i*4+2] >> 4;
+      const key = (r << 8) | (g << 4) | b;
+      colorMap.set(key, (colorMap.get(key) || 0) + 1);
+    }
+
+    // Sort by frequency, take top maxColors-1 colors (leave 1 for transparency)
+    const sorted = [...colorMap.entries()].sort((a, b) => b[1] - a[1]);
+    const paletteColors = sorted.slice(0, maxColors - 1);
+
+    // Build palette array [r,g,b, r,g,b, ...]
+    const palette = new Array(maxColors * 3).fill(0);
+    const colorToIndex = new Map();
+    paletteColors.forEach(([key], idx) => {
+      const r = ((key >> 8) & 0xF) << 4;
+      const g = ((key >> 4) & 0xF) << 4;
+      const b = (key & 0xF) << 4;
+      palette[idx*3]   = r;
+      palette[idx*3+1] = g;
+      palette[idx*3+2] = b;
+      colorToIndex.set(key, idx);
+    });
+
+    // Map each pixel to nearest palette entry
+    const indexed = new Uint8Array(numPixels);
+    for (let i = 0; i < numPixels; i++) {
+      const r = rgba[i*4]   >> 4;
+      const g = rgba[i*4+1] >> 4;
+      const b = rgba[i*4+2] >> 4;
+      const key = (r << 8) | (g << 4) | b;
+      if (colorToIndex.has(key)) {
+        indexed[i] = colorToIndex.get(key);
+      } else {
+        // Find nearest color in palette
+        let best = 0, bestDist = Infinity;
+        for (let j = 0; j < paletteColors.length; j++) {
+          const pr = palette[j*3], pg = palette[j*3+1], pb = palette[j*3+2];
+          const dr = (r<<4) - pr, dg = (g<<4) - pg, db = (b<<4) - pb;
+          const dist = dr*dr + dg*dg + db*db;
+          if (dist < bestDist) { bestDist = dist; best = j; }
+        }
+        indexed[i] = best;
+        colorToIndex.set(key, best);
+      }
+    }
+
+    return { palette, indexed };
+  }
+
+  function loadScript(src) {
+    return new Promise((res, rej) => { const s = document.createElement('script'); s.src = src; s.onload = res; s.onerror = rej; document.head.appendChild(s); });
+  }
+
+  clearBtn.addEventListener('click', () => {
+    fileList.innerHTML = ''; currentFile = null;
+    previewWrap.style.display = 'none'; actionRow.style.display = 'none';
+    resultArea.style.display = 'none'; progressBox.style.display = 'none';
+    gifPreviewWrap.style.display = 'none';
+    videoPreview.src = ''; fileInput.value = '';
+  });
+})();
+</script>
+</body>
+</html>

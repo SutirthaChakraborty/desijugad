@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/img/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/img/apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create ZIP Archive — Files &amp; Folders to ZIP Free | Desi Jugad</title>
+<meta name="description" content="Bundle files and entire folders into a ZIP archive right in your browser. Supports folder structure, file tree preview, and instant download. Free, no upload.">
+<meta name="keywords" content="create zip archive, folder to zip, files to zip online, zip maker browser, compress files zip, free archive creator">
+<meta name="author" content="Desi Jugad">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://desijugad.co.in/convert/create-archive.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Create ZIP Archive — Files &amp; Folders to ZIP Free | Desi Jugad">
+<meta property="og:description" content="Bundle files and entire folders into a ZIP archive right in your browser. Supports folder structure, file tree preview, and instant download.">
+<meta property="og:url" content="https://desijugad.co.in/convert/create-archive.html">
+<meta property="og:image" content="https://desijugad.co.in/assets/img/og-default.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Create ZIP Archive — Files &amp; Folders to ZIP Free | Desi Jugad">
+<meta name="twitter:description" content="Bundle files and entire folders into a ZIP archive right in your browser. Supports folder structure, file tree preview, and instant download.">
+<meta name="twitter:image" content="https://desijugad.co.in/assets/img/og-default.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,30..100;1,9..144,300..700,30..100&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Create Archive","url":"https://desijugad.co.in/convert/create-archive.html","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://desijugad.co.in/"},{"@type":"ListItem","position":2,"name":"Converters","item":"https://desijugad.co.in/#converters"},{"@type":"ListItem","position":3,"name":"Create Archive","item":"https://desijugad.co.in/convert/create-archive.html"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How do I zip an entire folder online?","acceptedAnswer":{"@type":"Answer","text":"Click 'Add Folder', select the folder in the file picker, and the tool will read the entire folder structure including subfolders. Then click Download ZIP to get the archive."}},{"@type":"Question","name":"Does the ZIP preserve folder structure?","acceptedAnswer":{"@type":"Answer","text":"Yes. Files added via folder picker include their relative paths inside the ZIP, so the folder structure is fully preserved when you extract the archive."}},{"@type":"Question","name":"Can I mix files and folders in one archive?","acceptedAnswer":{"@type":"Answer","text":"Yes — use the Add Files and Add Folder buttons multiple times to build up your file list, then click Download ZIP to bundle everything together."}},{"@type":"Question","name":"What compression does this use?","acceptedAnswer":{"@type":"Answer","text":"This tool uses DEFLATE compression (standard ZIP compression). Already-compressed files like JPG, MP4, and ZIP itself won't shrink much — that's normal."}}]}</script>
+</head>
+<body>
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="../" class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="../#converters">Converters</a></li>
+      <li><a href="../ai/">AI Studio <span class="badge-new">NEW</span></a></li>
+      <li><a href="../blog/">Blog</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../#converters" class="nav-cta">All tools</a></li>
+    </ul>
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</header>
+<main class="converter-page">
+  <div class="container">
+    <nav class="breadcrumb"><a href="../">Home</a><span class="sep">/</span><a href="../#converters">Converters</a><span class="sep">/</span><span>Create Archive</span></nav>
+    <div class="converter-header">
+      <h1>Pack <em class="italic">everything</em> into a ZIP.</h1>
+      <p class="lead">Drag files or pick whole folders — get one tidy ZIP archive. Folder structure preserved, nothing uploaded.</p>
+    </div>
+
+    <div class="options-row">
+      <div class="option">
+        <label>Archive name</label>
+        <input type="text" id="outputName" value="archive.zip" style="font-family:var(--font-mono,monospace);padding:0.45rem 0.75rem;border:1px solid var(--border);border-radius:6px;background:var(--bg);color:var(--text);font-size:0.9rem;">
+      </div>
+      <div style="display:flex;gap:0.5rem;align-items:flex-end;flex-wrap:wrap;">
+        <button class="btn btn-secondary" id="addFilesBtn">+ Add Files</button>
+        <button class="btn btn-secondary" id="addFolderBtn">+ Add Folder</button>
+        <button class="btn btn-primary" id="downloadZipBtn" disabled>Download ZIP</button>
+      </div>
+      <input type="file" id="fileInput" multiple style="display:none;">
+      <input type="file" id="folderInput" webkitdirectory multiple style="display:none;">
+    </div>
+
+    <div id="dropZone" style="min-height:160px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.75rem;border:2px dashed var(--border);border-radius:12px;padding:2rem;cursor:pointer;transition:border-color .2s,background .2s;">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><path d="M8 21h8M12 17v4"/></svg>
+      <p style="margin:0;color:var(--muted);text-align:center;">Drop files or folders here</p>
+    </div>
+
+    <div id="treeWrap" style="display:none;margin-top:1.5rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.75rem;">
+        <h3 id="treeTitle" style="margin:0;font-size:1rem;"></h3>
+        <button class="btn btn-secondary" id="clearBtn" style="font-size:0.85rem;padding:0.35rem 0.9rem;">Clear all</button>
+      </div>
+      <div id="fileTree" style="font-family:var(--font-mono,monospace);font-size:0.82rem;max-height:360px;overflow-y:auto;border:1px solid var(--border);border-radius:8px;padding:1rem;background:var(--surface,var(--bg));line-height:1.8;"></div>
+      <p id="totalSize" style="margin:0.5rem 0 0;font-size:0.85rem;color:var(--muted);"></p>
+    </div>
+
+    <div id="progressWrap" style="display:none;margin-top:1rem;">
+      <div style="height:6px;background:var(--border);border-radius:3px;overflow:hidden;">
+        <div id="progressBar" style="height:100%;width:0;background:var(--accent);transition:width .15s;border-radius:3px;"></div>
+      </div>
+      <p id="progressLabel" style="margin:0.4rem 0 0;font-size:0.85rem;color:var(--muted);"></p>
+    </div>
+
+    <section class="info-section">
+      <h2>Why zip your files?</h2>
+      <p>A ZIP archive bundles many files into a single <code>.zip</code> file, making it easy to email, upload, share, or store. Compression reduces total size, especially for text-heavy files like source code, logs, and documents.</p>
+
+      <h3>Folder structure is preserved</h3>
+      <p>When you add a folder using the folder picker, each file is stored with its relative path inside the ZIP. Extracting on any device will recreate the original folder tree — great for sending project directories.</p>
+
+      <h3>Everything stays local</h3>
+      <p>The archive is built entirely in your browser's memory using the open-source <strong>JSZip</strong> library. Nothing is uploaded. The resulting ZIP is downloaded directly to your device.</p>
+
+      <h2>FAQ</h2>
+      <details class="faq-item" open><summary>How large an archive can I create?</summary><p>Limited only by your device's available RAM. Desktop browsers handle several GB with ease. Mobile devices may slow down above 200–300 MB.</p></details>
+      <details class="faq-item"><summary>Will hidden files (dotfiles) be included?</summary><p>Browser file pickers typically expose hidden files when they are explicitly inside a selected folder. Files starting with a dot (like <code>.gitignore</code>) will be included if the OS allows the browser to read them.</p></details>
+      <details class="faq-item"><summary>Can I add files from multiple folders?</summary><p>Yes — click "Add Files" or "Add Folder" multiple times to accumulate files from different locations before clicking Download ZIP.</p></details>
+      <details class="faq-item"><summary>How is this different from the ZIP Converter tool?</summary><p>This tool focuses on creating archives with proper folder support and a file tree preview. The <a href="zip-converter.html">ZIP Converter</a> also handles extraction.</p></details>
+    </section>
+
+    <div class="related-tools">
+      <h3>Related tools</h3>
+      <div class="related-grid">
+        <a href="zip-converter.html" class="related-card">🗜️ ZIP Converter</a>
+        <a href="cbr-to-pdf.html" class="related-card">📚 CBR/CBZ to PDF</a>
+        <a href="image-converter.html" class="related-card">🖼️ Image Converter</a>
+        <a href="pdf-merge.html" class="related-card">📄 PDF Merge</a>
+      </div>
+    </div>
+  </div>
+</main>
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid footer-grid-5">
+      <div class="footer-brand"><div class="brand"><img src="../assets/img/logo.png" alt="Desi Jugad" class="brand-logo"></div><p>Free, private file conversion for everyone.</p></div>
+      <div class="footer-col"><h5>Tools</h5><ul><li><a href="image-converter.html">Image Converter</a></li><li><a href="pdf-merge.html">PDF Tools</a></li><li><a href="audio-converter.html">Audio Converter</a></li><li><a href="json-to-csv.html">JSON to CSV</a></li></ul></div>
+      <div class="footer-col"><h5>AI Studio</h5><ul><li><a href="../ai/image.html">AI Images</a></li><li><a href="../ai/bg-remove.html">Background Remover</a></li></ul></div>
+      <div class="footer-col"><h5>Company</h5><ul><li><a href="../about.html">About</a></li><li><a href="../blog/">Blog</a></li><li><a href="../privacy.html">Privacy</a></li><li><a href="../terms.html">Terms</a></li></ul></div>
+      <div class="footer-col"><h5>Help</h5><ul><li><a href="../contact.html">Contact</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><div>© <span data-year>2026</span> Desi Jugad.</div><div class="made-in"><span class="flag-in"></span>Made in India, built for the world.</div></div>
+  </div>
+</footer>
+<script src="../assets/js/main.js"></script>
+<script>
+(function(){
+  const fileInput = document.getElementById('fileInput');
+  const folderInput = document.getElementById('folderInput');
+  const dropZone = document.getElementById('dropZone');
+  const addFilesBtn = document.getElementById('addFilesBtn');
+  const addFolderBtn = document.getElementById('addFolderBtn');
+  const downloadZipBtn = document.getElementById('downloadZipBtn');
+  const clearBtn = document.getElementById('clearBtn');
+  const treeWrap = document.getElementById('treeWrap');
+  const treeTitle = document.getElementById('treeTitle');
+  const fileTree = document.getElementById('fileTree');
+  const totalSize = document.getElementById('totalSize');
+  const progressWrap = document.getElementById('progressWrap');
+  const progressBar = document.getElementById('progressBar');
+  const progressLabel = document.getElementById('progressLabel');
+  const outputName = document.getElementById('outputName');
+
+  let allFiles = []; // {path, file}
+
+  addFilesBtn.addEventListener('click', () => fileInput.click());
+  addFolderBtn.addEventListener('click', () => folderInput.click());
+
+  dropZone.addEventListener('click', () => fileInput.click());
+  dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.style.borderColor = 'var(--accent)'; dropZone.style.background = 'var(--accent-soft,rgba(99,102,241,0.06))'; });
+  dropZone.addEventListener('dragleave', () => { dropZone.style.borderColor = ''; dropZone.style.background = ''; });
+  dropZone.addEventListener('drop', e => {
+    e.preventDefault(); dropZone.style.borderColor = ''; dropZone.style.background = '';
+    addFromFileList(e.dataTransfer.files, '');
+  });
+
+  fileInput.addEventListener('change', () => addFromFileList(fileInput.files, ''));
+  folderInput.addEventListener('change', () => {
+    const files = Array.from(folderInput.files);
+    files.forEach(f => {
+      const path = f.webkitRelativePath || f.name;
+      allFiles.push({ path, file: f });
+    });
+    renderTree();
+  });
+
+  function addFromFileList(list, prefix) {
+    Array.from(list).forEach(f => allFiles.push({ path: prefix + f.name, file: f }));
+    renderTree();
+  }
+
+  function renderTree() {
+    if (!allFiles.length) { treeWrap.style.display = 'none'; downloadZipBtn.disabled = true; return; }
+    const dirs = {};
+    allFiles.forEach(({ path }) => {
+      const parts = path.split('/');
+      if (parts.length > 1) {
+        for (let i = 1; i < parts.length; i++) {
+          const dir = parts.slice(0, i).join('/');
+          dirs[dir] = true;
+        }
+      }
+    });
+    let html = '';
+    const sortedDirs = Object.keys(dirs).sort();
+    sortedDirs.forEach(d => {
+      const depth = d.split('/').length - 1;
+      html += `<div style="padding-left:${depth * 1.2}rem;color:var(--muted);">📁 ${d.split('/').pop()}/</div>`;
+    });
+    allFiles.forEach(({ path }) => {
+      const parts = path.split('/');
+      const depth = parts.length - 1;
+      html += `<div style="padding-left:${depth * 1.2}rem;">📄 ${parts[parts.length - 1]}</div>`;
+    });
+    fileTree.innerHTML = html || allFiles.map(f => `<div>📄 ${f.path}</div>`).join('');
+    const bytes = allFiles.reduce((s, f) => s + f.file.size, 0);
+    const unique = allFiles.length;
+    treeTitle.textContent = `${unique} file${unique !== 1 ? 's' : ''} ready`;
+    totalSize.textContent = `Total uncompressed: ${formatBytes(bytes)}`;
+    treeWrap.style.display = '';
+    downloadZipBtn.disabled = false;
+  }
+
+  clearBtn.addEventListener('click', () => {
+    allFiles = [];
+    treeWrap.style.display = 'none';
+    downloadZipBtn.disabled = true;
+    progressWrap.style.display = 'none';
+  });
+
+  downloadZipBtn.addEventListener('click', async () => {
+    if (!allFiles.length) return;
+    progressWrap.style.display = '';
+    progressBar.style.width = '0';
+    progressLabel.textContent = 'Building archive…';
+    downloadZipBtn.disabled = true;
+    try {
+      const zip = new JSZip();
+      for (const { path, file } of allFiles) zip.file(path, file);
+      const blob = await zip.generateAsync({ type: 'blob', compression: 'DEFLATE', compressionOptions: { level: 6 } }, meta => {
+        progressBar.style.width = meta.percent.toFixed(0) + '%';
+        progressLabel.textContent = `Compressing… ${meta.percent.toFixed(0)}%`;
+      });
+      progressLabel.textContent = 'Done! Downloading…';
+      const name = outputName.value.trim() || 'archive.zip';
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = name.endsWith('.zip') ? name : name + '.zip';
+      a.click();
+      setTimeout(() => URL.revokeObjectURL(a.href), 10000);
+    } catch(e) {
+      progressLabel.textContent = 'Error: ' + e.message;
+    }
+    downloadZipBtn.disabled = false;
+  });
+
+  function formatBytes(b) {
+    if (b < 1024) return b + ' B';
+    if (b < 1048576) return (b/1024).toFixed(1) + ' KB';
+    return (b/1048576).toFixed(1) + ' MB';
+  }
+})();
+</script>
+</body>
+</html>
