@@ -269,21 +269,35 @@
   // Inject FAQ schema ------------------------------------------------------------------
   function injectFAQ(faqs) {
     if (!faqs || !faqs.length) return;
-    var schema = {
-      '@context': 'https://schema.org',
-      '@type': 'FAQPage',
-      mainEntity: faqs.map(function(f) {
-        return {
-          '@type': 'Question',
-          name: f.q,
-          acceptedAnswer: { '@type': 'Answer', text: f.a }
-        };
-      })
-    };
+
+    var newItems = faqs.map(function(f) {
+      return { '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } };
+    });
+
+    // Find an existing FAQPage script block and merge into it to avoid duplicate schema error
+    var scripts = document.querySelectorAll('script[type="application/ld+json"]');
+    for (var i = 0; i < scripts.length; i++) {
+      try {
+        var data = JSON.parse(scripts[i].textContent || scripts[i].innerText);
+        if (data['@type'] === 'FAQPage') {
+          var existing = data.mainEntity || [];
+          // Avoid adding duplicate questions (match by name)
+          var existingNames = existing.map(function(q) { return q.name; });
+          newItems.forEach(function(item) {
+            if (existingNames.indexOf(item.name) === -1) existing.push(item);
+          });
+          data.mainEntity = existing;
+          scripts[i].textContent = JSON.stringify(data);
+          return; // merged — done
+        }
+      } catch (e) {}
+    }
+
+    // No existing FAQPage found — create a fresh one
     var s = document.createElement('script');
     s.type = 'application/ld+json';
     s.id = 'dj-seo-faq-schema';
-    s.text = JSON.stringify(schema);
+    s.textContent = JSON.stringify({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: newItems });
     document.head.appendChild(s);
   }
 
