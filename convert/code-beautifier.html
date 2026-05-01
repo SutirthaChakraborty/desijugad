@@ -298,5 +298,6 @@ document.getElementById('swapBtn').addEventListener('click', () => { inputCode.v
 document.getElementById('pasteBtn').addEventListener('click', () => { navigator.clipboard.readText().then(t => { inputCode.value = t; inputCount.textContent = t.length.toLocaleString() + ' chars'; }).catch(() => showToast('Clipboard access denied')); });
 </script>
 <script src="../assets/js/seo-howto.js" defer></script>
+<script src="../assets/js/seo-keywords.js" defer></script>
 </body>
 </html>

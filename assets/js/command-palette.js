@@ -127,7 +127,7 @@
       html += TOOLS.map(itemHTML).join('');
     } else {
       filtered = TOOLS.filter(function (t) {
-        var hay = (t.name + ' ' + (t.desc || '')).toLowerCase();
+        var hay = (t.name + ' ' + (t.desc || '') + ' ' + (t.tags ? t.tags.join(' ') : '')).toLowerCase();
         return hay.indexOf(q) !== -1;
       });
       if (filtered.length) {
