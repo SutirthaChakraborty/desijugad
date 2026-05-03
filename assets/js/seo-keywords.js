@@ -276,21 +276,24 @@
 
     // Find an existing FAQPage script block and merge into it to avoid duplicate schema error
     var scripts = document.querySelectorAll('script[type="application/ld+json"]');
+    var faqScript = null, faqData = null;
     for (var i = 0; i < scripts.length; i++) {
       try {
         var data = JSON.parse(scripts[i].textContent || scripts[i].innerText);
-        if (data['@type'] === 'FAQPage') {
-          var existing = data.mainEntity || [];
-          // Avoid adding duplicate questions (match by name)
-          var existingNames = existing.map(function(q) { return q.name; });
-          newItems.forEach(function(item) {
-            if (existingNames.indexOf(item.name) === -1) existing.push(item);
-          });
-          data.mainEntity = existing;
-          scripts[i].textContent = JSON.stringify(data);
-          return; // merged — done
-        }
+        if (data['@type'] === 'FAQPage') { faqScript = scripts[i]; faqData = data; break; }
       } catch (e) {}
+    }
+    if (faqScript) {
+      try {
+        var existing = faqData.mainEntity || [];
+        var existingNames = existing.map(function(q) { return q.name; });
+        newItems.forEach(function(item) {
+          if (existingNames.indexOf(item.name) === -1) existing.push(item);
+        });
+        faqData.mainEntity = existing;
+        faqScript.textContent = JSON.stringify(faqData);
+      } catch (e) {}
+      return; // always return — never create a second FAQPage even if the update threw
     }
 
     // No existing FAQPage found — create a fresh one
