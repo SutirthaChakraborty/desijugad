@@ -184,6 +184,50 @@
       <h2>Why privacy-first conversion is better</h2>
       <p>Uploading personal images to a server should be the exception, not the default. With browser-based conversion, your photo, screenshot, design mockup, or scanned document stays on your own device. There is no retention window to worry about and no cloud queue to wait through.</p>
 
+      <h2>Image format decision guide</h2>
+
+      <p>Picking the wrong output format is a common mistake. Converting everything to JPG by default sounds safe but loses quality on graphics that should stay lossless. Converting everything to PNG bloats file sizes for photographs that don't need it. Here's a structured framework for choosing the right format for the job:</p>
+
+      <ul>
+        <li><strong>For websites and web apps:</strong> WebP is the best default — same visual quality as JPG at 25–35% smaller file size, with full transparency support. Use JPG as a fallback for environments that don't support WebP (older Safari versions). Use PNG only when transparency is required and WebP support is not guaranteed.</li>
+        <li><strong>For social media posts:</strong> JPG gives the smallest file size and the widest compatibility across all platforms. Most social platforms re-compress uploaded images anyway, so a clean JPG is the right starting point.</li>
+        <li><strong>For editing and archiving:</strong> PNG (lossless) preserves every pixel for future editing. TIFF is preferred in professional print and publishing workflows where maximum colour fidelity is required.</li>
+        <li><strong>For logos and icons:</strong> SVG (vector) is the best format for any design that needs to scale cleanly — logos, icons, diagrams. Where SVG is not an option, use PNG with transparency (never JPG for logos, which creates ugly compression artifacts around sharp edges).</li>
+        <li><strong>For iPhone and camera photos:</strong> HEIC is Apple's default format for maximum storage efficiency on-device, but it has poor compatibility with non-Apple software. Convert HEIC to JPG before sharing or uploading anywhere outside the Apple ecosystem.</li>
+        <li><strong>For AI and machine learning datasets:</strong> PNG (lossless) is the standard for training data where pixel accuracy matters. WebP is also acceptable. Avoid JPG for ML datasets — the compression artifacts and quality variability introduce noise into your training signal.</li>
+      </ul>
+
+      <h2>Why image quality is lost on conversion</h2>
+
+      <p>Understanding the lossy vs lossless distinction is essential for getting the most out of image conversion. JPG is a lossy format: when a JPG is created, the encoder discards some image information to achieve compression. That information is gone permanently. PNG, WebP (lossless mode), and TIFF are lossless: every pixel value is preserved exactly.</p>
+
+      <p>Here's what this means in practice:</p>
+
+      <ul>
+        <li><strong>Converting JPG to PNG does not recover lost quality.</strong> PNG is lossless, so the conversion will preserve the current state of the image perfectly — but the quality already lost when the original JPG was created cannot be recovered. You end up with a lossless copy of a damaged original, at a larger file size. The output looks the same as the input JPG.</li>
+        <li><strong>Converting PNG to JPG will lose quality.</strong> You are going from a lossless format to a lossy one. Some pixel information will be discarded. The lower the quality setting, the more visible the compression artifacts. This loss is permanent — you cannot undo it by converting back to PNG.</li>
+        <li><strong>Converting JPG to WebP at equivalent visual quality saves 25–35% file size.</strong> WebP's compression algorithm is more efficient than JPG's. At the same perceived quality, WebP files are significantly smaller. This is why Google Search and performance-conscious websites strongly prefer WebP for photographs.</li>
+      </ul>
+
+      <p>The golden rule: always work from the highest-quality original you have. If you have a RAW file from a camera, keep the RAW as your archive master. If you have a PNG screenshot, keep the PNG. Do your editing, cropping, and resizing on the best-quality source available — then convert to the distribution format (WebP, JPG) as the final step. Never re-export a JPG as a JPG repeatedly; each re-encoding cycle multiplies the quality loss.</p>
+
+      <h2>Frequently asked questions</h2>
+
+      <details class="faq-item" open>
+        <summary>Does converting between image formats reduce quality?</summary>
+        <p>It depends on the direction. Converting from a lossless format (PNG, BMP, TIFF) to another lossless format causes no quality loss. Converting from a lossless format to a lossy format (JPG, low-quality WebP) will reduce quality — some image data is discarded permanently. Converting from JPG to PNG does not reduce further quality, but it also does not restore quality already lost when the JPG was created. For the best results, always start from the highest-quality source available and convert to your target format once, not repeatedly.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>Which image format is best for websites?</summary>
+        <p>WebP is the best format for most website images in 2026. It offers the same visual quality as JPG at 25–35% smaller file sizes, supports transparency like PNG, and is supported by all modern browsers. Use JPG for photographs when you need maximum compatibility with older systems or email clients. Use PNG for logos, icons, and graphics with transparency when WebP support is uncertain. Avoid BMP and uncompressed TIFF for web use — their file sizes are impractically large for page load performance.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>Can I convert multiple images at once?</summary>
+        <p>Yes. Desi Jugad's image converter supports batch conversion — drag in a folder or select multiple files at once, choose your output format, and all images are converted together. The batch processing runs entirely in your browser with no upload, so even large batches of high-resolution photos process quickly without waiting for server queues. Each converted image downloads individually or as a ZIP archive depending on the batch size.</p>
+      </details>
+
       <h2>Related reads</h2>
       <ul>
         <li><a href="png-jpg-webp-avif.html">Compare PNG, JPG, WebP, and AVIF</a> before choosing an output format.</li>

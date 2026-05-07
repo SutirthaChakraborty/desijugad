@@ -140,63 +140,64 @@
       </div>
 
       <div class="blog-content">
-        <h2>What Is Code Beautification?</h2>
-        <p>Code beautification (formatting) makes code readable by adding proper indentation, spacing, and line breaks. Minified code becomes human-readable again.</p>
+        <h2>Code Formatting Is Not About Aesthetics</h2>
+        <p>Formatting code is often dismissed as a stylistic preference — tabs vs spaces, brace placement, line length. But research consistently shows it has a direct impact on software quality. Studies measuring bug density across codebases find that poorly formatted code correlates with 2–3× more defects per line, largely because hard-to-read code slips through code review unexamined. When reviewers can quickly parse a function's structure, they catch logical errors. When they cannot, they approve blindly.</p>
+        <p>Code beautification is also not only for humans. Consistent formatting reduces noise in version control diffs, making it easier to spot genuine logic changes rather than wading through whitespace edits. A single pre-commit formatting pass can eliminate entire categories of review comments.</p>
 
-        <h2>Why Use a Code Beautifier?</h2>
+        <h2>What Code Beautification Actually Does</h2>
+        <p>Under the hood, a code beautifier parses your source into an <strong>Abstract Syntax Tree (AST)</strong> — a structured representation of the code's meaning — and then reprints it from scratch according to configurable rules. This is why a formatter never breaks your code: it works on the AST, not on raw text. The transformations typically include:</p>
         <ul>
-          <li>Make minified code readable for debugging</li>
-          <li>Improve code readability and consistency</li>
-          <li>Follow team coding standards</li>
-          <li>Fix formatting issues quickly</li>
-          <li>Validate code syntax</li>
+          <li><strong>Consistent indentation</strong> — normalises tabs vs spaces and the number of spaces per level (common choices: 2 or 4).</li>
+          <li><strong>Quote normalisation</strong> — converts all strings to single or double quotes depending on the project style.</li>
+          <li><strong>Trailing comma handling</strong> — adds or removes trailing commas on the last item of arrays and objects (trailing commas make diffs cleaner since adding a new item only touches one line).</li>
+          <li><strong>Line ending normalisation</strong> — converts between CRLF (Windows) and LF (Unix), which matters when teams work across platforms.</li>
+          <li><strong>Bracket and brace spacing</strong> — adds or removes spaces inside <code>{ }</code> or around operators.</li>
+          <li><strong>Object key sorting</strong> — some formatters (especially for JSON) optionally sort keys alphabetically for easier manual scanning.</li>
         </ul>
 
-        <h2>Example: Before & After</h2>
-        <p><strong>Minified:</strong><br>
-        <code>{name:"John",age:30,city:"NYC"}</code></p>
-        <p><strong>Beautified:</strong><br>
-        <code>{\n  name: "John",\n  age: 30,\n  city: "NYC"\n}</code></p>
-
-        <h2>Supported Formats</h2>
-        <p>Use <strong><a href="../convert/code-beautifier.html">Desi Jugad Code Beautifier</a></strong> to format:</p>
+        <h2>Language-Specific Formatting Standards</h2>
+        <p>Each major language has settled on conventions — some informal, some enforced by dominant tooling:</p>
         <ul>
-          <li>HTML / XML</li>
-          <li>CSS / SCSS / LESS</li>
-          <li>JavaScript / TypeScript</li>
-          <li>JSON</li>
-          <li>SQL</li>
-          <li>YAML / TOML</li>
+          <li><strong>JavaScript / TypeScript:</strong> <a href="https://prettier.io" rel="noopener noreferrer">Prettier</a> has become the de-facto standard. Its key selling point is being opinionated: there are very few configuration options, which ends "how should we format this?" debates. Common team debates include semi-colons vs no semi-colons and 80-character vs 120-character line length. ESLint handles linting (finding bugs and style issues); Prettier handles formatting — they are complementary, not competing.</li>
+          <li><strong>Python:</strong> <a href="https://peps.python.org/pep-0008/" rel="noopener noreferrer">PEP 8</a> specifies 4 spaces per indent level and a maximum line length of 79 characters. <a href="https://black.readthedocs.io" rel="noopener noreferrer">Black</a> is now the dominant formatter: fully opinionated, zero configuration, deterministic output. If two developers run Black on the same file, they get identical output.</li>
+          <li><strong>HTML:</strong> Formatters handle attribute ordering, whether void elements like <code>&lt;br&gt;</code> should be self-closed as <code>&lt;br /&gt;</code>, and how nested elements are indented. The challenge with HTML is that whitespace is sometimes meaningful (inline elements vs block elements), so good formatters are careful not to introduce extra whitespace between inline elements.</li>
+          <li><strong>CSS / SCSS:</strong> Property ordering is a common convention — typically grouped by category (positioning, box model, typography, visual) rather than alphabetical. Tools like Stylelint enforce both ordering and consistency between shorthand (<code>margin: 0 auto</code>) and longhand (<code>margin-top: 0; margin-right: auto;</code>) properties.</li>
+          <li><strong>JSON:</strong> 2-space indentation is the most widespread standard. Important note: strict JSON (RFC 8259) does <em>not</em> allow trailing commas after the last array or object element. JSON5 and JSONC (used by VS Code configs) relax this, but a standard JSON parser will reject a trailing comma.</li>
+          <li><strong>SQL:</strong> The established convention is keywords in uppercase (<code>SELECT</code>, <code>FROM</code>, <code>WHERE</code>, <code>JOIN</code>) and a new line for each major clause. Subqueries are indented one level. This makes the structure of complex multi-join queries scannable at a glance.</li>
         </ul>
 
-        <h2>Key Features</h2>
+        <h2>Beautify vs Minify vs Obfuscate</h2>
+        <p>These three operations all transform source code but serve opposite goals:</p>
         <ul>
-          <li><strong>Auto-Indent:</strong> Configurable spaces or tabs.</li>
-          <li><strong>Minify:</strong> Remove all unnecessary whitespace.</li>
-          <li><strong>Validate:</strong> Check syntax errors.</li>
-          <li><strong>Syntax Highlighting:</strong> Color-coded output.</li>
-          <li><strong>Copy to Clipboard:</strong> One-click export.</li>
+          <li><strong>Beautify (pretty-print):</strong> Maximum human readability. Adds whitespace, line breaks, consistent indentation. Used during development and code review.</li>
+          <li><strong>Minify:</strong> Removes all whitespace, comments, and often shortens variable names to single characters. A 100 KB JavaScript file typically shrinks to 30–50 KB minified, directly improving page load times. Used in production builds. Tools: Terser (JS), cssnano (CSS), html-minifier.</li>
+          <li><strong>Obfuscate:</strong> Rewrites code to make it intentionally hard to understand — renaming variables to meaningless names, flattening control flow, inserting dead code. Used to protect proprietary logic. Unlike minification, the goal is not size reduction but resistance to reverse engineering.</li>
         </ul>
+        <p>A typical production workflow: write code in readable form → commit formatted code → build pipeline minifies for production bundles. Obfuscation is added only when intellectual property protection is a specific requirement.</p>
 
-        <h2>Why Our Beautifier?</h2>
+        <h2>Why Format Before Code Review</h2>
+        <p>If formatting is not standardised, pull requests accumulate noise. A developer who uses 4-space indentation opens a file last touched by someone using 2-space indentation, makes one logic change, and their diff shows hundreds of whitespace lines changed alongside the single logical change. Reviewers either review the noise (wasting time) or skip it (missing bugs).</p>
+        <p>The solution is simple: agree on a formatter, add it as a <strong>pre-commit hook</strong>, and enforce it in CI. This means:</p>
         <ul>
-          <li><strong>Multiple Languages:</strong> HTML, CSS, JS, JSON, SQL, YAML.</li>
-          <li><strong>Instant Formatting:</strong> Real-time as you type.</li>
-          <li><strong>100% Private:</strong> No server, no tracking.</li>
-          <li><strong>Customizable:</strong> Control indentation, line length, etc.</li>
-          <li><strong>Error Detection:</strong> Highlights syntax issues.</li>
+          <li>Every commit is already formatted — no formatting PRs, no "please run Prettier" comments.</li>
+          <li>Diffs contain only logical changes — review is faster and more thorough.</li>
+          <li>New team members cannot accidentally introduce formatting divergence.</li>
         </ul>
+        <p>Tools like <a href="https://pre-commit.com" rel="noopener noreferrer">pre-commit</a> (language-agnostic), Husky (Node.js projects), and lint-staged make setting this up a one-time five-minute task.</p>
 
-        <h2>Perfect For</h2>
-        <ul>
-          <li>Web developers and front-end engineers</li>
-          <li>Back-end developers and system admins</li>
-          <li>Data analysts working with JSON</li>
-          <li>Anyone debugging code</li>
-        </ul>
-
-        <h2>Conclusion</h2>
-        <p>Formatting code is now instant and effortless. Use our free code beautifier to make any code readable and maintainable.</p>
+        <h2>Frequently Asked Questions</h2>
+        <details class="faq-item" open>
+          <summary>What is the difference between beautify and pretty-print?</summary>
+          <p>The terms are used interchangeably and mean the same thing: reformatting code or data to be human-readable, typically by adding indentation and line breaks. "Pretty-print" is the older term, common in the context of data serialisation formats like JSON and XML. "Beautify" is more common in web tooling contexts for HTML, CSS, and JavaScript. Both describe the process of taking compact or inconsistently formatted text and normalising it into a consistently indented, readable form.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Does formatting change how code runs?</summary>
+          <p>No. Formatting changes only whitespace, indentation, and stylistic elements — none of which affect execution in compiled or interpreted languages. JavaScript, Python, CSS, JSON, and SQL all ignore the amount of whitespace between tokens. The AST (abstract syntax tree) that represents the code's meaning is identical before and after formatting. The one exception to be aware of: Python's indentation is syntactically significant — <em>changing</em> indentation levels can alter which block of code a statement belongs to. A proper Python formatter (like Black) understands this and never changes indentation in a way that changes the AST.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Should I format minified code?</summary>
+          <p>Yes, if you need to read or debug it. Minified production code — from a vendor library, a bundled file, or a third-party script — is intentionally unreadable. Running it through a beautifier restores the structure so you can understand what it does, set breakpoints, or diagnose a bug. Note that minified code often has variable names shortened to single letters (<code>a</code>, <code>b</code>, <code>e</code>), so even beautified it won't be as readable as the original source. If the original source is available on a CDN or npm, checking the unminified source is faster than reading beautified minified code.</p>
+        </details>
       </div>
 
       <div class="blog-cta">

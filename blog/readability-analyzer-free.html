@@ -131,45 +131,68 @@
   <h1>Readability Analyzer — Check Text Readability Free</h1>
   <p style="color: #666; font-size: 14px;">Published April 27, 2026</p>
 
-  <h2>Why Readability Matters for SEO and User Experience</h2>
-  <p>Readable content keeps visitors on your page longer, reduces bounce rates, and improves SEO rankings. Search engines like Google consider user engagement (time on page, scroll depth) as ranking factors. Clear, easy-to-read content = better user experience = better rankings.</p>
+  <p>Readability is the measure of how easy your text is to read and understand. It matters enormously — research shows that writing at a lower reading level increases comprehension, sharing, and conversion rates even among highly educated audiences. A study of Nobel Prize-winning scientists found that their published abstracts are written at simpler reading levels than those of their less-recognized peers. Complexity does not signal intelligence; clarity does. Knowing exactly how readable your content is — and how to improve it — is one of the most practical skills in modern writing.</p>
 
-  <h2>Understanding Readability Scores</h2>
-  <h3>Flesch Reading Ease Score</h3>
+  <h2>The Main Readability Scores Explained</h2>
+  <p>Readability formulas use measurable text properties — sentence length, word length, syllable count — to estimate how difficult text is to read. Each formula weights these factors slightly differently.</p>
+
+  <h3>Flesch Reading Ease (FRE)</h3>
+  <p>The most widely used readability formula. Scores run from 0 to 100 — higher means easier. Roughly: 90–100 is very easy (fifth grade), 60–70 is standard magazine-level text, 50–60 is academic, and below 30 is scientific or legal writing. The formula penalizes both long sentences and words with many syllables.</p>
+
+  <h3>Flesch-Kincaid Grade Level</h3>
+  <p>Converts the Flesch Reading Ease score into a US school grade level. A result of 8 means the text is readable by the average eighth grader. For general web content, Grade 7–8 is the widely recommended target. Technical documentation and professional writing typically sits at Grade 10–12. This score uses the same underlying variables as FRE but inverts the scale — higher grade level means harder text.</p>
+
+  <h3>Gunning Fog Index</h3>
+  <p>Estimates the years of formal education a reader needs to understand the text on first reading. The key distinguishing feature of this formula is its treatment of "complex words" — defined as words with three or more syllables (excluding proper nouns, compound words, and two-syllable verb forms). A Fog Index under 12 is accessible to most adults. Most popular newspaper and magazine content aims for 10 or below.</p>
+
+  <h3>SMOG Index (Simple Measure of Gobbledygook)</h3>
+  <p>Counts polysyllabic words across a sample of 30 sentences. SMOG is particularly accurate for health communications and is the score recommended by plain-language guidelines for patient-facing medical content. It tends to give slightly higher grade-level estimates than Flesch-Kincaid, which makes it more conservative and appropriate where comprehension is safety-critical.</p>
+
+  <h3>Coleman-Liau Index</h3>
+  <p>Unlike most other formulas, Coleman-Liau uses character count per word rather than syllable count — making it easier to compute programmatically. It produces grade-level estimates comparable to Flesch-Kincaid. Because it counts characters instead of syllables, it rewards short words regardless of pronunciation patterns.</p>
+
+  <h3>Automated Readability Index (ARI)</h3>
+  <p>Also uses characters per word (like Coleman-Liau) and words per sentence. Produces a grade-level number. ARI tends to rate text as slightly easier than Flesch-Kincaid at comparable difficulty levels. Good as a secondary check alongside FRE.</p>
+
+  <h2>Target Scores by Content Type</h2>
   <ul>
-    <li><strong>90-100:</strong> Very Easy (5th grade) — Best for blogs, landing pages, social media</li>
-    <li><strong>70-90:</strong> Easy (8th grade) — Most online content should be here</li>
-    <li><strong>50-70:</strong> Fairly Difficult (10th grade) — College level, technical articles</li>
-    <li><strong>30-50:</strong> Difficult (13th grade) — Academic or specialized content</li>
-    <li><strong>0-30:</strong> Very Difficult (16+ grade) — Expert-only content</li>
+    <li><strong>Blog posts and news articles:</strong> Flesch Reading Ease 60–70 / Grade 7–8</li>
+    <li><strong>Email marketing:</strong> Flesch Reading Ease 65–75 / Grade 6–7</li>
+    <li><strong>Social media captions:</strong> Flesch Reading Ease 70–80 / Grade 5–6</li>
+    <li><strong>App UI copy and tooltips:</strong> Flesch Reading Ease 75–85 / Grade 4–5</li>
+    <li><strong>Technical documentation:</strong> Flesch Reading Ease 40–60 / Grade 10–12</li>
+    <li><strong>Legal and medical documents:</strong> Grade 12 and above (often unavoidable due to precise terminology)</li>
   </ul>
-
-  <h2>Flesch-Kincaid Grade Level</h2>
-  <p>This score tells you what US school grade level is needed to understand your text. A blog targeting general audiences should aim for grades 8-9. Technical documentation can be grades 12-14.</p>
+  <p>Terms of Service documents typically measure at Grade 16 or above — despite affecting millions of users who never read them. This is a known accessibility problem in the industry, though legal precision requirements make simplification difficult.</p>
 
   <h2>How to Improve Your Readability Score</h2>
-  <p><strong>1. Use Shorter Sentences</strong><br/>Long sentences tire readers. Aim for 15-20 words per sentence average. Break complex ideas into multiple sentences.</p>
-
-  <p><strong>2. Use Simpler Words</strong><br/>Replace complex words with everyday alternatives. "Utilize" → "Use," "Endeavor" → "Try," "Facilitate" → "Enable."</p>
-
-  <p><strong>3. Add Subheadings</strong><br/>Break content into chunks with clear H2 and H3 headings. This improves both readability and SEO.</p>
-
-  <p><strong>4. Use Bullet Points</strong><br/>Lists are easier to scan than paragraphs. Perfect for features, benefits, and step-by-step instructions.</p>
-
-  <p><strong>5. Active Voice Over Passive</strong><br/>"The tool converts images" (active) is clearer than "Images are converted by the tool" (passive).</p>
-
-  <h2>Target Readability by Audience</h2>
+  <p>These techniques directly reduce grade-level scores because they lower average sentence length and average syllables per word — the two variables that drive nearly every readability formula.</p>
   <ul>
-    <li><strong>General Web Users:</strong> Flesch Score 60-80 (8th-9th grade)</li>
-    <li><strong>Blog Posts:</strong> Flesch Score 70-90 (6th-8th grade)</li>
-    <li><strong>Business/Professional:</strong> Flesch Score 50-70 (10th-12th grade)</li>
-    <li><strong>Academic:</strong> Flesch Score 30-50 (College level)</li>
+    <li><strong>Shorten sentences.</strong> 15–20 words is the ideal average. When a sentence runs long, find the natural midpoint and break it into two. Each new sentence can begin with a short transitional word like "This," "It," or "But."</li>
+    <li><strong>Replace complex words with simpler alternatives.</strong> "Utilise" becomes "use." "Commence" becomes "start." "Demonstrate" becomes "show." "Approximately" becomes "about." These substitutions are not dumbing down — they are precision.</li>
+    <li><strong>Use active voice.</strong> "The team wrote the report" is clearer and shorter than "The report was written by the team." Active voice typically uses fewer words and places the subject first where readers expect it.</li>
+    <li><strong>Break paragraphs earlier.</strong> Three to four sentences per paragraph is enough. White space between paragraphs is not wasted space — it signals that a new idea is beginning, which helps readers orient themselves.</li>
+    <li><strong>Use numbered and bulleted lists</strong> for any information with multiple items. Readers scan lists faster than prose. Lists also force you to make each point parallel in structure, which improves clarity.</li>
+    <li><strong>Reduce transition words.</strong> Words like "furthermore," "consequently," and "nevertheless" add syllables without clarity. Often, a full stop followed by a new sentence is cleaner.</li>
   </ul>
 
-  <p><strong><a href="../convert/readability-analyzer.html">Check your content's readability free →</a></strong> Paste any article or blog post to get instant readability scores and improvement suggestions.</p>
+  <h2>Why High-Traffic Pages Need Readability Analysis</h2>
+  <p>Pages with complex copy have measurably higher bounce rates. Users who cannot immediately understand your value proposition leave without converting. For SEO, Google's natural language processing now parses content for topic clarity and entity relationships — simpler, clearer writing is more easily categorized and matched to user search intent. For conversion, A/B tests across multiple industries consistently show that simplified copy outperforms its more complex equivalent.</p>
+  <p>Use <strong><a href="../convert/readability-analyzer.html">Desi Jugad's free Readability Analyzer</a></strong> to paste any article, landing page, or email draft and instantly see your Flesch Reading Ease, Flesch-Kincaid Grade Level, Gunning Fog Index, SMOG Index, and more — with actionable feedback on where to improve.</p>
 
-  <h2>Conclusion</h2>
-  <p>Readable content isn't just good for users — it's good for SEO too. Use a readability analyzer to ensure your content meets your target audience's comprehension level. Aim for Flesch scores of 60-80 for general web content to maximize engagement and rankings.</p>
+  <h2>Frequently Asked Questions</h2>
+  <details class="faq-item" open>
+    <summary>What reading grade level should I target for a blog?</summary>
+    <p>For most general-audience blogs, Grade 7–8 (Flesch Reading Ease 60–70) is the widely accepted target. This is the reading level of popular newspapers and general interest magazines. Even if your audience is highly educated, research consistently shows that lower reading levels improve comprehension speed, increase time on page, and increase sharing. The goal is not to "write down" to your audience — it is to communicate as efficiently as possible.</p>
+  </details>
+  <details class="faq-item">
+    <summary>Do readability scores affect Google rankings?</summary>
+    <p>Readability is not a direct Google ranking factor — Google has not confirmed it uses any specific formula's score. However, readability strongly influences the metrics that Google does measure: bounce rate, time on page, and pages per session. Content that is easy to read keeps users engaged longer, which signals relevance and quality to Google's ranking systems. Additionally, clearer writing tends to answer search intent more directly, improving how well Google can match the page to relevant queries.</p>
+  </details>
+  <details class="faq-item">
+    <summary>Is it bad to have a very high readability score (too simple)?</summary>
+    <p>It depends on the content type and audience. For a children's educational site or a public health campaign, very high readability (Grade 4–5) is ideal. For a technical API reference or academic research summary, overly simplified text may omit the necessary precision and terminology that expert readers expect. The goal is matching your readability level to your target reader — not chasing the highest or lowest possible score. If your content covers a genuinely complex topic, some complexity is appropriate and expected.</p>
+  </details>
 
 <!-- Related posts — auto-injected for SEO internal linking -->
 <aside style="margin-top:3rem;padding-top:2rem;border-top:1px solid var(--line,#E8E1D3)">

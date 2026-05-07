@@ -290,26 +290,79 @@
 
       <p>For these features, iLovePDF Pro at €6/month is reasonable. For everything else — compress, merge, split, rotate, protect, convert — Desi Jugad covers the same ground with no limits and no upload.</p>
 
+      <h2>Why privacy matters for PDFs</h2>
+
+      <p>PDFs are not neutral files. Think about what lives inside a typical PDF: tax returns, salary slips, employment contracts, medical reports, bank statements, NDAs, legal filings. When you upload one of these to a cloud-based PDF tool — even a reputable one — that document is now on a third-party server, even if only briefly.</p>
+
+      <p>The "we delete files after 1 hour" policy that most services advertise is a reassurance, not a guarantee. Server infrastructure has logs, backups, and replication. A data breach at a popular PDF tool could expose thousands of sensitive documents even if the service's stated retention window was short. This is not hypothetical — file-conversion services have been targeted precisely because users upload sensitive documents without thinking twice.</p>
+
+      <p>For EU users, there's an additional legal dimension. Under GDPR, uploading a document that contains personal data — a name, an address, a national ID number — to a third-party processor creates a data-controller relationship with obligations on both sides. When the "processor" is a file conversion website with a one-page privacy policy and servers in a jurisdiction you didn't investigate, the practical compliance picture is unclear at best.</p>
+
+      <p>Specific document types you should never upload to any cloud PDF tool:</p>
+
+      <ul>
+        <li><strong>HR documents</strong> — offer letters, performance reviews, termination papers, anything with salary data</li>
+        <li><strong>NDAs and legal contracts</strong> — confidentiality is the whole point; uploading breaks it</li>
+        <li><strong>Medical records and prescriptions</strong> — protected health information in most jurisdictions</li>
+        <li><strong>Bank statements and financial reports</strong> — account numbers, routing numbers, transaction history</li>
+        <li><strong>Tax returns and filings</strong> — PAN numbers, income figures, TDS certificates</li>
+        <li><strong>Passports and ID documents</strong> — frequently requested in phishing attacks after being harvested from breaches</li>
+      </ul>
+
+      <p>Browser-based PDF processing eliminates this risk structurally. When Desi Jugad processes a PDF, the WebAssembly module runs inside your browser tab. The file is loaded into RAM on your own device. The output is generated locally. You can open your browser's Network tab and watch: there is no outgoing request carrying your file. The privacy guarantee is verifiable, not just a policy claim.</p>
+
+      <h2>iLovePDF pricing vs free alternatives</h2>
+
+      <p>iLovePDF's free tier gives you 2 PDF tasks per day and a 200 MB file size cap. For many users — someone who compresses a PDF once a month — this is more than enough. But for anyone doing real document work, it becomes a recurring wall.</p>
+
+      <p>iLovePDF's paid plans are priced at approximately $7/month (billed monthly) or $48/year (billed annually) for the individual tier, with team plans at higher price points. That's a reasonable price for a polished tool if you use it constantly. For occasional use, it's hard to justify when free browser-based alternatives handle the same tasks with no limits.</p>
+
+      <p>Here's where the line falls honestly:</p>
+
+      <p><strong>Tasks iLovePDF handles better than browser-based tools:</strong></p>
+      <ul>
+        <li>Batch cloud processing — upload 50 files at once and let their servers handle it</li>
+        <li>Cloud storage integrations — Google Drive and Dropbox connectors</li>
+        <li>PDF annotation and comments — mark up documents collaboratively</li>
+        <li>E-signature flows — fill and sign legally valid contracts</li>
+        <li>PDF-to-Word OCR — convert scanned documents to editable text</li>
+        <li>Mobile app workflows — polished native iOS/Android app</li>
+      </ul>
+
+      <p><strong>Tasks where a free browser-based tool is equally good (or better):</strong></p>
+      <ul>
+        <li>Merge PDFs — combine multiple files in any order</li>
+        <li>Split PDFs — extract pages or split by range</li>
+        <li>Compress PDFs — reduce file size for email or upload</li>
+        <li>Rotate pages — fix orientation on scanned documents</li>
+        <li>Add or remove passwords — protect or unlock a PDF you own</li>
+        <li>Resize pages — reformat to A4, Letter, or custom dimensions</li>
+        <li>PDF to JPG — convert each page to a high-resolution image</li>
+        <li>JPG to PDF — combine images into a PDF document</li>
+      </ul>
+
+      <p>For the second list — which covers 90% of everyday PDF use cases — a free browser tool covers every task with no daily limit, no watermark, no upload, and no subscription required.</p>
+
       <h2>Frequently asked questions</h2>
 
       <details class="faq-item" open>
+        <summary>Is iLovePDF safe for sensitive documents?</summary>
+        <p>iLovePDF is a legitimate, EU-based service with reasonable security practices (HTTPS, stated deletion after processing). For most personal documents — a CV, a scanned receipt, a public-facing brochure — the privacy tradeoff is acceptable. But for genuinely sensitive documents — NDAs, medical records, tax returns, bank statements, HR files — uploading to any third-party server creates a risk that browser-based processing avoids entirely. On Desi Jugad, your file never leaves your device. There is nothing to breach, leak, or retain. For sensitive PDFs, browser-based processing is the only defensible choice.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>What is the iLovePDF file size limit?</summary>
+        <p>iLovePDF's free tier limits files to 200 MB per operation. This is sufficient for most document PDFs but can be a constraint for large presentation files, high-resolution scanned documents, or PDF portfolios with embedded images. iLovePDF Pro raises the limit to 5 GB per file. Desi Jugad has no fixed file size limit — the practical constraint is your device's available RAM. On a modern laptop with 8–16 GB RAM, you can comfortably process files in the hundreds of megabytes range. Very large files (1 GB+) may be slow or cause memory pressure depending on your hardware.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>Does iLovePDF require a login to use?</summary>
+        <p>Most of iLovePDF's core tools are accessible without a login on the free tier — you can compress, merge, split, and rotate PDFs without creating an account. However, some features (including certain editing tools and cloud storage integrations) require signing in. Creating an account also means iLovePDF retains your email address and usage history, and may send marketing communications. Desi Jugad requires no login, no account, and no email for any tool — ever. You open the tool, use it, and leave. Nothing is tracked or stored.</p>
+      </details>
+
+      <details class="faq-item">
         <summary>Why does iLovePDF limit free users to 2 tasks per day?</summary>
         <p>iLovePDF is a freemium service — server-side PDF processing has real infrastructure costs, and the 2-task-per-day cap is designed to convert active users to paying subscribers. For light use it's workable; for regular document work it becomes a daily frustration. Browser-based tools like Desi Jugad have no per-task infrastructure cost because the processing happens on your device, so there's no economic reason to impose a daily cap.</p>
-      </details>
-
-      <details class="faq-item">
-        <summary>Does iLovePDF add a watermark to free documents?</summary>
-        <p>iLovePDF adds branding or watermarks on some free-tier operations — notably on some conversion and editing tools. The specific operations affected have changed over time. Desi Jugad never adds any watermark, branding, or metadata to output files. Your output is identical to what a paid tool would produce.</p>
-      </details>
-
-      <details class="faq-item">
-        <summary>Does iLovePDF upload my files to a server?</summary>
-        <p>Yes. iLovePDF processes files on its servers in Spain and the EU. Files travel over HTTPS and are deleted after processing. For sensitive documents — salary slips, medical records, legal contracts — browser-based processing is meaningfully safer because there is no server upload step at all. On Desi Jugad, the file exists only in your browser's memory and never touches the network.</p>
-      </details>
-
-      <details class="faq-item">
-        <summary>What PDF tools does Desi Jugad offer?</summary>
-        <p>Desi Jugad offers: PDF merge, PDF split, PDF compress, PDF rotate, PDF crop, PDF protect (add password), PDF unlock (remove password), PDF flatten, PDF resize, extract pages, remove pages, PDF to JPG, and JPG to PDF. All tools are free, unlimited, watermark-free, and process files entirely in your browser.</p>
       </details>
 
       <details class="faq-item">

@@ -140,77 +140,68 @@
       </div>
 
       <div class="blog-content">
-        <h2>What Is a Favicon?</h2>
-        <p>A favicon (favorite icon) is the small image that appears in browser tabs, bookmarks, and address bars. It's the visual identity of your website.</p>
+        <p>A favicon is the tiny icon that appears in browser tabs, bookmarks, address bars, and increasingly in Google search results next to your site name. Despite being as small as 16×16 pixels, it's often the first visual signal users associate with your site. A missing favicon signals an unfinished site. A blurry or wrong-size favicon signals a lack of attention to detail. A sharp, recognizable favicon signals professionalism before the user has read a single word.</p>
 
-        <h2>Why Use a Favicon?</h2>
+        <h2>All the Sizes You Actually Need</h2>
+        <p>The frustrating reality of favicons is that there's no single file that works everywhere. Different browsers, operating systems, and devices expect different formats and sizes. Here's what a complete favicon setup looks like in 2026:</p>
         <ul>
-          <li>Brand recognition in browser tabs</li>
-          <li>Professional website appearance</li>
-          <li>Improves user experience</li>
-          <li>Appears in bookmarks and history</li>
-          <li>Required by modern web standards</li>
+          <li><strong>favicon.ico:</strong> A multi-resolution ICO file containing 16×16, 32×32, and 48×48 pixel versions combined into a single file. Still needed for legacy Internet Explorer compatibility and for some email clients that display sender favicons. Place it at the root of your domain (<code>/favicon.ico</code>) — browsers request it automatically even without an HTML link tag.</li>
+          <li><strong>favicon-16x16.png:</strong> The default browser tab size. Small, but the most commonly displayed version.</li>
+          <li><strong>favicon-32x32.png:</strong> Standard resolution for modern browsers and Retina displays at 1×.</li>
+          <li><strong>apple-touch-icon.png (180×180px):</strong> Used when someone adds your site to their iOS home screen as a bookmark. Also used by Safari for pinned tabs. Without this, iOS uses a screenshot of your page instead — which looks terrible.</li>
+          <li><strong>android-chrome-192x192.png and android-chrome-512x512.png:</strong> Required for Chrome on Android and for Progressive Web App (PWA) manifests. The 512px version is used for the PWA splash screen when your app is loading.</li>
+          <li><strong>Safari pinned tab SVG:</strong> A monochrome, single-color SVG used when users pin your tab in Safari on macOS. Must be maskable (solid shape, no transparency tricks).</li>
+          <li><strong>og-image.png (1200×630px):</strong> Not technically a favicon, but closely related — this is the image shown when your link is shared on social media (Twitter, Facebook, LinkedIn, WhatsApp). It's referenced via <code>&lt;meta property="og:image"&gt;</code>.</li>
         </ul>
 
-        <h2>Favicon Formats</h2>
-        <table style="width:100%; border-collapse: collapse;">
-          <tr style="border-bottom: 1px solid #ddd;">
-            <th style="text-align: left; padding: 8px;">Format</th>
-            <th style="text-align: left; padding: 8px;">Use Case</th>
-            <th style="text-align: left; padding: 8px;">Size</th>
-          </tr>
-          <tr style="border-bottom: 1px solid #ddd;">
-            <td style="padding: 8px;">ICO</td>
-            <td style="padding: 8px;">Traditional favicon</td>
-            <td style="padding: 8px;">16×16 to 256×256px</td>
-          </tr>
-          <tr style="border-bottom: 1px solid #ddd;">
-            <td style="padding: 8px;">PNG</td>
-            <td style="padding: 8px;">Modern browsers</td>
-            <td style="padding: 8px;">32×32, 64×64, 512×512px</td>
-          </tr>
-          <tr>
-            <td style="padding: 8px;">Apple Touch</td>
-            <td style="padding: 8px;">iOS devices</td>
-            <td style="padding: 8px;">180×180px</td>
-          </tr>
-        </table>
+        <h2>The HTML to Link Your Favicons</h2>
+        <p>Add these tags inside your <code>&lt;head&gt;</code> section. Modern browsers use the PNG files and only fall back to <code>.ico</code> for legacy support:</p>
+        <code>&lt;link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"&gt;<br>
+&lt;link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"&gt;<br>
+&lt;link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"&gt;<br>
+&lt;link rel="manifest" href="/site.webmanifest"&gt;<br>
+&lt;meta name="theme-color" content="#ffffff"&gt;</code>
+        <p>The <code>site.webmanifest</code> file is a small JSON file that references your Android Chrome icons and sets your PWA display preferences. The <code>theme-color</code> meta tag controls the browser UI color on mobile Chrome.</p>
 
-        <h2>How to Use Our Favicon Generator</h2>
-        <p>Use <strong><a href="../convert/favicon-generator.html">Desi Jugad Favicon Generator</a></strong> to:</p>
-        <ol>
-          <li>Upload an image or enter emoji</li>
-          <li>Select favicon size (ICO, PNG, or Apple)</li>
-          <li>Customize colors and background</li>
-          <li>Download your favicon</li>
-          <li>Add to your website HTML</li>
-        </ol>
+        <h2>SVG Favicons — The Modern Approach</h2>
+        <p>Since 2021, Chrome, Firefox, Edge, and Safari all support SVG favicons. An SVG favicon is infinitely scalable — it looks crisp on any display resolution with a single file. You can also embed CSS inside the SVG, which enables two powerful features: CSS animations (though use these sparingly) and dark mode support.</p>
+        <p>To add dark mode support to an SVG favicon, include a <code>prefers-color-scheme</code> media query inside the SVG's <code>&lt;style&gt;</code> block. This lets your icon automatically switch between a light and dark version based on the user's OS theme — a detail that polished sites get right and most don't bother with.</p>
+        <p>Add it alongside your PNG fallbacks: <code>&lt;link rel="icon" href="/favicon.svg" type="image/svg+xml"&gt;</code>. Browsers that support SVG will use it; older browsers fall back to the PNG and ICO versions.</p>
 
-        <h2>HTML Implementation</h2>
-        <p>Add this to your HTML head:</p>
-        <code>&lt;link rel="icon" type="image/png" href="/favicon.png"&gt;<br>
-        &lt;link rel="apple-touch-icon" href="/apple-touch-icon.png"&gt;</code>
-
-        <h2>Best Practices</h2>
+        <h2>Design Principles for a Favicon That Works</h2>
+        <p>The hardest constraint in favicon design is the 16×16 pixel floor. At that size, fine details, thin strokes, and multiple colors collapse into visual noise. Here's what actually works:</p>
         <ul>
-          <li>Use your brand logo or simple shape</li>
-          <li>Ensure clarity at small sizes (16×16px)</li>
-          <li>Support high-DPI displays (2x, 3x variants)</li>
-          <li>Test on different browsers and devices</li>
-          <li>Include both ICO and PNG formats</li>
+          <li><strong>Simplify aggressively.</strong> A letter, a single icon, or a bold shape works. A detailed illustration does not.</li>
+          <li><strong>One or two colors maximum.</strong> High contrast between foreground and background is essential — light icon on dark background, or vice versa.</li>
+          <li><strong>Test against both browser themes.</strong> Chrome's dark mode shows favicons on a dark tab bar. Your white-background favicon will disappear entirely.</li>
+          <li><strong>Avoid fine details.</strong> Thin lines, small text, and gradients all disappear at 16×16px. If you can't draw it with a marker in five strokes, it's too complex.</li>
+          <li><strong>Square format.</strong> Don't fight the shape. Favicons display in a square (or circle on some platforms). Landscape or portrait designs get awkwardly cropped.</li>
+          <li><strong>A favicon is a logo mark, not a wordmark.</strong> Your full company name will not be legible. Use the icon portion of your logo, or a stylized initial.</li>
         </ul>
 
-        <h2>Why Our Generator?</h2>
-        <ul>
-          <li><strong>Instant Creation:</strong> Generate favicon in seconds.</li>
-          <li><strong>Multiple Formats:</strong> ICO, PNG, WebP, Apple Touch icons.</li>
-          <li><strong>Emoji Support:</strong> Create favicons from emojis.</li>
-          <li><strong>High Quality:</strong> Supports retina displays.</li>
-          <li><strong>100% Private:</strong> No server upload.</li>
-        </ul>
+        <h2>Google Search and Favicons</h2>
+        <p>Google displays favicons next to page titles in mobile search results. Getting this right gives your result a visual edge in crowded SERPs. Google's requirements: the favicon must be visible on a white background, at least 48×48px, and square. Google crops non-square favicons into a circle, so designs with important content near the edges may lose it. Use a PNG or SVG — Google's crawler handles these better than ICO. Google may take a few days to pick up a newly added or changed favicon, and it can take longer if your site is new.</p>
 
-        <h2>Conclusion</h2>
-        <p>Give your website a professional touch with a custom favicon. Our free generator makes it easy to create icons for any platform.</p>
+        <p>Use <strong><a href="../convert/favicon-generator.html">Desi Jugad Favicon Generator</a></strong> — upload any image or use an emoji, and download all the sizes you need in one go. Everything runs in your browser with no server upload.</p>
+
+        <section class="faq-section">
+          <h2>Frequently Asked Questions</h2>
+
+          <details class="faq-item" open>
+            <summary>What is the difference between favicon.ico and favicon.png?</summary>
+            <p><strong>favicon.ico</strong> is the original format — a container file that can hold multiple resolutions (16×16, 32×32, 48×48) in a single file. Browsers have supported it since the late 1990s and will look for it at <code>/favicon.ico</code> automatically. <strong>favicon.png</strong> is a standard image file at a single resolution. Modern browsers (Chrome, Firefox, Edge, Safari) prefer PNG or SVG over ICO. In practice, you should provide both: the <code>.ico</code> file for legacy compatibility and PNG files linked via <code>&lt;link&gt;</code> tags for modern browsers.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary>Why isn't my updated favicon showing?</summary>
+            <p>Browsers cache favicons aggressively — often for days. To force a refresh: 1) Hard reload the page with <strong>Ctrl+Shift+R</strong> (Windows) or <strong>Cmd+Shift+R</strong> (Mac). 2) Clear your browser cache entirely. 3) Open the favicon URL directly (<code>yoursite.com/favicon.ico</code>) and hard reload that. 4) In Chrome DevTools, go to the Network tab, right-click the favicon request, and select "Clear browser cache." If none of these work, append a version query string to your favicon link tag: <code>href="/favicon.png?v=2"</code> — this forces the browser to treat it as a new file.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary>Do I need all these favicon sizes?</summary>
+            <p>For a basic website, a <code>favicon.ico</code> at the root plus a 32×32 PNG linked in your HTML covers most browsers. For a complete, professional setup — especially if you want iOS home screen icons, Android PWA support, and Google search favicons — you need the full set. If you're building a PWA, the 192×192 and 512×512 PNG files in your <code>site.webmanifest</code> are mandatory. Generators like ours produce all sizes from a single upload, so there's no real cost to generating the full set.</p>
+          </details>
+        </section>
       </div>
 
       <div class="blog-cta">

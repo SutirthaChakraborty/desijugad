@@ -117,152 +117,84 @@
     </div>
     <div class="article-body">
 
-      <p>FreeConvert is a well-built, legitimate tool that handles over 300 file formats. If you've been using it, you've probably hit the 25-conversion-per-day wall on the free tier — or you've wondered, in the back of your mind, exactly what happens to your files after you upload them. Both are reasonable reasons to look for an alternative.</p>
+      <p>FreeConvert is a popular cloud-based file conversion service. It handles a wide range of formats, has a clean interface, and works well for casual use. But it has meaningful limitations that affect privacy-conscious users and professionals: file size caps, server-side processing where your files are uploaded to their infrastructure, conversion queues during peak hours, and a 25-conversion daily cap before hitting the paywall. Understanding these limitations — and what the alternatives actually offer — helps you make an informed choice rather than settling for friction.</p>
 
-      <p>This comparison is written by the team at <a href="../">Desi Jugad</a>, so we have an obvious stake in the outcome. We'll be upfront about that — and equally upfront about where FreeConvert is genuinely better.</p>
+      <p>This comparison is written by the team at <a href="../">Desi Jugad</a>, so we have an obvious stake in the outcome. We will be upfront about that — and equally upfront about where FreeConvert is genuinely the better tool.</p>
 
-      <h2>Why people look for FreeConvert alternatives</h2>
-
-      <p>FreeConvert's free tier is more generous than many competitors. There's no watermark on converted files, no email address required, and the interface is clean. But two friction points push users to look elsewhere:</p>
-
-      <p><strong>The 25-conversion-per-day cap.</strong> For casual users, 25 is enough. For anyone doing batch work — processing a folder of images, handling a stack of PDFs, running a project that needs repeated conversions — the cap becomes an obstacle within hours. When you hit it, your options are to wait until midnight (UTC) or pay $9.99/month for FreeConvert Premium.</p>
-
-      <p><strong>The server upload.</strong> FreeConvert processes files on its own infrastructure. Your file leaves your device, travels over the internet to a US-based server, gets converted, and sits there for up to 24 hours before deletion. For most files — a meme image, a podcast clip, a product brochure — this is entirely fine. For a tax return, a medical scan, an NDA, unreleased creative work, or personal photos, the question of whether you want your file on a third-party server is worth asking explicitly.</p>
-
-      <h2>FreeConvert vs Desi Jugad: full comparison</h2>
-
-      <div class="table-wrapper">
-        <table>
-          <thead>
-            <tr>
-              <th>Feature</th>
-              <th>FreeConvert Free</th>
-              <th>FreeConvert Premium</th>
-              <th>Desi Jugad</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Daily conversions</td>
-              <td>25 per day</td>
-              <td>Unlimited</td>
-              <td>Unlimited</td>
-            </tr>
-            <tr>
-              <td>File size limit</td>
-              <td>1 GB per file</td>
-              <td>5 GB per file</td>
-              <td>No limit*</td>
-            </tr>
-            <tr>
-              <td>File upload to server</td>
-              <td>Yes</td>
-              <td>Yes</td>
-              <td>No — browser only</td>
-            </tr>
-            <tr>
-              <td>Sign-up required</td>
-              <td>No</td>
-              <td>Yes</td>
-              <td>No</td>
-            </tr>
-            <tr>
-              <td>Watermark on output</td>
-              <td>No</td>
-              <td>No</td>
-              <td>No</td>
-            </tr>
-            <tr>
-              <td>Price</td>
-              <td>Free</td>
-              <td>$9.99/month</td>
-              <td>Free</td>
-            </tr>
-            <tr>
-              <td>Format count</td>
-              <td>300+</td>
-              <td>300+</td>
-              <td>130+</td>
-            </tr>
-            <tr>
-              <td>Works offline (after load)</td>
-              <td>No</td>
-              <td>No</td>
-              <td>Yes</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <p><em>* File size is limited only by the RAM available on your device. A modern laptop or desktop handles multi-gigabyte files without issues.</em></p>
-
-      <h2>The privacy difference, explained plainly</h2>
-
-      <p>FreeConvert's privacy policy is reasonable — they use HTTPS, they commit to deleting files within 24 hours, and they state they don't share your files with third parties. For most use cases, that's perfectly adequate.</p>
-
-      <p>But consider what "uploaded to a US-based server and deleted after 24 hours" actually means for certain types of files:</p>
-
+      <h2>FreeConvert Features and Limitations</h2>
+      <p>To compare fairly, here is what FreeConvert actually offers across its tiers:</p>
       <ul>
-        <li>A scanned medical report you want to compress before emailing your doctor</li>
-        <li>A PDF contract with salary details you're converting to share selectively</li>
-        <li>Personal photos from a family event</li>
-        <li>A spreadsheet with your company's financial data</li>
-        <li>An ID document you're converting to a different format</li>
+        <li><strong>Free tier:</strong> Up to 1 GB per file, 25 conversions per day. No sign-up required for casual use.</li>
+        <li><strong>Paid plans:</strong> Starting at $9.99 per month (Premium), removing the daily cap and raising file size to 5 GB.</li>
+        <li><strong>Supported formats:</strong> 500+ formats including video, audio, image, document, ebook, and vector.</li>
+        <li><strong>Processing:</strong> Server-side. Files are uploaded to FreeConvert's servers, converted there, and deleted after 24 hours per their stated policy.</li>
+        <li><strong>Privacy:</strong> Files are stored on their servers during the conversion window. Their privacy policy allows for analytics on conversion patterns (aggregated, not file content).</li>
+        <li><strong>Speed:</strong> Depends on server load. Small files are fast; large video files can sit in a queue for 5–15 minutes during peak hours.</li>
+        <li><strong>Batch conversion:</strong> Available on paid plans.</li>
+        <li><strong>API access:</strong> Available on paid plans for developers.</li>
       </ul>
 
-      <p>For each of these, you're making a trust decision when you use a server-based converter. You're trusting that the deletion happens as promised, that the server isn't breached during that 24-hour window, and that no employee or automated system touches your file.</p>
+      <h2>FreeConvert vs Browser-Based Conversion</h2>
+      <p>The fundamental architectural difference between FreeConvert and tools like Desi Jugad is where the conversion happens. Here is an honest point-by-point breakdown:</p>
 
-      <p>Desi Jugad runs the conversion logic entirely inside your browser tab using JavaScript and WebAssembly — the same open-source libraries that power desktop tools, compiled to run in the browser. Your file is never transmitted anywhere. You can verify this yourself: open Chrome DevTools, go to the Network tab, drop a file into any Desi Jugad tool, and watch: no outgoing file upload request appears. The bytes never leave your device.</p>
+      <p><strong>Privacy:</strong> Browser-based conversion means zero server involvement — your files never leave your device. FreeConvert requires uploading your file to a US-based server. For most files, this distinction is irrelevant. For medical images, legal documents, tax returns, personal photos, or confidential business files, it is a material consideration.</p>
 
-      <p>That's not a policy promise. It's a technical fact.</p>
+      <p><strong>File size:</strong> Browser-based tools are limited by the RAM available on your device — typically 2–4 GB in practical terms, more on modern machines. FreeConvert caps free users at 1 GB per file. For very large video files over 4 GB, neither option is ideal; a dedicated desktop tool becomes the better choice.</p>
 
-      <h2>When FreeConvert is the better choice</h2>
+      <p><strong>Format support:</strong> FreeConvert supports 500+ formats, including professional and obscure formats that are genuinely difficult to implement in a browser. Browser-based tools like Desi Jugad cover the most common 95% of use cases — images, PDFs, video, audio, data formats — but lack support for niche professional formats, legacy document types, and specialised audio codecs.</p>
 
-      <p>We'll say it plainly: FreeConvert's format library is significantly larger than ours, and for some use cases it's the right tool.</p>
+      <p><strong>Speed:</strong> For small files under 100 MB, browser-based conversion is typically faster because there is no upload step. For large video files, FreeConvert's server infrastructure can apply more CPU power than a browser WebAssembly environment.</p>
 
-      <p>FreeConvert handles formats that are genuinely difficult to implement in a browser environment: WMA, OGG Vorbis, FLAC, and obscure audio codecs; AVI, FLV, MKV, and legacy video containers with complex codec dependencies; ODT, RTF, and older Office formats; 3GP and mobile video formats. If you regularly convert between formats in these categories, FreeConvert's 300+ format support is a genuine advantage that browser-based tools can't yet match.</p>
+      <p><strong>Internet requirement:</strong> Browser-based tools work offline after the initial page load — the conversion engine is cached in the browser. FreeConvert requires an active internet connection throughout. This makes browser-based tools genuinely useful in low-connectivity situations.</p>
 
-      <p>For non-sensitive files — a video clip from a camera, a music file you're reformatting for a specific device, a document from an old application — FreeConvert's server-side approach also means the conversion engine can handle heavier computational work than a browser can in real time.</p>
+      <p><strong>Usage limits:</strong> Both offer no-signup conversion. FreeConvert restricts free users to 25 conversions per day. Browser-based tools have no metered usage — the server is not involved, so there is nothing to count.</p>
 
-      <h2>What Desi Jugad covers for FreeConvert users</h2>
+      <h2>When to Use FreeConvert</h2>
+      <p>FreeConvert genuinely excels in specific situations where browser-based tools fall short:</p>
+      <ul>
+        <li>You need obscure professional format conversions: 3D model files, specialised audio formats like FLAC and OGG Vorbis, old document formats like WPS or ODT, or mobile video formats like 3GP.</li>
+        <li>You need batch conversions of hundreds of files through their API, particularly when automating workflows.</li>
+        <li>Your source files are already in cloud storage — FreeConvert integrates with Dropbox and Google Drive, avoiding a local download-then-upload cycle.</li>
+        <li>You need conversion of formats not yet supported by browser-based tools, and privacy is not a concern for those specific files.</li>
+      </ul>
 
-      <p>The conversions that drive the majority of FreeConvert's usage are well covered by Desi Jugad:</p>
+      <h2>When Browser-Based Is Better</h2>
+      <p>There are clear situations where keeping conversion entirely in the browser is the right call:</p>
+      <ul>
+        <li>Privacy is a genuine concern: medical images, legal documents, financial records, personal photographs, anything you would not want sitting on a third-party server for 24 hours.</li>
+        <li>Files are very large — video files over 1 GB that exceed FreeConvert's free tier limit.</li>
+        <li>You need offline functionality — for example, converting files on a flight or in a location with unreliable internet.</li>
+        <li>You convert frequently and hit FreeConvert's 25-per-day cap.</li>
+        <li>You are on a slow connection — uploading a 500 MB file to a remote server takes time; browser-based conversion starts immediately.</li>
+      </ul>
 
-      <p><strong>Images:</strong> <a href="../convert/heic-to-jpg.html">HEIC to JPG</a>, <a href="../convert/image-converter.html">Image Converter</a> (PNG, JPG, WebP, AVIF, GIF, BMP, TIFF — any to any), <a href="../convert/image-compressor.html">Image Compressor</a>, <a href="../convert/image-cropper.html">Image Cropper</a>, SVG to PNG, Base64 image encoding.</p>
+      <h2>Other Alternatives to FreeConvert</h2>
+      <p>The cloud-based converter market has several other players, each with different trade-offs:</p>
+      <ul>
+        <li><strong>Convertio:</strong> Similar cloud-based model. Free tier caps at 100 MB per file (significantly smaller than FreeConvert's 1 GB). Good interface and broad format support.</li>
+        <li><strong>CloudConvert:</strong> More professional focus, better quality controls and conversion settings, more expensive. Better for high-quality professional output.</li>
+        <li><strong>Zamzar:</strong> One of the older services in this space. Uses an email-delivery model for output files. Free tier caps at 50 MB — the most restrictive of the major players.</li>
+        <li><strong>Smallpdf:</strong> PDF-focused rather than general purpose. Excellent for PDF workflows but limited for other formats.</li>
+      </ul>
+      <p>For privacy-first users, it is worth noting that all cloud-based services share the same fundamental limitation: your file leaves your device. The policies, deletion timelines, and server locations vary, but the architectural reality is the same across all of them.</p>
 
-      <p><strong>PDF:</strong> <a href="../convert/pdf-merge.html">PDF Merge</a>, <a href="../convert/pdf-split.html">PDF Split</a>, <a href="../convert/pdf-compressor.html">PDF Compress</a>, <a href="../convert/pdf-rotate.html">PDF Rotate</a>, <a href="../convert/pdf-protect.html">PDF Protect</a>, <a href="../convert/pdf-unlock.html">PDF Unlock</a>, <a href="../convert/pdf-to-image.html">PDF to JPG</a>, <a href="../convert/image-to-pdf.html">Images to PDF</a>, PDF crop, PDF watermark, PDF flatten, PDF resize.</p>
+      <p><strong><a href="../#converters">Browse all 130+ Desi Jugad tools →</a></strong> Images, PDFs, video, audio, data — all running in your browser with no upload, no sign-up, no limits.</p>
 
-      <p><strong>Data and documents:</strong> <a href="../convert/json-to-csv.html">JSON to CSV</a>, CSV to JSON, YAML to JSON, Markdown to HTML, HTML to Markdown, Base64 encode/decode, URL encode/decode.</p>
-
-      <p><strong>Video (browser-based via FFmpeg.wasm):</strong> <a href="../convert/video-converter.html">Video Converter</a> (MP4, WebM, MKV, AVI, MOV), <a href="../convert/video-compressor.html">Video Compressor</a>, <a href="../convert/video-trimmer.html">Video Trimmer</a>, <a href="../convert/video-to-audio.html">Video to Audio</a> (MP3, WAV, OGG), <a href="../convert/video-to-gif.html">Video to GIF</a>, <a href="../convert/gif-to-video.html">GIF to Video</a>.</p>
-
-      <p>All of these run in your browser. None of them touch a server.</p>
-
-      <h2>Frequently asked questions</h2>
+      <h2>Frequently Asked Questions</h2>
 
       <details class="faq-item" open>
-        <summary>Does FreeConvert upload my files?</summary>
-        <p>Yes. FreeConvert is a server-based converter — your file is uploaded to their infrastructure, converted there, and then available for download. This is standard for the category. Files are stated to be deleted after 24 hours. For non-sensitive files, this is a perfectly reasonable workflow. For confidential documents, medical records, or personal photos, a browser-based converter like Desi Jugad avoids the upload entirely.</p>
+        <summary>Is FreeConvert safe to use for sensitive documents?</summary>
+        <p>FreeConvert uses HTTPS for data transfer and states that uploaded files are automatically deleted from their servers within 24 hours. Their privacy policy does not allow sharing file content with third parties. For routine documents — a product brochure, a presentation, a non-confidential image — this level of protection is entirely adequate. For files containing personal medical information, financial records, legal contracts, ID documents, or proprietary business data, the question worth asking is whether you are comfortable with that file existing on a third-party US-based server for up to 24 hours. If the answer is no, a browser-based converter that never uploads your file is the appropriate choice.</p>
       </details>
 
       <details class="faq-item">
-        <summary>What happens to files on FreeConvert after 24 hours?</summary>
-        <p>FreeConvert's policy states files are automatically deleted from their servers after 24 hours. You are relying on their systems to execute that deletion. There is no way for an end user to independently verify it. For most files this is an acceptable level of trust. For highly sensitive documents, the only way to guarantee no server storage is to use a tool that never uploads in the first place.</p>
+        <summary>What is the FreeConvert file size limit?</summary>
+        <p>FreeConvert's free tier allows files up to 1 GB per conversion. The paid Premium plan ($9.99/month) raises this limit to 5 GB per file. For most image and document conversions, 1 GB is more than sufficient. For video files, particularly raw camera footage or high-resolution recordings, you may exceed the 1 GB limit. Browser-based converters have no fixed file size limit — the practical ceiling is your device's available RAM, typically 2–8 GB on a modern laptop.</p>
       </details>
 
       <details class="faq-item">
-        <summary>Is there a truly unlimited free file converter?</summary>
-        <p>Yes — Desi Jugad. Because all processing happens in your browser, there is no server to meter usage against. There is no daily cap, no file size limit (beyond your device's available RAM), no sign-up, and no cost. It's been free since launch and will remain so.</p>
-      </details>
-
-      <details class="faq-item">
-        <summary>What is FreeConvert Premium and is it worth it?</summary>
-        <p>FreeConvert Premium costs $9.99/month. It removes the 25-conversion/day limit and raises the file size cap from 1 GB to 5 GB. It's worth considering if you need to convert obscure formats at volume and don't mind server-side processing. If your conversions are mostly images and PDFs, Desi Jugad covers those use cases for free with no limits.</p>
-      </details>
-
-      <details class="faq-item">
-        <summary>Can Desi Jugad convert video files like FreeConvert?</summary>
-        <p>Yes, for common formats. Desi Jugad uses FFmpeg.wasm — a WebAssembly build of the FFmpeg library — to handle video conversion (MP4, WebM, MKV, AVI, MOV), compression, trimming, and audio extraction entirely in the browser. For very obscure legacy codecs or highly specialised video formats, FreeConvert's broader codec library may still be needed.</p>
+        <summary>Does FreeConvert work without creating an account?</summary>
+        <p>Yes. FreeConvert's free tier does not require creating an account or providing an email address. You can convert files immediately without signing up. The 25-conversion-per-day limit applies to all free users regardless of whether they have an account. FreeConvert Premium does require an account, as it is a paid subscription. Browser-based tools like Desi Jugad similarly require no account — but have no daily limit because there is no server counting your conversions.</p>
       </details>
 
       <div class="article-cta">

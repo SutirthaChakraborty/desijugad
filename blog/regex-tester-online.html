@@ -140,55 +140,82 @@
       </div>
 
       <div class="blog-content">
-        <h2>What Is Regex?</h2>
-        <p>Regular expressions (regex) are patterns used to match and manipulate text. They're essential for developers working with validation, search, and text processing.</p>
+        <h2>Why Regular Expressions Are Worth Learning</h2>
+        <p>Regular expressions are one of the highest-leverage skills in text processing. A developer who understands regex can validate an email address in one line, extract every IP address from a 50,000-line log file in seconds, clean up a messy CSV export without writing a parser, and run search-replace operations across an entire codebase that would take dozens of manual steps otherwise. The syntax looks cryptic at first glance, but it is built from a small number of composable rules — once you internalise those rules, patterns you have never seen before become readable.</p>
 
-        <h2>Why Use a Regex Tester?</h2>
+        <h2>Regex Syntax Quick Reference</h2>
+        <p><strong>Character classes</strong> match a set of characters:</p>
         <ul>
-          <li>Test patterns before using in production code</li>
-          <li>Debug regex issues visually</li>
-          <li>Learn regex with instant feedback</li>
-          <li>Validate email, phone, URLs, etc.</li>
-          <li>Extract and manipulate text efficiently</li>
+          <li><code>[abc]</code> — matches exactly one character: a, b, or c.</li>
+          <li><code>[a-z]</code> — matches any single lowercase letter; <code>[A-Z]</code> for uppercase; <code>[0-9]</code> for digits.</li>
+          <li><code>[^abc]</code> — the caret inside brackets negates: matches any character that is <em>not</em> a, b, or c.</li>
+          <li><code>\d</code> — shorthand for <code>[0-9]</code> (digit). <code>\D</code> is its negation (non-digit).</li>
+          <li><code>\w</code> — word character: <code>[a-zA-Z0-9_]</code>. <code>\W</code> is its negation.</li>
+          <li><code>\s</code> — whitespace (space, tab, newline). <code>\S</code> is its negation.</li>
+        </ul>
+        <p><strong>Quantifiers</strong> control how many times a preceding element must match:</p>
+        <ul>
+          <li><code>*</code> — zero or more. <code>ab*</code> matches "a", "ab", "abb", "abbb"…</li>
+          <li><code>+</code> — one or more. <code>ab+</code> matches "ab", "abb" but not "a".</li>
+          <li><code>?</code> — zero or one (makes something optional). <code>colou?r</code> matches both "color" and "colour".</li>
+          <li><code>{3}</code> — exactly 3 times. <code>{2,5}</code> — between 2 and 5 times.</li>
+          <li><strong>Greedy vs lazy:</strong> By default quantifiers are greedy — they consume as many characters as possible. Adding <code>?</code> after a quantifier makes it lazy: <code>.*</code> grabs everything to the last possible match; <code>.*?</code> grabs as little as possible to the first possible match. This distinction matters when extracting tags or quoted strings.</li>
+        </ul>
+        <p><strong>Anchors</strong> match positions, not characters:</p>
+        <ul>
+          <li><code>^</code> — start of the string (or line, in multiline mode).</li>
+          <li><code>$</code> — end of the string (or line, in multiline mode).</li>
+          <li><code>\b</code> — word boundary: the position between a word character and a non-word character. <code>\bcat\b</code> matches "cat" in "the cat sat" but not in "concatenate".</li>
+        </ul>
+        <p><strong>Groups</strong> let you capture sub-matches and apply quantifiers to sequences:</p>
+        <ul>
+          <li><code>(abc)</code> — capturing group. The matched text is accessible as <code>$1</code>, <code>$2</code>, etc. in replacements.</li>
+          <li><code>(?:abc)</code> — non-capturing group. Groups the pattern for quantifiers or alternation without creating a numbered capture.</li>
+          <li><code>(?=abc)</code> — positive lookahead: asserts that what follows the current position is "abc", but does not consume characters.</li>
+          <li><code>(?&lt;=abc)</code> — positive lookbehind: asserts that what precedes the current position is "abc".</li>
         </ul>
 
-        <h2>Common Regex Patterns</h2>
+        <h2>Most Useful Regex Patterns</h2>
         <ul>
-          <li><code>^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$</code> → Email validation</li>
-          <li><code>^\d{10}$</code> → 10-digit phone number</li>
-          <li><code>^https?:\/\/</code> → URLs starting with http/https</li>
-          <li><code>\b\w{3,}\b</code> → Words with 3+ characters</li>
+          <li><strong>Email:</strong> <code>^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$</code>. Email validation with regex is notoriously tricky because the actual RFC 5321 specification permits a huge range of characters in the local part. This pattern covers 99%+ of real-world addresses but will reject technically valid but rarely used forms like <code>"quoted string"@example.com</code>. For most web forms, this level of validation is the right tradeoff.</li>
+          <li><strong>Flexible phone number:</strong> <code>^\+?[\d\s\-\(\)]{7,15}$</code>. Accepts optional leading <code>+</code>, then any combination of digits, spaces, hyphens, and parentheses, between 7 and 15 characters total. Deliberately permissive — phone number formats vary enormously across countries.</li>
+          <li><strong>Date (YYYY-MM-DD):</strong> <code>^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$</code>. The month group <code>(0[1-9]|1[0-2])</code> ensures values 01–12 only. The day group <code>(0[1-9]|[12]\d|3[01])</code> ensures values 01–31. Note that regex cannot validate that February 31 is invalid — that requires date arithmetic after the regex match.</li>
+          <li><strong>IP address:</strong> <code>^(\d{1,3}\.){3}\d{1,3}$</code>. Matches the structural pattern of an IPv4 address. For strict validation, add checks that each octet is 0–255 (this pattern allows "999.999.999.999").</li>
+          <li><strong>URL:</strong> Start with <code>https?:\/\/</code> to match both http and https. Extend with <code>[\w\-]+(\.[\w\-]+)+</code> for the domain and <code>(\/[\w\-._~:/?#[\]@!$&amp;'()*+,;=%]*)?</code> for the optional path and query.</li>
+          <li><strong>Strong password:</strong> <code>^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z\d]).{8,}$</code>. Uses four lookaheads to assert: at least one lowercase letter, one uppercase letter, one digit, and one non-alphanumeric character — all within a string of 8 or more characters.</li>
         </ul>
 
-        <h2>How to Use Our Regex Tester</h2>
-        <p>Use <strong><a href="../convert/regex-tester.html">Desi Jugad Regex Tester</a></strong> to:</p>
-        <ol>
-          <li>Enter your regex pattern</li>
-          <li>Paste your test text</li>
-          <li>See matches highlighted in real-time</li>
-          <li>Get match count and details</li>
-        </ol>
-
-        <h2>Features</h2>
+        <h2>Regex Flags</h2>
+        <p>Flags (also called modifiers) change how the entire pattern behaves:</p>
         <ul>
-          <li><strong>Live Highlighting:</strong> See matches as you type.</li>
-          <li><strong>Multiple Flags:</strong> Support for global, case-insensitive, multiline.</li>
-          <li><strong>Match Details:</strong> View each match's position and captured groups.</li>
-          <li><strong>100% Private:</strong> No server, no data collection.</li>
-          <li><strong>Instant Results:</strong> No delay or processing time.</li>
+          <li><code>/g</code> — <strong>global</strong>: find all matches, not just the first. Without this flag, <code>str.match()</code> returns only the first match.</li>
+          <li><code>/i</code> — <strong>case-insensitive</strong>: <code>/hello/i</code> matches "hello", "Hello", "HELLO".</li>
+          <li><code>/m</code> — <strong>multiline</strong>: <code>^</code> and <code>$</code> match the start and end of each line, not just the entire string. Essential when scanning multi-line log files or documents.</li>
+          <li><code>/s</code> — <strong>dotAll</strong>: makes <code>.</code> match newline characters too. By default, <code>.</code> matches everything except <code>\n</code>.</li>
+          <li><code>/u</code> — <strong>Unicode mode</strong>: enables full Unicode matching, necessary for patterns involving emoji or non-BMP characters. Also enables Unicode property escapes like <code>\p{Script=Devanagari}</code>.</li>
         </ul>
 
-        <h2>Perfect For</h2>
+        <h2>Common Regex Mistakes</h2>
         <ul>
-          <li>Form validation in web development</li>
-          <li>Text processing and parsing</li>
-          <li>Data extraction from logs</li>
-          <li>Search and replace operations</li>
-          <li>Learning regex patterns</li>
+          <li><strong>Catastrophic backtracking:</strong> Patterns like <code>(a+)+</code> — nested quantifiers on overlapping patterns — can cause exponential matching time on certain inputs. A string of 30 characters might cause millions of backtracking steps. This is called ReDoS (Regular Expression Denial of Service) and is a real security vulnerability in input validation code.</li>
+          <li><strong>Greedy matching eating too much:</strong> <code>&lt;.*&gt;</code> intended to match one HTML tag will match from the first <code>&lt;</code> to the <em>last</em> <code>&gt;</code> on the line. Use <code>&lt;.*?&gt;</code> (lazy) or better yet <code>&lt;[^&gt;]*&gt;</code> (character class exclusion) instead.</li>
+          <li><strong>Not escaping dots:</strong> In regex, <code>.</code> matches any character except newline. <code>example.com</code> as a regex also matches "exampleXcom". Always use <code>\.</code> when you mean a literal period.</li>
+          <li><strong>Forgetting anchors:</strong> A pattern like <code>\d{4}</code> without anchors will match any four consecutive digits anywhere in the string — including "abc12345xyz". Add <code>^</code> and <code>$</code> when you mean to match the entire string, not just find a substring.</li>
         </ul>
 
-        <h2>Conclusion</h2>
-        <p>Testing regex patterns is now visual and instant. Use our free regex tester to validate and debug your patterns before using them in code.</p>
+        <h2>Frequently Asked Questions</h2>
+        <details class="faq-item" open>
+          <summary>What is the difference between greedy and lazy quantifiers?</summary>
+          <p>A <strong>greedy</strong> quantifier (<code>*</code>, <code>+</code>, <code>{n,m}</code>) tries to match as many characters as possible while still allowing the overall pattern to succeed. A <strong>lazy</strong> quantifier (<code>*?</code>, <code>+?</code>, <code>{n,m}?</code>) tries to match as few characters as possible. Example: given the string <code>&lt;b&gt;bold&lt;/b&gt;</code>, the pattern <code>&lt;.*&gt;</code> (greedy) matches the entire string from the first <code>&lt;</code> to the last <code>&gt;</code>. The pattern <code>&lt;.*?&gt;</code> (lazy) matches only <code>&lt;b&gt;</code>, stopping at the first closing angle bracket. Lazy quantifiers are essential when extracting delimited content like HTML tags, quoted strings, or bracketed expressions.</p>
+        </details>
+        <details class="faq-item">
+          <summary>How do I match a literal dot, dollar sign, or parenthesis in regex?</summary>
+          <p>Characters that have special meaning in regex — <code>. * + ? ^ $ { } [ ] | ( ) \</code> — must be escaped with a backslash to match them literally. To match a literal dot, use <code>\.</code>. To match a literal dollar sign, use <code>\$</code>. To match a literal opening parenthesis, use <code>\(</code>. A common source of bugs is writing a URL pattern with unescaped dots: <code>example.com</code> in regex matches "exampleXcom" because <code>.</code> means "any character." The corrected pattern is <code>example\.com</code>.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Which programming languages support regex?</summary>
+          <p>Virtually all modern programming languages include regex support, though the specific flavour and available features vary. JavaScript, Python, Java, PHP, Ruby, Go, Rust, Swift, Kotlin, C#, and Perl all support regular expressions natively or through standard libraries. The most important differences between flavours are lookbehind support (not available in older JavaScript engines), Unicode property escapes, and the handling of possessive quantifiers and atomic groups. JavaScript's regex engine (which runs in browsers and Node.js) is what online regex testers typically use, so patterns validated there will work in any JavaScript environment. Python's <code>re</code> module has a slightly different syntax for named groups (<code>(?P&lt;name&gt;...)</code> vs <code>(?&lt;name&gt;...)</code> in most other languages).</p>
+        </details>
       </div>
 
       <div class="blog-cta">

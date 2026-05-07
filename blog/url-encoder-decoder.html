@@ -140,75 +140,66 @@
       </div>
 
       <div class="blog-content">
-        <h2>Why Encode URLs?</h2>
-        <p>URL encoding converts special characters and spaces into a format safe for URLs. It's essential for:</p>
+        <h2>Why URLs Cannot Contain Arbitrary Characters</h2>
+        <p>A URL is transmitted as plain text across systems that were originally designed for ASCII. Spaces, accented letters, symbols like <code>&amp;</code>, <code>=</code>, and <code>#</code>, and any non-ASCII characters (Arabic, Hindi, Chinese script) carry special meaning in a URL's structure or simply cannot be transmitted safely. <strong>URL encoding</strong> — formally called <em>percent-encoding</em> — solves this by converting every unsafe character into a <code>%</code> followed by its two-digit hexadecimal ASCII or UTF-8 byte value.</p>
+
+        <h2>What Gets Encoded and Why</h2>
+        <p><a href="https://datatracker.ietf.org/doc/html/rfc3986" rel="noopener noreferrer">RFC 3986</a>, the specification that defines URI syntax, divides characters into two categories:</p>
         <ul>
-          <li>Creating shareable links with special characters</li>
-          <li>Handling query parameters safely</li>
-          <li>Debugging URL issues</li>
-          <li>API development and testing</li>
-          <li>Email and form submissions</li>
+          <li><strong>Unreserved characters</strong> — letters (A–Z, a–z), digits (0–9), hyphen (<code>-</code>), underscore (<code>_</code>), period (<code>.</code>), and tilde (<code>~</code>). These are safe to use as-is anywhere in a URL.</li>
+          <li><strong>Everything else</strong> must be percent-encoded when used as data rather than as URL structure.</li>
+        </ul>
+        <p>Key examples and the reason each matters:</p>
+        <ul>
+          <li><strong>Space → <code>%20</code></strong> (or <code>+</code> in query strings). Spaces are not valid in URLs at all — without encoding, many parsers treat the space as the end of the URL.</li>
+          <li><strong><code>&amp;</code> → <code>%26</code></strong>. The ampersand separates query parameters (<code>?a=1&amp;b=2</code>). If your parameter <em>value</em> contains an ampersand, it must be encoded or the parser splits the value in two.</li>
+          <li><strong><code>#</code> → <code>%23</code></strong>. The hash marks the start of a URL fragment. If you include a literal <code>#</code> in a query value without encoding, everything after it is treated as the fragment and never sent to the server.</li>
+          <li><strong>Non-ASCII characters</strong> (e.g., Hindi <code>नमस्ते</code>) are first encoded as UTF-8 bytes, then each byte is percent-encoded. The result is a sequence like <code>%E0%A4%A8%E0%A4%AE%E0%A4%B8%E0%A5%8D%E0%A4%A4%E0%A5%87</code>.</li>
         </ul>
 
-        <h2>Example: URL Encoding</h2>
-        <p>
-          <strong>Original:</strong> <code>Hello World & Friends!</code><br>
-          <strong>Encoded:</strong> <code>Hello%20World%20%26%20Friends%21</code>
-        </p>
-
-        <h2>How Our URL Encoder Works</h2>
-        <p>Use <strong><a href="../convert/url-tools.html">Desi Jugad URL Tools</a></strong> to:</p>
+        <h2>URL Encoding vs Base64</h2>
+        <p>These two encoding schemes are often confused but serve entirely different purposes:</p>
         <ul>
-          <li>Encode URLs with special characters</li>
-          <li>Decode encoded URLs to read them</li>
-          <li>Parse URLs to extract components</li>
-          <li>Generate QR codes from URLs</li>
-          <li>Analyze and validate URLs</li>
+          <li><strong>URL encoding</strong> (percent-encoding) preserves the readability of ASCII text while making it safe for use inside URL components. <code>hello world</code> becomes <code>hello%20world</code> — still legible to a human.</li>
+          <li><strong>Base64</strong> converts arbitrary binary data into a string of printable ASCII characters using a 64-character alphabet. The result is not human-readable. Use Base64 when you need to embed binary data — like a small image — inside a URL (data URIs) or in a JSON payload.</li>
+        </ul>
+        <p>Rule of thumb: use percent-encoding for query string parameter values; use Base64 for binary blobs that need to travel through text-only channels.</p>
+
+        <h2>Practical Examples</h2>
+        <ul>
+          <li><strong>Search query:</strong> The search term "hello world" in a query string becomes either <code>q=hello%20world</code> or <code>q=hello+world</code> depending on whether you use strict RFC 3986 encoding or the older HTML form encoding (the <code>+</code> convention comes from <code>application/x-www-form-urlencoded</code>).</li>
+          <li><strong>API key with special characters:</strong> If an API key contains <code>+</code>, <code>/</code>, or <code>=</code> (common in Base64-encoded keys), these must be percent-encoded before being placed in a query string. Failing to do so causes the server to receive a mangled key.</li>
+          <li><strong>Decoding a webhook URL:</strong> Third-party services often send callback URLs that look like opaque strings. Decoding the percent-encoding reveals the actual parameters and values — useful for debugging what a service is actually sending.</li>
+          <li><strong>Debugging a split parameter:</strong> If a URL parameter like <code>redirect_url=https://example.com/path?foo=bar</code> is passed unencoded, the outer query parser sees two parameters: <code>redirect_url=https://example.com/path?foo</code> and <code>bar</code>. Encoding the value first prevents this: <code>redirect_url=https%3A%2F%2Fexample.com%2Fpath%3Ffoo%3Dbar</code>.</li>
         </ul>
 
-        <h2>Common URL Encoding Issues</h2>
-        <table style="width:100%; border-collapse: collapse;">
-          <tr style="border-bottom: 1px solid #ddd;">
-            <th style="text-align: left; padding: 8px;">Character</th>
-            <th style="text-align: left; padding: 8px;">Encoded As</th>
-          </tr>
-          <tr style="border-bottom: 1px solid #ddd;">
-            <td style="padding: 8px;">Space</td>
-            <td style="padding: 8px;"><code>%20</code> or <code>+</code></td>
-          </tr>
-          <tr style="border-bottom: 1px solid #ddd;">
-            <td style="padding: 8px;">&amp;</td>
-            <td style="padding: 8px;"><code>%26</code></td>
-          </tr>
-          <tr style="border-bottom: 1px solid #ddd;">
-            <td style="padding: 8px;">?</td>
-            <td style="padding: 8px;"><code>%3F</code></td>
-          </tr>
-          <tr>
-            <td style="padding: 8px;">=</td>
-            <td style="padding: 8px;"><code>%3D</code></td>
-          </tr>
-        </table>
-
-        <h2>Why Our URL Tools?</h2>
+        <h2>encodeURIComponent vs encodeURI in JavaScript</h2>
+        <p>JavaScript ships with two built-in encoding functions, and choosing the wrong one is a common bug:</p>
         <ul>
-          <li><strong>Instant Encoding/Decoding:</strong> Real-time conversion.</li>
-          <li><strong>100% Private:</strong> No server, no tracking.</li>
-          <li><strong>Multiple Tools:</strong> Parser, encoder, decoder, QR generator in one.</li>
-          <li><strong>Format Highlighting:</strong> See URL components clearly.</li>
-          <li><strong>Copy to Clipboard:</strong> One-click sharing.</li>
+          <li><strong><code>encodeURI(url)</code></strong> encodes most special characters but deliberately leaves the structural characters of a URL untouched: <code>:</code>, <code>/</code>, <code>?</code>, <code>#</code>, <code>&amp;</code>, <code>=</code>, <code>@</code>. Use this when you have a complete URL and want to make it safe to transmit without breaking its structure.</li>
+          <li><strong><code>encodeURIComponent(value)</code></strong> encodes everything including those structural characters. Use this on individual parameter <em>values</em> before assembling them into a query string. Example: <code>encodeURIComponent("a=1&amp;b=2")</code> produces <code>"a%3D1%26b%3D2"</code> — safe to embed as a value without it being parsed as extra parameters.</li>
         </ul>
 
-        <h2>Use Cases</h2>
+        <h2>Common Pitfalls</h2>
         <ul>
-          <li>Create tracking links with query parameters</li>
-          <li>Debug API requests with complex URLs</li>
-          <li>Decode obfuscated URLs safely</li>
-          <li>Build URLs programmatically</li>
+          <li><strong>Double-encoding:</strong> If you encode an already-encoded URL, <code>%20</code> becomes <code>%2520</code> (because <code>%</code> itself gets encoded to <code>%25</code>). Always decode before re-encoding if you are unsure of the input state.</li>
+          <li><strong>Forgetting to decode before display:</strong> Showing a raw encoded URL to a user — especially one containing non-ASCII script — gives a terrible experience. Decode before rendering in UI.</li>
+          <li><strong><code>+</code> vs <code>%20</code>:</strong> HTML form submissions use <code>+</code> for spaces; manual URL construction and most server-side URL parsers expect <code>%20</code>. PHP's <code>urldecode()</code> handles both, but JavaScript's <code>decodeURIComponent()</code> does not decode <code>+</code> as a space — use <code>.replace(/\+/g, ' ')</code> first if dealing with form-encoded data.</li>
         </ul>
 
-        <h2>Conclusion</h2>
-        <p>URL encoding and decoding is now simple. Use our free tools to handle URLs safely and efficiently.</p>
+        <h2>Frequently Asked Questions</h2>
+        <details class="faq-item" open>
+          <summary>What is the difference between + and %20 for spaces?</summary>
+          <p>Both represent a space character, but in different contexts. <code>%20</code> is the strict RFC 3986 percent-encoding of a space and is universally valid in any part of a URL. The <code>+</code> sign as a space substitute comes from the <code>application/x-www-form-urlencoded</code> format — the encoding used by HTML forms when submitted via GET or POST. Most server-side frameworks decode both, but when building URLs manually or using <code>decodeURIComponent()</code> in JavaScript, <code>+</code> is treated as a literal plus sign, not a space. To be safe in programmatic URL construction, always use <code>%20</code>.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Why do some URLs look like %E0%A4%A8%E0%A4%AE%E0%A4%B8%E0%A5%8D%E0%A4%A4%E0%A5%87?</summary>
+          <p>That sequence is a Hindi word (<code>नमस्ते</code>, meaning "hello") encoded as UTF-8 bytes, with each byte percent-encoded. Non-ASCII characters cannot be represented directly in a URL, so they are first converted to their UTF-8 byte representation (which can be 2–4 bytes per character for most scripts), and then each byte is written as <code>%XX</code> where XX is the hexadecimal value. Modern browsers display the decoded Unicode form in the address bar for readability, but the actual HTTP request sends the percent-encoded version.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Is URL encoding the same as HTML entity encoding?</summary>
+          <p>No. They solve similar problems in different contexts. <strong>URL encoding</strong> (percent-encoding) makes characters safe for use inside a URL — it uses <code>%XX</code> notation. <strong>HTML entity encoding</strong> makes characters safe for display inside HTML markup — it uses <code>&amp;amp;</code>, <code>&amp;lt;</code>, <code>&amp;gt;</code>, <code>&amp;#160;</code> and similar forms. An ampersand in a URL query parameter needs to be percent-encoded (<code>%26</code>); an ampersand in HTML text needs to be entity-encoded (<code>&amp;amp;</code>). When a URL is embedded in an HTML attribute like <code>href</code>, you often need both: the URL itself is percent-encoded, and then the resulting string is entity-encoded for the HTML context.</p>
+        </details>
       </div>
 
       <div class="blog-cta">

@@ -262,6 +262,39 @@
 
       <p>Neither of these alternatives requires an email address for basic use, which already makes them meaningfully better than Zamzar if email collection is your main concern. But both still upload your files to remote infrastructure.</p>
 
+      <h2>Zamzar's history and what makes it different</h2>
+
+      <p>Zamzar launched in 2006, making it one of the oldest file converters still operating on the internet. At launch, it was genuinely innovative — and genuinely necessary. Broadband was slow and unreliable for large files, JavaScript was barely capable of basic interactivity, and WebAssembly didn't exist yet. Zamzar's original model was conversion-by-email: upload your file, enter your email address, and receive the converted file in your inbox when the server finished. That could take minutes or even hours.</p>
+
+      <p>The email-delivery model made complete sense in 2006. It makes no technical sense in 2026. Modern browsers can run the same compiled C++ conversion libraries that power desktop software, processing files in milliseconds without a server round-trip. Yet Zamzar still asks for your email address on every single conversion — because at this point, the email collection is as much a business model as a technical constraint.</p>
+
+      <p>What genuinely differentiates Zamzar is its format library. Eighteen years of accumulated conversion support means Zamzar handles formats that newer tools haven't bothered implementing: DXF and DWG for AutoCAD, AI files from older versions of Illustrator, WPS documents from Microsoft Works (discontinued in 2007), LIT eBook files, RealMedia video (.rm, .rmvb), and other legacy containers that professional archivists and technical users occasionally need to access. For these obscure conversions, Zamzar's depth is real.</p>
+
+      <p>The free tier is more restrictive than most users realize: 50 MB per file, 5 conversions per day, and 25 conversion "jobs" per month. If you hit those limits, the next tier starts at approximately $16/month — a steep jump for what is essentially a utility service.</p>
+
+      <h2>When Zamzar is worth using vs when to use a free alternative</h2>
+
+      <p>The honest answer is that Zamzar and browser-based tools serve different user segments, and the overlap is smaller than it looks.</p>
+
+      <p><strong>Zamzar excels at:</strong></p>
+      <ul>
+        <li><strong>CAD and engineering formats</strong> — DWG, DXF, and similar files from AutoCAD and other design tools. No browser-based tool handles these well.</li>
+        <li><strong>Legacy game and media formats</strong> — old container formats from the early 2000s, proprietary video codecs, RealMedia files</li>
+        <li><strong>Obscure document formats</strong> — WPS (Microsoft Works), older Publisher files, rare eBook containers like LIT and PDB</li>
+        <li><strong>Archival and recovery tasks</strong> — when you find an old file with an extension you don't recognise and need to know what it is</li>
+      </ul>
+
+      <p><strong>Browser-based alternatives (like Desi Jugad) excel at:</strong></p>
+      <ul>
+        <li><strong>Common image conversions</strong> — JPG, PNG, WebP, HEIC, BMP, GIF — all handled instantly with no 50 MB cap and zero upload</li>
+        <li><strong>PDF operations</strong> — merge, split, compress, rotate, protect, convert to/from JPG — faster than Zamzar and completely private</li>
+        <li><strong>Data format conversion</strong> — JSON to CSV, CSV to JSON, YAML, XML — all client-side with no file size constraints</li>
+        <li><strong>Video and audio</strong> — compression, format switching for common codecs (MP4, WebM, MP3, AAC)</li>
+        <li><strong>Privacy-sensitive files</strong> — anything you wouldn't want on a third-party server: contracts, medical documents, financial files</li>
+      </ul>
+
+      <p>The decision rule is simple: if your format is listed in the common categories above, use a browser-based tool — it will be faster, free, unlimited, and private. If you're dealing with a genuinely obscure or legacy format that no browser tool recognises, Zamzar is worth the email address. Use a secondary email or an alias to avoid inbox noise.</p>
+
       <h2>When Zamzar is still the right tool</h2>
 
       <p>Zamzar has been around long enough to accumulate support for genuinely obscure formats that newer converters haven't bothered with. If you need to convert any of the following, Zamzar is worth the email address:</p>
@@ -279,23 +312,23 @@
       <h2>Frequently asked questions</h2>
 
       <details class="faq-item" open>
+        <summary>What is Zamzar's free file size limit?</summary>
+        <p>Zamzar's free tier limits individual files to 50 MB and allows 5 conversions per day with a cap of 25 conversion jobs per month. This is restrictive for modern files: a RAW photo from a recent iPhone easily exceeds 50 MB, a short video clip is several hundred MB, and a presentation with embedded images can hit the cap quickly. Pro plans start at approximately $16/month and raise the per-file limit to 400 MB with more simultaneous conversions. Desi Jugad has no file size limit — the only practical constraint is your device's available RAM, which on a modern computer allows files well into the gigabyte range.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>Does Zamzar store uploaded files?</summary>
+        <p>Yes. Zamzar uploads your files to its servers in the UK for processing. On the free tier, converted files are stored and accessible for up to 24 hours after conversion — this is by design, since the original email-delivery model required files to persist until you downloaded them. Your email address is retained separately and associated with your conversion history, which may be used for marketing. Paid users get longer retention periods. On Desi Jugad, files are never uploaded at all: conversion runs in your browser tab, so there is no server-side storage, no retention window, and nothing to breach or delete.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>What formats does Zamzar support that others don't?</summary>
+        <p>Zamzar's unique strength is legacy and obscure format support built up over 18 years. Formats you're unlikely to find in browser-based tools: CAD files (DWG, DXF from AutoCAD), AI files from older Adobe Illustrator versions, WPS documents from discontinued Microsoft Works, LIT eBook files (discontinued Microsoft format), RealMedia video (.rm, .rmvb), older game formats, and various proprietary containers. For these niche conversions, Zamzar is often the most practical option. For common formats — images, PDFs, standard video and audio, data files — modern browser-based tools handle them equally well or better, without the email requirement or file size limit.</p>
+      </details>
+
+      <details class="faq-item">
         <summary>Why does Zamzar ask for my email address?</summary>
         <p>Zamzar was founded in 2006 when the only practical delivery mechanism for large converted files was email. The product was originally built around that workflow: upload, wait, receive by email. Despite browser capabilities making this unnecessary, Zamzar kept the email requirement — it's also how they qualify leads for paid plan upsells. There is no technical reason a modern converter needs your email address to deliver a file.</p>
-      </details>
-
-      <details class="faq-item">
-        <summary>Is there a Zamzar alternative that doesn't require email or sign-up?</summary>
-        <p>Yes. Desi Jugad converts 130+ file formats entirely in your browser — no email, no account, no file upload to any server. Convertio and CloudConvert are also email-free for basic use, but they do upload files to remote servers. For privacy-sensitive files, browser-based conversion is the only option where you can verify no upload occurs.</p>
-      </details>
-
-      <details class="faq-item">
-        <summary>Does Zamzar store my files?</summary>
-        <p>Zamzar uploads your files to its servers in the UK and stores them for up to 24 hours before deletion. Your email address is retained separately and may be used for marketing. Paid users get longer file retention periods. On Desi Jugad, files are never uploaded at all — the conversion runs locally, so there is nothing to store or delete.</p>
-      </details>
-
-      <details class="faq-item">
-        <summary>What is the file size limit on Zamzar free?</summary>
-        <p>Zamzar's free tier limits individual files to 50 MB and allows 3 simultaneous conversions. Pro plans start at approximately $16/month and raise the limit to 400 MB. Desi Jugad has no file size limit — the only practical constraint is your device's available RAM, which for modern computers allows files well into the gigabyte range for image and document conversion.</p>
       </details>
 
       <details class="faq-item">

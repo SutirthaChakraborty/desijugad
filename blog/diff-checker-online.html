@@ -140,46 +140,68 @@
       </div>
 
       <div class="blog-content">
-        <h2>What Is a Diff Checker?</h2>
-        <p>A diff checker compares two texts side-by-side and highlights additions, deletions, and changes. It's essential for developers, writers, and anyone who needs to track changes.</p>
+        <h2>Why Text Comparison Is a Fundamental Developer Skill</h2>
+        <p>Every developer eventually faces the same problem: two versions of something — a config file, a script, a document — and no clear picture of what changed between them. The ability to compare text precisely is not a nice-to-have; it sits at the core of code review, debugging, deployment verification, and collaborative writing. Understanding how diff tools work under the hood makes you far more effective when reading their output.</p>
 
-        <h2>Common Use Cases</h2>
+        <h2>How a Diff Algorithm Works</h2>
+        <p>Most diff tools — including <code>git diff</code> — use a variant of the <strong>Myers diff algorithm</strong>, published by Eugene Myers in 1986. The core idea is finding the <strong>Longest Common Subsequence (LCS)</strong>: the longest sequence of lines (or characters) that appears in both texts in the same order, even if they are not contiguous.</p>
+        <p>Once the LCS is computed, every line in the original text that is <em>not</em> part of the LCS is marked as <strong>removed</strong> (shown with a <code>-</code> prefix), and every line in the new text that is not part of the LCS is marked as <strong>added</strong> (shown with a <code>+</code> prefix). Lines that are part of the LCS appear unchanged — these are the <strong>context lines</strong>, typically shown in groups of three on each side of a change to help you understand what surrounds each edit.</p>
+        <p>Two display formats exist for diffs:</p>
         <ul>
-          <li>Compare code versions before merging</li>
-          <li>Check document changes between drafts</li>
-          <li>Verify configuration file updates</li>
-          <li>Review content changes for plagiarism</li>
-          <li>Debug differences in output</li>
+          <li><strong>Unified diff</strong> — both versions shown in a single column, with <code>-</code> and <code>+</code> prefixes. This is the format <code>git diff</code> produces and what patch files use.</li>
+          <li><strong>Side-by-side diff</strong> — original on the left, modified on the right. Easier to read for large changes because your eyes can track both versions in parallel.</li>
         </ul>
 
-        <h2>How to Use Our Diff Checker</h2>
-        <p>Use <strong><a href="../convert/diff-checker.html">Desi Jugad Diff Checker</a></strong> to:</p>
-        <ol>
-          <li>Paste or type your first text</li>
-          <li>Paste or type your second text</li>
-          <li>Click "Compare"</li>
-          <li>See differences highlighted instantly</li>
-        </ol>
-
-        <h2>Why Use Our Diff Checker?</h2>
+        <h2>Reading a Unified Diff: Decoding the @@ Header</h2>
+        <p>The most confusing part of a raw diff output is the hunk header. Consider:</p>
+        <pre><code>@@ -3,7 +3,8 @@</code></pre>
+        <p>Breaking it down:</p>
         <ul>
-          <li><strong>Instant Results:</strong> No waiting or processing delays.</li>
-          <li><strong>100% Private:</strong> Your text never leaves your browser.</li>
-          <li><strong>Color-Coded:</strong> Additions in green, deletions in red.</li>
-          <li><strong>Free Forever:</strong> No account, no limits, no watermark.</li>
-          <li><strong>Works with Code:</strong> Preserves formatting and indentation.</li>
+          <li><strong>-3,7</strong> — in the <em>original</em> file, this hunk starts at line 3 and spans 7 lines.</li>
+          <li><strong>+3,8</strong> — in the <em>new</em> file, the corresponding section starts at line 3 and spans 8 lines.</li>
+        </ul>
+        <p>The difference in line count (7 vs 8) tells you that one line was added. Context lines are counted in both numbers, which is why even unchanged surrounding lines are included in the span. If both numbers were equal, the same number of lines were added as were removed.</p>
+        <p>Context lines serve a practical purpose: they anchor the change in the file so a patch tool knows exactly where to apply modifications even if line numbers have shifted from earlier insertions.</p>
+
+        <h2>Real-World Use Cases for Diff</h2>
+        <ul>
+          <li><strong>Code review:</strong> Before merging a pull request, reviewers compare the feature branch against the main branch to understand precisely what logic changed — not just what files changed.</li>
+          <li><strong>Config file audits:</strong> Infrastructure teams diff <code>nginx.conf</code> or <code>docker-compose.yml</code> between environments to verify that staging and production only differ where expected.</li>
+          <li><strong>Document drafts:</strong> Editors comparing a revised manuscript against the previous version to verify that only the agreed changes were made — no accidental deletions.</li>
+          <li><strong>Debugging regressions:</strong> "It worked yesterday." Running diff against the last known-good version of a config or script narrows the cause from "something changed" to "exactly this changed."</li>
+          <li><strong>Verifying patches:</strong> Patch files (<code>.patch</code> or <code>.diff</code>) are applied to source trees in open-source projects. Reading them in a diff viewer confirms what a patch will do before you apply it.</li>
         </ul>
 
-        <h2>Perfect For Developers</h2>
+        <h2>Diff in a Git Workflow</h2>
+        <p>Git exposes diff at several stages of the development lifecycle:</p>
         <ul>
-          <li>Git diff visualization</li>
-          <li>Code review before PR</li>
-          <li>JSON/XML comparison</li>
-          <li>Configuration file updates</li>
+          <li><code>git diff</code> — shows changes in your working tree that have <em>not</em> been staged yet.</li>
+          <li><code>git diff --staged</code> — shows changes that <em>have</em> been staged (added to the index) but not yet committed. Also written as <code>git diff --cached</code>.</li>
+          <li><code>git diff HEAD~1</code> — compares the current working state against the previous commit. Useful for reviewing what you just changed before pushing.</li>
+          <li><code>git diff branch1..branch2</code> — compares the tip of two branches. Useful for reviewing what a feature branch adds relative to main.</li>
+        </ul>
+        <p>Pull request interfaces on GitHub and GitLab take this same underlying diff and render it visually — coloring additions green and removals red, collapsing unmodified files, and linking line numbers to inline comments. The visual layer is a convenience; the data underneath is always a standard unified diff.</p>
+
+        <h2>Practical Tips</h2>
+        <ul>
+          <li><strong>Ignore whitespace:</strong> <code>diff -w</code> (or <code>git diff -w</code>) skips whitespace-only changes. Invaluable when a file has been reformatted but no logic changed.</li>
+          <li><strong>Word-level diffs:</strong> <code>git diff --word-diff</code> highlights individual changed words within a line rather than marking the whole line as changed. Useful for prose and long config values.</li>
+          <li><strong>Binary file limitations:</strong> Standard diff tools operate on text. Binary files (images, compiled executables, PDFs) show only "binary files differ." Specialised tools exist for image diffs and document comparison, but they work on extracted text layers, not bytes.</li>
         </ul>
 
-        <h2>Conclusion</h2>
-        <p>Comparing text has never been simpler. Use our free, instant, private diff checker to spot changes in code, documents, and content.</p>
+        <h2>Frequently Asked Questions</h2>
+        <details class="faq-item" open>
+          <summary>What is the difference between unified and side-by-side diff?</summary>
+          <p>A <strong>unified diff</strong> shows both the old and new versions in a single column. Removed lines are prefixed with <code>-</code> and added lines with <code>+</code>. It is compact and the standard format for patch files and <code>git diff</code> output. A <strong>side-by-side diff</strong> displays the original file in the left column and the modified file in the right column, with matching lines aligned. Side-by-side is generally easier to read for large or complex changes because you can scan both versions simultaneously without mentally reconstructing the modified file.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Can I diff binary files or images?</summary>
+          <p>Standard line-based diff tools are designed for text and cannot meaningfully compare binary content — they will simply report "binary files differ." For images, specialised diff tools can overlay two versions and highlight pixel-level differences, or extract text from PDFs before comparing. For binary formats that have a text representation (like SVG, which is XML, or a compiled binary where you compare the disassembly), converting to text first and then diffing is the standard workaround.</p>
+        </details>
+        <details class="faq-item">
+          <summary>What does "hunk" mean in a diff?</summary>
+          <p>A <strong>hunk</strong> is a contiguous block of changes in a diff output. If you changed line 5 and line 50 of a file, those are two separate hunks. Each hunk starts with an <code>@@</code> header indicating the line ranges it covers, followed by context lines and the actual additions and removals. Tools like <code>git add -p</code> (interactive staging) let you stage or skip individual hunks, which is why the term appears frequently in interactive Git workflows.</p>
+        </details>
       </div>
 
       <div class="blog-cta">
