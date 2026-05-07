@@ -84,50 +84,49 @@
       </div>
 
       <div class="blog-content">
-        <h2>Why Convert Videos to GIF?</h2>
-        <ul>
-          <li>Share clips on social media without sound</li>
-          <li>Create reaction GIFs for messaging</li>
-          <li>Make meme GIFs from video moments</li>
-          <li>Perfect for WhatsApp, Discord, Twitter</li>
-          <li>GIFs autoplay everywhere (no click needed)</li>
-        </ul>
+        <p>Animated GIFs have been the internet's favourite way to share short looping moments for over 30 years. From reaction memes to product demos, from quick tutorials to funny moments — the GIF format endures because it works everywhere without plugins, auto-plays silently, and loops infinitely. But most GIFs today start life as a video clip.</p>
 
-        <h2>How to Create GIFs from Video</h2>
-        <p>Use <strong><a href="../convert/video-to-gif.html">Desi Jugad Video to GIF Converter</a></strong> to:</p>
+        <h2>GIF vs. Video: Why Both Still Matter</h2>
+        <p>You might wonder: if MP4 is smaller and higher quality, why use GIF at all? The answer is context:</p>
+        <ul>
+          <li><strong>Universal compatibility:</strong> GIFs play in every email client, every browser, every messaging app, every forum and social platform — without any media player or codec. An MP4 embedded in an email often won't autoplay. A GIF always will.</li>
+          <li><strong>Silence by default:</strong> GIFs have no audio track. For reaction memes, tutorials, and quick demonstrations, silence is a feature — the viewer doesn't need to unmute or worry about loud playback.</li>
+          <li><strong>Infinite looping:</strong> GIFs loop seamlessly without any controls visible to the viewer. A looping MP4 requires JavaScript or HTML5 controls.</li>
+          <li><strong>Embeddability:</strong> GIFs can be embedded anywhere an image can — including Slack, Notion, GitHub issues, Confluence, and other tools that don't support video.</li>
+        </ul>
+        <p>The tradeoff: GIF is an old format limited to 256 colours per frame, and the file size for anything over 5 seconds becomes large. For longer animations or anything requiring audio, MP4 is better.</p>
+
+        <h2>How Video-to-GIF Conversion Works</h2>
+        <p>Converting video to GIF is more complex than it sounds because GIF supports only 256 colours per frame, while modern video has millions. The conversion process involves:</p>
         <ol>
-          <li>Upload your video (MP4, WebM, MKV, AVI, MOV)</li>
-          <li>Select the time range you want</li>
-          <li>Choose GIF quality and speed</li>
-          <li>Download your animated GIF</li>
+          <li><strong>Frame extraction:</strong> The video is decoded and frames are captured at the desired frame rate (e.g., 10–15 fps for GIF, vs. 24–60 fps for the original video).</li>
+          <li><strong>Colour quantization:</strong> Each frame's full-colour palette is reduced to 256 colours using algorithms like median-cut or octree quantization. How this is done significantly affects visual quality — a good converter builds a global palette optimised across all frames.</li>
+          <li><strong>Dithering:</strong> To simulate colours not in the palette, adjacent pixels are used to create the illusion of in-between colours (like halftone printing). Dithering reduces banding artifacts but can make the GIF look grainy.</li>
+          <li><strong>LZW compression:</strong> The final GIF is compressed using LZW encoding, the same algorithm used in ZIP files.</li>
         </ol>
 
-        <h2>Best Settings for Different Uses</h2>
+        <h2>Optimising GIF Quality and File Size</h2>
+        <p>The two biggest factors in GIF quality are frame rate and colour palette size:</p>
         <ul>
-          <li><strong>High Quality GIF:</strong> For detailed clips, larger file size</li>
-          <li><strong>Standard Quality:</strong> Best balance of quality and size</li>
-          <li><strong>Web Optimized:</strong> Smaller file size for faster loading</li>
+          <li><strong>Frame rate:</strong> 10–15 fps is standard for GIFs — smooth enough to feel animated, low enough to keep file sizes reasonable. 24 fps GIFs are high quality but file sizes grow fast. For slow-motion or text animations, 8–10 fps is acceptable.</li>
+          <li><strong>Duration:</strong> Every extra second is roughly 15–30% more file size. Keep GIFs under 5 seconds for Discord and Slack (where 8 MB is a common limit), and under 10 seconds for most other uses.</li>
+          <li><strong>Resolution:</strong> A 480p (854×480) GIF is often indistinguishable from a 1080p GIF in practice, because the 256-colour limit masks fine detail anyway. Halving the width typically quarters the file size.</li>
+          <li><strong>Content type:</strong> Solid-colour animations (logos, text reveals, charts) convert to GIF with excellent quality. Photographs and videos with many colours will show noticeable dithering — for those, consider using a short MP4 with the <code>autoplay muted loop</code> HTML attributes instead.</li>
         </ul>
 
-        <h2>Why Our Converter?</h2>
+        <h2>Perfect GIF Length for Each Platform</h2>
         <ul>
-          <li><strong>No Server Upload:</strong> Everything stays on your device.</li>
-          <li><strong>Multiple Formats:</strong> Convert from any video format to GIF.</li>
-          <li><strong>Instant Processing:</strong> Get your GIF in seconds.</li>
-          <li><strong>Customizable Speed:</strong> Control animation playback speed.</li>
-          <li><strong>Completely Free:</strong> No watermarks, no limits.</li>
+          <li><strong>Twitter / X:</strong> Under 15 MB. Accepts GIF up to 5 MB on mobile. Keep under 5 seconds at medium resolution for reliable uploading.</li>
+          <li><strong>Discord:</strong> 8 MB limit for regular users (50 MB with Nitro). 3–5 second GIFs at 480p typically fit.</li>
+          <li><strong>Slack:</strong> 100 MB limit but previews large GIFs slowly. Keep under 5 MB for smooth performance.</li>
+          <li><strong>Email (inline):</strong> Many email clients display GIFs as animated. Keep under 1 MB for email — anything larger may cause delivery issues or display as a static first frame in Outlook.</li>
+          <li><strong>GitHub / Notion / Confluence:</strong> No strict limit but large GIFs slow page loads. Under 3 MB is a good target.</li>
         </ul>
 
-        <h2>Pro Tips</h2>
-        <ul>
-          <li>Keep GIFs under 5 seconds for best results</li>
-          <li>Use <strong><a href="../convert/video-trimmer.html">Video Trimmer</a></strong> first to cut the exact clip you want</li>
-          <li>Reduce frame rate for smaller file size</li>
-          <li>Test on the platform where you'll share (Discord, Twitter, etc.)</li>
-        </ul>
-
-        <h2>Conclusion</h2>
-        <p>Making GIFs from videos has never been easier. No uploads, instant conversion, fully private. Create your animated GIFs today.</p>
+        <h2>Frequently Asked Questions</h2>
+        <details class="faq-item" open><summary>Why does my GIF look washed out or grainy compared to the original video?</summary><p>This is the 256-colour limitation of the GIF format. Videos with photos, gradients, and complex colour scenes suffer the most. Try reducing the clip length and resolution to give the colour quantizer more palette to work with per frame. For photographic content, consider using a short silent MP4 instead of GIF.</p></details>
+        <details class="faq-item"><summary>What frame rate should I use for GIFs?</summary><p>10–15 fps for general use. 8 fps for slow or simple animations. Note that GIF timing is stored in centiseconds (1/100th of a second intervals), and some browsers round to the nearest 10 ms, so 10 fps (100 ms delay) and 12 fps (83 ms delay) tend to be more reliable than unusual frame rates.</p></details>
+        <details class="faq-item"><summary>Can I convert only part of a video to GIF?</summary><p>Yes — use our <a href="../convert/video-trimmer.html">Video Trimmer</a> first to cut the exact 3–10 second clip you want, then convert that trimmed clip to GIF. This gives you precise control over which moment becomes your animation.</p></details>
       </div>
 
       <div class="blog-cta">

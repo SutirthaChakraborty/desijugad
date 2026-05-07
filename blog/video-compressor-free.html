@@ -84,45 +84,48 @@
       </div>
 
       <div class="blog-content">
-        <h2>Why Compress Videos?</h2>
+        <p>Modern phones shoot video at 4K resolution at 60 frames per second, producing files that grow at 400+ MB per minute. A 10-minute family gathering video becomes a 4 GB file. Your WhatsApp won't send it. Your email won't accept it. Your cloud storage fills up. Video compression is the solution — reducing file size while keeping the visual quality at a level you're comfortable with.</p>
+
+        <h2>How Video Compression Works</h2>
+        <p>Video compression works by finding redundancy — information that can be stored more efficiently. Modern codecs like H.264 and H.265 use two main techniques:</p>
         <ul>
-          <li>Reduce file size for email or messaging</li>
-          <li>Save storage on phone and cloud</li>
-          <li>Speed up video uploads to social media</li>
-          <li>Backup large video files efficiently</li>
-          <li>Save bandwidth when streaming</li>
+          <li><strong>Spatial compression:</strong> Within each individual frame, similar color regions are compressed together (similar to how JPEG compresses photos). A clear blue sky can be described with far fewer data points than a complex forest scene.</li>
+          <li><strong>Temporal compression:</strong> Between frames, only the differences are stored. If you're recording a person talking with a static background, the background pixels don't change — only the person's face and mouth movement are encoded for each frame. This is why a talking-head video compresses much better than a fast action scene.</li>
+        </ul>
+        <p>The quality setting (often called CRF — Constant Rate Factor) controls the tradeoff: lower CRF = higher quality = larger file. Higher CRF = lower quality = smaller file.</p>
+
+        <h2>Understanding Compression Ratios</h2>
+        <p>How much can you compress a video without visible quality loss? It depends on the content:</p>
+        <ul>
+          <li><strong>Screen recordings and presentations:</strong> Very compressible. Static backgrounds, limited motion. Can often reduce by 80-90% with no visible loss.</li>
+          <li><strong>Talking head / interview videos:</strong> Highly compressible. Static background, limited frame-to-frame change. 70-80% reduction is typical.</li>
+          <li><strong>Documentary or vlog footage:</strong> Moderate compression. Mixed motion. 50-70% reduction at high quality.</li>
+          <li><strong>Sports, action, and fast motion:</strong> Hard to compress. Every frame is dramatically different. 30-50% reduction before visible quality loss.</li>
+          <li><strong>Animated content:</strong> Highly variable. Flat-colored animation compresses extremely well; photorealistic CGI does not.</li>
         </ul>
 
-        <h2>How Much Can You Compress?</h2>
-        <p>With our <strong><a href="../convert/video-compressor.html">Video Compressor</a></strong>, you can reduce video file size by:</p>
+        <h2>H.264 vs H.265 vs VP9: Which Codec Compresses Best?</h2>
+        <p>The codec determines how efficiently your video is compressed:</p>
         <ul>
-          <li><strong>30-50%:</strong> High-quality preset (minimal quality loss)</li>
-          <li><strong>50-70%:</strong> Medium-quality preset</li>
-          <li><strong>70%+:</strong> Low-quality preset for archival</li>
+          <li><strong>H.264 (AVC):</strong> The universal standard. Supported everywhere — every phone, browser, smart TV, and media player from the past 15 years. Good compression, not the best. Use H.264 when compatibility is critical.</li>
+          <li><strong>H.265 (HEVC):</strong> Twice the compression efficiency of H.264 at the same visual quality. A 1 GB H.264 video might be 500 MB in H.265. But it requires more CPU to decode and isn't supported on all older devices. Some platforms (like YouTube) convert uploads, so H.265 uploads work fine.</li>
+          <li><strong>VP9:</strong> Google's open-source codec, used in WebM format and YouTube. Similar efficiency to H.265. No licensing fees. Good support in browsers and newer devices.</li>
+          <li><strong>AV1:</strong> The newest codec. Best compression of all — 30% better than H.265. Supported in modern browsers and Android. Apple added support in 2021. Encoding is still slow on most hardware.</li>
         </ul>
 
-        <h2>How to Compress Videos</h2>
-        <ol>
-          <li>Upload your video to our compressor</li>
-          <li>Select quality level (high/medium/low)</li>
-          <li>Preview and download</li>
-          <li>Done! Your file is ready to share</li>
-        </ol>
-
-        <h2>Why Our Compressor Is Best</h2>
+        <h2>The Right Compression Settings for Different Uses</h2>
         <ul>
-          <li><strong>No Upload Required:</strong> Processing happens on your device.</li>
-          <li><strong>Smart Compression:</strong> Uses H.264 codec for optimal size vs. quality.</li>
-          <li><strong>Multiple Formats:</strong> Works with MP4, WebM, MKV, AVI, MOV.</li>
-          <li><strong>Instant Download:</strong> Get your compressed video immediately.</li>
-          <li><strong>100% Private:</strong> Your videos never leave your computer.</li>
+          <li><strong>WhatsApp / Telegram sharing:</strong> Target under 100 MB for most phones to avoid platform re-compression. 720p at H.264 high quality usually achieves this for videos under 5 minutes.</li>
+          <li><strong>YouTube upload:</strong> YouTube re-compresses everything anyway. Upload at the highest quality you have — don't pre-compress for YouTube, you'll just lose quality twice.</li>
+          <li><strong>Email attachment:</strong> Target under 25 MB. Consider 480p resolution if the content doesn't require high detail.</li>
+          <li><strong>Long-term archiving:</strong> Use the least compression possible (CRF 18-22 in H.264). Storage is cheap; quality lost is gone forever.</li>
+          <li><strong>Website background video:</strong> Aim for under 5 MB for autoplay videos. Use WebM format, muted, loop, at minimal resolution (480-720p).</li>
         </ul>
 
-        <h2>Related Tools</h2>
-        <p>After compression, use <strong><a href="../convert/video-converter.html">Video Converter</a></strong> to change formats, or <strong><a href="../convert/video-trimmer.html">Video Trimmer</a></strong> to cut unnecessary parts first.</p>
-
-        <h2>Conclusion</h2>
-        <p>Video compression doesn't have to be complicated or slow. Use our free, instant, browser-based video compressor to reduce file sizes without uploading to the cloud.</p>
+        <h2>Frequently Asked Questions</h2>
+        <details class="faq-item" open><summary>What's the best quality setting for compression?</summary><p>For most personal videos, CRF 23 (H.264) gives excellent quality with 50-70% size reduction. For important footage you want to preserve, use CRF 18-20. For sharing on messaging apps where quality matters less, CRF 28-32 reduces size dramatically with acceptable quality for most content types.</p></details>
+        <details class="faq-item"><summary>Should I compress before or after editing?</summary><p>Always edit first, then compress as the final step. Editing requires re-encoding at each step, and starting from a compressed source accumulates artifacts. Keep your editing master at full quality and export a compressed version for distribution.</p></details>
+        <details class="faq-item"><summary>Does compressing a video reduce its resolution?</summary><p>Not necessarily. Compression can reduce file size while keeping the same resolution — it just reduces the bitrate allocated to encoding that resolution. However, at extreme compression levels, you may want to also reduce resolution (e.g., from 4K to 1080p) because encoding 4K at very low bitrate often looks worse than encoding 1080p at moderate bitrate.</p></details>
       </div>
 
       <div class="blog-cta">

@@ -86,40 +86,44 @@
       </div>
 
       <div class="blog-content">
-        <h2>Why Extract Audio from Video?</h2>
+        <p>Sometimes you don't need the video — you need the audio. A lecture you want to study on the go, a concert performance you recorded on your phone, a podcast that was released as a YouTube video, background music from a film clip. Extracting audio from video is one of the most common media tasks people need to do, and it's simpler than most people think.</p>
+
+        <h2>Audio Formats: Which One Should You Choose?</h2>
+        <p>Choosing the right output format matters for your use case:</p>
         <ul>
-          <li>Convert YouTube videos to MP3 (for personal use)</li>
-          <li>Extract podcast audio from video files</li>
-          <li>Get background music from videos</li>
-          <li>Save storage by keeping only audio</li>
+          <li><strong>MP3:</strong> The universal audio format. Plays on every device ever made with audio support — from a 2003 iPod to the latest iPhone. Lossy compression, but at 192–320 kbps, the quality is excellent. Best choice for music, podcasts, and anything you'll share widely.</li>
+          <li><strong>WAV:</strong> Uncompressed audio. Perfect quality, large file size. A 5-minute WAV is about 50 MB vs. 5 MB for MP3. Use WAV when you need to edit the audio further or when lossless quality matters — music production, audio archiving, professional work.</li>
+          <li><strong>OGG Vorbis:</strong> An open-source alternative to MP3. Slightly better quality at the same bitrate, smaller file sizes. Great for games, apps, and web use. Not supported everywhere (notably, older Apple devices require a plugin).</li>
+          <li><strong>FLAC:</strong> Lossless compression — the audio is mathematically identical to the original, but the file is 40–60% smaller than WAV. The audiophile's choice. Supported by modern music players, Spotify, Tidal.</li>
+          <li><strong>AAC:</strong> Apple's format, used in MP4 and M4A files. Better quality than MP3 at the same bitrate. Used by iTunes, Apple Music, YouTube. Best for Apple ecosystem compatibility.</li>
         </ul>
 
-        <h2>How to Convert Video to Audio</h2>
-        <p>Use <strong><a href="../convert/video-to-audio.html">Desi Jugad Video to Audio Converter</a></strong> to extract:</p>
+        <h2>How Audio Extraction Actually Works</h2>
+        <p>Video files like MP4 or MKV are containers — they hold both a video stream and one or more audio streams packaged together. When you "extract audio," you're demuxing (separating) the audio stream from the video. If the audio was already stored as MP3 or AAC inside the video container, this is lossless — no re-encoding, just extraction. If you're converting to a different format (say, extracting to WAV from an AAC audio stream), it's transcoded once.</p>
+        <p>The <a href="../convert/video-to-audio.html">Desi Jugad Video to Audio Converter</a> uses FFmpeg.wasm to handle this entirely in your browser. For MP4 → MP3 extraction, the audio is simply demuxed and packaged — the actual audio data is untouched, preserving the original quality without any re-encoding degradation.</p>
+
+        <h2>Common Use Cases for Audio Extraction</h2>
         <ul>
-          <li>Video → MP3</li>
-          <li>Video → WAV</li>
-          <li>Video → OGG</li>
-          <li>Video → FLAC</li>
+          <li><strong>Lectures and educational videos:</strong> Convert a recorded Zoom/Teams lecture to MP3 so you can listen while commuting or exercising.</li>
+          <li><strong>Music from concerts or live recordings:</strong> Extract the audio track from a live concert video for your personal music library.</li>
+          <li><strong>Podcast episodes released on YouTube:</strong> Many podcasters publish to YouTube. Extract to MP3 to listen offline on any podcast player.</li>
+          <li><strong>Screen recording voiceovers:</strong> Extract the audio from a screen recording to transcribe it, edit it, or use it separately.</li>
+          <li><strong>Background music for presentations:</strong> Extract the score from a movie clip to use as background music.</li>
+          <li><strong>Archiving interviews:</strong> A recorded video interview is much larger than just the audio. Extract to MP3 for compact long-term storage.</li>
         </ul>
 
-        <h2>Why Our Converter?</h2>
-        <ul>
-          <li><strong>No Upload Required:</strong> Your video stays private on your device.</li>
-          <li><strong>All Formats Supported:</strong> MP4, MKV, WebM, AVI, MOV, FLV, and more.</li>
-          <li><strong>Fast Processing:</strong> Runs in your browser with FFmpeg.wasm.</li>
-          <li><strong>Free Forever:</strong> No account, no watermark, no limits.</li>
-        </ul>
+        <h2>Tips for Best Audio Quality</h2>
+        <ol>
+          <li><strong>Use a high-quality source.</strong> If the original video has poor audio (background noise, low bitrate), the extracted audio will have the same issues.</li>
+          <li><strong>Choose the right bitrate.</strong> For speech (lectures, interviews), 128 kbps MP3 is more than adequate. For music, use 192–320 kbps or choose FLAC for lossless quality.</li>
+          <li><strong>Trim first if needed.</strong> Use our <a href="../convert/video-trimmer.html">Video Trimmer</a> to cut the exact portion you want before extracting audio — this is faster than extracting the whole file and editing in an audio editor.</li>
+          <li><strong>Check for multiple audio tracks.</strong> Videos with multiple language tracks (common in MKV files) let you choose which track to extract.</li>
+        </ol>
 
-        <h2>Pro Tips</h2>
-        <ul>
-          <li>Use <strong><a href="../convert/video-trimmer.html">Video Trimmer</a></strong> first to cut the video, then extract audio to save processing time.</li>
-          <li>Check audio quality before downloading — WAV preserves lossless quality.</li>
-          <li>MP3 is the most compatible format for all devices.</li>
-        </ul>
-
-        <h2>Conclusion</h2>
-        <p>Extracting audio from video has never been easier. No uploads, no servers, 100% private. Use our free video to audio converter today.</p>
+        <h2>Frequently Asked Questions</h2>
+        <details class="faq-item" open><summary>Does extracting audio reduce quality?</summary><p>If you extract to the same format as the original audio stream (e.g., MP4 with AAC audio → AAC output), there is zero quality loss — it's a direct copy. Quality loss only occurs when transcoding to a different format (e.g., AAC → MP3). In that case, the loss is minimal at high bitrates and typically imperceptible.</p></details>
+        <details class="faq-item"><summary>Why is my extracted audio out of sync?</summary><p>Sync issues usually occur with videos that have variable frame rates (VFR) — common in screen recordings and some phone videos. Try converting the video to a constant frame rate (CFR) first, then extract the audio.</p></details>
+        <details class="faq-item"><summary>Can I extract audio from a live YouTube URL?</summary><p>No — this tool works with files you already have on your device. To convert YouTube audio, you'd need to download the video first using a desktop tool like yt-dlp (for personal use).</p></details>
       </div>
 
       <div class="blog-cta">
