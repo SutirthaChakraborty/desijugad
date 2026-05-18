@@ -64,7 +64,10 @@
                          ['Download compressed JPGs', 'Click Compress and save the smaller JPEG files.']],
     'zip-converter':    [['Upload files', 'Select any files you want to archive — documents, images, any type.'],
                          ['Click Create ZIP', 'Your ZIP archive is created instantly in the browser.'],
-                         ['Download ZIP', 'Click Download ZIP to save your archive to your device.']]
+                         ['Download ZIP', 'Click Download ZIP to save your archive to your device.']],
+    'epub-converter':   [['Drop your EPUB file', 'Click the drop zone or drag a DRM-free .epub file onto it. The file stays on your device — nothing is uploaded.'],
+                         ['Select a chapter', 'Your ebook chapters are listed in the dropdown. Choose any chapter to read it in the browser viewer.'],
+                         ['Navigate or convert to PDF', 'Use Prev / Next to move between chapters, or open the EPUB to PDF link to convert it to a downloadable PDF.']]
   };
 
   // Generic fallback steps
